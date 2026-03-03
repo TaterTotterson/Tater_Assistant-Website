@@ -72,6 +72,20 @@ python3 /home/taterassistant/scripts/sync_wiki_sources.py --skip-fetch
 python3 /home/taterassistant/scripts/sync_wiki_sources.py --allow-dirty-build
 ```
 
+## Force rebuild
+
+To force a rebuild even when the repo heads did not change:
+
+```bash
+python3 /home/taterassistant/scripts/sync_wiki_sources.py --force-build
+```
+
+To reset the sync state and let the next normal run rebuild:
+
+```bash
+rm -f /home/taterassistant/scripts/.wiki-sync-state.json
+```
+
 ## Cron / Webmin
 
 For a headless Linux server, use cron.
