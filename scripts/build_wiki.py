@@ -103,7 +103,7 @@ MACOS_APP_GUIDES = [
         "chips": ["Server URL", "Auth token", "Bootstrap"],
         "details": [
             "Default bridge URL is http://127.0.0.1:8791, but the app can target any reachable Tater host.",
-            "If AUTH_TOKEN is set in macOS platform settings, the app must send that same token as X-Tater-Token.",
+            "If AUTH_TOKEN is set in macOS portal settings, the app must send that same token as X-Tater-Token.",
             "The app bootstraps assistant identity and recent history from /macos/bootstrap before normal chat usage.",
         ],
     },
@@ -256,7 +256,7 @@ WEB_SEARCH_GUIDES = [
 PLUGIN_OVERRIDES = {
     "events_query_brief": {
         "when_to_use": "Use this for short event rollups on dashboards, automations, and notifications when you want brief plain-text output instead of a long narrative.",
-        "how_to_use": "Run it from the automation platform, choose a timeframe and optional area/query, then either set INPUT_TEXT_ENTITY once in WebUI or pass input_text_entity in the action to write straight into a Home Assistant helper.",
+        "how_to_use": "Run it from the automation portal, choose a timeframe and optional area/query, then either set INPUT_TEXT_ENTITY once in WebUI or pass input_text_entity in the action to write straight into a Home Assistant helper.",
         "usage_example": """{
   "function": "events_query_brief",
   "arguments": {
@@ -411,7 +411,7 @@ PLUGIN_OVERRIDES = {
                 "details": [
                     "play launches the closest matching game on the chosen or inferred system, for example play mario on snes.",
                     "now_playing reports the current game and system, go_to_menu returns to the MiSTer menu, and screenshot_take captures a screenshot artifact.",
-                    "The screenshot action returns image payload data when available so the current platform can display or attach the screenshot cleanly.",
+                    "The screenshot action returns image payload data when available so the current portal can display or attach the screenshot cleanly.",
                 ],
             },
             {
@@ -428,7 +428,7 @@ PLUGIN_OVERRIDES = {
     },
     "weather_brief": {
         "when_to_use": "Use this for short weather recaps in dashboards, notifications, and scheduled automations when you want a concise summary of recent conditions.",
-        "how_to_use": "Run it from the automation platform, pick the recent hour window from the dropdown, optionally add a short query, and write the result into an input_text helper with INPUT_TEXT_ENTITY or input_text_entity.",
+        "how_to_use": "Run it from the automation portal, pick the recent hour window from the dropdown, optionally add a short query, and write the result into an input_text helper with INPUT_TEXT_ENTITY or input_text_entity.",
         "usage_example": """{
   "function": "weather_brief",
   "arguments": {
@@ -493,7 +493,7 @@ PLUGIN_OVERRIDES = {
     },
     "zen_greeting": {
         "when_to_use": "Use this for a short daily zen message, calm greeting, or dashboard-safe motivational line inside automation flows.",
-        "how_to_use": "Run it from the automation platform, choose tone and include_date options from the Home Assistant action UI, and store the result in an input_text helper when you want the message to persist on a dashboard.",
+        "how_to_use": "Run it from the automation portal, choose tone and include_date options from the Home Assistant action UI, and store the result in an input_text helper when you want the message to persist on a dashboard.",
         "usage_example": """{
   "function": "zen_greeting",
   "arguments": {
@@ -527,7 +527,7 @@ PLUGIN_OVERRIDES = {
         ],
     },
 }
-PLATFORM_DOCS_ORDER = [
+PORTAL_DOCS_ORDER = [
     "webui",
     "discord",
     "telegram",
@@ -537,10 +537,13 @@ PLATFORM_DOCS_ORDER = [
     "ha_automations",
     "homekit",
     "macos",
-    "ai_task",
-    "memory_platform",
-    "rss",
     "xbmc",
+]
+
+CORE_DOCS_ORDER = [
+    "ai_task",
+    "memory",
+    "rss",
 ]
 
 PLATFORM_DOCS = {
@@ -553,14 +556,14 @@ PLATFORM_DOCS = {
         "highlights": [
             "Hosts private chat, Verba Plugin browsing, settings, and Cerberus runtime controls in one place.",
             "Acts as the easiest way to inspect available tools and manage the Verba Plugin ecosystem.",
-            "Ships with dedicated views for chat, Verba Plugins, settings, Cerberus, platforms, and AI task workflows.",
+            "Ships with dedicated views for chat, Verba Plugins, settings, Cerberus, portals, and AI task workflows.",
         ],
     },
     "discord": {
         "label": "Discord",
         "description": "Full-featured Discord bot with rich interactions, media output, background jobs, and Verba Plugin-backed actions.",
         "role": "Chat endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "discord_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "discord_portal.py",
         "plugin_surface": "discord",
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
@@ -572,7 +575,7 @@ PLATFORM_DOCS = {
         "label": "Telegram",
         "description": "Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba Plugin execution.",
         "role": "Chat endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "telegram_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "telegram_portal.py",
         "plugin_surface": "telegram",
         "highlights": [
             "Supports rich formatting, inline media delivery, and per-chat restrictions.",
@@ -584,7 +587,7 @@ PLATFORM_DOCS = {
         "label": "Matrix",
         "description": "Federated Matrix client with encryption support, Markdown rendering, and full Verba Plugin compatibility.",
         "role": "Chat endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "matrix_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "matrix_portal.py",
         "plugin_surface": "matrix",
         "highlights": [
             "Brings Tater to federated chat networks like Element and Cinny.",
@@ -596,7 +599,7 @@ PLATFORM_DOCS = {
         "label": "IRC",
         "description": "Lightweight IRC bot that responds to mentions and runs compatible Verba Plugins.",
         "role": "Chat endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "irc_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "irc_portal.py",
         "plugin_surface": "irc",
         "highlights": [
             "Simple low-overhead deployment for classic chat rooms and ZNC-style setups.",
@@ -608,7 +611,7 @@ PLATFORM_DOCS = {
         "label": "Home Assistant",
         "description": "Voice and text assistant endpoint for Home Assistant Assist, paired with the Tater Conversation Agent integration plus direct smart-home control and a built-in notifications API that can queue alerts and light configured Voice PE indicators.",
         "role": "Voice and smart-home endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "homeassistant_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "homeassistant_portal.py",
         "plugin_surface": "homeassistant",
         "highlights": [
             "Designed for Assist pipeline conversations and direct smart-home control.",
@@ -622,7 +625,7 @@ PLATFORM_DOCS = {
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
         "companions_eyebrow": "Companion setup",
-        "companions_title": "Home Assistant integrations that connect to this platform.",
+        "companions_title": "Home Assistant integrations that connect to this portal.",
         "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
         "apis": [
             {
@@ -655,7 +658,7 @@ PLATFORM_DOCS = {
         "label": "HA Automations",
         "description": "Automation-only Home Assistant endpoint that pairs with the Tater Automations integration for direct tool execution, built-in event storage, and brief plugins that can write clean summary text straight into Home Assistant helpers.",
         "role": "Automation bridge",
-        "source": TATER_SHOP_DIR / "platforms" / "ha_automations_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "ha_automations_portal.py",
         "plugin_surface": "automation",
         "highlights": [
             "Built for fast one-shot execution from Home Assistant automations rather than open-ended chat.",
@@ -670,11 +673,11 @@ PLATFORM_DOCS = {
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
         "companions_eyebrow": "Companion setup",
-        "companions_title": "Home Assistant integrations that connect to this platform.",
+        "companions_title": "Home Assistant integrations that connect to this portal.",
         "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
         "guides": HOME_ASSISTANT_AUTOMATION_GUIDES,
         "guides_eyebrow": "Automation patterns",
-        "guides_title": "How this platform handles brief outputs and Home Assistant state.",
+        "guides_title": "How this portal handles brief outputs and Home Assistant state.",
         "guides_intro": "These patterns are useful when a Home Assistant automation needs clean short text instead of a conversational reply.",
         "apis": [
             {
@@ -699,7 +702,7 @@ PLATFORM_DOCS = {
                 "method": "POST",
                 "path": "/tater-ha/v1/tools/{tool_name}",
                 "summary": "Run an automation-only tool directly.",
-                "details": "Calls an enabled plugin on the automation platform with a JSON arguments payload, without any AI router in the middle, which makes it useful for deterministic Home Assistant automations.",
+                "details": "Calls an enabled plugin on the automation portal with a JSON arguments payload, without any AI router in the middle, which makes it useful for deterministic Home Assistant automations.",
             },
         ],
     },
@@ -707,7 +710,7 @@ PLATFORM_DOCS = {
         "label": "HomeKit",
         "description": "Siri and Apple Shortcuts bridge for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.",
         "role": "Voice endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "homekit_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "homekit_portal.py",
         "plugin_surface": "homekit",
         "highlights": [
             "Provides a lightweight HTTP bridge for Siri and Apple Shortcuts workflows.",
@@ -764,7 +767,7 @@ PLATFORM_DOCS = {
             },
         ],
         "guides_eyebrow": "Shortcut guide",
-        "guides_title": "How to connect Siri and Apple Shortcuts to this platform.",
+        "guides_title": "How to connect Siri and Apple Shortcuts to this portal.",
         "guides_intro": "These notes focus on the Shortcut flow, session handling, optional auth, and the Siri voice round-trip.",
         "apis": [
             {
@@ -779,7 +782,7 @@ PLATFORM_DOCS = {
         "label": "macOS",
         "description": "Native desktop bridge used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.",
         "role": "Desktop endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "macos_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "macos_portal.py",
         "plugin_surface": "macos",
         "highlights": [
             "Runs a FastAPI bridge on port 8791 by default for the Tater Menu app.",
@@ -793,7 +796,7 @@ PLATFORM_DOCS = {
         ],
         "companions_eyebrow": "Client app",
         "companions_title": "macOS app that connects to this bridge.",
-        "companions_intro": "The menu-bar app is the main user-facing client for this platform and handles quick actions, chat UI, and attachment flows.",
+        "companions_intro": "The menu-bar app is the main user-facing client for this portal and handles quick actions, chat UI, and attachment flows.",
         "guides": MACOS_APP_GUIDES,
         "guides_eyebrow": "App setup",
         "guides_title": "How to run and connect the Tater Menu app.",
@@ -857,22 +860,22 @@ PLATFORM_DOCS = {
     },
     "ai_task": {
         "label": "AI Task Runner",
-        "description": "Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier platforms.",
+        "description": "Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier portals.",
         "role": "Scheduler",
-        "source": TATER_SHOP_DIR / "platforms" / "ai_task_platform.py",
+        "source": TATER_SHOP_DIR / "cores" / "ai_task_core.py",
         "plugin_surface": "",
         "highlights": [
             "Executes recurring jobs without requiring an external scheduler around Tater.",
-            "Routes output through supported notifier platforms so scheduled results can land where users already are.",
+            "Routes output through supported notifier portals so scheduled results can land where users already are.",
             "Best paired with concise task prompts and target-specific delivery rules.",
         ],
         "apis": [],
     },
-    "memory_platform": {
-        "label": "Memory Platform",
+    "memory": {
+        "label": "Memory Core",
         "description": "Background memory extraction layer that scans chat history, stores user and room memory, and feeds Cerberus context.",
         "role": "Background service",
-        "source": TATER_SHOP_DIR / "platforms" / "memory_platform.py",
+        "source": TATER_SHOP_DIR / "cores" / "memory_core.py",
         "plugin_surface": "",
         "highlights": [
             "Incrementally mines durable facts from prior conversations instead of relying only on the active turn.",
@@ -883,9 +886,9 @@ PLATFORM_DOCS = {
     },
     "rss": {
         "label": "RSS",
-        "description": "Background feed watcher that summarizes articles and dispatches updates through notifier platforms.",
+        "description": "Background feed watcher that summarizes articles and dispatches updates through notifier portals.",
         "role": "Background service",
-        "source": TATER_SHOP_DIR / "platforms" / "rss_platform.py",
+        "source": TATER_SHOP_DIR / "cores" / "rss_core.py",
         "plugin_surface": "",
         "highlights": [
             "Polls feeds, extracts article bodies, and creates digest-style summaries.",
@@ -898,7 +901,7 @@ PLATFORM_DOCS = {
         "label": "XBMC4Xbox",
         "description": "Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.",
         "role": "Console endpoint",
-        "source": TATER_SHOP_DIR / "platforms" / "xbmc_platform.py",
+        "source": TATER_SHOP_DIR / "portals" / "xbmc_portal.py",
         "plugin_surface": "xbmc",
         "highlights": [
             "Gives Tater a living-room interface on the OG Xbox.",
@@ -1371,7 +1374,7 @@ def manifest_fallback_plugin(entry: dict[str, Any]) -> dict[str, Any]:
             "how_to_use": "",
             "version": str(entry.get("version") or "").strip(),
             "usage": "",
-            "platforms": list(entry.get("platforms") or []),
+            "platforms": list(entry.get("portals") or []),
             "required_settings": {},
             "guides": [],
         }
@@ -1393,7 +1396,7 @@ def merge_shop_manifest(plugin: dict[str, Any], entry: dict[str, Any]) -> dict[s
     if version:
         merged["version"] = version
 
-    platforms = [str(item).strip().lower() for item in entry.get("platforms") or [] if str(item).strip()]
+    platforms = [str(item).strip().lower() for item in entry.get("portals") or [] if str(item).strip()]
     if platforms:
         merged["platforms"] = platforms
 
@@ -1444,7 +1447,7 @@ def normalize_plugin(raw: dict[str, Any]) -> dict[str, Any]:
         how_to_use = "Use the example call shape below and provide only the fields the plugin expects."
     usage = str(raw.get("usage") or "").strip()
     version = str(raw.get("version") or "").strip() or "unknown"
-    platforms = [str(item).strip().lower() for item in raw.get("platforms") or [] if str(item).strip()]
+    platforms = [str(item).strip().lower() for item in raw.get("portals") or [] if str(item).strip()]
     required_settings = raw.get("required_settings") if isinstance(raw.get("required_settings"), dict) else {}
 
     usage_example = str(overrides.get("usage_example") or canonical_usage(plugin_id, usage)).strip()
@@ -1480,9 +1483,9 @@ def normalize_required_settings(source: dict[str, Any]) -> list[dict[str, str]]:
             "options": "",
         }
         if isinstance(meta, dict):
-            item["label"] = str(meta.get("label") or key).strip()
+            item["label"] = portalize_copy(str(meta.get("label") or key).strip())
             item["type"] = str(meta.get("type") or "").strip()
-            item["description"] = str(meta.get("description") or meta.get("label") or "").strip()
+            item["description"] = portalize_copy(str(meta.get("description") or meta.get("label") or "").strip())
             default = meta.get("default")
             item["default"] = "" if default in (None, "") else str(default)
             options = meta.get("options")
@@ -1582,6 +1585,25 @@ def infer_type(value: Any) -> str:
     return "string"
 
 
+def portalize_copy(text: Any) -> str:
+    value = str(text or "").strip()
+    if not value:
+        return value
+    return (
+        value
+        .replace("current platform", "current portal")
+        .replace("cross-platform", "cross-portal")
+        .replace("notifier platforms", "notifier portals")
+        .replace("platform endpoints", "portal endpoints")
+        .replace("automation platform", "automation portal")
+        .replace("through platform config", "through portal config")
+        .replace("this platform", "this portal")
+        .replace("platform notification endpoint", "portal notification endpoint")
+        .replace("Platform notification endpoint", "Portal notification endpoint")
+        .replace(" across platforms ", " across portals ")
+    )
+
+
 def extract_kernel_tools() -> list[dict[str, str]]:
     tool_ids = extract_named_literal(TOOL_RUNTIME_SOURCE, "META_TOOLS")
     purposes = extract_named_literal(TOOL_RUNTIME_SOURCE, "_KERNEL_TOOL_PURPOSE_HINTS")
@@ -1609,6 +1631,7 @@ def extract_kernel_tools() -> list[dict[str, str]]:
                 "group": kernel_group(tool_id),
             }
         )
+        rows[-1]["purpose"] = portalize_copy(rows[-1]["purpose"])
     return rows
 
 
@@ -1651,27 +1674,45 @@ def extract_cerberus_defaults() -> list[dict[str, str]]:
     return rows
 
 
-def extract_platform_settings(source_path: Path | None) -> tuple[str, list[dict[str, str]], bool]:
+def extract_platform_settings(
+    source_path: Path | None,
+    *,
+    surface_kind: str = "portal",
+) -> tuple[str, list[dict[str, str]], bool]:
     if source_path is None:
         return ("WebUI modules", [], False)
-    settings = extract_named_literal(source_path, "PLATFORM_SETTINGS")
+    kind = str(surface_kind or "portal").strip().lower()
+    settings_symbol = "CORE_SETTINGS" if kind == "core" else "PORTAL_SETTINGS"
+    default_category = "Core settings" if kind == "core" else "Portal settings"
+    settings = extract_named_literal(source_path, settings_symbol)
     if not isinstance(settings, dict):
-        return ("Platform settings", [], False)
-    category = str(settings.get("category") or "Platform settings").strip()
+        return (default_category, [], False)
+    category = str(settings.get("category") or default_category).strip()
+    category = category.replace("Platform Settings", "Core Settings" if kind == "core" else "Portal Settings")
+    category = category.replace("platform settings", "core settings" if kind == "core" else "portal settings")
     required = settings.get("required") if isinstance(settings.get("required"), dict) else {}
     return (category, normalize_required_settings(required), True)
 
 
-def build_platforms(plugins: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def build_platforms(
+    plugins: list[dict[str, Any]],
+    *,
+    docs_order: list[str],
+    surface_kind: str,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for slug in PLATFORM_DOCS_ORDER:
+    for slug in docs_order:
         meta = PLATFORM_DOCS[slug]
-        category, settings, has_settings_schema = extract_platform_settings(meta.get("source"))
+        category, settings, has_settings_schema = extract_platform_settings(
+            meta.get("source"),
+            surface_kind=surface_kind,
+        )
         surface = str(meta.get("plugin_surface") or "").strip().lower()
         matching_plugins = [plugin for plugin in plugins if surface and surface in plugin["platforms"]]
         rows.append(
             {
                 "slug": slug,
+                "surface_kind": surface_kind,
                 "title": meta["label"],
                 "description": meta["description"],
                 "role": meta["role"],
@@ -1723,7 +1764,8 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("home", "Home", f"{base}index.html"),
         ("install", "Install", f"{base}install/index.html"),
         ("cerberus", "Cerberus", f"{base}cerberus/index.html"),
-        ("platforms", "Platforms", f"{base}platforms/index.html"),
+        ("portals", "Portals", f"{base}portals/index.html"),
+        ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
         ("plugins", "Verba Plugins", f"{base}plugins/index.html"),
     ]
@@ -1782,7 +1824,7 @@ def button(label: str, href: str, ghost: bool = False) -> str:
 
 def render_platform_badges(platforms: list[str]) -> str:
     if not platforms:
-        return '<span class="chip">No platforms listed</span>'
+        return '<span class="chip">No portals listed</span>'
     return "".join(chip(PLATFORM_META.get(name, {"label": name.replace("_", " ").title()})["label"]) for name in platforms)
 
 
@@ -1803,7 +1845,7 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
         return "Desktop bridge"
     if platform["slug"] == "ai_task":
         return "Scheduler runtime"
-    if platform["slug"] == "memory_platform":
+    if platform["slug"] == "memory":
         return "Memory service"
     if platform["slug"] == "rss":
         return "Feed watcher"
@@ -1811,22 +1853,24 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
 
 
 def platform_settings_text(platform: dict[str, Any]) -> str:
+    surface_kind = str(platform.get("surface_kind") or "portal").strip().lower()
+    settings_symbol = "CORE_SETTINGS" if surface_kind == "core" else "PORTAL_SETTINGS"
     if platform["slug"] == "webui":
         return (
             "The WebUI is itself the configuration surface, so this page documents behavior and role rather than "
-            "a separate PLATFORM_SETTINGS form."
+            f"a separate {settings_symbol} form."
         )
     if platform["slug"] == "ai_task":
         return (
-            "The scheduler declares a platform settings block, but it does not currently require explicit fields. "
+            "The scheduler declares a settings block, but it does not currently require explicit fields. "
             "Its behavior is driven by scheduled task data, targets, and notifier routing."
         )
     if platform.get("has_settings_schema"):
         return (
-            "This platform declares a PLATFORM_SETTINGS schema, but it does not currently require any explicit fields."
+            f"This runtime surface declares a {settings_symbol} schema, but it does not currently require any explicit fields."
         )
     return (
-        "This surface does not expose a standalone PLATFORM_SETTINGS form in the current source snapshot."
+        f"This surface does not expose a standalone {settings_symbol} form in the current source snapshot."
     )
 
 
@@ -1839,17 +1883,17 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "ai_task":
         return (
             "AI Task Runner is a scheduler surface. It executes scheduled prompts and routes results through notifier "
-            "platforms rather than acting as a direct Verba Plugin target."
+            "portals rather than acting as a direct Verba Plugin target."
         )
-    if platform["slug"] == "memory_platform":
+    if platform["slug"] == "memory":
         return (
-            "Memory Platform is background infrastructure. It scans chat history, extracts durable facts, and injects "
+            "Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects "
             "memory context back into Cerberus instead of acting like a direct Verba Plugin surface."
         )
     if platform["slug"] == "rss":
         return (
             "RSS is a background feed watcher. It polls feeds, summarizes content, and dispatches updates through "
-            "notifier platforms rather than serving as a direct Verba Plugin target."
+            "notifier portals rather than serving as a direct Verba Plugin target."
         )
     return (
         "This surface mainly handles runtime orchestration rather than exposing its own direct Verba Plugin target."
@@ -1866,28 +1910,36 @@ def plugin_arguments_text(plugin: dict[str, Any]) -> str:
 def plugin_settings_text(plugin: dict[str, Any]) -> str:
     return (
         "This Verba Plugin does not declare plugin-specific settings in its metadata. Any dependencies are handled "
-        "through platform config, environment variables, or the backing service itself."
+        "through portal config, environment variables, or the backing service itself."
     )
 
 
-def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str, Any]], platforms: list[dict[str, Any]]) -> str:
+def render_home_page(
+    plugins: list[dict[str, Any]],
+    kernel_tools: list[dict[str, Any]],
+    portals: list[dict[str, Any]],
+    cores: list[dict[str, Any]],
+) -> str:
     plugin_count = len(plugins)
     kernel_count = len(kernel_tools)
-    platform_count = len(platforms)
+    portal_count = len(portals)
+    core_count = len(cores)
+    surface_count = portal_count + core_count
     install_count = len(INSTALL_METHODS)
 
     hero = f"""
     <section class="hero hero-home">
       <div class="hero-copy">
         <span class="eyebrow">Source-backed wiki</span>
-        <h1>Tater is a multi-platform AI assistant built to act.</h1>
+        <h1>Tater is a portal-and-core AI assistant built to act.</h1>
         <p>
           Cerberus plans the work, chains kernel tools with Verba Plugins, and finishes tasks across chat,
           smart-home, media, and automation workflows.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
-          {button("Explore platforms", "platforms/index.html")}
+          {button("Explore portals", "portals/index.html")}
+          {button("Explore cores", "cores/index.html")}
           {button("Explore Verba Plugins", "plugins/index.html")}
           {button("Read Cerberus", "cerberus/index.html", ghost=True)}
         </div>
@@ -1899,7 +1951,7 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
         <div class="hero-stats">
           <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verba Plugins</span></div>
           <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
-          <div class="stat-card"><strong>{platform_count}</strong><span>runtime surfaces</span></div>
+          <div class="stat-card"><strong>{surface_count}</strong><span>runtime surfaces</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
       </aside>
@@ -1921,7 +1973,7 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
         ),
         (
             "Control surface",
-            "The WebUI handles setup, chat, plugin management, and runtime tuning while platform bridges expose Tater to users.",
+            "The WebUI handles setup, chat, plugin management, and runtime tuning while portals and cores run communication and background services.",
         ),
     ]
     feature_html = "".join(
@@ -1934,7 +1986,7 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
         for title, text in feature_cards
     )
 
-    platform_cards = "".join(
+    portal_cards = "".join(
         f"""
         <article class="platform-card">
           <div class="chip-row">
@@ -1944,11 +1996,28 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
           <h3>{escape(platform['title'])}</h3>
           <p>{escape(platform['description'])}</p>
           <div class="plugin-links">
-            {button("Read platform page", f"platforms/{platform['slug']}.html", ghost=True)}
+            {button("Read portal page", f"portals/{platform['slug']}.html", ghost=True)}
           </div>
         </article>
         """
-        for platform in platforms
+        for platform in portals
+    )
+
+    core_cards = "".join(
+        f"""
+        <article class="platform-card">
+          <div class="chip-row">
+            {chip(platform['role'])}
+            {chip(platform_settings_chip(platform))}
+          </div>
+          <h3>{escape(platform['title'])}</h3>
+          <p>{escape(platform['description'])}</p>
+          <div class="plugin-links">
+            {button("Read core page", f"cores/{platform['slug']}.html", ghost=True)}
+          </div>
+        </article>
+        """
+        for platform in cores
     )
 
     page_links = f"""
@@ -1964,9 +2033,14 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
         {button("Open install guide", "install/index.html", ghost=True)}
       </article>
       <article class="panel">
-        <h3>Platform docs</h3>
+        <h3>Portal docs</h3>
         <p>See every runtime surface, its role, and its settings.</p>
-        {button("Open platforms", "platforms/index.html", ghost=True)}
+        {button("Open portals", "portals/index.html", ghost=True)}
+      </article>
+      <article class="panel">
+        <h3>Core docs</h3>
+        <p>Built-in runtime services such as scheduling, memory, and RSS monitoring.</p>
+        {button("Open cores", "cores/index.html", ghost=True)}
       </article>
       <article class="panel">
         <h3>Cerberus core</h3>
@@ -2010,10 +2084,15 @@ def render_home_page(plugins: list[dict[str, Any]], kernel_tools: list[dict[str,
     <section class="section">
       <div class="section-head">
         <span class="eyebrow">Runtime surfaces</span>
-        <h2>One assistant. Multiple runtime surfaces.</h2>
+        <h2>One assistant. Portals and cores.</h2>
       </div>
+      <h3>Portals</h3>
       <div class="grid grid-3">
-        {platform_cards}
+        {portal_cards}
+      </div>
+      <h3>Cores</h3>
+      <div class="grid grid-3">
+        {core_cards}
       </div>
     </section>
     <section class="section">
@@ -2138,7 +2217,7 @@ def render_install_detail(method: dict[str, Any]) -> str:
         method.get("companions") or [],
         "Home Assistant extras",
         "Optional HACS integrations for Assist conversations and native automation actions.",
-        "After the add-on is running, these Home Assistant-side integrations connect Assist and automation flows back to Tater's platform endpoints.",
+        "After the add-on is running, these Home Assistant-side integrations connect Assist and automation flows back to Tater's portal endpoints.",
     )
     guide_section = render_companion_section(
         method.get("guides") or [],
@@ -2219,7 +2298,8 @@ def render_install_detail(method: dict[str, Any]) -> str:
       <div class="action-row">
         {button("Back to install guide", "index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
-        {button("Platforms", "../platforms/index.html", ghost=True)}
+        {button("Portals", "../portals/index.html", ghost=True)}
+        {button("Cores", "../cores/index.html", ghost=True)}
       </div>
     </section>
     """
@@ -2244,7 +2324,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
           <h3>{escape(platform['title'])}</h3>
           <p>{escape(platform['description'])}</p>
           <div class="plugin-links">
-            {button("Read platform page", f"{platform['slug']}.html", ghost=True)}
+            {button("Read portal page", f"{platform['slug']}.html", ghost=True)}
           </div>
         </article>
         """
@@ -2254,7 +2334,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
     body = f"""
     <section class="hero hero-subpage">
       <div class="hero-copy">
-        <span class="eyebrow">Platform reference</span>
+        <span class="eyebrow">Portal reference</span>
         <h1>Tater runs across purpose-built runtime surfaces.</h1>
         <p>
           Some surfaces are chat or voice endpoints. Others are operator tools or background services that feed data back into Tater.
@@ -2262,7 +2342,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">What is documented</span>
-        <p>{len(platforms)} platform surfaces with current descriptions, settings snapshots, and related Verba Plugin context.</p>
+        <p>{len(platforms)} portal surfaces with current descriptions, settings snapshots, and related Verba Plugin context.</p>
       </aside>
     </section>
     <section class="section">
@@ -2272,27 +2352,79 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
     </section>
     """
     return page_template(
-        title="Tater Assistant | Platforms",
-        description="Reference for Tater Assistant runtime platforms and integration surfaces.",
+        title="Tater Assistant | Portals",
+        description="Reference for Tater Assistant runtime portals and integration surfaces.",
         body=body,
         depth=1,
-        nav_key="platforms",
+        nav_key="portals",
+    )
+
+
+def render_cores_page(cores: list[dict[str, Any]]) -> str:
+    cards = "".join(
+        f"""
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            {chip(core['role'])}
+            {chip(platform_settings_chip(core))}
+            {chip(platform_runtime_chip(core))}
+          </div>
+          <h3>{escape(core['title'])}</h3>
+          <p>{escape(core['description'])}</p>
+          <div class="plugin-links">
+            {button("Read core page", f"{core['slug']}.html", ghost=True)}
+          </div>
+        </article>
+        """
+        for core in cores
+    )
+
+    body = f"""
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Core reference</span>
+        <h1>Tater cores power built-in runtime services.</h1>
+        <p>
+          Cores are always-on internal services like scheduling, memory extraction, and feed monitoring.
+        </p>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">What is documented</span>
+        <p>{len(cores)} cores with current descriptions, settings snapshots, and runtime behavior notes.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="grid grid-3">
+        {cards}
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | Cores",
+        description="Reference for Tater Assistant core runtime services.",
+        body=body,
+        depth=1,
+        nav_key="cores",
     )
 
 
 def render_platform_detail(platform: dict[str, Any]) -> str:
+    surface_kind = str(platform.get("surface_kind") or "portal").strip().lower()
+    is_core = surface_kind == "core"
+    surface_label = "core" if is_core else "portal"
+    surface_title = "Core" if is_core else "Portal"
     highlight_html = "".join(f"<li>{escape(item)}</li>" for item in platform["highlights"])
     companion_section = render_companion_section(
         platform.get("companions") or [],
         platform.get("companions_eyebrow") or "Companion setup",
-        platform.get("companions_title") or "Related app and integration pieces for this platform.",
+        platform.get("companions_title") or f"Related app and integration pieces for this {surface_label}.",
         platform.get("companions_intro") or "These components connect external clients or service layers back to this runtime surface.",
     )
     guide_section = render_companion_section(
         platform.get("guides") or [],
         platform.get("guides_eyebrow") or "Usage guide",
-        platform.get("guides_title") or "How to connect to this platform.",
-        platform.get("guides_intro") or "These notes focus on the setup and runtime behavior that matter most for this platform.",
+        platform.get("guides_title") or f"How to connect to this {surface_label}.",
+        platform.get("guides_intro") or f"These notes focus on the setup and runtime behavior that matter most for this {surface_label}.",
     )
     api_items = platform.get("apis") or []
     api_section = ""
@@ -2314,7 +2446,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         <section class="section">
           <div class="section-head">
             <span class="eyebrow">Built-in APIs</span>
-            <h2>HTTP endpoints exposed by this platform.</h2>
+            <h2>HTTP endpoints exposed by this {surface_label}.</h2>
           </div>
           <div class="grid grid-2">
             {api_cards}
@@ -2356,7 +2488,8 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
 
     source_note = ""
     if platform["source_path"]:
-        source_note = f"<p>Settings extracted from <code>{escape(Path(platform['source_path']).name)}</code>.</p>"
+        source_name = Path(platform['source_path']).name
+        source_note = f"<p>Settings extracted from <code>{escape(source_name)}</code>.</p>"
 
     webui_showcase = ""
     if platform["slug"] == "webui":
@@ -2371,7 +2504,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     body = f"""
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
-        <span class="eyebrow">Platform profile</span>
+        <span class="eyebrow">{surface_title} profile</span>
         <h1>{escape(platform['title'])}</h1>
         <p>{escape(platform['description'])}</p>
         <div class="chip-row">
@@ -2404,7 +2537,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
       <div class="detail-grid">
         <article class="panel">
           <span class="eyebrow">Related Verba Plugins</span>
-          <h2>Direct platform support</h2>
+          <h2>Direct {surface_label} support</h2>
           {plugin_block}
         </article>
         <article class="panel">
@@ -2420,8 +2553,10 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     {api_section}
     <section class="section">
       <div class="action-row">
-        {button("Back to platforms", "index.html", ghost=True)}
+        {button(f"Back to {'cores' if is_core else 'portals'}", "index.html", ghost=True)}
         {button("Verba Plugins", "../plugins/index.html", ghost=True)}
+        {button("Portals", "../portals/index.html", ghost=True)}
+        {button("Cores", "../cores/index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
       </div>
     </section>
@@ -2431,7 +2566,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         description=platform["description"],
         body=body,
         depth=1,
-        nav_key="platforms",
+        nav_key="cores" if is_core else "portals",
     )
 
 
@@ -2645,9 +2780,9 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
 def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
     cards = "".join(render_plugin_card(plugin) for plugin in plugins)
     source_copy = (
-        "This index reflects the current Tater Shop manifest and plugin files. Each entry links to a source-backed detail page with usage, platforms, and current behavior."
+        "This index reflects the current Tater Shop manifest and plugin files. Each entry links to a source-backed detail page with usage, portals, and current behavior."
         if shop_manifest_plugins()
-        else "This index reflects the modules currently present in <code>Tater/plugins</code>. Each entry links to a source-backed detail page with usage, platforms, and current behavior."
+        else "This index reflects the modules currently present in <code>Tater/plugins</code>. Each entry links to a source-backed detail page with usage, portals, and current behavior."
     )
     body = f"""
     <section class="hero hero-subpage">
@@ -2677,7 +2812,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
       <div class="plugin-grid" data-plugin-grid>
         {cards}
       </div>
-      <p class="empty-state" data-plugin-empty hidden>No Verba Plugins match the current search and platform filter.</p>
+      <p class="empty-state" data-plugin-empty hidden>No Verba Plugins match the current search and portal filter.</p>
     </section>
     """
     return page_template(
@@ -2768,7 +2903,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
         </div>
       </div>
       <aside class="panel hero-panel">
-        <span class="eyebrow">Supported platforms</span>
+        <span class="eyebrow">Supported portals</span>
         <div class="chip-row">{render_platform_badges(plugin['platforms'])}</div>
       </aside>
     </section>
@@ -2811,7 +2946,8 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
     <section class="section">
       <div class="action-row">
         {button("Back to Verba Plugins", "index.html", ghost=True)}
-        {button("Platforms", "../platforms/index.html", ghost=True)}
+        {button("Portals", "../portals/index.html", ghost=True)}
+        {button("Cores", "../cores/index.html", ghost=True)}
         {button("Kernel tools", "../kernel-tools/index.html", ghost=True)}
         {button("Cerberus", "../cerberus/index.html", ghost=True)}
       </div>
@@ -2831,23 +2967,41 @@ def write_page(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def cleanup_section_pages(section_dir: Path, keep_slugs: list[str]) -> None:
+    if not section_dir.exists():
+        return
+    keep_files = {"index.html", *[f"{slug}.html" for slug in keep_slugs]}
+    for path in section_dir.glob("*.html"):
+        if path.name not in keep_files:
+            path.unlink(missing_ok=True)
+
+
 def build() -> None:
     plugins = build_plugins()
-    platforms = build_platforms(plugins)
+    portals = build_platforms(plugins, docs_order=PORTAL_DOCS_ORDER, surface_kind="portal")
+    cores = build_platforms(plugins, docs_order=CORE_DOCS_ORDER, surface_kind="core")
     kernel_tools = extract_kernel_tools()
     cerberus_defaults = extract_cerberus_defaults()
 
-    write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, platforms))
+    write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores))
     write_page(SITE_ROOT / "install" / "index.html", render_install_index())
-    write_page(SITE_ROOT / "platforms" / "index.html", render_platforms_page(platforms))
+    write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))
+    write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
     write_page(SITE_ROOT / "cerberus" / "index.html", render_cerberus_page(cerberus_defaults))
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
     write_page(SITE_ROOT / "plugins" / "index.html", render_plugins_page(plugins))
 
+    cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
+    cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
+    cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])
+    cleanup_section_pages(SITE_ROOT / "plugins", [plugin["slug"] for plugin in plugins])
+
     for method in INSTALL_METHODS:
         write_page(SITE_ROOT / "install" / f"{method['slug']}.html", render_install_detail(method))
-    for platform in platforms:
-        write_page(SITE_ROOT / "platforms" / f"{platform['slug']}.html", render_platform_detail(platform))
+    for platform in portals:
+        write_page(SITE_ROOT / "portals" / f"{platform['slug']}.html", render_platform_detail(platform))
+    for core in cores:
+        write_page(SITE_ROOT / "cores" / f"{core['slug']}.html", render_platform_detail(core))
     for plugin in plugins:
         write_page(SITE_ROOT / "plugins" / f"{plugin['slug']}.html", render_plugin_detail(plugin))
 
