@@ -1962,7 +1962,7 @@ def render_home_page(
     <section class="hero hero-home">
       <div class="hero-copy">
         <span class="eyebrow">Source-backed wiki</span>
-        <h1>Tater is a portal-and-core AI assistant built to act.</h1>
+        <h1>Tater is an AI assistant built to act.</h1>
         <p>
           Cerberus plans the work, chains core tools with Verbas, and finishes tasks across chat,
           smart-home, media, and automation workflows.
@@ -2140,7 +2140,7 @@ def render_home_page(
     </section>
     """
     return page_template(
-        title="Tater Assistant | Home",
+        title="Tater | Home",
         description="Overview of Tater Assistant, supported surfaces, and the current wiki structure.",
         body=body,
         depth=0,
