@@ -556,7 +556,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Hosts private chat, Verba browsing, settings, and Cerberus runtime controls in one place.",
             "Acts as the easiest way to inspect available tools and manage the Verba ecosystem.",
-            "Ships with dedicated views for chat, Verba's, settings, Cerberus, portals, and AI task workflows.",
+            "Ships with dedicated views for chat, Verbas, settings, Cerberus, portals, and AI task workflows.",
         ],
     },
     "discord": {
@@ -568,7 +568,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
             "Runs Cerberus turns per conversation so multi-step requests stay grounded.",
-            "Pairs well with admin-only Verba's and server management workflows.",
+            "Pairs well with admin-only Verbas and server management workflows.",
         ],
     },
     "telegram": {
@@ -597,7 +597,7 @@ PLATFORM_DOCS = {
     },
     "irc": {
         "label": "IRC",
-        "description": "Lightweight IRC bot that responds to mentions and runs compatible Verba's.",
+        "description": "Lightweight IRC bot that responds to mentions and runs compatible Verbas.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "irc_portal.py",
         "plugin_surface": "irc",
@@ -667,7 +667,7 @@ PLATFORM_DOCS = {
             "The current automation brief trio is Events Query Brief, Weather Brief, and Zen Greeting.",
             "Pairs with the Tater Automations HACS integration, which exposes native Home Assistant actions instead of requiring raw REST or YAML calls.",
             "Those Home Assistant actions now use clean selectors and dropdowns for common fields, so most flows no longer require typing raw arguments.",
-            "Works naturally with automation-only Verba's that expose short machine-oriented outputs and with a direct tool endpoint that skips AI routing.",
+            "Works naturally with automation-only Verbas that expose short machine-oriented outputs and with a direct tool endpoint that skips AI routing.",
         ],
         "companions": [
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
@@ -906,7 +906,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Gives Tater a living-room interface on the OG Xbox.",
             "Maintains local conversation sessions and routes actions through the same Cerberus core.",
-            "Pairs well with media, smart-home, and utility Verba's for couch-side control.",
+            "Pairs well with media, smart-home, and utility Verbas for couch-side control.",
         ],
         "apis": [],
     },
@@ -1674,6 +1674,22 @@ def extract_cerberus_defaults() -> list[dict[str, str]]:
     return rows
 
 
+def extract_platform_version(source_path: Path | None) -> str:
+    if source_path is None:
+        return "bundled"
+
+    for symbol in ("__version__", "VERSION"):
+        try:
+            value = extract_named_literal(source_path, symbol)
+        except Exception:
+            continue
+        version = str(value or "").strip()
+        if version:
+            return version
+
+    return "unknown"
+
+
 def extract_platform_settings(
     source_path: Path | None,
     *,
@@ -1684,7 +1700,12 @@ def extract_platform_settings(
     kind = str(surface_kind or "portal").strip().lower()
     settings_symbol = "CORE_SETTINGS" if kind == "core" else "PORTAL_SETTINGS"
     default_category = "Core settings" if kind == "core" else "Portal settings"
-    settings = extract_named_literal(source_path, settings_symbol)
+
+    try:
+        settings = extract_named_literal(source_path, settings_symbol)
+    except Exception:
+        return (default_category, [], False)
+
     if not isinstance(settings, dict):
         return (default_category, [], False)
     category = str(settings.get("category") or default_category).strip()
@@ -1716,6 +1737,7 @@ def build_platforms(
                 "title": meta["label"],
                 "description": meta["description"],
                 "role": meta["role"],
+                "version": extract_platform_version(meta.get("source")),
                 "highlights": list(meta.get("highlights") or []),
                 "companions": list(meta.get("companions") or []),
                 "companions_eyebrow": str(meta.get("companions_eyebrow") or ""),
@@ -1767,7 +1789,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("portals", "Portals", f"{base}portals/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Core Tools", f"{base}kernel-tools/index.html"),
-        ("plugins", "Verba's", f"{base}plugins/index.html"),
+        ("plugins", "Verbas", f"{base}plugins/index.html"),
     ]
     nav_html = "\n".join(
         f'<a class="nav-link{" is-active" if key == nav_key else ""}" href="{href}">{label}</a>'
@@ -1840,7 +1862,7 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
 
 def platform_runtime_chip(platform: dict[str, Any]) -> str:
     if int(platform["plugin_count"]) > 0:
-        return f"{platform['plugin_count']} Verba's"
+        return f"{platform['plugin_count']} Verbas"
     if platform["slug"] == "macos":
         return "Desktop bridge"
     if platform["slug"] == "ai_task":
@@ -1850,6 +1872,15 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
     if platform["slug"] == "rss":
         return "Feed watcher"
     return "Internal runtime"
+
+
+def platform_version_chip(platform: dict[str, Any]) -> str:
+    version = str(platform.get("version") or "").strip()
+    if not version or version.lower() == "unknown":
+        return "Version unknown"
+    if version.lower() == "bundled":
+        return "Bundled"
+    return f"v{version}"
 
 
 def platform_settings_text(platform: dict[str, Any]) -> str:
@@ -1877,7 +1908,7 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
 def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "macos":
         return (
-            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verba's "
+            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verbas "
             "through /macos/plugin even when plugin inventory tags for macos are sparse."
         )
     if platform["slug"] == "ai_task":
@@ -1933,14 +1964,14 @@ def render_home_page(
         <span class="eyebrow">Source-backed wiki</span>
         <h1>Tater is a portal-and-core AI assistant built to act.</h1>
         <p>
-          Cerberus plans the work, chains core tools with Verba's, and finishes tasks across chat,
+          Cerberus plans the work, chains core tools with Verbas, and finishes tasks across chat,
           smart-home, media, and automation workflows.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
           {button("Explore portals", "portals/index.html")}
           {button("Explore cores", "cores/index.html")}
-          {button("Explore Verba's", "plugins/index.html")}
+          {button("Explore Verbas", "plugins/index.html")}
           {button("Read Cerberus", "cerberus/index.html", ghost=True)}
         </div>
       </div>
@@ -1949,7 +1980,7 @@ def render_home_page(
           <img src="assets/images/tater-logo.png" alt="Tater Assistant emblem">
         </div>
         <div class="hero-stats">
-          <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verba's</span></div>
+          <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
           <div class="stat-card"><strong>{kernel_count}</strong><span>core tools</span></div>
           <div class="stat-card"><strong>{surface_count}</strong><span>runtime surfaces</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
@@ -1968,8 +1999,8 @@ def render_home_page(
             "Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.",
         ),
         (
-            "Verba's",
-            "Actions speak louder then words. Verba's extend Tater into smart-home, media, camera, note, download, and admin workflows.",
+            "Verbas",
+            "Actions speak louder then words. Verbas extend Tater into smart-home, media, camera, note, download, and admin workflows.",
         ),
         (
             "Control surface",
@@ -1991,6 +2022,7 @@ def render_home_page(
         <article class="platform-card">
           <div class="chip-row">
             {chip(platform['role'])}
+            {chip(platform_version_chip(platform))}
             {chip(platform_settings_chip(platform))}
           </div>
           <h3>{escape(platform['title'])}</h3>
@@ -2008,6 +2040,7 @@ def render_home_page(
         <article class="platform-card">
           <div class="chip-row">
             {chip(platform['role'])}
+            {chip(platform_version_chip(platform))}
             {chip(platform_settings_chip(platform))}
           </div>
           <h3>{escape(platform['title'])}</h3>
@@ -2048,9 +2081,9 @@ def render_home_page(
         {button("Open Cerberus", "cerberus/index.html", ghost=True)}
       </article>
       <article class="panel">
-        <h3>Tools + Verba's</h3>
+        <h3>Tools + Verbas</h3>
         <p>Browse built-in tools and the current Verba snapshot.</p>
-        {button("Open Verba's", "plugins/index.html", ghost=True)}
+        {button("Open Verbas", "plugins/index.html", ghost=True)}
       </article>
     </div>
     """
@@ -2318,6 +2351,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             {chip(platform['role'])}
+            {chip(platform_version_chip(platform))}
             {chip(platform_settings_chip(platform))}
             {chip(platform_runtime_chip(platform))}
           </div>
@@ -2366,6 +2400,7 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             {chip(core['role'])}
+            {chip(platform_version_chip(core))}
             {chip(platform_settings_chip(core))}
             {chip(platform_runtime_chip(core))}
           </div>
@@ -2480,7 +2515,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
             for plugin in example_plugins
         )
         plugin_block = f"""
-        <p>{escape(platform['plugin_count'])} current Verba's advertise direct support for this surface.</p>
+        <p>{escape(platform['plugin_count'])} current Verbas advertise direct support for this surface.</p>
         <div class="chip-row">{plugin_links}</div>
         """
     else:
@@ -2509,6 +2544,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         <p>{escape(platform['description'])}</p>
         <div class="chip-row">
           {chip(platform['role'])}
+          {chip(platform_version_chip(platform))}
           {chip(platform_settings_chip(platform))}
           {chip(platform_runtime_chip(platform))}
         </div>
@@ -2536,7 +2572,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Related Verba's</span>
+          <span class="eyebrow">Related Verbas</span>
           <h2>Direct {surface_label} support</h2>
           {plugin_block}
         </article>
@@ -2554,7 +2590,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     <section class="section">
       <div class="action-row">
         {button(f"Back to {'cores' if is_core else 'portals'}", "index.html", ghost=True)}
-        {button("Verba's", "../plugins/index.html", ghost=True)}
+        {button("Verbas", "../plugins/index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
@@ -2615,7 +2651,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
 
     guardrails = [
         "Current-message tool gate: Cerberus does not continue past work unless the current turn explicitly asks it to.",
-        "Smart chaining: core tools and Verba's can be mixed across steps to finish a task instead of stopping after one tool result.",
+        "Smart chaining: core tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.",
         "Atomic execution lock: the planner and checker both focus on one next step instead of merging unrelated actions.",
         "Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.",
         "Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.",
@@ -2631,7 +2667,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
             "Cerberus can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
         ),
         (
-            "Verba's where action lives",
+            "Verbas where action lives",
             "When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Cerberus switches to the right Verba.",
         ),
         (
@@ -2655,7 +2691,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         <span class="eyebrow">Cerberus AI core</span>
         <h1>Cerberus plans, chains, and completes tasks.</h1>
         <p>
-          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes core tools with Verba's one step at a time.
+          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes core tools with Verbas one step at a time.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2788,7 +2824,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Verba reference</span>
-        <h1>Actions speak louder then words. {len(plugins)} Verba's are documented here.</h1>
+        <h1>Actions speak louder then words. {len(plugins)} Verbas are documented here.</h1>
         <p>
           {source_copy}
         </p>
@@ -2796,7 +2832,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
       <aside class="panel hero-panel">
         <span class="eyebrow">Filter the list</span>
         <div class="plugins-toolbar">
-          <input class="search-input" type="search" placeholder="Search Verba's" data-plugin-search>
+          <input class="search-input" type="search" placeholder="Search Verbas" data-plugin-search>
           <div class="chip-row filter-row">
             <button class="filter-chip is-active" type="button" data-platform-filter="all">All</button>
             <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
@@ -2804,7 +2840,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
             <button class="filter-chip" type="button" data-platform-filter="homeassistant">Home Assistant</button>
             <button class="filter-chip" type="button" data-platform-filter="automation">Automation</button>
           </div>
-          <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verba's shown</p>
+          <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verbas shown</p>
         </div>
       </aside>
     </section>
@@ -2812,12 +2848,12 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
       <div class="plugin-grid" data-plugin-grid>
         {cards}
       </div>
-      <p class="empty-state" data-plugin-empty hidden>No Verba's match the current search and portal filter.</p>
+      <p class="empty-state" data-plugin-empty hidden>No Verbas match the current search and portal filter.</p>
     </section>
     """
     return page_template(
-        title="Tater Assistant | Verba's",
-        description="Index of Tater Assistant Verba's documented from the current repository snapshot.",
+        title="Tater Assistant | Verbas",
+        description="Index of Tater Assistant Verbas documented from the current repository snapshot.",
         body=body,
         depth=1,
         nav_key="plugins",
@@ -2945,7 +2981,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
     </section>
     <section class="section">
       <div class="action-row">
-        {button("Back to Verba's", "index.html", ghost=True)}
+        {button("Back to Verbas", "index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Core tools", "../kernel-tools/index.html", ghost=True)}

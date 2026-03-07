@@ -19,8 +19,8 @@ This repo is set up for a Linux host with this layout:
 ## What it does
 
 - builds the website into `public_html`
-- reads core runtime and platform info from `Tater`
-- reads Verba Plugin inventory from `Tater_Shop/manifest.json`
+- reads core runtime and portal info from `Tater`
+- reads Verbas inventory from `Tater_Shop/manifest.json`
 - reads plugin detail metadata from the actual plugin files in `Tater_Shop/plugins`
 - can clone/update both repos automatically and rebuild the site when they change
 
