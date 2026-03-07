@@ -1,2 +1,11 @@
 Tater
 Tater_Shop
+
+# Generated site output
+public_html/
+
+# macOS hidden metadata files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
