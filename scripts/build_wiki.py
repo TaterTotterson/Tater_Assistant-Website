@@ -189,7 +189,7 @@ KERNEL_TOOL_OVERRIDES = {
 WEB_SEARCH_GUIDES = [
     {
         "title": "Create a Google API key",
-        "summary": "The search_web kernel tool uses Google's Custom Search JSON API credentials.",
+        "summary": "The search_web core tool uses Google's Custom Search JSON API credentials.",
         "chips": ["Google Cloud", "Custom Search JSON API", "API key"],
         "details": [
             "Open Google Cloud Console, create or select a project, then enable Custom Search API under APIs and Services -> Library.",
@@ -214,7 +214,7 @@ WEB_SEARCH_GUIDES = [
         "details": [
             "Create a Programmable Search Engine, then open its control panel and enable Search the entire web if you want broad public-web results.",
             "Open the generated search page URL and copy the value after cx=, because that is the Search Engine ID Tater stores.",
-            "Tater's kernel search flow is only ready once both the API key and the CX value are saved.",
+            "Tater's core search flow is only ready once both the API key and the CX value are saved.",
         ],
         "links": [
             {
@@ -225,8 +225,8 @@ WEB_SEARCH_GUIDES = [
     },
     {
         "title": "Enter the keys in Tater",
-        "summary": "Web search is configured from Integrations because it powers a kernel tool, not a Verba Plugin.",
-        "chips": ["Settings -> Integrations", "Web Search", "Kernel tool"],
+        "summary": "Web search is configured from Integrations because it powers a core tool, not a Verba.",
+        "chips": ["Settings -> Integrations", "Web Search", "Core tool"],
         "details": [
             "Open Tater WebUI and go to Settings -> Integrations -> Web Search.",
             "Paste Google API Key and Google Search Engine ID (CX), then save the settings.",
@@ -236,7 +236,7 @@ WEB_SEARCH_GUIDES = [
         "links": [],
     },
     {
-        "title": "What the kernel tool supports",
+        "title": "What the core tool supports",
         "summary": "The current search_web implementation accepts a few focused filters on top of the main query.",
         "chips": ["query", "site", "country", "language"],
         "details": [
@@ -549,61 +549,61 @@ CORE_DOCS_ORDER = [
 PLATFORM_DOCS = {
     "webui": {
         "label": "WebUI",
-        "description": "Streamlit-based control center for setup, private chat, Verba Plugin browsing, and Cerberus tuning.",
+        "description": "Streamlit-based control center for setup, private chat, Verba browsing, and Cerberus tuning.",
         "role": "Operator console",
         "source": None,
         "plugin_surface": "webui",
         "highlights": [
-            "Hosts private chat, Verba Plugin browsing, settings, and Cerberus runtime controls in one place.",
-            "Acts as the easiest way to inspect available tools and manage the Verba Plugin ecosystem.",
-            "Ships with dedicated views for chat, Verba Plugins, settings, Cerberus, portals, and AI task workflows.",
+            "Hosts private chat, Verba browsing, settings, and Cerberus runtime controls in one place.",
+            "Acts as the easiest way to inspect available tools and manage the Verba ecosystem.",
+            "Ships with dedicated views for chat, Verba's, settings, Cerberus, portals, and AI task workflows.",
         ],
     },
     "discord": {
         "label": "Discord",
-        "description": "Full-featured Discord bot with rich interactions, media output, background jobs, and Verba Plugin-backed actions.",
+        "description": "Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "discord_portal.py",
         "plugin_surface": "discord",
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
             "Runs Cerberus turns per conversation so multi-step requests stay grounded.",
-            "Pairs well with admin-only Verba Plugins and server management workflows.",
+            "Pairs well with admin-only Verba's and server management workflows.",
         ],
     },
     "telegram": {
         "label": "Telegram",
-        "description": "Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba Plugin execution.",
+        "description": "Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba execution.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "telegram_portal.py",
         "plugin_surface": "telegram",
         "highlights": [
             "Supports rich formatting, inline media delivery, and per-chat restrictions.",
             "Good fit for direct bot conversations and push-style alert delivery.",
-            "Uses the same Verba Plugin runtime model as the rest of Tater's chat surfaces.",
+            "Uses the same Verba runtime model as the rest of Tater's chat surfaces.",
         ],
     },
     "matrix": {
         "label": "Matrix",
-        "description": "Federated Matrix client with encryption support, Markdown rendering, and full Verba Plugin compatibility.",
+        "description": "Federated Matrix client with encryption support, Markdown rendering, and full Verba compatibility.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "matrix_portal.py",
         "plugin_surface": "matrix",
         "highlights": [
             "Brings Tater to federated chat networks like Element and Cinny.",
             "Can operate with end-to-end encryption and persistent Matrix device state.",
-            "Supports mention triggers, room response modes, and Verba Plugin-backed actions.",
+            "Supports mention triggers, room response modes, and Verba-backed actions.",
         ],
     },
     "irc": {
         "label": "IRC",
-        "description": "Lightweight IRC bot that responds to mentions and runs compatible Verba Plugins.",
+        "description": "Lightweight IRC bot that responds to mentions and runs compatible Verba's.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "irc_portal.py",
         "plugin_surface": "irc",
         "highlights": [
             "Simple low-overhead deployment for classic chat rooms and ZNC-style setups.",
-            "Supports admin-user gating and Verba Plugin execution on mention.",
+            "Supports admin-user gating and Verba execution on mention.",
             "Keeps the interaction model intentionally lean and plain-text friendly.",
         ],
     },
@@ -667,7 +667,7 @@ PLATFORM_DOCS = {
             "The current automation brief trio is Events Query Brief, Weather Brief, and Zen Greeting.",
             "Pairs with the Tater Automations HACS integration, which exposes native Home Assistant actions instead of requiring raw REST or YAML calls.",
             "Those Home Assistant actions now use clean selectors and dropdowns for common fields, so most flows no longer require typing raw arguments.",
-            "Works naturally with automation-only Verba Plugins that expose short machine-oriented outputs and with a direct tool endpoint that skips AI routing.",
+            "Works naturally with automation-only Verba's that expose short machine-oriented outputs and with a direct tool endpoint that skips AI routing.",
         ],
         "companions": [
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
@@ -906,7 +906,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Gives Tater a living-room interface on the OG Xbox.",
             "Maintains local conversation sessions and routes actions through the same Cerberus core.",
-            "Pairs well with media, smart-home, and utility Verba Plugins for couch-side control.",
+            "Pairs well with media, smart-home, and utility Verba's for couch-side control.",
         ],
         "apis": [],
     },
@@ -1437,11 +1437,11 @@ def normalize_plugin(raw: dict[str, Any]) -> dict[str, Any]:
         str(overrides.get("description") or "").strip()
         or str(raw.get("description") or "").strip()
         or str(raw.get("plugin_dec") or "").strip()
-        or "No description is present in the current Verba Plugin metadata."
+        or "No description is present in the current Verba metadata."
     )
     when_to_use = str(overrides.get("when_to_use") or raw.get("when_to_use") or "").strip()
     if not when_to_use:
-        when_to_use = first_sentence(description) or "Use this Verba Plugin when the user asks for this capability."
+        when_to_use = first_sentence(description) or "Use this Verba when the user asks for this capability."
     how_to_use = str(overrides.get("how_to_use") or raw.get("how_to_use") or "").strip()
     if not how_to_use:
         how_to_use = "Use the example call shape below and provide only the fields the plugin expects."
@@ -1766,8 +1766,8 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("cerberus", "Cerberus", f"{base}cerberus/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
-        ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
-        ("plugins", "Verba Plugins", f"{base}plugins/index.html"),
+        ("kernel", "Core Tools", f"{base}kernel-tools/index.html"),
+        ("plugins", "Verba's", f"{base}plugins/index.html"),
     ]
     nav_html = "\n".join(
         f'<a class="nav-link{" is-active" if key == nav_key else ""}" href="{href}">{label}</a>'
@@ -1840,7 +1840,7 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
 
 def platform_runtime_chip(platform: dict[str, Any]) -> str:
     if int(platform["plugin_count"]) > 0:
-        return f"{platform['plugin_count']} Verba Plugins"
+        return f"{platform['plugin_count']} Verba's"
     if platform["slug"] == "macos":
         return "Desktop bridge"
     if platform["slug"] == "ai_task":
@@ -1877,39 +1877,39 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
 def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "macos":
         return (
-            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verba Plugins "
+            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verba's "
             "through /macos/plugin even when plugin inventory tags for macos are sparse."
         )
     if platform["slug"] == "ai_task":
         return (
             "AI Task Runner is a scheduler surface. It executes scheduled prompts and routes results through notifier "
-            "portals rather than acting as a direct Verba Plugin target."
+            "portals rather than acting as a direct Verba target."
         )
     if platform["slug"] == "memory":
         return (
             "Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects "
-            "memory context back into Cerberus instead of acting like a direct Verba Plugin surface."
+            "memory context back into Cerberus instead of acting like a direct Verba surface."
         )
     if platform["slug"] == "rss":
         return (
             "RSS is a background feed watcher. It polls feeds, summarizes content, and dispatches updates through "
-            "notifier portals rather than serving as a direct Verba Plugin target."
+            "notifier portals rather than serving as a direct Verba target."
         )
     return (
-        "This surface mainly handles runtime orchestration rather than exposing its own direct Verba Plugin target."
+        "This surface mainly handles runtime orchestration rather than exposing its own direct Verba target."
     )
 
 
 def plugin_arguments_text(plugin: dict[str, Any]) -> str:
     return (
-        "This Verba Plugin does not require named arguments in its published usage example. Cerberus usually triggers "
+        "This Verba does not require named arguments in its published usage example. Cerberus usually triggers "
         "it directly from the user's request or from recent conversation context."
     )
 
 
 def plugin_settings_text(plugin: dict[str, Any]) -> str:
     return (
-        "This Verba Plugin does not declare plugin-specific settings in its metadata. Any dependencies are handled "
+        "This Verba does not declare plugin-specific settings in its metadata. Any dependencies are handled "
         "through portal config, environment variables, or the backing service itself."
     )
 
@@ -1933,14 +1933,14 @@ def render_home_page(
         <span class="eyebrow">Source-backed wiki</span>
         <h1>Tater is a portal-and-core AI assistant built to act.</h1>
         <p>
-          Cerberus plans the work, chains kernel tools with Verba Plugins, and finishes tasks across chat,
+          Cerberus plans the work, chains core tools with Verba's, and finishes tasks across chat,
           smart-home, media, and automation workflows.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
           {button("Explore portals", "portals/index.html")}
           {button("Explore cores", "cores/index.html")}
-          {button("Explore Verba Plugins", "plugins/index.html")}
+          {button("Explore Verba's", "plugins/index.html")}
           {button("Read Cerberus", "cerberus/index.html", ghost=True)}
         </div>
       </div>
@@ -1949,8 +1949,8 @@ def render_home_page(
           <img src="assets/images/tater-logo.png" alt="Tater Assistant emblem">
         </div>
         <div class="hero-stats">
-          <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verba Plugins</span></div>
-          <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
+          <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verba's</span></div>
+          <div class="stat-card"><strong>{kernel_count}</strong><span>core tools</span></div>
           <div class="stat-card"><strong>{surface_count}</strong><span>runtime surfaces</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
@@ -1964,12 +1964,12 @@ def render_home_page(
             "Cerberus breaks work into steps, picks the next tool, and keeps going until the task is done.",
         ),
         (
-            "Kernel layer",
+            "Core layer",
             "Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.",
         ),
         (
-            "Verba Plugins",
-            "Actions speak louder then words. Verba Plugins extend Tater into smart-home, media, camera, note, download, and admin workflows.",
+            "Verba's",
+            "Actions speak louder then words. Verba's extend Tater into smart-home, media, camera, note, download, and admin workflows.",
         ),
         (
             "Control surface",
@@ -2048,9 +2048,9 @@ def render_home_page(
         {button("Open Cerberus", "cerberus/index.html", ghost=True)}
       </article>
       <article class="panel">
-        <h3>Tools + Verba Plugins</h3>
-        <p>Browse built-in tools and the current Verba Plugin snapshot.</p>
-        {button("Open Verba Plugins", "plugins/index.html", ghost=True)}
+        <h3>Tools + Verba's</h3>
+        <p>Browse built-in tools and the current Verba snapshot.</p>
+        {button("Open Verba's", "plugins/index.html", ghost=True)}
       </article>
     </div>
     """
@@ -2342,7 +2342,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">What is documented</span>
-        <p>{len(platforms)} portal surfaces with current descriptions, settings snapshots, and related Verba Plugin context.</p>
+        <p>{len(platforms)} portal surfaces with current descriptions, settings snapshots, and related Verba context.</p>
       </aside>
     </section>
     <section class="section">
@@ -2480,7 +2480,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
             for plugin in example_plugins
         )
         plugin_block = f"""
-        <p>{escape(platform['plugin_count'])} current Verba Plugins advertise direct support for this surface.</p>
+        <p>{escape(platform['plugin_count'])} current Verba's advertise direct support for this surface.</p>
         <div class="chip-row">{plugin_links}</div>
         """
     else:
@@ -2536,7 +2536,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Related Verba Plugins</span>
+          <span class="eyebrow">Related Verba's</span>
           <h2>Direct {surface_label} support</h2>
           {plugin_block}
         </article>
@@ -2554,7 +2554,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     <section class="section">
       <div class="action-row">
         {button(f"Back to {'cores' if is_core else 'portals'}", "index.html", ghost=True)}
-        {button("Verba Plugins", "../plugins/index.html", ghost=True)}
+        {button("Verba's", "../plugins/index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
@@ -2578,7 +2578,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         ),
         (
             "2. Planner",
-            "The planner chooses exactly one next action, selecting the best kernel tool or Verba Plugin for the current step with a strict current-message tool gate.",
+            "The planner chooses exactly one next action, selecting the best core tool or Verba for the current step with a strict current-message tool gate.",
         ),
         (
             "3. Validation and repair",
@@ -2615,7 +2615,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
 
     guardrails = [
         "Current-message tool gate: Cerberus does not continue past work unless the current turn explicitly asks it to.",
-        "Smart chaining: kernel tools and Verba Plugins can be mixed across steps to finish a task instead of stopping after one tool result.",
+        "Smart chaining: core tools and Verba's can be mixed across steps to finish a task instead of stopping after one tool result.",
         "Atomic execution lock: the planner and checker both focus on one next step instead of merging unrelated actions.",
         "Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.",
         "Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.",
@@ -2627,12 +2627,12 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     state_html = "".join(chip(field) for field in state_fields)
     chaining_cards = [
         (
-            "Kernel tools first",
+            "Core tools first",
             "Cerberus can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
         ),
         (
-            "Verba Plugins where action lives",
-            "When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Cerberus switches to the right Verba Plugin.",
+            "Verba's where action lives",
+            "When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Cerberus switches to the right Verba.",
         ),
         (
             "One step at a time",
@@ -2655,7 +2655,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         <span class="eyebrow">Cerberus AI core</span>
         <h1>Cerberus plans, chains, and completes tasks.</h1>
         <p>
-          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes kernel tools with Verba Plugins one step at a time.
+          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes core tools with Verba's one step at a time.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2734,7 +2734,7 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
             f"""
             <section class="tool-section">
               <div class="section-head">
-                <span class="eyebrow">Kernel tools</span>
+                <span class="eyebrow">Core tools</span>
                 <h2>{escape(group_name)}</h2>
               </div>
               <div class="grid grid-2">
@@ -2748,14 +2748,14 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Built-in capabilities</span>
-        <h1>Kernel tools are Tater's native action layer.</h1>
+        <h1>Core tools are Tater's native action layer.</h1>
         <p>
-          They handle files, web inspection, memory, artifacts, and delivery before Cerberus reaches for a Verba Plugin.
+          They handle files, web inspection, memory, artifacts, and delivery before Cerberus reaches for a Verba.
         </p>
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">Why they matter</span>
-        <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
+        <p>Core tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
       </aside>
     </section>
     """
@@ -2763,14 +2763,14 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     guide_section = render_companion_section(
         WEB_SEARCH_GUIDES,
         "Web search setup",
-        "How to enable Google's search backend for the search_web kernel tool.",
-        "This is a kernel capability, not a Verba Plugin. The current Tater WebUI path is Settings -> Integrations -> Web Search.",
+        "How to enable Google's search backend for the search_web core tool.",
+        "This is a core capability, not a Verba. The current Tater WebUI path is Settings -> Integrations -> Web Search.",
     )
 
     body = intro + "\n".join(sections) + guide_section
     return page_template(
-        title="Tater Assistant | Kernel Tools",
-        description="Reference for Tater Assistant kernel tools and their purposes.",
+        title="Tater Assistant | Core Tools",
+        description="Reference for Tater Assistant core tools and their purposes.",
         body=body,
         depth=1,
         nav_key="kernel",
@@ -2787,8 +2787,8 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
     body = f"""
     <section class="hero hero-subpage">
       <div class="hero-copy">
-        <span class="eyebrow">Verba Plugin reference</span>
-        <h1>Actions speak louder then words. {len(plugins)} Verba Plugins are documented here.</h1>
+        <span class="eyebrow">Verba reference</span>
+        <h1>Actions speak louder then words. {len(plugins)} Verba's are documented here.</h1>
         <p>
           {source_copy}
         </p>
@@ -2796,7 +2796,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
       <aside class="panel hero-panel">
         <span class="eyebrow">Filter the list</span>
         <div class="plugins-toolbar">
-          <input class="search-input" type="search" placeholder="Search Verba Plugins" data-plugin-search>
+          <input class="search-input" type="search" placeholder="Search Verba's" data-plugin-search>
           <div class="chip-row filter-row">
             <button class="filter-chip is-active" type="button" data-platform-filter="all">All</button>
             <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
@@ -2804,7 +2804,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
             <button class="filter-chip" type="button" data-platform-filter="homeassistant">Home Assistant</button>
             <button class="filter-chip" type="button" data-platform-filter="automation">Automation</button>
           </div>
-          <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verba Plugins shown</p>
+          <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verba's shown</p>
         </div>
       </aside>
     </section>
@@ -2812,12 +2812,12 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
       <div class="plugin-grid" data-plugin-grid>
         {cards}
       </div>
-      <p class="empty-state" data-plugin-empty hidden>No Verba Plugins match the current search and portal filter.</p>
+      <p class="empty-state" data-plugin-empty hidden>No Verba's match the current search and portal filter.</p>
     </section>
     """
     return page_template(
-        title="Tater Assistant | Verba Plugins",
-        description="Index of Tater Assistant Verba Plugins documented from the current repository snapshot.",
+        title="Tater Assistant | Verba's",
+        description="Index of Tater Assistant Verba's documented from the current repository snapshot.",
         body=body,
         depth=1,
         nav_key="plugins",
@@ -2844,7 +2844,7 @@ def render_plugin_card(plugin: dict[str, Any]) -> str:
       </div>
       <div class="chip-row platform-row">{render_platform_badges(plugin['platforms'])}</div>
       <div class="plugin-links">
-        {button("Read Verba Plugin", f"{plugin['slug']}.html", ghost=True)}
+        {button("Read Verba", f"{plugin['slug']}.html", ghost=True)}
       </div>
     </article>
     """
@@ -2894,7 +2894,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
     body = f"""
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
-        <span class="eyebrow">Verba Plugin profile</span>
+        <span class="eyebrow">Verba profile</span>
         <h1>{escape(plugin['title'])}</h1>
         <p>{escape(plugin['description'])}</p>
         <div class="chip-row">
@@ -2945,10 +2945,10 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
     </section>
     <section class="section">
       <div class="action-row">
-        {button("Back to Verba Plugins", "index.html", ghost=True)}
+        {button("Back to Verba's", "index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
-        {button("Kernel tools", "../kernel-tools/index.html", ghost=True)}
+        {button("Core tools", "../kernel-tools/index.html", ghost=True)}
         {button("Cerberus", "../cerberus/index.html", ghost=True)}
       </div>
     </section>
