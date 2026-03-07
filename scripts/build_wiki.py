@@ -78,6 +78,67 @@ HOME_ASSISTANT_COMPANIONS = {
     },
 }
 
+MACOS_MENU_COMPANION = {
+    "title": "Tater Menu (macOS app)",
+    "summary": "Lightweight menu-bar app that connects to the Tater macOS bridge for chat, quick actions, clipboard workflows, screen captures, and attachment handling.",
+    "chips": ["Status bar app", "Port 8791", "Quick actions"],
+    "details": [
+        "Install with python3.11 -m pip install -e . inside the Tater-MacOS repo, then run python3.11 tater_menu.py.",
+        "It can also run in the background with python3.11 tater_menu.py --background and stays as a menu-bar-only app.",
+        "Set Server URL, Auth Token, and Quick Action Plugin from the app Settings menu.",
+        "The local config is stored at ~/Library/Application Support/TaterMenu/config.json.",
+    ],
+    "links": [
+        {
+            "label": "Tater-MacOS Repo",
+            "href": "https://github.com/TaterTotterson/Tater-MacOS",
+        },
+    ],
+}
+
+MACOS_APP_GUIDES = [
+    {
+        "title": "First connection",
+        "summary": "Point the app at the macOS bridge and verify bootstrap and polling are healthy.",
+        "chips": ["Server URL", "Auth token", "Bootstrap"],
+        "details": [
+            "Default bridge URL is http://127.0.0.1:8791, but the app can target any reachable Tater host.",
+            "If AUTH_TOKEN is set in macOS platform settings, the app must send that same token as X-Tater-Token.",
+            "The app bootstraps assistant identity and recent history from /macos/bootstrap before normal chat usage.",
+        ],
+    },
+    {
+        "title": "Quick actions",
+        "summary": "Clipboard and screen presets call the plugin endpoint first, then fall back to chat when needed.",
+        "chips": ["/macos/plugin", "/macos/chat", "Plugin fallback"],
+        "details": [
+            "Quick actions are sent to /macos/plugin with a configured plugin name, defaulting to macos_quick_action.",
+            "If plugin handling fails or is unavailable, the app can fall back to /macos/chat for normal assistant handling.",
+            "This keeps menu actions fast while still allowing broader Cerberus-driven behavior when needed.",
+        ],
+    },
+    {
+        "title": "Permissions",
+        "summary": "Screen and rewrite flows depend on standard macOS privacy permissions.",
+        "chips": ["Screen Recording", "Accessibility", "Apple Events"],
+        "details": [
+            "Screen capture tools require macOS Screen Recording permission for the Python process or packaged app.",
+            "Rewrite selected text relies on Accessibility permission because it drives keystrokes with AppleScript.",
+            "Frontmost-app context and rewrite flows can also require Apple Events access depending on target apps.",
+        ],
+    },
+    {
+        "title": "Notifications and attachments",
+        "summary": "The app long-polls notifications and can download or auto-open returned attachments.",
+        "chips": ["/macos/notifications/next", "Assets", "Downloads"],
+        "details": [
+            "The client polls /macos/notifications/next for queued notices, including tool_wait status updates.",
+            "Returned artifacts are exposed through /macos/asset/{asset_id} download URLs scoped to the active device or session.",
+            "Image attachments from direct actions can be opened automatically, while other files are saved in app-support downloads.",
+        ],
+    },
+]
+
 HOME_ASSISTANT_AUTOMATION_GUIDES = [
     {
         "title": "Auto briefs",
@@ -475,6 +536,7 @@ PLATFORM_DOCS_ORDER = [
     "homeassistant",
     "ha_automations",
     "homekit",
+    "macos",
     "ai_task",
     "memory_platform",
     "rss",
@@ -498,7 +560,7 @@ PLATFORM_DOCS = {
         "label": "Discord",
         "description": "Full-featured Discord bot with rich interactions, media output, background jobs, and Verba Plugin-backed actions.",
         "role": "Chat endpoint",
-        "source": TATER_DIR / "platforms" / "discord_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "discord_platform.py",
         "plugin_surface": "discord",
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
@@ -510,7 +572,7 @@ PLATFORM_DOCS = {
         "label": "Telegram",
         "description": "Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba Plugin execution.",
         "role": "Chat endpoint",
-        "source": TATER_DIR / "platforms" / "telegram_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "telegram_platform.py",
         "plugin_surface": "telegram",
         "highlights": [
             "Supports rich formatting, inline media delivery, and per-chat restrictions.",
@@ -522,7 +584,7 @@ PLATFORM_DOCS = {
         "label": "Matrix",
         "description": "Federated Matrix client with encryption support, Markdown rendering, and full Verba Plugin compatibility.",
         "role": "Chat endpoint",
-        "source": TATER_DIR / "platforms" / "matrix_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "matrix_platform.py",
         "plugin_surface": "matrix",
         "highlights": [
             "Brings Tater to federated chat networks like Element and Cinny.",
@@ -534,7 +596,7 @@ PLATFORM_DOCS = {
         "label": "IRC",
         "description": "Lightweight IRC bot that responds to mentions and runs compatible Verba Plugins.",
         "role": "Chat endpoint",
-        "source": TATER_DIR / "platforms" / "irc_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "irc_platform.py",
         "plugin_surface": "irc",
         "highlights": [
             "Simple low-overhead deployment for classic chat rooms and ZNC-style setups.",
@@ -546,7 +608,7 @@ PLATFORM_DOCS = {
         "label": "Home Assistant",
         "description": "Voice and text assistant endpoint for Home Assistant Assist, paired with the Tater Conversation Agent integration plus direct smart-home control and a built-in notifications API that can queue alerts and light configured Voice PE indicators.",
         "role": "Voice and smart-home endpoint",
-        "source": TATER_DIR / "platforms" / "homeassistant_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "homeassistant_platform.py",
         "plugin_surface": "homeassistant",
         "highlights": [
             "Designed for Assist pipeline conversations and direct smart-home control.",
@@ -559,6 +621,9 @@ PLATFORM_DOCS = {
             HOME_ASSISTANT_COMPANIONS["tater_conversation"],
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
+        "companions_eyebrow": "Companion setup",
+        "companions_title": "Home Assistant integrations that connect to this platform.",
+        "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
         "apis": [
             {
                 "method": "GET",
@@ -590,7 +655,7 @@ PLATFORM_DOCS = {
         "label": "HA Automations",
         "description": "Automation-only Home Assistant endpoint that pairs with the Tater Automations integration for direct tool execution, built-in event storage, and brief plugins that can write clean summary text straight into Home Assistant helpers.",
         "role": "Automation bridge",
-        "source": TATER_DIR / "platforms" / "ha_automations_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "ha_automations_platform.py",
         "plugin_surface": "automation",
         "highlights": [
             "Built for fast one-shot execution from Home Assistant automations rather than open-ended chat.",
@@ -604,6 +669,9 @@ PLATFORM_DOCS = {
         "companions": [
             HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
+        "companions_eyebrow": "Companion setup",
+        "companions_title": "Home Assistant integrations that connect to this platform.",
+        "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
         "guides": HOME_ASSISTANT_AUTOMATION_GUIDES,
         "guides_eyebrow": "Automation patterns",
         "guides_title": "How this platform handles brief outputs and Home Assistant state.",
@@ -639,7 +707,7 @@ PLATFORM_DOCS = {
         "label": "HomeKit",
         "description": "Siri and Apple Shortcuts bridge for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.",
         "role": "Voice endpoint",
-        "source": TATER_DIR / "platforms" / "homekit_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "homekit_platform.py",
         "plugin_surface": "homekit",
         "highlights": [
             "Provides a lightweight HTTP bridge for Siri and Apple Shortcuts workflows.",
@@ -707,11 +775,91 @@ PLATFORM_DOCS = {
             },
         ],
     },
+    "macos": {
+        "label": "macOS",
+        "description": "Native desktop bridge used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.",
+        "role": "Desktop endpoint",
+        "source": TATER_SHOP_DIR / "platforms" / "macos_platform.py",
+        "plugin_surface": "macos",
+        "highlights": [
+            "Runs a FastAPI bridge on port 8791 by default for the Tater Menu app.",
+            "Maintains scoped session history with configurable limits and TTL so desktop context stays stable but bounded.",
+            "Supports long-poll notifications plus tool_wait status handling for menu-app feedback loops.",
+            "Includes asset upload and download endpoints for screen captures, clipboard artifacts, and returned files.",
+            "Can enforce AUTH_TOKEN protection through the X-Tater-Token header.",
+        ],
+        "companions": [
+            MACOS_MENU_COMPANION,
+        ],
+        "companions_eyebrow": "Client app",
+        "companions_title": "macOS app that connects to this bridge.",
+        "companions_intro": "The menu-bar app is the main user-facing client for this platform and handles quick actions, chat UI, and attachment flows.",
+        "guides": MACOS_APP_GUIDES,
+        "guides_eyebrow": "App setup",
+        "guides_title": "How to run and connect the Tater Menu app.",
+        "guides_intro": "These notes are based on the current Tater-MacOS app README and the active macOS bridge endpoints.",
+        "apis": [
+            {
+                "method": "GET",
+                "path": "/macos/health",
+                "summary": "Health check for the desktop bridge.",
+                "details": "Returns ok, platform=macos, and version 1.0 so clients can confirm the bridge is alive.",
+            },
+            {
+                "method": "GET",
+                "path": "/macos/bootstrap",
+                "summary": "Bootstrap assistant identity and recent history.",
+                "details": "Returns assistant identity plus recent scoped history so the menu app can initialize quickly.",
+            },
+            {
+                "method": "GET",
+                "path": "/macos/notifications/next",
+                "summary": "Long-poll next queued notification item.",
+                "details": "Polls scoped notification queues with optional wait_seconds and returns the next pending notification payload.",
+            },
+            {
+                "method": "POST",
+                "path": "/macos/chat",
+                "summary": "Main macOS chat endpoint.",
+                "details": "Accepts user_text, clipboard context, optional assets, and scope/device context, then runs a Cerberus turn.",
+            },
+            {
+                "method": "POST",
+                "path": "/macos/plugin",
+                "summary": "Direct plugin call path for quick actions.",
+                "details": "Executes a named plugin with args for deterministic quick-action flows, then returns narrated text plus attachments/actions.",
+            },
+            {
+                "method": "POST",
+                "path": "/macos/asset",
+                "summary": "Upload one client asset into scoped artifact storage.",
+                "details": "Stores an incoming asset payload and returns an attachment-ready artifact reference for later use.",
+            },
+            {
+                "method": "GET",
+                "path": "/macos/asset/{asset_id}",
+                "summary": "Download a scoped artifact by asset_id.",
+                "details": "Returns raw file bytes for stored artifacts so the app can save or open returned attachments.",
+            },
+            {
+                "method": "GET",
+                "path": "/macos/history",
+                "summary": "Fetch scoped conversation history.",
+                "details": "Returns client-safe history entries for a scope or device with server-side cap enforcement.",
+            },
+            {
+                "method": "GET",
+                "path": "/macos/assistant",
+                "summary": "Fetch assistant identity metadata.",
+                "details": "Returns assistant display-name identity data for app UI labels and chat headers.",
+            },
+        ],
+    },
     "ai_task": {
         "label": "AI Task Runner",
         "description": "Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier platforms.",
         "role": "Scheduler",
-        "source": TATER_DIR / "platforms" / "ai_task_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "ai_task_platform.py",
         "plugin_surface": "",
         "highlights": [
             "Executes recurring jobs without requiring an external scheduler around Tater.",
@@ -724,7 +872,7 @@ PLATFORM_DOCS = {
         "label": "Memory Platform",
         "description": "Background memory extraction layer that scans chat history, stores user and room memory, and feeds Cerberus context.",
         "role": "Background service",
-        "source": TATER_DIR / "platforms" / "memory_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "memory_platform.py",
         "plugin_surface": "",
         "highlights": [
             "Incrementally mines durable facts from prior conversations instead of relying only on the active turn.",
@@ -737,7 +885,7 @@ PLATFORM_DOCS = {
         "label": "RSS",
         "description": "Background feed watcher that summarizes articles and dispatches updates through notifier platforms.",
         "role": "Background service",
-        "source": TATER_DIR / "platforms" / "rss_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "rss_platform.py",
         "plugin_surface": "",
         "highlights": [
             "Polls feeds, extracts article bodies, and creates digest-style summaries.",
@@ -750,7 +898,7 @@ PLATFORM_DOCS = {
         "label": "XBMC4Xbox",
         "description": "Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.",
         "role": "Console endpoint",
-        "source": TATER_DIR / "platforms" / "xbmc_platform.py",
+        "source": TATER_SHOP_DIR / "platforms" / "xbmc_platform.py",
         "plugin_surface": "xbmc",
         "highlights": [
             "Gives Tater a living-room interface on the OG Xbox.",
@@ -1529,6 +1677,9 @@ def build_platforms(plugins: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "role": meta["role"],
                 "highlights": list(meta.get("highlights") or []),
                 "companions": list(meta.get("companions") or []),
+                "companions_eyebrow": str(meta.get("companions_eyebrow") or ""),
+                "companions_title": str(meta.get("companions_title") or ""),
+                "companions_intro": str(meta.get("companions_intro") or ""),
                 "guides": list(meta.get("guides") or []),
                 "guides_eyebrow": str(meta.get("guides_eyebrow") or ""),
                 "guides_title": str(meta.get("guides_title") or ""),
@@ -1648,6 +1799,8 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
 def platform_runtime_chip(platform: dict[str, Any]) -> str:
     if int(platform["plugin_count"]) > 0:
         return f"{platform['plugin_count']} Verba Plugins"
+    if platform["slug"] == "macos":
+        return "Desktop bridge"
     if platform["slug"] == "ai_task":
         return "Scheduler runtime"
     if platform["slug"] == "memory_platform":
@@ -1678,6 +1831,11 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
 
 
 def platform_plugin_text(platform: dict[str, Any]) -> str:
+    if platform["slug"] == "macos":
+        return (
+            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verba Plugins "
+            "through /macos/plugin even when plugin inventory tags for macos are sparse."
+        )
     if platform["slug"] == "ai_task":
         return (
             "AI Task Runner is a scheduler surface. It executes scheduled prompts and routes results through notifier "
@@ -2126,9 +2284,9 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     highlight_html = "".join(f"<li>{escape(item)}</li>" for item in platform["highlights"])
     companion_section = render_companion_section(
         platform.get("companions") or [],
-        "Companion setup",
-        "Home Assistant integrations that connect to this platform.",
-        "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
+        platform.get("companions_eyebrow") or "Companion setup",
+        platform.get("companions_title") or "Related app and integration pieces for this platform.",
+        platform.get("companions_intro") or "These components connect external clients or service layers back to this runtime surface.",
     )
     guide_section = render_companion_section(
         platform.get("guides") or [],
