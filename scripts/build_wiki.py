@@ -189,7 +189,7 @@ KERNEL_TOOL_OVERRIDES = {
 WEB_SEARCH_GUIDES = [
     {
         "title": "Create a Google API key",
-        "summary": "The search_web core tool uses Google's Custom Search JSON API credentials.",
+        "summary": "The search_web kernel tool uses Google's Custom Search JSON API credentials.",
         "chips": ["Google Cloud", "Custom Search JSON API", "API key"],
         "details": [
             "Open Google Cloud Console, create or select a project, then enable Custom Search API under APIs and Services -> Library.",
@@ -225,8 +225,8 @@ WEB_SEARCH_GUIDES = [
     },
     {
         "title": "Enter the keys in Tater",
-        "summary": "Web search is configured from Integrations because it powers a core tool, not a Verba.",
-        "chips": ["Settings -> Integrations", "Web Search", "Core tool"],
+        "summary": "Web search is configured from Integrations because it powers a kernel tool, not a Verba.",
+        "chips": ["Settings -> Integrations", "Web Search", "Kernel tool"],
         "details": [
             "Open Tater WebUI and go to Settings -> Integrations -> Web Search.",
             "Paste Google API Key and Google Search Engine ID (CX), then save the settings.",
@@ -236,7 +236,7 @@ WEB_SEARCH_GUIDES = [
         "links": [],
     },
     {
-        "title": "What the core tool supports",
+        "title": "What the kernel tool supports",
         "summary": "The current search_web implementation accepts a few focused filters on top of the main query.",
         "chips": ["query", "site", "country", "language"],
         "details": [
@@ -1788,7 +1788,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("cerberus", "Cerberus", f"{base}cerberus/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
-        ("kernel", "Core Tools", f"{base}kernel-tools/index.html"),
+        ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
         ("plugins", "Verbas", f"{base}plugins/index.html"),
     ]
     nav_html = "\n".join(
@@ -1964,7 +1964,7 @@ def render_home_page(
         <span class="eyebrow">Source-backed wiki</span>
         <h1>Tater is an AI assistant built to act.</h1>
         <p>
-          Cerberus plans the work, chains core tools with Verbas, and finishes tasks across chat,
+          Cerberus plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
           smart-home, media, and automation workflows.
         </p>
         <div class="action-row">
@@ -1981,7 +1981,7 @@ def render_home_page(
         </div>
         <div class="hero-stats">
           <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
-          <div class="stat-card"><strong>{kernel_count}</strong><span>core tools</span></div>
+          <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
           <div class="stat-card"><strong>{surface_count}</strong><span>runtime surfaces</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
@@ -2614,7 +2614,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         ),
         (
             "2. Planner",
-            "The planner chooses exactly one next action, selecting the best core tool or Verba for the current step with a strict current-message tool gate.",
+            "The planner chooses exactly one next action, selecting the best kernel tool or Verba for the current step with a strict current-message tool gate.",
         ),
         (
             "3. Validation and repair",
@@ -2651,7 +2651,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
 
     guardrails = [
         "Current-message tool gate: Cerberus does not continue past work unless the current turn explicitly asks it to.",
-        "Smart chaining: core tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.",
+        "Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.",
         "Atomic execution lock: the planner and checker both focus on one next step instead of merging unrelated actions.",
         "Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.",
         "Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.",
@@ -2663,7 +2663,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     state_html = "".join(chip(field) for field in state_fields)
     chaining_cards = [
         (
-            "Core tools first",
+            "Kernel tools first",
             "Cerberus can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
         ),
         (
@@ -2691,7 +2691,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         <span class="eyebrow">Cerberus AI core</span>
         <h1>Cerberus plans, chains, and completes tasks.</h1>
         <p>
-          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes core tools with Verbas one step at a time.
+          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes kernel tools with Verbas one step at a time.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2770,7 +2770,7 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
             f"""
             <section class="tool-section">
               <div class="section-head">
-                <span class="eyebrow">Core tools</span>
+                <span class="eyebrow">Kernel tools</span>
                 <h2>{escape(group_name)}</h2>
               </div>
               <div class="grid grid-2">
@@ -2784,14 +2784,14 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Built-in capabilities</span>
-        <h1>Core tools are Tater's native action layer.</h1>
+        <h1>Kernel tools are Tater's native action layer.</h1>
         <p>
           They handle files, web inspection, memory, artifacts, and delivery before Cerberus reaches for a Verba.
         </p>
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">Why they matter</span>
-        <p>Core tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
+        <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
       </aside>
     </section>
     """
@@ -2799,14 +2799,14 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     guide_section = render_companion_section(
         WEB_SEARCH_GUIDES,
         "Web search setup",
-        "How to enable Google's search backend for the search_web core tool.",
+        "How to enable Google's search backend for the search_web kernel tool.",
         "This is a core capability, not a Verba. The current Tater WebUI path is Settings -> Integrations -> Web Search.",
     )
 
     body = intro + "\n".join(sections) + guide_section
     return page_template(
-        title="Tater Assistant | Core Tools",
-        description="Reference for Tater Assistant core tools and their purposes.",
+        title="Tater Assistant | Kernel Tools",
+        description="Reference for Tater Assistant kernel tools and their purposes.",
         body=body,
         depth=1,
         nav_key="kernel",
@@ -2984,7 +2984,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
         {button("Back to Verbas", "index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
-        {button("Core tools", "../kernel-tools/index.html", ghost=True)}
+        {button("Kernel tools", "../kernel-tools/index.html", ghost=True)}
         {button("Cerberus", "../cerberus/index.html", ghost=True)}
       </div>
     </section>
