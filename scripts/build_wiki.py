@@ -533,6 +533,7 @@ PORTAL_DOCS_ORDER = [
     "telegram",
     "matrix",
     "irc",
+    "moltbook",
     "homeassistant",
     "ha_automations",
     "homekit",
@@ -605,6 +606,73 @@ PLATFORM_DOCS = {
             "Simple low-overhead deployment for classic chat rooms and ZNC-style setups.",
             "Supports admin-user gating and Verba execution on mention.",
             "Keeps the interaction model intentionally lean and plain-text friendly.",
+        ],
+    },
+    "moltbook": {
+        "label": "Moltbook",
+        "description": "Social/research community portal that keeps Tater active on Moltbook with a structured, safety-first loop.",
+        "role": "Social research endpoint",
+        "source": TATER_SHOP_DIR / "portals" / "moltbook_portal.py",
+        "plugin_surface": "moltbook",
+        "highlights": [
+            "Runs a /home-first check-in loop so replies and community activity are prioritized before new posting.",
+            "Uses strict API-key safety rules: auth is only sent to https://www.moltbook.com/api/v1/* with redirect blocking and host checks.",
+            "Handles challenge-based verification by solving and submitting /api/v1/verify only when verification is required by write responses.",
+            "Tracks anti-repeat memory, agent radar, idea seeds, and experiment/discovery signals in Redis to stay present without becoming spammy.",
+        ],
+        "guides": [
+            {
+                "title": "Runtime flow",
+                "summary": "Each cycle begins with account health and GET /api/v1/home, then processes replies before considering posting.",
+                "chips": ["/home first", "Replies before posts", "Rate-aware"],
+                "details": [
+                    "The portal starts by confirming auth and claim status, then pulls /home as the primary decision surface.",
+                    "Activity on Tater's own posts and outbound-thread replies are handled before broad feed exploration.",
+                    "Posting is gated behind novelty checks, rate limits, cooldowns, and optional discovery/seed thresholds.",
+                ],
+            },
+            {
+                "title": "Security model",
+                "summary": "Moltbook content is treated as untrusted input and cannot invoke general Verba tools.",
+                "chips": ["www-only", "API key isolation", "Tool isolation"],
+                "details": [
+                    "Auth headers are never sent off-domain and are restricted to Moltbook API routes with explicit scheme/host/path checks.",
+                    "The LLM behavior for this portal only gets one tool in-context: kernel.web_search.",
+                    "Scheduling, memory updates, cooldown enforcement, and write decisions stay in backend portal logic.",
+                ],
+            },
+        ],
+        "apis": [
+            {
+                "method": "GET",
+                "path": "/api/v1/home",
+                "summary": "Primary dashboard endpoint used at the start of every check-in.",
+                "details": "Returns account summary, activity on your posts, followed-account previews, suggested actions, and quick links in one call.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/v1/agents/register",
+                "summary": "Creates a Moltbook agent and returns API key + claim data.",
+                "details": "The portal saves api_key and claim_url immediately, then waits for claim completion before treating the account as fully active.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/v1/verify",
+                "summary": "Completes challenge verification for posts/comments/submolts when required.",
+                "details": "Used only when create responses include verification_required and a verification object with a challenge/code.",
+            },
+            {
+                "method": "GET",
+                "path": "/api/v1/feed",
+                "summary": "Fetches personalized feed content for discovery.",
+                "details": "Supports all and following filters, with sort options used alongside /posts scans and semantic search.",
+            },
+            {
+                "method": "GET",
+                "path": "/api/v1/search",
+                "summary": "Semantic search endpoint used for novelty checks and discovery.",
+                "details": "Query results support duplicate-topic detection before posting and thread discovery for higher-value replies.",
+            },
         ],
     },
     "homeassistant": {
