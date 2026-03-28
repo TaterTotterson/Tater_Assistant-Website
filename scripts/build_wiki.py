@@ -35,9 +35,13 @@ WEBUI_SOURCE = TATER_DIR / "images" / "webui.png"
 LOGO_TARGET = SITE_ROOT / "assets" / "images" / "tater-logo.png"
 WEBUI_TARGET = SITE_ROOT / "assets" / "images" / "webui.png"
 
-CERBERUS_SOURCE = TATER_DIR / "cerberus" / "__init__.py"
+CERBERUS_SOURCE = resolve_path(
+    "TATER_WIKI_HYDRA_SOURCE",
+    TATER_DIR / "hydra" / "__init__.py",
+    TATER_DIR / "cerberus" / "__init__.py",
+)
 TOOL_RUNTIME_SOURCE = TATER_DIR / "tool_runtime.py"
-PLUGIN_DIR = TATER_DIR / "plugins"
+PLUGIN_DIR = resolve_path("TATER_WIKI_VERBA_DIR", TATER_DIR / "verba")
 
 HOME_ASSISTANT_COMPANIONS = {
     "tater_conversation": {
@@ -46,7 +50,7 @@ HOME_ASSISTANT_COMPANIONS = {
         "chips": ["HACS integration", "Assist pipeline", "Port 8787"],
         "details": [
             "Install the Tater-HomeAssistant repository through HACS as an Integration, then add Tater Conversation in Devices & Services.",
-            "The config flow asks for a display name and a full endpoint URL, defaulting to http://127.0.0.1:8787/tater-ha/v1/message.",
+            "The config flow asks for host/IP, port, and an optional API key (when the Home Assistant portal has API auth enabled).",
             "After setup, choose Tater Conversation as the conversation agent in Settings -> Voice Assistants.",
             "The component forwards text plus user, device, area, session, and language context so Tater can keep room-aware and device-aware sessions.",
         ],
@@ -54,25 +58,6 @@ HOME_ASSISTANT_COMPANIONS = {
             {
                 "label": "Tater-HomeAssistant Repo",
                 "href": "https://github.com/TaterTotterson/Tater-HomeAssistant",
-            },
-        ],
-    },
-    "tater_automations": {
-        "title": "Tater Automations",
-        "summary": "HACS integration that registers native Home Assistant automation actions for direct calls into Tater's automations bridge.",
-        "chips": ["HACS integration", "Automation actions", "Port 8788"],
-        "details": [
-            "Install the tater_automations repository through HACS as an Integration, then add Tater Automations in Devices & Services.",
-            "The config flow asks only for host and port, with 8788 as the default automations bridge port.",
-            "It registers native actions for Camera Event, Doorbell Alert, Events Query Brief, Weather Brief, and Zen Greeting, plus a legacy generic tool call.",
-            "Doorbell Alert is exposed as a simple no-field action because it is meant to run from defaults configured once in Tater WebUI.",
-            "Those actions use Home Assistant selectors and dropdowns for common fields, so operators usually do not need to type raw tool names or raw JSON arguments.",
-            "Calls still post directly to /tater-ha/v1/tools/{tool_name} with validated arguments and no AI routing in the middle.",
-        ],
-        "links": [
-            {
-                "label": "tater_automations Repo",
-                "href": "https://github.com/TaterTotterson/tater_automations",
             },
         ],
     },
@@ -85,7 +70,7 @@ MACOS_MENU_COMPANION = {
     "details": [
         "Install with python3.11 -m pip install -e . inside the Tater-MacOS repo, then run python3.11 tater_menu.py.",
         "It can also run in the background with python3.11 tater_menu.py --background and stays as a menu-bar-only app.",
-        "Set Server URL, Auth Token, and Quick Action Plugin from the app Settings menu.",
+        "Set Server URL, optional API key/Auth Token, and Quick Action Plugin from the app Settings menu.",
         "The local config is stored at ~/Library/Application Support/TaterMenu/config.json.",
     ],
     "links": [
@@ -103,7 +88,7 @@ MACOS_APP_GUIDES = [
         "chips": ["Server URL", "Auth token", "Bootstrap"],
         "details": [
             "Default bridge URL is http://127.0.0.1:8791, but the app can target any reachable Tater host.",
-            "If AUTH_TOKEN is set in macOS portal settings, the app must send that same token as X-Tater-Token.",
+            "If API auth is enabled in macOS portal settings, the app must send the same API key in X-Tater-Token.",
             "The app bootstraps assistant identity and recent history from /macos/bootstrap before normal chat usage.",
         ],
     },
@@ -114,7 +99,7 @@ MACOS_APP_GUIDES = [
         "details": [
             "Quick actions are sent to /macos/plugin with a configured plugin name, defaulting to macos_quick_action.",
             "If plugin handling fails or is unavailable, the app can fall back to /macos/chat for normal assistant handling.",
-            "This keeps menu actions fast while still allowing broader Cerberus-driven behavior when needed.",
+            "This keeps menu actions fast while still allowing broader Hydra-driven behavior when needed.",
         ],
     },
     {
@@ -135,39 +120,6 @@ MACOS_APP_GUIDES = [
             "The client polls /macos/notifications/next for queued notices, including tool_wait status updates.",
             "Returned artifacts are exposed through /macos/asset/{asset_id} download URLs scoped to the active device or session.",
             "Image attachments from direct actions can be opened automatically, while other files are saved in app-support downloads.",
-        ],
-    },
-]
-
-HOME_ASSISTANT_AUTOMATION_GUIDES = [
-    {
-        "title": "Auto briefs",
-        "summary": "Three automation-safe brief plugins are built for short summaries and dashboard-friendly output.",
-        "chips": ["Events Query Brief", "Weather Brief", "Zen Greeting"],
-        "details": [
-            "Events Query Brief, Weather Brief, and Zen Greeting are the three brief-style automation plugins in the current stack.",
-            "They are designed to return short plain-text summaries instead of long conversational replies.",
-            "That makes them a good fit for dashboards, notifications, routines, and other machine-triggered flows.",
-        ],
-    },
-    {
-        "title": "Store results in input_text helpers",
-        "summary": "Brief plugins can write directly into Home Assistant text helpers so automations stay simple and UI-driven.",
-        "chips": ["input_text", "No YAML required", "Dashboard-safe"],
-        "details": [
-            "Create input_text helpers in Home Assistant for summaries such as input_text.event_brief, input_text.weather_brief, or input_text.zen_message.",
-            "Set Maximum length to 255 when creating the helper so it has enough room for short Tater summaries.",
-            "These plugins can write straight to input_text.set_value, so Home Assistant owns the state while Tater only generates the summary text.",
-        ],
-    },
-    {
-        "title": "Default once or override per automation",
-        "summary": "Result targets can live in Tater plugin settings or be overridden inside an individual automation action.",
-        "chips": ["INPUT_TEXT_ENTITY", "input_text_entity", "Override support"],
-        "details": [
-            "Option A: set INPUT_TEXT_ENTITY once in Tater WebUI plugin settings to make a helper the default output target.",
-            "Option B: pass input_text_entity in the Home Assistant action to override the default for that one automation.",
-            "This keeps common automations clean while still allowing special cases to route output somewhere else.",
         ],
     },
 ]
@@ -231,7 +183,7 @@ WEB_SEARCH_GUIDES = [
             "Open Tater WebUI and go to Settings -> Integrations -> Web Search.",
             "Paste Google API Key and Google Search Engine ID (CX), then save the settings.",
             "The current code stores those values as tater:web_search:google_api_key and tater:web_search:google_cx, with a legacy fallback for older plugin-style settings.",
-            "After that, Cerberus can call search_web for current web research and article lookup tasks.",
+            "After that, Hydra can call search_web for current web research and article lookup tasks.",
         ],
         "links": [],
     },
@@ -256,7 +208,7 @@ WEB_SEARCH_GUIDES = [
 PLUGIN_OVERRIDES = {
     "events_query_brief": {
         "when_to_use": "Use this for short event rollups on dashboards, automations, and notifications when you want brief plain-text output instead of a long narrative.",
-        "how_to_use": "Run it from the automation portal, choose a timeframe and optional area/query, then either set INPUT_TEXT_ENTITY once in WebUI or pass input_text_entity in the action to write straight into a Home Assistant helper.",
+        "how_to_use": "Run it from an Awareness Core brief rule, choose a timeframe and optional area/query, then either set INPUT_TEXT_ENTITY once in WebUI or pass input_text_entity in the action to write straight into a Home Assistant helper.",
         "usage_example": """{
   "function": "events_query_brief",
   "arguments": {
@@ -428,7 +380,7 @@ PLUGIN_OVERRIDES = {
     },
     "weather_brief": {
         "when_to_use": "Use this for short weather recaps in dashboards, notifications, and scheduled automations when you want a concise summary of recent conditions.",
-        "how_to_use": "Run it from the automation portal, pick the recent hour window from the dropdown, optionally add a short query, and write the result into an input_text helper with INPUT_TEXT_ENTITY or input_text_entity.",
+        "how_to_use": "Run it from an Awareness Core brief rule, pick the recent hour window from the dropdown, optionally add a short query, and write the result into an input_text helper with INPUT_TEXT_ENTITY or input_text_entity.",
         "usage_example": """{
   "function": "weather_brief",
   "arguments": {
@@ -493,7 +445,7 @@ PLUGIN_OVERRIDES = {
     },
     "zen_greeting": {
         "when_to_use": "Use this for a short daily zen message, calm greeting, or dashboard-safe motivational line inside automation flows.",
-        "how_to_use": "Run it from the automation portal, choose tone and include_date options from the Home Assistant action UI, and store the result in an input_text helper when you want the message to persist on a dashboard.",
+        "how_to_use": "Run it from an Awareness Core brief rule, choose tone and include_date options from the Home Assistant action UI, and store the result in an input_text helper when you want the message to persist on a dashboard.",
         "usage_example": """{
   "function": "zen_greeting",
   "arguments": {
@@ -535,13 +487,13 @@ PORTAL_DOCS_ORDER = [
     "irc",
     "moltbook",
     "homeassistant",
-    "ha_automations",
     "homekit",
     "macos",
     "xbmc",
 ]
 
 CORE_DOCS_ORDER = [
+    "awareness",
     "ai_task",
     "memory",
     "rss",
@@ -550,14 +502,16 @@ CORE_DOCS_ORDER = [
 PLATFORM_DOCS = {
     "webui": {
         "label": "WebUI",
-        "description": "Streamlit-based control center for setup, private chat, Verba browsing, and Cerberus tuning.",
+        "description": "FastAPI + static control center for setup, private chat, Verba/Portal/Core management, Hydra tuning, and Redis operations.",
         "role": "Operator console",
         "source": None,
         "plugin_surface": "webui",
         "highlights": [
-            "Hosts private chat, Verba browsing, settings, and Cerberus runtime controls in one place.",
-            "Acts as the easiest way to inspect available tools and manage the Verba ecosystem.",
-            "Ships with dedicated views for chat, Verbas, settings, Cerberus, portals, and AI task workflows.",
+            "Hosts private chat, Verba browsing, settings, and runtime controls in one place.",
+            "First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.",
+            "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
+            "Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.",
+            "WebUI password login can be enabled from Settings -> General and uses cookie-backed sessions.",
         ],
     },
     "discord": {
@@ -568,7 +522,7 @@ PLATFORM_DOCS = {
         "plugin_surface": "discord",
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
-            "Runs Cerberus turns per conversation so multi-step requests stay grounded.",
+            "Runs Hydra turns per conversation so multi-step requests stay grounded.",
             "Pairs well with admin-only Verbas and server management workflows.",
         ],
     },
@@ -686,15 +640,15 @@ PLATFORM_DOCS = {
             "Includes session history, follow-up mic behavior, satellite lookup caching, and notification bridging.",
             "Pairs with the Tater Conversation Agent HACS integration, which points Home Assistant Assist at /tater-ha/v1/message and forwards device and area context.",
             "Ships with a built-in notifications API that queues notification payloads in Redis and can light configured Voice PE indicators when new notifications arrive.",
-            "Forms the conversational half of the Home Assistant integration story alongside automation actions.",
+            "Awareness automations now live in Awareness Core instead of a separate automation bridge surface.",
+            "Supports optional API key protection for HTTP endpoints using X-Tater-Token.",
         ],
         "companions": [
             HOME_ASSISTANT_COMPANIONS["tater_conversation"],
-            HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
         "companions_eyebrow": "Companion setup",
         "companions_title": "Home Assistant integrations that connect to this portal.",
-        "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
+        "companions_intro": "This component lives inside Home Assistant and points Assist conversations back at Tater's runtime bridge.",
         "apis": [
             {
                 "method": "GET",
@@ -706,71 +660,19 @@ PLATFORM_DOCS = {
                 "method": "POST",
                 "path": "/tater-ha/v1/notifications/add",
                 "summary": "Queue a Home Assistant-facing notification item.",
-                "details": "Accepts source, title, type, message, entity_id, ha_time, level, and data, stores the item in the Redis notifications list, and attempts to turn on configured Voice PE light entities.",
+                "details": "Accepts source, title, type, message, entity_id, ha_time, level, and data, stores the item in Redis, attempts to turn on configured Voice PE light entities, and enforces X-Tater-Token when API auth is enabled.",
             },
             {
                 "method": "GET",
                 "path": "/tater-ha/v1/notifications",
                 "summary": "Pull and clear queued notifications.",
-                "details": "Reads queued notifications from Redis, clears the list after delivery, and turns Voice PE indicators off once notifications are consumed, or immediately if none are present.",
+                "details": "Reads queued notifications from Redis, clears the list after delivery, turns Voice PE indicators off once notifications are consumed (or immediately if none are present), and enforces X-Tater-Token when API auth is enabled.",
             },
             {
                 "method": "POST",
                 "path": "/tater-ha/v1/message",
                 "summary": "Main Assist/chat message endpoint.",
-                "details": "Receives Home Assistant conversation requests, preserves stable session context, and runs Cerberus turns with Home Assistant-scoped system prompting and plugin gating.",
-            },
-        ],
-    },
-    "ha_automations": {
-        "label": "HA Automations",
-        "description": "Automation-only Home Assistant endpoint that pairs with the Tater Automations integration for direct tool execution, built-in event storage, and brief plugins that can write clean summary text straight into Home Assistant helpers.",
-        "role": "Automation bridge",
-        "source": TATER_SHOP_DIR / "portals" / "ha_automations_portal.py",
-        "plugin_surface": "automation",
-        "highlights": [
-            "Built for fast one-shot execution from Home Assistant automations rather than open-ended chat.",
-            "Includes an event API that stores newest-first event records per source in Redis for camera, doorbell, motion, garage, and other house-event timelines.",
-            "Fits camera events, doorbell alerts, dashboard summaries, and deterministic tool calls.",
-            "The current automation brief trio is Events Query Brief, Weather Brief, and Zen Greeting.",
-            "Pairs with the Tater Automations HACS integration, which exposes native Home Assistant actions instead of requiring raw REST or YAML calls.",
-            "Those Home Assistant actions now use clean selectors and dropdowns for common fields, so most flows no longer require typing raw arguments.",
-            "Works naturally with automation-only Verbas that expose short machine-oriented outputs and with a direct tool endpoint that skips AI routing.",
-        ],
-        "companions": [
-            HOME_ASSISTANT_COMPANIONS["tater_automations"],
-        ],
-        "companions_eyebrow": "Companion setup",
-        "companions_title": "Home Assistant integrations that connect to this portal.",
-        "companions_intro": "These components live inside Home Assistant and point user-facing conversations or automation actions back at Tater's runtime bridges.",
-        "guides": HOME_ASSISTANT_AUTOMATION_GUIDES,
-        "guides_eyebrow": "Automation patterns",
-        "guides_title": "How this portal handles brief outputs and Home Assistant state.",
-        "guides_intro": "These patterns are useful when a Home Assistant automation needs clean short text instead of a conversational reply.",
-        "apis": [
-            {
-                "method": "GET",
-                "path": "/tater-ha/v1/health",
-                "summary": "Basic health endpoint for the automations bridge.",
-                "details": "Returns ok plus the current bridge version so Home Assistant can verify the service is alive.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/events/add",
-                "summary": "Store a structured event record.",
-                "details": "Accepts source, title, ha_time, type, message, entity_id, level, and data, normalizes ha_time to naive ISO format, then stores the event in a newest-first Redis list keyed by source.",
-            },
-            {
-                "method": "GET",
-                "path": "/tater-ha/v1/events/search",
-                "summary": "Query stored events by source and time window.",
-                "details": "Supports source, limit, since, and until parameters, trims old items by the configured retention window, and returns filtered event items for a single source bucket such as front_yard.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/tools/{tool_name}",
-                "summary": "Run an automation-only tool directly.",
-                "details": "Calls an enabled plugin on the automation portal with a JSON arguments payload, without any AI router in the middle, which makes it useful for deterministic Home Assistant automations.",
+                "details": "Receives Home Assistant conversation requests, preserves stable session context, and runs Hydra turns with Home Assistant-scoped system prompting and plugin gating.",
             },
         ],
     },
@@ -784,7 +686,7 @@ PLATFORM_DOCS = {
             "Provides a lightweight HTTP bridge for Siri and Apple Shortcuts workflows.",
             "Designed for Shortcut-driven voice loops where Siri captures speech, posts JSON to Tater, then speaks the reply back aloud.",
             "Maintains per-device conversation sessions instead of treating every request as stateless.",
-            "Can require an AUTH_TOKEN so Shortcuts must send the X-Tater-Token header when the bridge is protected.",
+            "Supports optional API key protection so Shortcuts must send X-Tater-Token when enabled.",
             "Good fit for Apple-first households that want voice access without a full chat client.",
         ],
         "guides": [
@@ -819,7 +721,7 @@ PLATFORM_DOCS = {
                 "chips": ["session_id", "X-Tater-Token", "Per-device memory"],
                 "details": [
                     "Use a stable session_id such as iphone, ipad, or bedroom_homepod so conversations do not mix between devices.",
-                    "If AUTH_TOKEN is set in Tater HomeKit settings, add an X-Tater-Token header inside the shortcut request.",
+                    "If API auth is enabled in Tater HomeKit settings, add an X-Tater-Token header inside the shortcut request.",
                     "The bridge keeps short Siri-friendly session history in Redis using the configured session TTL and history limits.",
                 ],
             },
@@ -842,7 +744,7 @@ PLATFORM_DOCS = {
                 "method": "POST",
                 "path": "/tater-homekit/v1/message",
                 "summary": "Main Siri / Shortcuts message endpoint.",
-                "details": "Accepts JSON with text plus an optional session_id, enforces X-Tater-Token when AUTH_TOKEN is configured, and returns a plain reply field sized for Siri speech.",
+                "details": "Accepts JSON with text plus an optional session_id, enforces X-Tater-Token when API auth is enabled, and returns a plain reply field sized for Siri speech.",
             },
         ],
     },
@@ -857,7 +759,7 @@ PLATFORM_DOCS = {
             "Maintains scoped session history with configurable limits and TTL so desktop context stays stable but bounded.",
             "Supports long-poll notifications plus tool_wait status handling for menu-app feedback loops.",
             "Includes asset upload and download endpoints for screen captures, clipboard artifacts, and returned files.",
-            "Can enforce AUTH_TOKEN protection through the X-Tater-Token header.",
+            "Supports optional API key protection through the X-Tater-Token header.",
         ],
         "companions": [
             MACOS_MENU_COMPANION,
@@ -892,7 +794,7 @@ PLATFORM_DOCS = {
                 "method": "POST",
                 "path": "/macos/chat",
                 "summary": "Main macOS chat endpoint.",
-                "details": "Accepts user_text, clipboard context, optional assets, and scope/device context, then runs a Cerberus turn.",
+                "details": "Accepts user_text, clipboard context, optional assets, and scope/device context, then runs a Hydra turn.",
             },
             {
                 "method": "POST",
@@ -926,6 +828,22 @@ PLATFORM_DOCS = {
             },
         ],
     },
+    "awareness": {
+        "label": "Awareness Core",
+        "description": "Home awareness automation core for camera, doorbell, entry-sensor, and brief workflows with Redis-backed event history.",
+        "role": "Home awareness engine",
+        "source": TATER_SHOP_DIR / "cores" / "awareness_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Replaces the old HA automations bridge with an in-core awareness runtime.",
+            "Connects to Home Assistant state changes and runs camera, doorbell, and entry-sensor rules directly.",
+            "Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.",
+            "Camera and doorbell paths support snapshot + vision summaries, with optional notifications and TTS routing.",
+            "Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.",
+            "Brief jobs generate compact text updates (events/weather/greetings) on schedules for dashboard-style use.",
+        ],
+        "apis": [],
+    },
     "ai_task": {
         "label": "AI Task Runner",
         "description": "Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier portals.",
@@ -941,13 +859,13 @@ PLATFORM_DOCS = {
     },
     "memory": {
         "label": "Memory Core",
-        "description": "Background memory extraction layer that scans chat history, stores user and room memory, and feeds Cerberus context.",
+        "description": "Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.",
         "role": "Background service",
         "source": TATER_SHOP_DIR / "cores" / "memory_core.py",
         "plugin_surface": "",
         "highlights": [
             "Incrementally mines durable facts from prior conversations instead of relying only on the active turn.",
-            "Builds user and room summaries in Redis for later Cerberus injection.",
+            "Builds user and room summaries in Redis for later Hydra injection.",
             "Includes confidence thresholds, identity linking options, and context-size limits.",
         ],
         "apis": [],
@@ -973,8 +891,9 @@ PLATFORM_DOCS = {
         "plugin_surface": "xbmc",
         "highlights": [
             "Gives Tater a living-room interface on the OG Xbox.",
-            "Maintains local conversation sessions and routes actions through the same Cerberus core.",
+            "Maintains local conversation sessions and routes actions through the same Hydra core.",
             "Pairs well with media, smart-home, and utility Verbas for couch-side control.",
+            "Supports optional API key protection on HTTP endpoints using X-Tater-Token.",
         ],
         "apis": [],
     },
@@ -987,33 +906,30 @@ PLATFORM_META = {
     }
     for key, value in PLATFORM_DOCS.items()
 }
-PLATFORM_META["automation"] = {
-    "label": "Automation",
-    "description": "Plugin runtime surface for automation-only tools triggered by machine workflows.",
-}
 
 INSTALL_METHODS = [
     {
         "slug": "unraid",
         "title": "Unraid Community Apps",
         "eyebrow": "Recommended easy path",
-        "summary": "Install Tater and Redis Stack from Unraid Community Apps with persistent storage for Agent Lab data.",
+        "summary": "Install Tater and Redis Stack from Unraid Community Apps with persistent storage for Agent Lab and runtime config.",
         "best_for": "Unraid users who want the smoothest packaged deployment.",
         "complexity": "Low",
         "highlights": [
             "Tater is available in the Unraid Community Apps store.",
             "The README recommends installing both Tater and Redis Stack from the app store templates.",
-            "Persistent Agent Lab storage matters so updates do not wipe logs, downloads, documents, or workspace data.",
+            "Persistent Agent Lab and .runtime storage matters so updates do not wipe workspace data or Redis setup/encryption state.",
         ],
         "steps": [
             "Open Unraid Community Apps and install Redis Stack.",
             "Install Tater from the Community Apps store.",
-            "Add a persistent path mapping for /app/agent_lab inside the container to a host path such as /mnt/user/appdata/tater/agent_lab.",
+            "Add persistent path mappings for /app/agent_lab and /app/.runtime inside the container (for example /mnt/user/appdata/tater/agent_lab and /mnt/user/appdata/tater/runtime).",
+            "Optional but recommended: set TZ and map /etc/localtime + /etc/timezone for local container time.",
             "Start the containers and finish configuration in the WebUI.",
         ],
         "notes": [
-            "Without the /app/agent_lab mapping, Agent Lab data can be lost when the container is rebuilt or updated.",
-            "This path mirrors the Docker persistence advice in the README, but packaged for Unraid users.",
+            "Without /app/agent_lab mapping, Agent Lab data can be lost on rebuild/update.",
+            "Without /app/.runtime mapping, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
         ],
         "snippets": [],
         "links": [],
@@ -1028,33 +944,29 @@ INSTALL_METHODS = [
         "highlights": [
             "The README points to a dedicated Home Assistant add-on repository for Tater.",
             "The add-on store exposes Redis Stack and Tater AI Assistant together.",
-            "Two optional HACS integrations complete the Home Assistant side: Tater Conversation Agent for Assist and Tater Automations for native automation actions.",
+            "Optional HACS integration: Tater Conversation Agent for Assist conversations.",
         ],
         "steps": [
             "Add the Tater add-on repository: https://github.com/TaterTotterson/hassio-addons-tater",
             "Install and start Redis Stack first.",
             "Install Tater AI Assistant second.",
-            "Configure your LLM and Redis settings in the Tater add-on.",
-            "Start Tater and verify the WebUI and Home Assistant bridge are reachable.",
+            "Start Tater and open the WebUI ingress page.",
+            "Complete Redis setup in the popup if prompted, then configure Hydra model settings in WebUI.",
+            "Verify the WebUI and Home Assistant bridges are reachable.",
         ],
         "notes": [
             "Tater-HomeAssistant is the Home Assistant conversation component that points Assist at Tater's /tater-ha/v1/message bridge endpoint.",
-            "tater_automations is the Home Assistant automation integration that calls Tater's automations bridge on port 8788 with plugin-specific actions.",
+            "Awareness automations now run in Awareness Core inside Tater rather than a separate automation bridge endpoint.",
+            "Home Assistant integration supports optional API key entry when portal API auth is enabled.",
             "For brief-style automation output, input_text helpers are the recommended storage target inside Home Assistant.",
         ],
         "companions": [
             HOME_ASSISTANT_COMPANIONS["tater_conversation"],
-            HOME_ASSISTANT_COMPANIONS["tater_automations"],
         ],
-        "guides": HOME_ASSISTANT_AUTOMATION_GUIDES,
         "snippets": [
             {
-                "label": "Conversation agent endpoint",
-                "code": "http://YOUR_TATER_HOST:8787/tater-ha/v1/message",
-            },
-            {
-                "label": "Automations integration target",
-                "code": "host: YOUR_TATER_HOST\nport: 8788",
+                "label": "Conversation integration target",
+                "code": "host: YOUR_TATER_HOST\nport: 8787\napi_key: OPTIONAL_PORTAL_API_KEY",
             },
             {
                 "label": "Dashboard markdown card",
@@ -1077,34 +989,31 @@ INSTALL_METHODS = [
                 "label": "Tater-HomeAssistant",
                 "href": "https://github.com/TaterTotterson/Tater-HomeAssistant",
             },
-            {
-                "label": "tater_automations",
-                "href": "https://github.com/TaterTotterson/tater_automations",
-            },
         ],
     },
     {
         "slug": "local",
         "title": "Local Python Install",
         "eyebrow": "Advanced local setup",
-        "summary": "Run Tater from source with Python 3.11, Redis Stack, and an OpenAI-compatible model backend.",
+        "summary": "Run Tater from source with Python 3.11 and Redis Stack, then configure Redis/Hydra in WebUI.",
         "best_for": "Developers and operators who want direct source control and local customization.",
         "complexity": "Medium",
         "highlights": [
             "Requires Python 3.11, Redis Stack, and an OpenAI-compatible LLM backend such as Ollama, LocalAI, LM Studio, Lemonade, or OpenAI API.",
             "The README recommends running inside a virtual environment to keep dependencies isolated.",
-            "The Streamlit WebUI is started directly from the source tree.",
+            "Redis is no longer configured in .env; connection setup is handled in-WebUI and saved in .runtime.",
         ],
         "steps": [
             "Clone the repository.",
             "Change into the Tater project directory.",
             "Create and activate a Python virtual environment.",
             "Install dependencies from requirements.txt.",
-            "Create a .env file with your LLM and Redis configuration.",
-            "Launch the Streamlit WebUI.",
+            "Launch TaterOS and complete Redis setup in the popup (host/port/auth/TLS).",
+            "Configure Hydra LLM base server(s) and optional Beast Mode role routing in Settings.",
         ],
         "notes": [
-            "When using ChatGPT/OpenAI API, leave LLM_PORT blank so Tater uses HTTPS without appending a port.",
+            "Redis connection settings are saved locally in .runtime/redis_connection.json.",
+            "Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.",
             "This path is the best fit when you want to inspect or modify the source directly.",
         ],
         "snippets": [
@@ -1117,25 +1026,12 @@ source .venv/bin/activate
 pip install -r requirements.txt""",
             },
             {
-                "label": "Example .env for local backend",
-                "code": """LLM_HOST=127.0.0.1
-LLM_PORT=11434
-LLM_MODEL=gemma3-27b-abliterated
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379""",
+                "label": "Run TaterOS backend + WebUI",
+                "code": "uvicorn tateros_app:app --host 0.0.0.0 --port 8501 --reload --no-access-log",
             },
             {
-                "label": "Example .env for ChatGPT/OpenAI API",
-                "code": """LLM_HOST=https://api.openai.com
-LLM_PORT=
-LLM_MODEL=gpt-4o
-LLM_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379""",
-            },
-            {
-                "label": "Run the WebUI",
-                "code": "streamlit run webui.py",
+                "label": "Alternative launcher",
+                "code": "sh run_ui.sh",
             },
         ],
         "links": [],
@@ -1144,22 +1040,25 @@ REDIS_PORT=6379""",
         "slug": "docker",
         "title": "Docker Image",
         "eyebrow": "Container path",
-        "summary": "Run the published container image with explicit LLM, Redis, time-zone, and Agent Lab volume settings.",
+        "summary": "Run the published container image with persistent Agent Lab/.runtime volumes, then configure Redis + Hydra in WebUI.",
         "best_for": "Operators who want a direct container deployment outside packaged add-on/app-store flows.",
         "complexity": "Medium",
         "highlights": [
             "The README publishes the image at ghcr.io/tatertotterson/tater:latest.",
-            "The main container persistence warning is that /app/agent_lab should be mounted to host storage.",
-            "The container exposes the Streamlit WebUI on port 8501 and several Tater service ports in the README example.",
+            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings.",
+            "The container exposes the WebUI on port 8501 and several Tater service ports in the README example.",
         ],
         "steps": [
             "Pull the published image.",
-            "Start the container with your chosen LLM and Redis environment variables.",
-            "Mount /app/agent_lab to host storage so Agent Lab data persists across rebuilds.",
+            "Start the container with required port and volume mappings.",
+            "Mount /app/agent_lab and /app/.runtime to host storage so runtime and Redis config persist across rebuilds.",
+            "Open the WebUI and complete Redis setup popup if prompted.",
+            "Configure Hydra base model settings and optional Beast Mode role routing in Settings.",
             "Open the WebUI at http://localhost:8501 after the container is running.",
         ],
         "notes": [
-            "If you do not mount /app/agent_lab, runtime data can be lost when the container is rebuilt or updated.",
+            "If /app/agent_lab is not mounted, runtime data can be lost on rebuild/update.",
+            "If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
             "The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.",
         ],
         "snippets": [
@@ -1168,7 +1067,7 @@ REDIS_PORT=6379""",
                 "code": "docker pull ghcr.io/tatertotterson/tater:latest",
             },
             {
-                "label": "Docker run with local backend",
+                "label": "Docker run with persistent runtime paths",
                 "code": """docker run -d --name tater_webui \\
   -p 8501:8501 \\
   -p 8787:8787 \\
@@ -1178,16 +1077,12 @@ REDIS_PORT=6379""",
   -e TZ=America/Chicago \\
   -v /etc/localtime:/etc/localtime:ro \\
   -v /etc/timezone:/etc/timezone:ro \\
-  -e LLM_HOST=127.0.0.1 \\
-  -e LLM_PORT=11434 \\
-  -e LLM_MODEL=gemma3-27b-abliterated \\
-  -e REDIS_HOST=127.0.0.1 \\
-  -e REDIS_PORT=6379 \\
-  -v /agent_lab:/app/agent_lab \\
+  -v /tater_agent_lab:/app/agent_lab \\
+  -v /tater_runtime:/app/.runtime \\
   ghcr.io/tatertotterson/tater:latest""",
             },
             {
-                "label": "Docker run with ChatGPT/OpenAI API",
+                "label": "Docker run (same ports/volumes, alternate host paths)",
                 "code": """docker run -d --name tater_webui \\
   -p 8501:8501 \\
   -p 8787:8787 \\
@@ -1197,13 +1092,8 @@ REDIS_PORT=6379""",
   -e TZ=America/Chicago \\
   -v /etc/localtime:/etc/localtime:ro \\
   -v /etc/timezone:/etc/timezone:ro \\
-  -e LLM_HOST=https://api.openai.com \\
-  -e LLM_PORT= \\
-  -e LLM_MODEL=gpt-4o \\
-  -e LLM_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx \\
-  -e REDIS_HOST=127.0.0.1 \\
-  -e REDIS_PORT=6379 \\
-  -v /agent_lab:/app/agent_lab \\
+  -v /tater_agent_lab:/app/agent_lab \\
+  -v /tater_runtime:/app/.runtime \\
   ghcr.io/tatertotterson/tater:latest""",
             },
         ],
@@ -1238,7 +1128,6 @@ KERNEL_TOOL_GROUPS = {
     ],
     "Web and media": [
         "search_web",
-        "read_url",
         "inspect_webpage",
         "image_describe",
     ],
@@ -1421,7 +1310,7 @@ def shop_manifest_plugins() -> list[dict[str, Any]]:
     except Exception:
         return []
 
-    items = payload.get("plugins") if isinstance(payload, dict) else []
+    items = payload.get("verbas") if isinstance(payload, dict) else []
     if not isinstance(items, list):
         return []
     return [item for item in items if isinstance(item, dict)]
@@ -1477,22 +1366,22 @@ def merge_shop_manifest(plugin: dict[str, Any], entry: dict[str, Any]) -> dict[s
 
 def build_plugins() -> list[dict[str, Any]]:
     manifest_entries = shop_manifest_plugins()
-    if manifest_entries:
-        rows: list[dict[str, Any]] = []
-        for entry in manifest_entries:
-            relative_entry = str(entry.get("entry") or "").strip()
-            source_path = (TATER_SHOP_DIR / relative_entry).resolve() if relative_entry else None
-            if source_path and source_path.exists():
-                plugin = extract_plugin_metadata(source_path)
-            else:
-                plugin = manifest_fallback_plugin(entry)
-            rows.append(merge_shop_manifest(plugin, entry))
-        return sorted(rows, key=lambda item: item["title"].lower())
+    if not manifest_entries:
+        raise RuntimeError(
+            f"No Verbas found in {TATER_SHOP_MANIFEST}. "
+            "Expected a top-level 'verbas' list populated by Tater_Shop."
+        )
 
-    return sorted(
-        (extract_plugin_metadata(path) for path in PLUGIN_DIR.glob("*.py") if path.name != "__init__.py"),
-        key=lambda item: item["title"].lower(),
-    )
+    rows: list[dict[str, Any]] = []
+    for entry in manifest_entries:
+        relative_entry = str(entry.get("entry") or "").strip()
+        source_path = (TATER_SHOP_DIR / relative_entry).resolve() if relative_entry else None
+        if source_path and source_path.exists():
+            plugin = extract_plugin_metadata(source_path)
+        else:
+            plugin = manifest_fallback_plugin(entry)
+        rows.append(merge_shop_manifest(plugin, entry))
+    return sorted(rows, key=lambda item: item["title"].lower())
 
 
 def normalize_plugin(raw: dict[str, Any]) -> dict[str, Any]:
@@ -1722,13 +1611,9 @@ def extract_cerberus_defaults() -> list[dict[str, str]]:
     keys = [
         ("DEFAULT_MAX_ROUNDS", "Max rounds", ""),
         ("DEFAULT_MAX_TOOL_CALLS", "Max tool calls", ""),
-        ("DEFAULT_PLANNER_MAX_TOKENS", "Planner max tokens", ""),
-        ("DEFAULT_DOER_MAX_TOKENS", "Doer max tokens", ""),
-        ("DEFAULT_CHECKER_MAX_TOKENS", "Checker max tokens", ""),
-        ("DEFAULT_TOOL_REPAIR_MAX_TOKENS", "Tool repair max tokens", ""),
-        ("DEFAULT_RECOVERY_MAX_TOKENS", "Recovery max tokens", ""),
+        ("DEFAULT_STEP_RETRY_LIMIT", "Step retry limit", ""),
         ("DEFAULT_MAX_LEDGER_ITEMS", "Max ledger items", ""),
-        ("DEFAULT_AGENT_STATE_TTL_SECONDS", "Agent state TTL", "seconds"),
+        ("DEFAULT_ASTRAEUS_PLAN_REVIEW_ENABLED", "Astraeus second plan check", ""),
     ]
     rows: list[dict[str, str]] = []
     for constant_name, label, unit in keys:
@@ -1830,9 +1715,6 @@ def build_platforms(
 
 
 def format_default_value(constant_name: str, value: Any, unit: str) -> str:
-    if constant_name == "DEFAULT_AGENT_STATE_TTL_SECONDS" and isinstance(value, (int, float)):
-        days = int(value) // 86400
-        return f"{int(value)} seconds ({days} days)"
     if unit and isinstance(value, (int, float)):
         return f"{int(value)} {unit}"
     if isinstance(value, (int, float)):
@@ -1853,7 +1735,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
     nav_items = [
         ("home", "Home", f"{base}index.html"),
         ("install", "Install", f"{base}install/index.html"),
-        ("cerberus", "Cerberus", f"{base}cerberus/index.html"),
+        ("cerberus", "Hydra", f"{base}cerberus/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
@@ -1935,6 +1817,8 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
         return "Desktop bridge"
     if platform["slug"] == "ai_task":
         return "Scheduler runtime"
+    if platform["slug"] == "awareness":
+        return "Awareness engine"
     if platform["slug"] == "memory":
         return "Memory service"
     if platform["slug"] == "rss":
@@ -1987,7 +1871,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "memory":
         return (
             "Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects "
-            "memory context back into Cerberus instead of acting like a direct Verba surface."
+            "memory context back into Hydra instead of acting like a direct Verba surface."
         )
     if platform["slug"] == "rss":
         return (
@@ -2001,7 +1885,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
 
 def plugin_arguments_text(plugin: dict[str, Any]) -> str:
     return (
-        "This Verba does not require named arguments in its published usage example. Cerberus usually triggers "
+        "This Verba does not require named arguments in its published usage example. Hydra usually triggers "
         "it directly from the user's request or from recent conversation context."
     )
 
@@ -2032,7 +1916,7 @@ def render_home_page(
         <span class="eyebrow">Source-backed wiki</span>
         <h1>Tater is an AI assistant built to act.</h1>
         <p>
-          Cerberus plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
+          Hydra plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
           smart-home, media, and automation workflows.
         </p>
         <div class="action-row">
@@ -2040,7 +1924,7 @@ def render_home_page(
           {button("Explore portals", "portals/index.html")}
           {button("Explore cores", "cores/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
-          {button("Read Cerberus", "cerberus/index.html", ghost=True)}
+          {button("Read Hydra", "cerberus/index.html", ghost=True)}
         </div>
       </div>
       <aside class="hero-art">
@@ -2060,11 +1944,27 @@ def render_home_page(
     feature_cards = [
         (
             "Smart chaining",
-            "Cerberus breaks work into steps, picks the next tool, and keeps going until the task is done.",
+            "Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.",
+        ),
+        (
+            "Beast Mode routing",
+            "Base servers can run normal AI calls while Chat/Astraeus/Thanatos/Minos/Hermes optionally route to per-head models.",
+        ),
+        (
+            "Redis control + encryption",
+            "Redis setup, connectivity checks, and live encrypt/decrypt controls are managed directly in WebUI settings.",
+        ),
+        (
+            "API key protection",
+            "Portal HTTP bridges can be locked behind X-Tater-Token so companion apps and integrations use shared API keys.",
         ),
         (
             "Core layer",
             "Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.",
+        ),
+        (
+            "Awareness Core",
+            "Camera, doorbell, entry-sensor, and brief automations now run in-core with Redis event timelines.",
         ),
         (
             "Verbas",
@@ -2140,13 +2040,13 @@ def render_home_page(
       </article>
       <article class="panel">
         <h3>Core docs</h3>
-        <p>Built-in runtime services such as scheduling, memory, and RSS monitoring.</p>
+        <p>Built-in runtime services such as awareness automation, scheduling, memory, and RSS monitoring.</p>
         {button("Open cores", "cores/index.html", ghost=True)}
       </article>
       <article class="panel">
-        <h3>Cerberus core</h3>
-        <p>Planner loop, validation path, guardrails, and budgets.</p>
-        {button("Open Cerberus", "cerberus/index.html", ghost=True)}
+        <h3>Hydra core</h3>
+        <p>Astraeus -> Thanatos -> Minos -> Hermes loop, Beast Mode routing, and guardrails.</p>
+        {button("Open Hydra", "cerberus/index.html", ghost=True)}
       </article>
       <article class="panel">
         <h3>Tools + Verbas</h3>
@@ -2162,7 +2062,7 @@ def render_home_page(
         <span class="eyebrow">WebUI snapshot</span>
         <h2>The operator side is live.</h2>
         <p>
-          The WebUI handles setup, chat, plugin browsing, settings, and Cerberus runtime controls in one place.
+          The WebUI handles setup, chat, plugin browsing, settings, Hydra runtime controls, and Redis encryption in one place.
         </p>
       </div>
       <div class="screenshot-frame">
@@ -2317,14 +2217,14 @@ def render_install_detail(method: dict[str, Any]) -> str:
     companion_section = render_companion_section(
         method.get("companions") or [],
         "Home Assistant extras",
-        "Optional HACS integrations for Assist conversations and native automation actions.",
-        "After the add-on is running, these Home Assistant-side integrations connect Assist and automation flows back to Tater's portal endpoints.",
+        "Optional HACS integrations for Assist conversations.",
+        "After the add-on is running, these Home Assistant-side integrations connect Assist flows back to Tater's portal endpoints.",
     )
     guide_section = render_companion_section(
         method.get("guides") or [],
-        "Automation setup",
-        "Patterns for storing brief automation results in Home Assistant.",
-        "These patterns matter most when you want automation-safe text summaries to stay visible in helpers, dashboards, and routines.",
+        "Workflow setup",
+        "Patterns for storing brief helper output in Home Assistant.",
+        "These patterns matter most when you want compact text summaries to stay visible in helpers, dashboards, and routines.",
     )
     links_html = "".join(
         button(link["label"], link["href"], ghost=True)
@@ -2488,7 +2388,7 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
         <span class="eyebrow">Core reference</span>
         <h1>Tater cores power built-in runtime services.</h1>
         <p>
-          Cores are always-on internal services like scheduling, memory extraction, and feed monitoring.
+          Cores are always-on internal services like awareness automation, scheduling, memory extraction, and feed monitoring.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2532,6 +2432,19 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     api_items = platform.get("apis") or []
     api_section = ""
     if api_items:
+        api_auth_note = ""
+        if not is_core and str(platform.get("slug") or "").strip().lower() in {
+            "homeassistant",
+            "homekit",
+            "macos",
+            "xbmc",
+        }:
+            api_auth_note = """
+            <article class="panel">
+              <span class="eyebrow">API auth</span>
+              <p>When API auth is enabled, requests must include <code>X-Tater-Token</code> with the configured portal API key.</p>
+            </article>
+            """
         api_cards = "".join(
             f"""
             <article class="tool-card">
@@ -2551,6 +2464,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
             <span class="eyebrow">Built-in APIs</span>
             <h2>HTTP endpoints exposed by this {surface_label}.</h2>
           </div>
+          {api_auth_note}
           <div class="grid grid-2">
             {api_cards}
           </div>
@@ -2677,24 +2591,28 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
 def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     loop_cards = [
         (
-            "1. Plan Builder",
-            "Cerberus turns a user request into ordered atomic steps so multi-action requests become a clean chain instead of one oversized tool call.",
+            "1. Astraeus (The Seer)",
+            "Astraeus turns a user request into an ordered atomic plan and decides whether the turn is chat-only or execution.",
         ),
         (
-            "2. Planner",
-            "The planner chooses exactly one next action, selecting the best kernel tool or Verba for the current step with a strict current-message tool gate.",
+            "2. Thanatos (The executor)",
+            "Thanatos executes the active atomic step and selects the exact next tool call needed for that step.",
         ),
         (
             "3. Validation and repair",
             "Tool calls are forced into strict JSON, checked against the tool catalog, repaired if malformed, and blocked if the tool is unsupported or disabled.",
         ),
         (
-            "4. Doer state update",
-            "After a tool runs, Cerberus updates goal, plan, facts, open questions, next step, and tool history so the next round stays grounded.",
+            "4. Thanatos state update",
+            "After each tool run, state is updated with goal, plan, facts, open questions, next step, and tool history so current-turn execution stays grounded.",
         ),
         (
-            "5. Checker",
-            "The checker returns exactly one of FINAL_ANSWER, RETRY_TOOL, or NEED_USER_INFO and decides whether another atomic step is still required.",
+            "5. Minos (The Arbiter)",
+            "Minos returns one validation decision (CONTINUE, RETRY, ASK_USER, FAIL, or FINAL) and checks whether the turn still needs another atomic step.",
+        ),
+        (
+            "6. Hermes (The voice)",
+            "Hermes renders the final user-facing response after execution and validation have converged.",
         ),
     ]
     loop_html = "".join(
@@ -2718,12 +2636,14 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     )
 
     guardrails = [
-        "Current-message tool gate: Cerberus does not continue past work unless the current turn explicitly asks it to.",
+        "Tool-first router: execution, retrieval, setting changes, add/remove requests, and system diagnostics route to tools.",
+        "Beast Mode routing: base servers can handle AI Calls while Chat/Astraeus/Thanatos/Minos/Hermes can route to per-head models.",
         "Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.",
-        "Atomic execution lock: the planner and checker both focus on one next step instead of merging unrelated actions.",
+        "Atomic execution lock: Thanatos and Minos both focus on one next step instead of merging unrelated actions.",
+        "Fresh-run behavior: ASK_USER ends the current run and a new user message starts a fresh run.",
         "Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.",
         "Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.",
-        "Memory context: user and room memory summaries can be injected into checker decisions without bloating the turn.",
+        "Memory context: user and room memory summaries can be injected into Minos decisions without bloating the turn.",
     ]
     guardrail_html = "".join(f"<li>{escape(item)}</li>" for item in guardrails)
 
@@ -2732,11 +2652,11 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     chaining_cards = [
         (
             "Kernel tools first",
-            "Cerberus can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
+            "Hydra can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
         ),
         (
             "Verbas where action lives",
-            "When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Cerberus switches to the right Verba.",
+            "When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Hydra switches to the right Verba.",
         ),
         (
             "One step at a time",
@@ -2756,14 +2676,14 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     body = f"""
     <section class="hero hero-subpage">
       <div class="hero-copy">
-        <span class="eyebrow">Cerberus AI core</span>
-        <h1>Cerberus plans, chains, and completes tasks.</h1>
+        <span class="eyebrow">Hydra AI core</span>
+        <h1>Hydra plans, chains, and completes tasks.</h1>
         <p>
-          It runs a guarded Planner -> Doer -> Checker loop that validates actions, repairs bad calls, and mixes kernel tools with Verbas one step at a time.
+          It runs a guarded Astraeus -> Thanatos -> Minos -> Hermes loop that validates actions, repairs bad calls, and mixes kernel tools with Verbas one step at a time.
         </p>
       </div>
       <aside class="panel hero-panel">
-        <img class="cerberus-badge" src="../assets/images/cerberus-badge.png" alt="Cerberus AI Core badge">
+        <img class="cerberus-badge" src="../assets/images/cerberus-badge.png" alt="Hydra AI Core badge">
         <span class="eyebrow">State fields</span>
         <div class="chip-row">{state_html}</div>
       </aside>
@@ -2789,7 +2709,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     <section class="section">
       <div class="section-head">
         <span class="eyebrow">Guardrails</span>
-        <h2>Why Cerberus stays controlled.</h2>
+        <h2>Why Hydra stays controlled.</h2>
       </div>
       <div class="panel">
         <ul class="stack-list">
@@ -2808,8 +2728,8 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     </section>
     """
     return page_template(
-        title="Tater Assistant | Cerberus",
-        description="Overview of the Cerberus AI core that powers Tater Assistant.",
+        title="Tater Assistant | Hydra",
+        description="Overview of the Hydra AI core that powers Tater Assistant.",
         body=body,
         depth=1,
         nav_key="cerberus",
@@ -2854,7 +2774,7 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
         <span class="eyebrow">Built-in capabilities</span>
         <h1>Kernel tools are Tater's native action layer.</h1>
         <p>
-          They handle files, web inspection, memory, artifacts, and delivery before Cerberus reaches for a Verba.
+          They handle files, web inspection, memory, artifacts, and delivery before Hydra reaches for a Verba.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2884,9 +2804,8 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
 def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
     cards = "".join(render_plugin_card(plugin) for plugin in plugins)
     source_copy = (
-        "This index reflects the current Tater Shop manifest and plugin files. Each entry links to a source-backed detail page with usage, portals, and current behavior."
-        if shop_manifest_plugins()
-        else "This index reflects the modules currently present in <code>Tater/plugins</code>. Each entry links to a source-backed detail page with usage, portals, and current behavior."
+        "This index reflects the current Tater Shop manifest and Verba files. "
+        "Each entry links to a source-backed detail page with usage, portals, and current behavior."
     )
     body = f"""
     <section class="hero hero-subpage">
@@ -2906,7 +2825,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
             <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
             <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
             <button class="filter-chip" type="button" data-platform-filter="homeassistant">Home Assistant</button>
-            <button class="filter-chip" type="button" data-platform-filter="automation">Automation</button>
+            <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
           </div>
           <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verbas shown</p>
         </div>
@@ -3053,7 +2972,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
         {button("Portals", "../portals/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Kernel tools", "../kernel-tools/index.html", ghost=True)}
-        {button("Cerberus", "../cerberus/index.html", ghost=True)}
+        {button("Hydra", "../cerberus/index.html", ghost=True)}
       </div>
     </section>
     """
