@@ -29,11 +29,17 @@ SITE_ROOT = resolve_path("TATER_WIKI_SITE_DIR", BASE_DIR / "public_html", BASE_D
 TATER_DIR = resolve_path("TATER_WIKI_TATER_DIR", SCRIPT_DIR / "Tater", BASE_DIR / "Tater")
 TATER_SHOP_DIR = resolve_path("TATER_WIKI_TATER_SHOP_DIR", SCRIPT_DIR / "Tater_Shop", BASE_DIR / "Tater_Shop")
 TATER_SHOP_MANIFEST = TATER_SHOP_DIR / "manifest.json"
+TATER_README = TATER_DIR / "README.md"
 
 LOGO_SOURCE = TATER_DIR / "images" / "tater-new-logo.png"
 WEBUI_SOURCE = TATER_DIR / "images" / "webui.png"
 LOGO_TARGET = SITE_ROOT / "assets" / "images" / "tater-logo.png"
 WEBUI_TARGET = SITE_ROOT / "assets" / "images" / "webui.png"
+DEFAULT_INSTALL_README_NOTE = (
+    "Tater currently recommends using gemma-4-26b-a4b (disable thinking), "
+    "qwen/qwen3.5-35b-a3b (disable thinking), qwen3-coder-next, qwen3-next-80b, "
+    "or gpt-oss-120b (disable thinking)."
+)
 
 CERBERUS_SOURCE = resolve_path(
     "TATER_WIKI_HYDRA_SOURCE",
@@ -496,6 +502,7 @@ CORE_DOCS_ORDER = [
     "awareness",
     "ai_task",
     "memory",
+    "personal",
     "rss",
 ]
 
@@ -828,6 +835,116 @@ PLATFORM_DOCS = {
             },
         ],
     },
+    "esphome": {
+        "label": "ESPHome",
+        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and future native devices, with satellites, live entities, logs, stats, and the full voice pipeline on the main app port.",
+        "role": "Native device runtime",
+        "source": None,
+        "plugin_surface": "voice_core",
+        "hero_eyebrow": "Native ESPHome",
+        "hero_panel_eyebrow": "What it powers",
+        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, ESPHome satellites, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
+        "role_eyebrow": "Why it matters",
+        "role_title": "What native ESPHome unlocks",
+        "role_text": "Tater now owns the full ESPHome voice experience directly: discovery, room-aware voice sessions, live device state, and on-device playback all run inside the main app instead of a downloadable core.",
+        "highlights_eyebrow": "Feature set",
+        "highlights_title": "What makes the built-in ESPHome stack feel like a real voice system",
+        "plugin_eyebrow": "Voice-aware verbas",
+        "plugin_title": "Verbas that can act on the speaking device",
+        "settings_eyebrow": "Operator controls",
+        "settings_title": "How operators use it in Tater",
+        "highlights": [
+            "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
+            "Settings -> ESPHome now owns Satellites, Settings, and Stats so operators can manage discovery, pairing, rooms, logs, live entities, and voice metrics in one place.",
+            "Shared speech backends live in Settings -> Models, with Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, and Home Assistant announcement TTS available where they make sense.",
+            "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding models.",
+            "Live entity views expose sensors plus writable controls such as switches, buttons, numbers, selects, lights, and RGB color when the device supports it.",
+            "Per-device logs, stats, room awareness, and direct playback make Tater Voice hardware feel local to the room instead of remote to the browser.",
+        ],
+        "guides": [
+            {
+                "title": "Native ESPHome runtime",
+                "summary": "ESPHome is no longer a shop core. It is part of the main Tater app and starts with Tater.",
+                "chips": ["Built in", "One app", "Main port"],
+                "details": [
+                    "The old external voice runtime has been folded into Tater's built-in ESPHome runtime so the voice stack no longer depends on a separate downloadable core or its own HTTP listener.",
+                    "That keeps the device lifecycle simpler: discovery, session handling, playback URLs, and operator screens now all live inside the same main application.",
+                    "This built-in shape also leaves room for future ESPHome device types beyond the current voice-pipeline hardware.",
+                ],
+            },
+            {
+                "title": "Voice pipeline and shared models",
+                "summary": "The live voice loop uses shared STT/TTS choices from the Models tab while keeping ESPHome-specific controls in one native screen.",
+                "chips": ["Models tab", "STT", "TTS"],
+                "details": [
+                    "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, or Piper.",
+                    "Announcement flows can still bridge to Home Assistant API TTS when that is the right delivery path, but device-local voice replies stay inside Tater's built-in runtime.",
+                    "Because models auto-download into agent_lab/models, first-run setup is much smoother on fresh installs and bind-mounted Docker deployments.",
+                ],
+            },
+            {
+                "title": "Runtime observability",
+                "summary": "The ESPHome screen now separates devices, settings, and stats so tuning is based on real behavior instead of guesswork.",
+                "chips": ["Satellites", "Stats", "Live logs"],
+                "details": [
+                    "Satellites shows discovered devices, saved room assignments, live entity state, device facts, and an ESPHome-style live log console.",
+                    "Stats surfaces wake behavior, no-op rates, false wakes, backend latency, fallback usage, and per-device voice summaries for tuning.",
+                    "Writable entity controls are available inline for things like switches, lights, numbers, buttons, and select options.",
+                ],
+            },
+            {
+                "title": "Experimental voice features",
+                "summary": "Optional experimental toggles let operators test more aggressive voice behavior on hardware that can support it.",
+                "chips": ["Experimental", "Partial STT", "Early-start TTS"],
+                "details": [
+                    "Experimental Partial STT can keep partial transcript state during live capture so the system gets earlier visibility into what the user is saying.",
+                    "Experimental Early-Start TTS can begin speaking long replies sooner by preparing smaller response chunks before the whole answer is finished.",
+                    "Experimental Live Tool Progress Speech lets Tater speak Hydra tool-progress lines during the thinking phase instead of waiting until the final answer.",
+                ],
+            },
+        ],
+        "guides_eyebrow": "Voice experience",
+        "guides_title": "How native ESPHome makes Tater feel like a real device assistant.",
+        "guides_intro": "These notes focus on the built-in ESPHome runtime, the live voice pipeline, shared speech backends, and the operator tools now living directly inside Tater.",
+        "apis": [
+            {
+                "method": "GET",
+                "path": "/api/settings/esphome/runtime",
+                "summary": "Load the native ESPHome runtime view used by Settings -> ESPHome.",
+                "details": "Returns the current Satellites, Settings, and Stats payload so the WebUI can render discovery state, device cards, voice metrics, and runtime controls.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/settings/esphome/runtime/action",
+                "summary": "Run a native ESPHome runtime action from the WebUI.",
+                "details": "Handles refresh, connect/disconnect, save/forget satellite actions, live log lifecycle, and direct entity-control actions from the ESPHome settings screen.",
+            },
+            {
+                "method": "GET",
+                "path": "/tater-ha/v1/voice/native/status",
+                "summary": "Inspect current voice-pipeline runtime state and backend availability.",
+                "details": "Returns selected speech backends, effective fallback state, model roots, discovery state, selector sessions, and availability of local STT/TTS backends.",
+            },
+            {
+                "method": "POST",
+                "path": "/tater-ha/v1/voice/esphome/entities",
+                "summary": "Fetch live ESPHome entity rows for one connected satellite.",
+                "details": "Returns the live entity snapshot so verbas and operators can inspect sensors, buttons, numbers, switches, lights, and other exposed device entities.",
+            },
+            {
+                "method": "POST",
+                "path": "/tater-ha/v1/voice/esphome/entities/command",
+                "summary": "Command a writable ESPHome entity on one satellite.",
+                "details": "Supports button, number, switch, select, text, and light-control actions so device-local flows can act directly on the speaking device.",
+            },
+            {
+                "method": "POST",
+                "path": "/tater-ha/v1/voice/esphome/play",
+                "summary": "Queue direct audio playback on a selected ESPHome satellite.",
+                "details": "Used for device-local playback flows such as announcements, generated audio, and other responses that should play on the speaking satellite itself.",
+            },
+        ],
+    },
     "awareness": {
         "label": "Awareness Core",
         "description": "Home awareness automation core for camera, doorbell, entry-sensor, and brief workflows with Redis-backed event history.",
@@ -870,6 +987,22 @@ PLATFORM_DOCS = {
         ],
         "apis": [],
     },
+    "personal": {
+        "label": "Personal Core",
+        "description": "Email intelligence core that scans inboxes, builds a structured personal profile, injects optional Hydra context, and supports cross-portal notifications.",
+        "role": "Personal intelligence engine",
+        "source": TATER_SHOP_DIR / "cores" / "personal_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Scans one or more IMAP inboxes on a configurable interval and stores normalized email history in Redis.",
+            "Extracts structured signals such as spending habits, upcoming events, subscriptions, deliveries, action items, and important notes.",
+            "Publishes personal kernel tools for search, summarization, spending, plans, subscriptions, deliveries, actions, notes, and favorite places.",
+            "Can inject bounded personal context into Hydra prompts per portal, with Discord/IRC/Telegram/Matrix controls.",
+            "Supports notification routing through notifier portals with destination controls and per-cycle limits.",
+            "Includes a dedicated WebUI tab for stats, context previews, manual scans, notification tests, and safe data cleanup actions.",
+        ],
+        "apis": [],
+    },
     "rss": {
         "label": "RSS",
         "description": "Background feed watcher that summarizes articles and dispatches updates through notifier portals.",
@@ -906,6 +1039,10 @@ PLATFORM_META = {
     }
     for key, value in PLATFORM_DOCS.items()
 }
+PLATFORM_META["voice_core"] = {
+    "label": "ESPHome Voice",
+    "description": "Built-in ESPHome voice runtime inside Tater.",
+}
 
 INSTALL_METHODS = [
     {
@@ -918,7 +1055,7 @@ INSTALL_METHODS = [
         "highlights": [
             "Tater is available in the Unraid Community Apps store.",
             "The README recommends installing both Tater and Redis Stack from the app store templates.",
-            "Persistent Agent Lab and .runtime storage matters so updates do not wipe workspace data or Redis setup/encryption state.",
+            "Persistent Agent Lab and .runtime storage matters so updates do not wipe workspace data, Redis setup/encryption state, or auto-downloaded voice models.",
         ],
         "steps": [
             "Open Unraid Community Apps and install Redis Stack.",
@@ -928,7 +1065,7 @@ INSTALL_METHODS = [
             "Start the containers and finish configuration in the WebUI.",
         ],
         "notes": [
-            "Without /app/agent_lab mapping, Agent Lab data can be lost on rebuild/update.",
+            "Without /app/agent_lab mapping, Agent Lab data and downloaded STT/TTS voice models can be lost on rebuild/update.",
             "Without /app/.runtime mapping, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
         ],
         "snippets": [],
@@ -1012,7 +1149,7 @@ INSTALL_METHODS = [
             "Configure Hydra LLM base server(s) and optional Beast Mode role routing in Settings.",
         ],
         "notes": [
-            "Redis connection settings are saved locally in .runtime/redis_connection.json.",
+            "Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models.",
             "Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.",
             "This path is the best fit when you want to inspect or modify the source directly.",
         ],
@@ -1045,7 +1182,7 @@ pip install -r requirements.txt""",
         "complexity": "Medium",
         "highlights": [
             "The README publishes the image at ghcr.io/tatertotterson/tater:latest.",
-            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings.",
+            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve downloaded voice models.",
             "The container exposes the WebUI on port 8501 and several Tater service ports in the README example.",
         ],
         "steps": [
@@ -1057,7 +1194,7 @@ pip install -r requirements.txt""",
             "Open the WebUI at http://localhost:8501 after the container is running.",
         ],
         "notes": [
-            "If /app/agent_lab is not mounted, runtime data can be lost on rebuild/update.",
+            "If /app/agent_lab is not mounted, runtime data and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.",
             "If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
             "The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.",
         ],
@@ -1144,6 +1281,29 @@ KERNEL_TOOL_GROUPS = {
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def extract_install_readme_note() -> str:
+    if not TATER_README.exists():
+        return DEFAULT_INSTALL_README_NOTE
+
+    try:
+        lines = read_text(TATER_README).splitlines()
+    except Exception:
+        return DEFAULT_INSTALL_README_NOTE
+
+    for raw in lines:
+        line = str(raw or "").strip()
+        if not line:
+            continue
+        line = line.lstrip(">").strip()
+        if line.startswith("- "):
+            line = line[2:].strip()
+        line = " ".join(line.split())
+        if "Tater currently recommends" in line:
+            return line
+
+    return DEFAULT_INSTALL_README_NOTE
 
 
 def parse_module(path: Path) -> ast.Module:
@@ -1709,6 +1869,24 @@ def build_platforms(
                 "plugin_count": len(matching_plugins),
                 "plugin_examples": matching_plugins[:6],
                 "source_path": str(meta.get("source") or ""),
+                **{
+                    key: meta.get(key)
+                    for key in (
+                        "hero_eyebrow",
+                        "hero_panel_eyebrow",
+                        "hero_panel_text",
+                        "role_eyebrow",
+                        "role_title",
+                        "role_text",
+                        "highlights_eyebrow",
+                        "highlights_title",
+                        "plugin_eyebrow",
+                        "plugin_title",
+                        "settings_eyebrow",
+                        "settings_title",
+                    )
+                    if meta.get(key)
+                },
             }
         )
     return rows
@@ -1737,6 +1915,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("install", "Install", f"{base}install/index.html"),
         ("cerberus", "Hydra", f"{base}cerberus/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
+        ("esphome", "ESPHome", f"{base}esphome/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
         ("plugins", "Verbas", f"{base}plugins/index.html"),
@@ -1745,6 +1924,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         f'<a class="nav-link{" is-active" if key == nav_key else ""}" href="{href}">{label}</a>'
         for key, label, href in nav_items
     )
+    nav_html += "\n" + '<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>'
     return textwrap.dedent(
         f"""\
         <!DOCTYPE html>
@@ -1803,6 +1983,8 @@ def render_platform_badges(platforms: list[str]) -> str:
 def platform_settings_chip(platform: dict[str, Any]) -> str:
     if platform["slug"] == "webui":
         return "Configured in app"
+    if platform["slug"] == "esphome":
+        return "Settings -> ESPHome"
     if platform.get("has_settings_schema"):
         if int(platform["setting_count"]) == 0:
             return "No required fields"
@@ -1811,6 +1993,8 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
 
 
 def platform_runtime_chip(platform: dict[str, Any]) -> str:
+    if platform["slug"] == "esphome":
+        return "Voice device runtime"
     if int(platform["plugin_count"]) > 0:
         return f"{platform['plugin_count']} Verbas"
     if platform["slug"] == "macos":
@@ -1821,6 +2005,8 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
         return "Awareness engine"
     if platform["slug"] == "memory":
         return "Memory service"
+    if platform["slug"] == "personal":
+        return "Email intelligence"
     if platform["slug"] == "rss":
         return "Feed watcher"
     return "Internal runtime"
@@ -1838,9 +2024,10 @@ def platform_version_chip(platform: dict[str, Any]) -> str:
 def platform_settings_text(platform: dict[str, Any]) -> str:
     surface_kind = str(platform.get("surface_kind") or "portal").strip().lower()
     settings_symbol = "CORE_SETTINGS" if surface_kind == "core" else "PORTAL_SETTINGS"
+    surface_label = "core" if surface_kind == "core" else ("runtime" if platform["slug"] == "esphome" else "portal")
     if platform["slug"] == "webui":
         return (
-            "The WebUI is itself the configuration surface, so this page documents behavior and role rather than "
+            "The WebUI is itself the configuration portal, so this page documents behavior and role rather than "
             f"a separate {settings_symbol} form."
         )
     if platform["slug"] == "ai_task":
@@ -1848,24 +2035,33 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
             "The scheduler declares a settings block, but it does not currently require explicit fields. "
             "Its behavior is driven by scheduled task data, targets, and notifier routing."
         )
+    if platform["slug"] == "esphome":
+        return (
+            "ESPHome is configured through Settings -> ESPHome for Satellites, Settings, and Stats, while shared STT/TTS model choices live in Settings -> Models. "
+            "The runtime is built into the main Tater app rather than a separate downloadable core."
+        )
     if platform.get("has_settings_schema"):
         return (
-            f"This runtime surface declares a {settings_symbol} schema, but it does not currently require any explicit fields."
+            f"This {surface_label} declares a {settings_symbol} schema, but it does not currently require any explicit fields."
         )
     return (
-        f"This surface does not expose a standalone {settings_symbol} form in the current source snapshot."
+        f"This {surface_label} does not expose a standalone {settings_symbol} form in the current source snapshot."
     )
 
 
 def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "macos":
         return (
-            "macOS is a desktop bridge surface used by the Tater Menu app. It can execute compatible Verbas "
+            "macOS is a desktop bridge portal used by the Tater Menu app. It can execute compatible Verbas "
             "through /macos/plugin even when plugin inventory tags for macos are sparse."
+        )
+    if platform["slug"] == "esphome":
+        return (
+            "ESPHome is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater now maps onto the native ESPHome speaking-device context, room assignment, and live entity access."
         )
     if platform["slug"] == "ai_task":
         return (
-            "AI Task Runner is a scheduler surface. It executes scheduled prompts and routes results through notifier "
+            "AI Task Runner is a scheduler core. It executes scheduled prompts and routes results through notifier "
             "portals rather than acting as a direct Verba target."
         )
     if platform["slug"] == "memory":
@@ -1873,13 +2069,18 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
             "Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects "
             "memory context back into Hydra instead of acting like a direct Verba surface."
         )
+    if platform["slug"] == "personal":
+        return (
+            "Personal Core is background email intelligence. It scans connected inboxes, extracts structured profile "
+            "signals, and exposes personal kernel tools plus optional prompt-context injection rather than acting like a direct Verba surface."
+        )
     if platform["slug"] == "rss":
         return (
             "RSS is a background feed watcher. It polls feeds, summarizes content, and dispatches updates through "
             "notifier portals rather than serving as a direct Verba target."
         )
     return (
-        "This surface mainly handles runtime orchestration rather than exposing its own direct Verba target."
+        "This runtime component mainly handles orchestration rather than exposing its own direct Verba target."
     )
 
 
@@ -1906,8 +2107,7 @@ def render_home_page(
     plugin_count = len(plugins)
     kernel_count = len(kernel_tools)
     portal_count = len(portals)
-    core_count = len(cores)
-    surface_count = portal_count + core_count
+    surface_count = portal_count
     install_count = len(INSTALL_METHODS)
 
     hero = f"""
@@ -1917,11 +2117,12 @@ def render_home_page(
         <h1>Tater is an AI assistant built to act.</h1>
         <p>
           Hydra plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
-          smart-home, media, and automation workflows.
+          smart-home, direct voice devices, media, and automation workflows.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
           {button("Explore portals", "portals/index.html")}
+          {button("ESPHome", "esphome/index.html", ghost=True)}
           {button("Explore cores", "cores/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html", ghost=True)}
@@ -1934,7 +2135,7 @@ def render_home_page(
         <div class="hero-stats">
           <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
           <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
-          <div class="stat-card"><strong>{surface_count}</strong><span>runtime surfaces</span></div>
+          <div class="stat-card"><strong>{surface_count}</strong><span>portals</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
       </aside>
@@ -1945,6 +2146,18 @@ def render_home_page(
         (
             "Smart chaining",
             "Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.",
+        ),
+        (
+            "Native ESPHome voice",
+            "ESPHome is now built into Tater, powering VoicePE and Sat1 devices with room-aware voice sessions, live entities, direct playback, logs, and native operator screens.",
+        ),
+        (
+            "Shared STT and TTS",
+            "The Models tab now holds the shared speech stack: Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, plus Home Assistant announcement TTS when needed.",
+        ),
+        (
+            "Voice pipeline experiments",
+            "Optional experimental toggles can enable live partial STT, early-start TTS, and live Hydra tool-progress speech on hardware that can support them.",
         ),
         (
             "Beast Mode routing",
@@ -1963,16 +2176,8 @@ def render_home_page(
             "Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.",
         ),
         (
-            "Awareness Core",
-            "Camera, doorbell, entry-sensor, and brief automations now run in-core with Redis event timelines.",
-        ),
-        (
             "Verbas",
             "Actions speak louder then words. Verbas extend Tater into smart-home, media, camera, note, download, and admin workflows.",
-        ),
-        (
-            "Control surface",
-            "The WebUI handles setup, chat, plugin management, and runtime tuning while portals and cores run communication and background services.",
         ),
     ]
     feature_html = "".join(
@@ -1984,6 +2189,8 @@ def render_home_page(
         """
         for title, text in feature_cards
     )
+
+    home_cores = [core for core in cores if core.get("slug") != "awareness"]
 
     portal_cards = "".join(
         f"""
@@ -2018,7 +2225,7 @@ def render_home_page(
           </div>
         </article>
         """
-        for platform in cores
+        for platform in home_cores
     )
 
     page_links = f"""
@@ -2035,12 +2242,17 @@ def render_home_page(
       </article>
       <article class="panel">
         <h3>Portal docs</h3>
-        <p>See every runtime surface, its role, and its settings.</p>
+        <p>See every portal, its role, and its settings.</p>
         {button("Open portals", "portals/index.html", ghost=True)}
       </article>
       <article class="panel">
+        <h3>ESPHome tab</h3>
+        <p>Built-in voice runtime docs for satellites, live entities, and playback flows.</p>
+        {button("Open ESPHome", "esphome/index.html", ghost=True)}
+      </article>
+      <article class="panel">
         <h3>Core docs</h3>
-        <p>Built-in runtime services such as awareness automation, scheduling, memory, and RSS monitoring.</p>
+        <p>Built-in runtime services such as awareness automation, scheduling, memory, personal email intelligence, and RSS monitoring.</p>
         {button("Open cores", "cores/index.html", ghost=True)}
       </article>
       <article class="panel">
@@ -2084,8 +2296,8 @@ def render_home_page(
     </section>
     <section class="section">
       <div class="section-head">
-        <span class="eyebrow">Runtime surfaces</span>
-        <h2>One assistant. Portals and cores.</h2>
+        <span class="eyebrow">Portals + cores</span>
+        <h2>One assistant. Verbas, portals, and cores.</h2>
       </div>
       <h3>Portals</h3>
       <div class="grid grid-3">
@@ -2109,7 +2321,7 @@ def render_home_page(
     """
     return page_template(
         title="Tater | Home",
-        description="Overview of Tater Assistant, supported surfaces, and the current wiki structure.",
+        description="Overview of Tater Assistant, supported portals, and the current wiki structure.",
         body=body,
         depth=0,
         nav_key="home",
@@ -2117,6 +2329,7 @@ def render_home_page(
 
 
 def render_install_index() -> str:
+    readme_note = extract_install_readme_note()
     cards = "".join(
         f"""
         <article class="platform-card platform-card-detail">
@@ -2145,7 +2358,10 @@ def render_install_index() -> str:
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">README note</span>
-        <p>Tater currently recommends models such as qwen3-coder-next, qwen3-next-80b, gpt-oss-120b, qwen3-coder-30b, or Gemma3-27b.</p>
+        <p>{escape(readme_note)}</p>
+        <div class="action-row">
+          {button("ESPHome tab", "../esphome/index.html", ghost=True)}
+        </div>
       </aside>
     </section>
     <section class="section">
@@ -2337,14 +2553,14 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Portal reference</span>
-        <h1>Tater runs across purpose-built runtime surfaces.</h1>
+        <h1>Tater runs across purpose-built portals.</h1>
         <p>
-          Some surfaces are chat or voice endpoints. Others are operator tools or background services that feed data back into Tater.
+          Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas.
         </p>
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">What is documented</span>
-        <p>{len(platforms)} portal surfaces with current descriptions, settings snapshots, and related Verba context.</p>
+        <p>{len(platforms)} portals with current descriptions, settings snapshots, API notes, and related Verba context.</p>
       </aside>
     </section>
     <section class="section">
@@ -2355,7 +2571,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
     """
     return page_template(
         title="Tater Assistant | Portals",
-        description="Reference for Tater Assistant runtime portals and integration surfaces.",
+        description="Reference for Tater Assistant portals and their integration behavior.",
         body=body,
         depth=1,
         nav_key="portals",
@@ -2388,7 +2604,7 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
         <span class="eyebrow">Core reference</span>
         <h1>Tater cores power built-in runtime services.</h1>
         <p>
-          Cores are always-on internal services like awareness automation, scheduling, memory extraction, and feed monitoring.
+          Cores are always-on internal services like awareness automation, scheduling, memory extraction, personal email intelligence, and feed monitoring.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2411,17 +2627,24 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
     )
 
 
-def render_platform_detail(platform: dict[str, Any]) -> str:
+def render_platform_detail(
+    platform: dict[str, Any],
+    *,
+    nav_key_override: str | None = None,
+    back_href: str = "index.html",
+    back_label: str | None = None,
+) -> str:
     surface_kind = str(platform.get("surface_kind") or "portal").strip().lower()
     is_core = surface_kind == "core"
-    surface_label = "core" if is_core else "portal"
-    surface_title = "Core" if is_core else "Portal"
+    is_esphome_runtime = str(platform.get("slug") or "").strip().lower() == "esphome"
+    surface_label = "core" if is_core else ("runtime" if is_esphome_runtime else "portal")
+    surface_title = "Core" if is_core else ("Runtime" if is_esphome_runtime else "Portal")
     highlight_html = "".join(f"<li>{escape(item)}</li>" for item in platform["highlights"])
     companion_section = render_companion_section(
         platform.get("companions") or [],
         platform.get("companions_eyebrow") or "Companion setup",
         platform.get("companions_title") or f"Related app and integration pieces for this {surface_label}.",
-        platform.get("companions_intro") or "These components connect external clients or service layers back to this runtime surface.",
+        platform.get("companions_intro") or f"These components connect external clients or service layers back to this {surface_label}.",
     )
     guide_section = render_companion_section(
         platform.get("guides") or [],
@@ -2497,7 +2720,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
             for plugin in example_plugins
         )
         plugin_block = f"""
-        <p>{escape(platform['plugin_count'])} current Verbas advertise direct support for this surface.</p>
+        <p>{escape(platform['plugin_count'])} current Verbas advertise direct support for this {surface_label}.</p>
         <div class="chip-row">{plugin_links}</div>
         """
     else:
@@ -2518,10 +2741,23 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         </section>
         """
 
+    hero_eyebrow = platform.get("hero_eyebrow") or f"{surface_title} profile"
+    hero_panel_eyebrow = platform.get("hero_panel_eyebrow") or "Configuration category"
+    hero_panel_text = platform.get("hero_panel_text") or platform["settings_category"]
+    role_eyebrow = platform.get("role_eyebrow") or f"{surface_title} role"
+    role_title = platform.get("role_title") or f"What this {surface_label} is for"
+    role_text = platform.get("role_text") or platform["role"]
+    highlights_eyebrow = platform.get("highlights_eyebrow") or "Highlights"
+    highlights_title = platform.get("highlights_title") or "Behavior in the current codebase"
+    plugin_eyebrow = platform.get("plugin_eyebrow") or "Related Verbas"
+    plugin_title = platform.get("plugin_title") or f"Direct {surface_label} support"
+    settings_eyebrow = platform.get("settings_eyebrow") or "Settings"
+    settings_title = platform.get("settings_title") or "Configuration schema"
+
     body = f"""
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
-        <span class="eyebrow">{surface_title} profile</span>
+        <span class="eyebrow">{escape(hero_eyebrow)}</span>
         <h1>{escape(platform['title'])}</h1>
         <p>{escape(platform['description'])}</p>
         <div class="chip-row">
@@ -2532,21 +2768,21 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         </div>
       </div>
       <aside class="panel hero-panel">
-        <span class="eyebrow">Configuration category</span>
-        <p>{escape(platform['settings_category'])}</p>
+        <span class="eyebrow">{escape(hero_panel_eyebrow)}</span>
+        <p>{escape(hero_panel_text)}</p>
         {source_note}
       </aside>
     </section>
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Runtime role</span>
-          <h2>What this surface is for</h2>
-          <p>{escape(platform['role'])}</p>
+          <span class="eyebrow">{escape(role_eyebrow)}</span>
+          <h2>{escape(role_title)}</h2>
+          <p>{escape(role_text)}</p>
         </article>
         <article class="panel">
-          <span class="eyebrow">Highlights</span>
-          <h2>Behavior in the current codebase</h2>
+          <span class="eyebrow">{escape(highlights_eyebrow)}</span>
+          <h2>{escape(highlights_title)}</h2>
           <ul class="stack-list">{highlight_html}</ul>
         </article>
       </div>
@@ -2554,13 +2790,13 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct {surface_label} support</h2>
+          <span class="eyebrow">{escape(plugin_eyebrow)}</span>
+          <h2>{escape(plugin_title)}</h2>
           {plugin_block}
         </article>
         <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
+          <span class="eyebrow">{escape(settings_eyebrow)}</span>
+          <h2>{escape(settings_title)}</h2>
           {settings_block}
         </article>
       </div>
@@ -2571,9 +2807,10 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
     {api_section}
     <section class="section">
       <div class="action-row">
-        {button(f"Back to {'cores' if is_core else 'portals'}", "index.html", ghost=True)}
+        {button(back_label or f"Back to {'cores' if is_core else 'portals'}", back_href, ghost=True)}
         {button("Verbas", "../plugins/index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
+        {button("ESPHome", "../esphome/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
       </div>
@@ -2584,7 +2821,7 @@ def render_platform_detail(platform: dict[str, Any]) -> str:
         description=platform["description"],
         body=body,
         depth=1,
-        nav_key="cores" if is_core else "portals",
+        nav_key=nav_key_override or ("cores" if is_core else "portals"),
     )
 
 
@@ -3002,6 +3239,7 @@ def cleanup_section_pages(section_dir: Path, keep_slugs: list[str]) -> None:
 def build() -> None:
     plugins = build_plugins()
     portals = build_platforms(plugins, docs_order=PORTAL_DOCS_ORDER, surface_kind="portal")
+    esphome_runtime = build_platforms(plugins, docs_order=["esphome"], surface_kind="runtime")[0]
     cores = build_platforms(plugins, docs_order=CORE_DOCS_ORDER, surface_kind="core")
     kernel_tools = extract_kernel_tools()
     cerberus_defaults = extract_cerberus_defaults()
@@ -3009,6 +3247,15 @@ def build() -> None:
     write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores))
     write_page(SITE_ROOT / "install" / "index.html", render_install_index())
     write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))
+    write_page(
+        SITE_ROOT / "esphome" / "index.html",
+        render_platform_detail(
+            esphome_runtime,
+            nav_key_override="esphome",
+            back_href="../portals/index.html",
+            back_label="Back to portals",
+        ),
+    )
     write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
     write_page(SITE_ROOT / "cerberus" / "index.html", render_cerberus_page(cerberus_defaults))
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
@@ -3016,6 +3263,7 @@ def build() -> None:
 
     cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
     cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
+    cleanup_section_pages(SITE_ROOT / "esphome", [])
     cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])
     cleanup_section_pages(SITE_ROOT / "plugins", [plugin["slug"] for plugin in plugins])
 
