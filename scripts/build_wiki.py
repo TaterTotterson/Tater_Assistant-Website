@@ -49,34 +49,29 @@ CERBERUS_SOURCE = resolve_path(
 TOOL_RUNTIME_SOURCE = TATER_DIR / "tool_runtime.py"
 PLUGIN_DIR = resolve_path("TATER_WIKI_VERBA_DIR", TATER_DIR / "verba")
 
-HOME_ASSISTANT_COMPANIONS = {
-    "tater_conversation": {
-        "title": "Tater Conversation Agent",
-        "summary": "HACS conversation integration that makes Tater selectable as a Home Assistant Assist conversation agent.",
-        "chips": ["HACS integration", "Assist pipeline", "Port 8787"],
-        "details": [
-            "Install the Tater-HomeAssistant repository through HACS as an Integration, then add Tater Conversation in Devices & Services.",
-            "The config flow asks for host/IP, port, and an optional API key (when the Home Assistant portal has API auth enabled).",
-            "After setup, choose Tater Conversation as the conversation agent in Settings -> Voice Assistants.",
-            "The component forwards text plus user, device, area, session, and language context so Tater can keep room-aware and device-aware sessions.",
-        ],
-        "links": [
-            {
-                "label": "Tater-HomeAssistant Repo",
-                "href": "https://github.com/TaterTotterson/Tater-HomeAssistant",
-            },
-        ],
-    },
-}
+REMOVED_PORTAL_TAGS = {"homeassistant"}
+
+
+def clean_platforms(value: Any) -> list[str]:
+    platforms: list[str] = []
+    seen: set[str] = set()
+    for item in value or []:
+        token = str(item).strip().lower()
+        if not token or token in REMOVED_PORTAL_TAGS or token in seen:
+            continue
+        platforms.append(token)
+        seen.add(token)
+    return platforms
 
 MACOS_MENU_COMPANION = {
     "title": "Tater Menu (macOS app)",
-    "summary": "Lightweight menu-bar app that connects to the Tater macOS bridge for chat, quick actions, clipboard workflows, screen captures, and attachment handling.",
-    "chips": ["Status bar app", "Port 8791", "Quick actions"],
+    "summary": "Lightweight menu-bar app that connects to Tater's built-in macOS routes for chat, quick actions, clipboard workflows, screen captures, and attachment handling.",
+    "chips": ["Status bar app", "Main Tater port", "Quick actions"],
     "details": [
         "Install with python3.11 -m pip install -e . inside the Tater-MacOS repo, then run python3.11 tater_menu.py.",
         "It can also run in the background with python3.11 tater_menu.py --background and stays as a menu-bar-only app.",
-        "Set Server URL, optional API key/Auth Token, and Quick Action Plugin from the app Settings menu.",
+        "Set Server URL to the main Tater URL, for example http://127.0.0.1:8501, plus optional API key/Auth Token and Quick Action Plugin from the app Settings menu.",
+        "The app uses /macos/... routes mounted inside Tater instead of a separate desktop bridge port.",
         "The local config is stored at ~/Library/Application Support/TaterMenu/config.json.",
     ],
     "links": [
@@ -90,10 +85,10 @@ MACOS_MENU_COMPANION = {
 MACOS_APP_GUIDES = [
     {
         "title": "First connection",
-        "summary": "Point the app at the macOS bridge and verify bootstrap and polling are healthy.",
+        "summary": "Point the app at the main Tater URL and verify bootstrap and polling are healthy.",
         "chips": ["Server URL", "Auth token", "Bootstrap"],
         "details": [
-            "Default bridge URL is http://127.0.0.1:8791, but the app can target any reachable Tater host.",
+            "Default Tater URL is http://127.0.0.1:8501, but the app can target any reachable Tater host.",
             "If API auth is enabled in macOS portal settings, the app must send the same API key in X-Tater-Token.",
             "The app bootstraps assistant identity and recent history from /macos/bootstrap before normal chat usage.",
         ],
@@ -492,7 +487,6 @@ PORTAL_DOCS_ORDER = [
     "matrix",
     "irc",
     "moltbook",
-    "homeassistant",
     "homekit",
     "macos",
     "xbmc",
@@ -509,16 +503,69 @@ CORE_DOCS_ORDER = [
 PLATFORM_DOCS = {
     "webui": {
         "label": "WebUI",
-        "description": "FastAPI + static control center for setup, private chat, Verba/Portal/Core management, Hydra tuning, and Redis operations.",
+        "description": "FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.",
         "role": "Operator console",
         "source": None,
         "plugin_surface": "webui",
         "highlights": [
-            "Hosts private chat, Verba browsing, settings, and runtime controls in one place.",
+            "Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.",
+            "Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.",
             "First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.",
             "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
             "Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.",
+            "The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.",
+            "Integrations now include Hugging Face token storage so automatic model downloads can use authenticated Hub requests.",
+            "Settings -> People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.",
             "WebUI password login can be enabled from Settings -> General and uses cookie-backed sessions.",
+        ],
+        "guides_eyebrow": "Identity layer",
+        "guides_title": "People turns scattered accounts and devices into one known user.",
+        "guides_intro": "The People panel is the human identity layer Tater uses when one person appears through multiple portals, devices, or voice identities.",
+        "guides": [
+            {
+                "title": "Master users",
+                "summary": "Create one master user per real person, then link all of their known identities to that record.",
+                "chips": ["Settings -> People", "Master user", "Identity links"],
+                "details": [
+                    "A master user can represent the same person across WebUI, Discord, Telegram, Matrix, IRC, HomeKit, macOS, XBMC, Meshtastic, and ESPHome voice identities.",
+                    "Linked identities let Tater resolve a request origin into one person_id and person_name instead of treating every portal account as a separate user.",
+                    "Speaker ID aliases from ESPHome voice turns can also be linked, so a recognized voice can map back to the same master user as that person's chat accounts.",
+                ],
+            },
+            {
+                "title": "Per-person instructions",
+                "summary": "Each master user can carry trusted response instructions that only apply when that user is resolved.",
+                "chips": ["Instructions", "Prompt context", "Scoped"],
+                "details": [
+                    "Per-person instructions are useful for preferred names, tone preferences, accessibility needs, household roles, or other user-specific response style rules.",
+                    "Tater injects those instructions only for the current resolved user and tells Hydra not to apply them to other people mentioned in the conversation.",
+                    "These instructions are scoped under system and safety rules, so they personalize responses without overriding higher-priority behavior.",
+                ],
+            },
+            {
+                "title": "Discovered identities",
+                "summary": "The People panel can surface identities Tater has seen but not yet linked.",
+                "chips": ["Discovery", "Portals", "Speaker ID"],
+                "details": [
+                    "Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and ESPHome Speaker ID aliases.",
+                    "Operators can attach a discovered identity to an existing master user or create a new master user first.",
+                    "Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.",
+                ],
+            },
+        ],
+        "apis": [
+            {
+                "method": "GET",
+                "path": "/api/settings/people",
+                "summary": "Load People settings, master users, and discovered identity rows.",
+                "details": "Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and ESPHome Speaker ID.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/settings/people/action",
+                "summary": "Create, edit, delete, link, and unlink People records.",
+                "details": "Supports people_create, people_save, people_delete, people_alias_attach, and people_alias_detach actions for the Settings -> People panel.",
+            },
         ],
     },
     "discord": {
@@ -636,70 +683,24 @@ PLATFORM_DOCS = {
             },
         ],
     },
-    "homeassistant": {
-        "label": "Home Assistant",
-        "description": "Voice and text assistant endpoint for Home Assistant Assist, paired with the Tater Conversation Agent integration plus direct smart-home control and a built-in notifications API that can queue alerts and light configured Voice PE indicators.",
-        "role": "Voice and smart-home endpoint",
-        "source": TATER_SHOP_DIR / "portals" / "homeassistant_portal.py",
-        "plugin_surface": "homeassistant",
-        "highlights": [
-            "Designed for Assist pipeline conversations and direct smart-home control.",
-            "Includes session history, follow-up mic behavior, satellite lookup caching, and notification bridging.",
-            "Pairs with the Tater Conversation Agent HACS integration, which points Home Assistant Assist at /tater-ha/v1/message and forwards device and area context.",
-            "Ships with a built-in notifications API that queues notification payloads in Redis and can light configured Voice PE indicators when new notifications arrive.",
-            "Awareness automations now live in Awareness Core instead of a separate automation bridge surface.",
-            "Supports optional API key protection for HTTP endpoints using X-Tater-Token.",
-        ],
-        "companions": [
-            HOME_ASSISTANT_COMPANIONS["tater_conversation"],
-        ],
-        "companions_eyebrow": "Companion setup",
-        "companions_title": "Home Assistant integrations that connect to this portal.",
-        "companions_intro": "This component lives inside Home Assistant and points Assist conversations back at Tater's runtime bridge.",
-        "apis": [
-            {
-                "method": "GET",
-                "path": "/tater-ha/v1/health",
-                "summary": "Basic health endpoint for the Home Assistant bridge.",
-                "details": "Returns bridge status and version 2.0 so Home Assistant or external checks can confirm the service is up.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/notifications/add",
-                "summary": "Queue a Home Assistant-facing notification item.",
-                "details": "Accepts source, title, type, message, entity_id, ha_time, level, and data, stores the item in Redis, attempts to turn on configured Voice PE light entities, and enforces X-Tater-Token when API auth is enabled.",
-            },
-            {
-                "method": "GET",
-                "path": "/tater-ha/v1/notifications",
-                "summary": "Pull and clear queued notifications.",
-                "details": "Reads queued notifications from Redis, clears the list after delivery, turns Voice PE indicators off once notifications are consumed (or immediately if none are present), and enforces X-Tater-Token when API auth is enabled.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/message",
-                "summary": "Main Assist/chat message endpoint.",
-                "details": "Receives Home Assistant conversation requests, preserves stable session context, and runs Hydra turns with Home Assistant-scoped system prompting and plugin gating.",
-            },
-        ],
-    },
     "homekit": {
         "label": "HomeKit",
-        "description": "Siri and Apple Shortcuts bridge for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.",
+        "description": "Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.",
         "role": "Voice endpoint",
         "source": TATER_SHOP_DIR / "portals" / "homekit_portal.py",
         "plugin_surface": "homekit",
         "highlights": [
-            "Provides a lightweight HTTP bridge for Siri and Apple Shortcuts workflows.",
+            "Provides lightweight Siri and Apple Shortcuts routes mounted inside the main Tater app.",
             "Designed for Shortcut-driven voice loops where Siri captures speech, posts JSON to Tater, then speaks the reply back aloud.",
             "Maintains per-device conversation sessions instead of treating every request as stateless.",
             "Supports optional API key protection so Shortcuts must send X-Tater-Token when enabled.",
+            "Uses the default Tater port, so no separate HomeKit service port is needed.",
             "Good fit for Apple-first households that want voice access without a full chat client.",
         ],
         "guides": [
             {
                 "title": "Premade shortcut",
-                "summary": "A ready-made Apple Shortcut already exists for the HomeKit bridge.",
+                "summary": "A ready-made Apple Shortcut already exists for the HomeKit portal.",
                 "chips": ["Shortcut", "Siri", "Quick start"],
                 "details": [
                     "You can start from the premade Ask Tater shortcut instead of building the flow by hand.",
@@ -718,18 +719,18 @@ PLATFORM_DOCS = {
                 "chips": ["Dictate Text", "POST JSON", "Speak Text"],
                 "details": [
                     "Create a shortcut such as Ask Tater, then add Dictate Text with stop listening set to After Pause.",
-                    "Use Get Contents of URL to POST JSON to http://YOUR-TATER-IP:8789/tater-homekit/v1/message with text and session_id fields.",
+                    "Use Get Contents of URL to POST JSON to http://YOUR-TATER-IP:8501/tater-homekit/v1/message with text and session_id fields.",
                     "Extract the reply key from the JSON response, then feed it into Speak Text so Siri or a HomePod reads it back.",
                 ],
             },
             {
                 "title": "Session IDs and auth",
-                "summary": "Each device should use its own session_id, and protected bridges can require the X-Tater-Token header.",
+                "summary": "Each device should use its own session_id, and protected routes can require the X-Tater-Token header.",
                 "chips": ["session_id", "X-Tater-Token", "Per-device memory"],
                 "details": [
                     "Use a stable session_id such as iphone, ipad, or bedroom_homepod so conversations do not mix between devices.",
                     "If API auth is enabled in Tater HomeKit settings, add an X-Tater-Token header inside the shortcut request.",
-                    "The bridge keeps short Siri-friendly session history in Redis using the configured session TTL and history limits.",
+                    "The portal keeps short Siri-friendly session history in Redis using the configured session TTL and history limits.",
                 ],
             },
             {
@@ -757,12 +758,12 @@ PLATFORM_DOCS = {
     },
     "macos": {
         "label": "macOS",
-        "description": "Native desktop bridge used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.",
+        "description": "Native desktop portal used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.",
         "role": "Desktop endpoint",
         "source": TATER_SHOP_DIR / "portals" / "macos_portal.py",
         "plugin_surface": "macos",
         "highlights": [
-            "Runs a FastAPI bridge on port 8791 by default for the Tater Menu app.",
+            "Mounts /macos/... routes under the main Tater WebUI/API port for the Tater Menu app.",
             "Maintains scoped session history with configurable limits and TTL so desktop context stays stable but bounded.",
             "Supports long-poll notifications plus tool_wait status handling for menu-app feedback loops.",
             "Includes asset upload and download endpoints for screen captures, clipboard artifacts, and returned files.",
@@ -772,18 +773,18 @@ PLATFORM_DOCS = {
             MACOS_MENU_COMPANION,
         ],
         "companions_eyebrow": "Client app",
-        "companions_title": "macOS app that connects to this bridge.",
+        "companions_title": "macOS app that connects to these Tater routes.",
         "companions_intro": "The menu-bar app is the main user-facing client for this portal and handles quick actions, chat UI, and attachment flows.",
         "guides": MACOS_APP_GUIDES,
         "guides_eyebrow": "App setup",
         "guides_title": "How to run and connect the Tater Menu app.",
-        "guides_intro": "These notes are based on the current Tater-MacOS app README and the active macOS bridge endpoints.",
+        "guides_intro": "These notes are based on the current Tater-MacOS app README and the active macOS routes.",
         "apis": [
             {
                 "method": "GET",
                 "path": "/macos/health",
-                "summary": "Health check for the desktop bridge.",
-                "details": "Returns ok, platform=macos, and version 1.0 so clients can confirm the bridge is alive.",
+                "summary": "Health check for the desktop portal.",
+                "details": "Returns ok, platform=macos, and version 1.0 so clients can confirm the route is alive.",
             },
             {
                 "method": "GET",
@@ -837,29 +838,35 @@ PLATFORM_DOCS = {
     },
     "esphome": {
         "label": "ESPHome",
-        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and future native devices, with satellites, live entities, logs, stats, and the full voice pipeline on the main app port.",
+        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
         "role": "Native device runtime",
         "source": None,
         "plugin_surface": "voice_core",
         "hero_eyebrow": "Native ESPHome",
         "hero_panel_eyebrow": "What it powers",
-        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, ESPHome satellites, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
+        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
         "role_eyebrow": "Why it matters",
         "role_title": "What native ESPHome unlocks",
-        "role_text": "Tater now owns the full ESPHome voice experience directly: discovery, room-aware voice sessions, live device state, and on-device playback all run inside the main app instead of a downloadable core.",
+        "role_text": "Tater now owns the ESPHome device experience directly: discovery, room-aware voice sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
         "highlights_eyebrow": "Feature set",
-        "highlights_title": "What makes the built-in ESPHome stack feel like a real voice system",
+        "highlights_title": "What makes the built-in ESPHome stack feel like a real device platform",
         "plugin_eyebrow": "Voice-aware verbas",
         "plugin_title": "Verbas that can act on the speaking device",
         "settings_eyebrow": "Operator controls",
         "settings_title": "How operators use it in Tater",
         "highlights": [
             "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
-            "Settings -> ESPHome now owns Satellites, Settings, and Stats so operators can manage discovery, pairing, rooms, logs, live entities, and voice metrics in one place.",
+            "Settings -> ESPHome now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
+            "The firmware tab supports Tater VoicePE, Tater Sat1, and Tater S3Box Display targets, including device images, editable substitutions, Environment Core sensor dropdowns, and reply playback options.",
+            "Browser USB flashing and USB logs let operators recover ESP32 devices from the browser, choose the USB device before building, erase flash for safe-mode recovery, and watch logs after flashing.",
+            "Tater S3Box Display firmware uses LVGL for Tater-themed status, weather bubbles, history bars, voice states, tool-call states, display brightness, and camera snapshot notifications.",
+            "Display feed and display event APIs let apps send compact sensor values, transient cards, camera snapshots, doorbell notices, and tool-progress states to ESPHome screens.",
             "Shared speech backends live in Settings -> Models, with Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, and Home Assistant announcement TTS available where they make sense.",
             "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding models.",
+            "Speaker ID and Emotion ID can warm SpeechBrain models at startup and feed speaker/tone context into voice turns when enabled.",
+            "Reply playback targets can stay on the listening satellite, go silent/display-only, or route TTS to another media/announcement device without breaking mic reopening.",
             "Live entity views expose sensors plus writable controls such as switches, buttons, numbers, selects, lights, and RGB color when the device supports it.",
-            "Per-device logs, stats, room awareness, and direct playback make Tater Voice hardware feel local to the room instead of remote to the browser.",
+            "Per-device logs, stats, room awareness, display refresh nudges, and direct playback make Tater hardware feel local to the room instead of remote to the browser.",
         ],
         "guides": [
             {
@@ -873,13 +880,59 @@ PLATFORM_DOCS = {
                 ],
             },
             {
+                "title": "Firmware manager and browser recovery",
+                "summary": "Tater can build, flash, recover, and log ESPHome firmware from the WebUI.",
+                "chips": ["Firmware tab", "Browser USB", "Live logs"],
+                "details": [
+                    "Firmware templates expose device-specific substitutions with safer controls instead of raw YAML edits for common setup.",
+                    "Browser USB recovery mirrors the familiar ESPHome web flashing flow: choose the USB serial device, build, flash, erase safe-mode state when needed, and stream USB logs.",
+                    "OTA and USB log windows use the same Tater firmware session UI so operators can debug failed boots without leaving the app.",
+                ],
+            },
+            {
+                "title": "S3Box display platform",
+                "summary": "ESP32-S3-BOX-3 devices can run a Tater-native LVGL display firmware.",
+                "chips": ["Tater S3Box", "LVGL", "Display events"],
+                "details": [
+                    "The Tater S3Box Display firmware shows assistant identity, online state, Environment Core sensor readings, weather/history bars, voice pipeline states, and tool-call activity.",
+                    "Display sensor fields use dropdowns sourced from Environment Core readings, with source labels and a clean install warning when Environment Core is missing.",
+                    "Apps and cores can publish display cards with text, image URLs, snapshot IDs, TTL, target display names, and event kinds such as notification, camera, doorbell, image, tool_call, voice, status, and alert.",
+                ],
+            },
+            {
                 "title": "Voice pipeline and shared models",
                 "summary": "The live voice loop uses shared STT/TTS choices from the Models tab while keeping ESPHome-specific controls in one native screen.",
-                "chips": ["Models tab", "STT", "TTS"],
+                "chips": ["STT", "TTS", "Models"],
                 "details": [
-                    "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, or Piper.",
-                    "Announcement flows can still bridge to Home Assistant API TTS when that is the right delivery path, but device-local voice replies stay inside Tater's built-in runtime.",
-                    "Because models auto-download into agent_lab/models, first-run setup is much smoother on fresh installs and bind-mounted Docker deployments.",
+                    "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, Piper, or external announcement paths.",
+                    "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding speech models.",
+                    "Hugging Face tokens saved in Integrations are passed into model download environments for speech models that need authenticated Hub access.",
+                    "Shared model choices live in Settings -> Models, while satellite behavior, wake words, reply playback, Speaker ID, and Emotion ID live under Settings -> ESPHome.",
+                ],
+            },
+            {
+                "title": "Speaker ID and Emotion ID",
+                "summary": "Tater can identify enrolled speakers and optionally add voice-tone context to Hydra prompts.",
+                "chips": ["Speaker ID", "Emotion ID", "SpeechBrain"],
+                "details": [
+                    "Speaker ID is for recognizing who is talking after a voice turn is captured; it uses enrolled voice samples and reports the best speaker plus match score.",
+                    "Speaker ID aliases can be linked in Settings -> People so the recognized voice maps to the same master user as that person's portal accounts.",
+                    "Emotion ID is separate from Speaker ID: it classifies the user's tone after STT and can add a soft prompt hint when enabled, confident enough, and not filtered as neutral.",
+                    "Both features are optional, and normal voice turns still work when either model is disabled, missing, warming, or unable to make a confident detection.",
+                    "The Dashboard voice section shows last detection information so operators can see Speaker ID and Emotion ID behavior without digging through logs.",
+                    "Settings -> ESPHome contains the SpeechBrain model controls, enable/disable toggles, confidence thresholds, neutral-tone handling, enrollment controls, and warmup actions.",
+                    "Speaker ID and Emotion ID models are stored under agent_lab/models so container rebuilds keep the downloaded model cache when agent_lab is bind-mounted.",
+                    "In the NVIDIA image, SpeechBrain models can use CUDA when configured, with CPU fallback if the GPU path is unavailable.",
+                ],
+            },
+            {
+                "title": "Reply playback routing",
+                "summary": "Satellites can listen locally while replies play somewhere else.",
+                "chips": ["This device", "External player", "Silent display"],
+                "details": [
+                    "Each satellite can keep reply playback on its own speaker, go silent/display-only, or route the reply to another selected media or announcement target.",
+                    "This is useful for S3Box units that should act as microphones and displays while another speaker handles the answer.",
+                    "After external playback, the listening device reopens the mic so follow-up conversation behavior stays natural.",
                 ],
             },
             {
@@ -899,7 +952,8 @@ PLATFORM_DOCS = {
                 "details": [
                     "Experimental Partial STT can keep partial transcript state during live capture so the system gets earlier visibility into what the user is saying.",
                     "Experimental Early-Start TTS can begin speaking long replies sooner by preparing smaller response chunks before the whole answer is finished.",
-                    "Experimental Live Tool Progress Speech lets Tater speak Hydra tool-progress lines during the thinking phase instead of waiting until the final answer.",
+                    "Experimental Live Tool Progress Speech lets Tater speak Hydra tool-progress lines during the thinking phase, while display firmware can also show tool-call visual states without needing that speech path.",
+                    "Wake word settings can use prebuilt microWakeWord models or a trainer URL/dropdown flow when a trainer app exposes custom trained wake words.",
                 ],
             },
         ],
@@ -943,11 +997,35 @@ PLATFORM_DOCS = {
                 "summary": "Queue direct audio playback on a selected ESPHome satellite.",
                 "details": "Used for device-local playback flows such as announcements, generated audio, and other responses that should play on the speaking satellite itself.",
             },
+            {
+                "method": "GET/POST",
+                "path": "/tater-ha/v1/display/feed",
+                "summary": "Serve compact display sensor data for ESPHome screens.",
+                "details": "Returns display-ready slot values, flat readings, text labels, online state, and clock data; firmware profiles can map slots to Environment Core readings instead of hard-coded Home Assistant entity IDs.",
+            },
+            {
+                "method": "GET",
+                "path": "/tater-ha/v1/display/events",
+                "summary": "Poll queued display events for a target screen.",
+                "details": "Returns transient notification/display cards after a sequence number, with optional target filtering so one display can receive a specific camera, doorbell, tool-call, voice, status, or alert event.",
+            },
+            {
+                "method": "POST",
+                "path": "/tater-ha/v1/display/events",
+                "summary": "Publish a display event card.",
+                "details": "Accepts display event payloads with kind, title, message, image_url, snapshot_id, target, TTL, and optional metadata such as tool phase/status and step counts.",
+            },
+            {
+                "method": "GET",
+                "path": "/tater-ha/v1/display/snapshots/{snapshot_id}",
+                "summary": "Serve Redis-backed awareness snapshots to displays.",
+                "details": "Allows ESPHome displays to show camera snapshots that were stored by Awareness Core, using the same display API token rules as the feed and event endpoints.",
+            },
         ],
     },
     "awareness": {
         "label": "Awareness Core",
-        "description": "Home awareness automation core for camera, doorbell, entry-sensor, and brief workflows with Redis-backed event history.",
+        "description": "Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.",
         "role": "Home awareness engine",
         "source": TATER_SHOP_DIR / "cores" / "awareness_core.py",
         "plugin_surface": "",
@@ -955,9 +1033,10 @@ PLATFORM_DOCS = {
             "Replaces the old HA automations bridge with an in-core awareness runtime.",
             "Connects to Home Assistant state changes and runs camera, doorbell, and entry-sensor rules directly.",
             "Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.",
-            "Camera and doorbell paths support snapshot + vision summaries, with optional notifications and TTS routing.",
+            "Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.",
             "Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.",
-            "Brief jobs generate compact text updates (events/weather/greetings) on schedules for dashboard-style use.",
+            "The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.",
+            "Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.",
         ],
         "apis": [],
     },
@@ -983,6 +1062,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Incrementally mines durable facts from prior conversations instead of relying only on the active turn.",
             "Builds user and room summaries in Redis for later Hydra injection.",
+            "Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and ESPHome voice identities.",
             "Includes confidence thresholds, identity linking options, and context-size limits.",
         ],
         "apis": [],
@@ -1081,7 +1161,7 @@ INSTALL_METHODS = [
         "highlights": [
             "The README points to a dedicated Home Assistant add-on repository for Tater.",
             "The add-on store exposes Redis Stack and Tater AI Assistant together.",
-            "Optional HACS integration: Tater Conversation Agent for Assist conversations.",
+            "This path is for running the Tater container stack from Home Assistant's add-on workflow; Tater's current voice/display work is managed from the built-in WebUI.",
         ],
         "steps": [
             "Add the Tater add-on repository: https://github.com/TaterTotterson/hassio-addons-tater",
@@ -1089,42 +1169,23 @@ INSTALL_METHODS = [
             "Install Tater AI Assistant second.",
             "Start Tater and open the WebUI ingress page.",
             "Complete Redis setup in the popup if prompted, then configure Hydra model settings in WebUI.",
-            "Verify the WebUI and Home Assistant bridges are reachable.",
+            "Verify the WebUI loads through ingress and that Tater's main API routes are reachable.",
         ],
         "notes": [
-            "Tater-HomeAssistant is the Home Assistant conversation component that points Assist at Tater's /tater-ha/v1/message bridge endpoint.",
             "Awareness automations now run in Awareness Core inside Tater rather than a separate automation bridge endpoint.",
-            "Home Assistant integration supports optional API key entry when portal API auth is enabled.",
-            "For brief-style automation output, input_text helpers are the recommended storage target inside Home Assistant.",
-        ],
-        "companions": [
-            HOME_ASSISTANT_COMPANIONS["tater_conversation"],
+            "Dashboard briefs, environment summaries, awareness snapshots, and ESPHome display notifications are now Tater-native surfaces.",
+            "Companion and smart-home routes can use the shared X-Tater-Token header when API auth is enabled.",
         ],
         "snippets": [
             {
-                "label": "Conversation integration target",
-                "code": "host: YOUR_TATER_HOST\nport: 8787\napi_key: OPTIONAL_PORTAL_API_KEY",
-            },
-            {
-                "label": "Dashboard markdown card",
-                "code": """### Front Yard Activity
-{{ states('input_text.event_brief') or 'No activity yet.' }}
-
-### Weather
-{{ states('input_text.weather_brief') or 'No weather summary yet.' }}
-
-### Zen Message
-{{ states('input_text.zen_message') or 'Take a breath.' }}""",
+                "label": "Add-on repository",
+                "code": "https://github.com/TaterTotterson/hassio-addons-tater",
             },
         ],
         "links": [
             {
                 "label": "Add-on Repository",
                 "href": "https://github.com/TaterTotterson/hassio-addons-tater",
-            },
-            {
-                "label": "Tater-HomeAssistant",
-                "href": "https://github.com/TaterTotterson/Tater-HomeAssistant",
             },
         ],
     },
@@ -1183,11 +1244,11 @@ pip install -r requirements.txt""",
         "highlights": [
             "The README publishes the image at ghcr.io/tatertotterson/tater:latest.",
             "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve downloaded voice models.",
-            "The container exposes the WebUI on port 8501 and several Tater service ports in the README example.",
+            "The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.",
         ],
         "steps": [
             "Pull the published image.",
-            "Start the container with required port and volume mappings.",
+            "Start the container with the main Tater port and persistent volume mappings.",
             "Mount /app/agent_lab and /app/.runtime to host storage so runtime and Redis config persist across rebuilds.",
             "Open the WebUI and complete Redis setup popup if prompted.",
             "Configure Hydra base model settings and optional Beast Mode role routing in Settings.",
@@ -1207,10 +1268,6 @@ pip install -r requirements.txt""",
                 "label": "Docker run with persistent runtime paths",
                 "code": """docker run -d --name tater_webui \\
   -p 8501:8501 \\
-  -p 8787:8787 \\
-  -p 8788:8788 \\
-  -p 8789:8789 \\
-  -p 8790:8790 \\
   -e TZ=America/Chicago \\
   -v /etc/localtime:/etc/localtime:ro \\
   -v /etc/timezone:/etc/timezone:ro \\
@@ -1219,13 +1276,9 @@ pip install -r requirements.txt""",
   ghcr.io/tatertotterson/tater:latest""",
             },
             {
-                "label": "Docker run (same ports/volumes, alternate host paths)",
+                "label": "Docker run (same port/volumes, alternate host paths)",
                 "code": """docker run -d --name tater_webui \\
   -p 8501:8501 \\
-  -p 8787:8787 \\
-  -p 8788:8788 \\
-  -p 8789:8789 \\
-  -p 8790:8790 \\
   -e TZ=America/Chicago \\
   -v /etc/localtime:/etc/localtime:ro \\
   -v /etc/timezone:/etc/timezone:ro \\
@@ -1491,7 +1544,7 @@ def manifest_fallback_plugin(entry: dict[str, Any]) -> dict[str, Any]:
             "how_to_use": "",
             "version": str(entry.get("version") or "").strip(),
             "usage": "",
-            "platforms": list(entry.get("portals") or []),
+            "platforms": clean_platforms(entry.get("portals") or entry.get("platforms")),
             "required_settings": {},
             "guides": [],
         }
@@ -1513,7 +1566,7 @@ def merge_shop_manifest(plugin: dict[str, Any], entry: dict[str, Any]) -> dict[s
     if version:
         merged["version"] = version
 
-    platforms = [str(item).strip().lower() for item in entry.get("portals") or [] if str(item).strip()]
+    platforms = clean_platforms(entry.get("portals") or entry.get("platforms"))
     if platforms:
         merged["platforms"] = platforms
 
@@ -1564,7 +1617,7 @@ def normalize_plugin(raw: dict[str, Any]) -> dict[str, Any]:
         how_to_use = "Use the example call shape below and provide only the fields the plugin expects."
     usage = str(raw.get("usage") or "").strip()
     version = str(raw.get("version") or "").strip() or "unknown"
-    platforms = [str(item).strip().lower() for item in raw.get("portals") or [] if str(item).strip()]
+    platforms = clean_platforms(raw.get("portals") or raw.get("platforms"))
     required_settings = raw.get("required_settings") if isinstance(raw.get("required_settings"), dict) else {}
 
     usage_example = str(overrides.get("usage_example") or canonical_usage(plugin_id, usage)).strip()
@@ -1975,9 +2028,10 @@ def button(label: str, href: str, ghost: bool = False) -> str:
 
 
 def render_platform_badges(platforms: list[str]) -> str:
-    if not platforms:
+    visible_platforms = clean_platforms(platforms)
+    if not visible_platforms:
         return '<span class="chip">No portals listed</span>'
-    return "".join(chip(PLATFORM_META.get(name, {"label": name.replace("_", " ").title()})["label"]) for name in platforms)
+    return "".join(chip(PLATFORM_META.get(name, {"label": name.replace("_", " ").title()})["label"]) for name in visible_platforms)
 
 
 def platform_settings_chip(platform: dict[str, Any]) -> str:
@@ -1998,7 +2052,7 @@ def platform_runtime_chip(platform: dict[str, Any]) -> str:
     if int(platform["plugin_count"]) > 0:
         return f"{platform['plugin_count']} Verbas"
     if platform["slug"] == "macos":
-        return "Desktop bridge"
+        return "Desktop portal"
     if platform["slug"] == "ai_task":
         return "Scheduler runtime"
     if platform["slug"] == "awareness":
@@ -2052,7 +2106,7 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
 def platform_plugin_text(platform: dict[str, Any]) -> str:
     if platform["slug"] == "macos":
         return (
-            "macOS is a desktop bridge portal used by the Tater Menu app. It can execute compatible Verbas "
+            "macOS is a desktop portal used by the Tater Menu app on the main Tater port. It can execute compatible Verbas "
             "through /macos/plugin even when plugin inventory tags for macos are sparse."
         )
     if platform["slug"] == "esphome":
@@ -2148,16 +2202,40 @@ def render_home_page(
             "Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.",
         ),
         (
+            "Tater Dashboard",
+            "The default WebUI view now gives a cached home brief, health, environment, awareness snapshots, voice devices, Speaker ID, and Emotion ID without blocking page load.",
+        ),
+        (
             "Native ESPHome voice",
-            "ESPHome is now built into Tater, powering VoicePE and Sat1 devices with room-aware voice sessions, live entities, direct playback, logs, and native operator screens.",
+            "ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, live entities, reply playback routing, logs, and native operator screens.",
         ),
         (
-            "Shared STT and TTS",
-            "The Models tab now holds the shared speech stack: Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, plus Home Assistant announcement TTS when needed.",
+            "Tater S3Box displays",
+            "ESP32-S3-BOX-3 displays can run a Tater LVGL firmware with sensor bubbles, weather history bars, voice states, tool-call visuals, and camera snapshot notifications.",
         ),
         (
-            "Voice pipeline experiments",
-            "Optional experimental toggles can enable live partial STT, early-start TTS, and live Hydra tool-progress speech on hardware that can support them.",
+            "Firmware recovery",
+            "The ESPHome firmware tab supports browser USB flashing, USB device selection, OTA and USB logs, and safe-mode recovery erases for ESP32 devices.",
+        ),
+        (
+            "Voice identity and tone",
+            "Speaker ID and Emotion ID can warm SpeechBrain models, detect enrolled speakers or tone, and pass useful context into voice turns.",
+        ),
+        (
+            "People identity layer",
+            "Settings -> People creates master users that link portal accounts and ESPHome voice identities, with scoped per-person response instructions.",
+        ),
+        (
+            "Display notifications",
+            "Tater apps and cores can publish display events with text, images, snapshots, and tool-progress metadata to targeted ESPHome screens.",
+        ),
+        (
+            "Environment-aware sensors",
+            "Environment Core supplies normalized readings for displays and dashboard briefs, including Ecowitt rain, Ecobee remote sensors, and Fahrenheit/Celsius conversion.",
+        ),
+        (
+            "Hugging Face integration",
+            "A saved Hugging Face token can be injected into model download environments for private, gated, or higher-rate model pulls.",
         ),
         (
             "Beast Mode routing",
@@ -2169,7 +2247,7 @@ def render_home_page(
         ),
         (
             "API key protection",
-            "Portal HTTP bridges can be locked behind X-Tater-Token so companion apps and integrations use shared API keys.",
+            "Portal routes on the main Tater port can be locked behind X-Tater-Token so companion apps and integrations use shared API keys.",
         ),
         (
             "Core layer",
@@ -2432,15 +2510,15 @@ def render_install_detail(method: dict[str, Any]) -> str:
     )
     companion_section = render_companion_section(
         method.get("companions") or [],
-        "Home Assistant extras",
-        "Optional HACS integrations for Assist conversations.",
-        "After the add-on is running, these Home Assistant-side integrations connect Assist flows back to Tater's portal endpoints.",
+        "Companion apps",
+        "Optional companion pieces for this install path.",
+        "After Tater is running, companion apps can connect back to the portal routes mounted on the main Tater port when they are supported.",
     )
     guide_section = render_companion_section(
         method.get("guides") or [],
         "Workflow setup",
-        "Patterns for storing brief helper output in Home Assistant.",
-        "These patterns matter most when you want compact text summaries to stay visible in helpers, dashboards, and routines.",
+        "Patterns for connecting this install path to Tater workflows.",
+        "These patterns matter most when you want companion apps, dashboards, and routines to use Tater's main WebUI/API routes.",
     )
     links_html = "".join(
         button(link["label"], link["href"], ghost=True)
@@ -2555,7 +2633,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
         <span class="eyebrow">Portal reference</span>
         <h1>Tater runs across purpose-built portals.</h1>
         <p>
-          Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas.
+          Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas through the main Tater WebUI/API port.
         </p>
       </div>
       <aside class="panel hero-panel">
@@ -2657,7 +2735,6 @@ def render_platform_detail(
     if api_items:
         api_auth_note = ""
         if not is_core and str(platform.get("slug") or "").strip().lower() in {
-            "homeassistant",
             "homekit",
             "macos",
             "xbmc",
@@ -3061,7 +3138,6 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
             <button class="filter-chip is-active" type="button" data-platform-filter="all">All</button>
             <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
             <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
-            <button class="filter-chip" type="button" data-platform-filter="homeassistant">Home Assistant</button>
             <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
           </div>
           <p class="results-copy"><span data-results-count>{len(plugins)}</span> Verbas shown</p>
@@ -3085,7 +3161,8 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
 
 
 def render_plugin_card(plugin: dict[str, Any]) -> str:
-    platform_label = " ".join(plugin["platforms"])
+    visible_platforms = clean_platforms(plugin["platforms"])
+    platform_label = " ".join(visible_platforms)
     return f"""
     <article
       class="plugin-card"
@@ -3102,7 +3179,7 @@ def render_plugin_card(plugin: dict[str, Any]) -> str:
         <h3>{escape(plugin['title'])}</h3>
         <p>{escape(plugin['description'])}</p>
       </div>
-      <div class="chip-row platform-row">{render_platform_badges(plugin['platforms'])}</div>
+      <div class="chip-row platform-row">{render_platform_badges(visible_platforms)}</div>
       <div class="plugin-links">
         {button("Read Verba", f"{plugin['slug']}.html", ghost=True)}
       </div>
