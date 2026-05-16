@@ -1,3 +1,12 @@
+<div align="center">
+  <a href="https://taterassistant.com">
+    <img src="images/tater-repo-logo.png" alt="Tater Website" width="460"/>
+  </a>
+</div>
+<h3 align="center">
+  <a href="https://taterassistant.com">taterassistant.com</a>
+</h3>
+
 # Tater Assistant Wiki
 
 Static wiki generator for the Tater Assistant docs site.
