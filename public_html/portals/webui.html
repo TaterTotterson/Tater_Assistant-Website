@@ -1,0 +1,176 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.">
+          <title>Tater Assistant | WebUI</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>WebUI</h1>
+        <p>FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.</p>
+        <div class="chip-row">
+          <span class="chip">Operator console</span>
+          <span class="chip">Bundled</span>
+          <span class="chip">Configured in app</span>
+          <span class="chip">66 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>WebUI modules</p>
+
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Operator console</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.</li><li>Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.</li><li>First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.</li><li>Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.</li><li>Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.</li><li>The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.</li><li>Integrations now include Hugging Face token storage so automatic model downloads can use authenticated Hub requests.</li><li>Settings -&gt; People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.</li><li>WebUI password login can be enabled from Settings -&gt; General and uses cookie-backed sessions.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>66 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/automatic_plugin.html">Automatic1111 Image</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/comfyui_image_video.html">ComfyUI Animate Image</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <p>The WebUI is itself the configuration portal, so this page documents behavior and role rather than a separate PORTAL_SETTINGS form.</p>
+        </article>
+      </div>
+    </section>
+
+        <section class="section">
+          <div class="screenshot-frame">
+            <img src="../assets/images/webui.png" alt="Tater WebUI screenshot">
+          </div>
+        </section>
+
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Identity layer</span>
+        <h2>People turns scattered accounts and devices into one known user.</h2>
+        <p>The People panel is the human identity layer Tater uses when one person appears through multiple portals, devices, or voice identities.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Settings -&gt; People</span><span class="chip">Master user</span><span class="chip">Identity links</span></div>
+          <h3>Master users</h3>
+          <p>Create one master user per real person, then link all of their known identities to that record.</p>
+          <ul class="stack-list"><li>A master user can represent the same person across WebUI, Discord, Telegram, Matrix, IRC, HomeKit, macOS, XBMC, Meshtastic, and ESPHome voice identities.</li><li>Linked identities let Tater resolve a request origin into one person_id and person_name instead of treating every portal account as a separate user.</li><li>Speaker ID aliases from ESPHome voice turns can also be linked, so a recognized voice can map back to the same master user as that person&#x27;s chat accounts.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Instructions</span><span class="chip">Prompt context</span><span class="chip">Scoped</span></div>
+          <h3>Per-person instructions</h3>
+          <p>Each master user can carry trusted response instructions that only apply when that user is resolved.</p>
+          <ul class="stack-list"><li>Per-person instructions are useful for preferred names, tone preferences, accessibility needs, household roles, or other user-specific response style rules.</li><li>Tater injects those instructions only for the current resolved user and tells Hydra not to apply them to other people mentioned in the conversation.</li><li>These instructions are scoped under system and safety rules, so they personalize responses without overriding higher-priority behavior.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Discovery</span><span class="chip">Portals</span><span class="chip">Speaker ID</span></div>
+          <h3>Discovered identities</h3>
+          <p>The People panel can surface identities Tater has seen but not yet linked.</p>
+          <ul class="stack-list"><li>Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and ESPHome Speaker ID aliases.</li><li>Operators can attach a discovered identity to an existing master user or create a new master user first.</li><li>Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+
+        <section class="section">
+          <div class="section-head">
+            <span class="eyebrow">Built-in APIs</span>
+            <h2>HTTP endpoints exposed by this portal.</h2>
+          </div>
+
+          <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/api/settings/people</span>
+              </div>
+              <h3>Load People settings, master users, and discovered identity rows.</h3>
+              <p>Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and ESPHome Speaker ID.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/api/settings/people/action</span>
+              </div>
+              <h3>Create, edit, delete, link, and unlink People records.</h3>
+              <p>Supports people_create, people_save, people_delete, people_alias_attach, and people_alias_detach actions for the Settings -&gt; People panel.</p>
+            </article>
+
+          </div>
+        </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

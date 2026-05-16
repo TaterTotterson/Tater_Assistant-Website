@@ -1,0 +1,160 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Lightweight IRC bot that responds to mentions and runs compatible Verbas.">
+          <title>Tater Assistant | IRC</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>IRC</h1>
+        <p>Lightweight IRC bot that responds to mentions and runs compatible Verbas.</p>
+        <div class="chip-row">
+          <span class="chip">Chat endpoint</span>
+          <span class="chip">v1.0.1</span>
+          <span class="chip">6 settings</span>
+          <span class="chip">59 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>IRC Settings</p>
+        <p>Settings extracted from <code>irc_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Chat endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Simple low-overhead deployment for classic chat rooms and ZNC-style setups.</li><li>Supports admin-user gating and Verba execution on mention.</li><li>Keeps the interaction model intentionally lean and plain-text friendly.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>59 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/ecobee_homekit_thermostat.html">Ecobee HomeKit Thermostat</a><a class="chip-link" href="../plugins/find_my_phone.html">Find My Phone</a><a class="chip-link" href="../plugins/ha_camera_area.html">Home Assistant Camera Area</a><a class="chip-link" href="../plugins/ha_climate.html">Home Assistant Climate</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>IRC Channel</strong>
+              <span>string</span>
+              <p>Channel to join</p>
+              <small>Key: irc_channel</small>
+              <small>Default: #tater</small>
+
+            </li>
+
+            <li>
+              <strong>IRC Nickname</strong>
+              <span>string</span>
+              <p>Nickname to use</p>
+              <small>Key: irc_nick</small>
+              <small>Default: TaterBot</small>
+
+            </li>
+
+            <li>
+              <strong>IRC Password</strong>
+              <span>string</span>
+              <p>Login password (ZNC password)</p>
+              <small>Key: irc_password</small>
+
+
+            </li>
+
+            <li>
+              <strong>IRC Port</strong>
+              <span>string</span>
+              <p>Port number</p>
+              <small>Key: irc_port</small>
+              <small>Default: 6667</small>
+
+            </li>
+
+            <li>
+              <strong>IRC Server</strong>
+              <span>string</span>
+              <p>Hostname of the IRC server</p>
+              <small>Key: irc_server</small>
+              <small>Default: irc.libera.chat</small>
+
+            </li>
+
+            <li>
+              <strong>IRC Username</strong>
+              <span>string</span>
+              <p>Login username (for ZNC: typically username/network)</p>
+              <small>Key: irc_username</small>
+
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

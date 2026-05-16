@@ -1,0 +1,142 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.">
+          <title>Tater Assistant | XBMC4Xbox</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>XBMC4Xbox</h1>
+        <p>Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.</p>
+        <div class="chip-row">
+          <span class="chip">Console endpoint</span>
+          <span class="chip">v1.1.2</span>
+          <span class="chip">4 settings</span>
+          <span class="chip">43 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>XBMC / Original Xbox Settings</p>
+        <p>Settings extracted from <code>xbmc_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Console endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Gives Tater a living-room interface on the OG Xbox.</li><li>Maintains local conversation sessions and routes actions through the same Hydra core.</li><li>Pairs well with media, smart-home, and utility Verbas for couch-side control.</li><li>Supports optional API key protection on HTTP endpoints using X-Tater-Token.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>43 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/ecobee_homekit_thermostat.html">Ecobee HomeKit Thermostat</a><a class="chip-link" href="../plugins/find_my_phone.html">Find My Phone</a><a class="chip-link" href="../plugins/ha_camera_area.html">Home Assistant Camera Area</a><a class="chip-link" href="../plugins/ha_climate.html">Home Assistant Climate</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Require API Key</strong>
+              <span>select</span>
+              <p>Require X-Tater-Token on all XBMC portal API endpoints.</p>
+              <small>Key: API_AUTH_ENABLED</small>
+              <small>Default: false</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>API Key</strong>
+              <span>password</span>
+              <p>Shared API key expected in the X-Tater-Token header when auth is enabled.</p>
+              <small>Key: API_AUTH_KEY</small>
+
+
+            </li>
+
+            <li>
+              <strong>Session TTL</strong>
+              <span>select</span>
+              <p>How long to keep an XBMC session’s history alive (5m–24h).</p>
+              <small>Key: SESSION_TTL_SECONDS</small>
+              <small>Default: 2h</small>
+              <small>Options: 5m, 30m, 1h, 2h, 6h, 24h</small>
+            </li>
+
+            <li>
+              <strong>Legacy Bind Port</strong>
+              <span>number</span>
+              <p>Deprecated. XBMC now uses Tater&#x27;s main API path: /api/portals/xbmc_portal/api/tater-xbmc/v1</p>
+              <small>Key: bind_port</small>
+              <small>Default: 8790</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

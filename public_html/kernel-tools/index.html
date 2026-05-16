@@ -1,0 +1,238 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Reference for Tater Assistant kernel tools and their purposes.">
+          <title>Tater Assistant | Kernel Tools</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="kernel">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link is-active" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Built-in capabilities</span>
+        <h1>Kernel tools are Tater's native action layer.</h1>
+        <p>
+          They handle files, web inspection, memory, artifacts, and delivery before Hydra reaches for a Verba.
+        </p>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Why they matter</span>
+        <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
+      </aside>
+    </section>
+
+            <section class="tool-section">
+              <div class="section-head">
+                <span class="eyebrow">Kernel tools</span>
+                <h2>Catalog and inspection</h2>
+              </div>
+              <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Catalog and inspection</span></div>
+              <h3>list_tools</h3>
+              <p>list kernel and enabled verba tools for current portal</p>
+            </article>
+
+              </div>
+            </section>
+
+
+            <section class="tool-section">
+              <div class="section-head">
+                <span class="eyebrow">Kernel tools</span>
+                <h2>Workspace and files</h2>
+              </div>
+              <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>attach_file</h3>
+              <p>attach an available artifact/local file and optionally send it to a destination platform/target</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>delete_file</h3>
+              <p>delete a local file</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>download_file</h3>
+              <p>download a file from a concrete file URL after discovery/inspection (actual file retrieval)</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>extract_archive</h3>
+              <p>extract archives to a target directory</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>list_archive</h3>
+              <p>inspect archive entries</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>list_directory</h3>
+              <p>list files and folders</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>list_workspace</h3>
+              <p>list workspace notes</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>read_file</h3>
+              <p>read local file contents</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>search_files</h3>
+              <p>search text across local files</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>write_file</h3>
+              <p>write content to a local file</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Workspace and files</span></div>
+              <h3>write_workspace_note</h3>
+              <p>append a workspace note</p>
+            </article>
+
+              </div>
+            </section>
+
+
+            <section class="tool-section">
+              <div class="section-head">
+                <span class="eyebrow">Kernel tools</span>
+                <h2>Web and media</h2>
+              </div>
+              <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Web and media</span></div>
+              <h3>image_describe</h3>
+              <p>describe an explicit image using an artifact_id, URL, blob, or local path</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Web and media</span></div>
+              <h3>inspect_webpage</h3>
+              <p>inspect and extract content from a specific webpage URL (title, summary text, links, images)</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Web and media</span></div>
+              <h3>search_web</h3>
+              <p>Search the public web through Google&#x27;s Programmable Search backend after Web Search is configured in Tater WebUI.</p>
+            </article>
+
+              </div>
+            </section>
+
+
+            <section class="tool-section">
+              <div class="section-head">
+                <span class="eyebrow">Kernel tools</span>
+                <h2>Memory and delivery</h2>
+              </div>
+              <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Memory and delivery</span></div>
+              <h3>send_message</h3>
+              <p>queue a cross-portal notification/message only when the user explicitly asks to notify or message a destination (never for normal chat replies)</p>
+            </article>
+
+              </div>
+            </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Web search setup</span>
+        <h2>How to enable Google&#x27;s search backend for the search_web kernel tool.</h2>
+        <p>This is a core capability, not a Verba. The current Tater WebUI path is Settings -&gt; Integrations -&gt; Web Search.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Google Cloud</span><span class="chip">Custom Search JSON API</span><span class="chip">API key</span></div>
+          <h3>Create a Google API key</h3>
+          <p>The search_web kernel tool uses Google&#x27;s Custom Search JSON API credentials.</p>
+          <ul class="stack-list"><li>Open Google Cloud Console, create or select a project, then enable Custom Search API under APIs and Services -&gt; Library.</li><li>After the API is enabled, go to APIs and Services -&gt; Credentials and create an API key for Tater.</li><li>Keep that key handy because Tater&#x27;s WebUI expects it as the Google API Key for web search.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://console.cloud.google.com/">Google Cloud Console</a><a class="button button-ghost" href="https://developers.google.com/custom-search/v1/overview">Custom Search JSON API Docs</a></div>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Programmable Search Engine</span><span class="chip">CX</span><span class="chip">Entire web</span></div>
+          <h3>Create a Search Engine ID (CX)</h3>
+          <p>Google also requires a Programmable Search Engine and its Search Engine ID.</p>
+          <ul class="stack-list"><li>Create a Programmable Search Engine, then open its control panel and enable Search the entire web if you want broad public-web results.</li><li>Open the generated search page URL and copy the value after cx=, because that is the Search Engine ID Tater stores.</li><li>Tater&#x27;s core search flow is only ready once both the API key and the CX value are saved.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://programmablesearchengine.google.com/">Programmable Search Engine</a></div>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Settings -&gt; Integrations</span><span class="chip">Web Search</span><span class="chip">Kernel tool</span></div>
+          <h3>Enter the keys in Tater</h3>
+          <p>Web search is configured from Integrations because it powers a kernel tool, not a Verba.</p>
+          <ul class="stack-list"><li>Open Tater WebUI and go to Settings -&gt; Integrations -&gt; Web Search.</li><li>Paste Google API Key and Google Search Engine ID (CX), then save the settings.</li><li>The current code stores those values as tater:web_search:google_api_key and tater:web_search:google_cx, with a legacy fallback for older plugin-style settings.</li><li>After that, Hydra can call search_web for current web research and article lookup tasks.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">query</span><span class="chip">site</span><span class="chip">country</span><span class="chip">language</span></div>
+          <h3>What the kernel tool supports</h3>
+          <p>The current search_web implementation accepts a few focused filters on top of the main query.</p>
+          <ul class="stack-list"><li>query is required, while num_results, start, site, safe, country, and language are optional.</li><li>site narrows results to one domain, country maps to Google&#x27;s gl parameter, and language maps to lr.</li><li>If the Google credentials are missing, the tool returns a configuration error that points operators back to WebUI settings.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://developers.google.com/custom-search/v1">API Reference</a></div>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

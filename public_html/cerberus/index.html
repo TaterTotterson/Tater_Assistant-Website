@@ -1,0 +1,165 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Overview of the Hydra AI core that powers Tater Assistant.">
+          <title>Tater Assistant | Hydra</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cerberus">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link is-active" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Hydra AI core</span>
+        <h1>Hydra plans, chains, and completes tasks.</h1>
+        <p>
+          It runs a guarded Astraeus -> Thanatos -> Minos -> Hermes loop that validates actions, repairs bad calls, and mixes kernel tools with Verbas one step at a time.
+        </p>
+      </div>
+      <aside class="panel hero-panel">
+        <img class="cerberus-badge" src="../assets/images/cerberus-badge.png" alt="Hydra AI Core badge">
+        <span class="eyebrow">State fields</span>
+        <div class="chip-row"><span class="chip">goal</span><span class="chip">plan</span><span class="chip">facts</span><span class="chip">open_questions</span><span class="chip">next_step</span><span class="chip">tool_history</span></div>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Task completion</span>
+        <h2>Smart chaining is the real feature.</h2>
+      </div>
+      <div class="grid grid-3">
+
+        <article class="feature-card">
+          <h3>Kernel tools first</h3>
+          <p>Hydra can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Verbas where action lives</h3>
+          <p>When the task needs smart-home control, media workflows, image generation, camera events, or app-specific logic, Hydra switches to the right Verba.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>One step at a time</h3>
+          <p>The chain stays deliberate: choose one action, validate it, run it, update state, then decide whether the next step should continue the task.</p>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Execution loop</span>
+        <h2>Each round commits to one next action.</h2>
+      </div>
+      <div class="timeline">
+
+        <article class="timeline-card">
+          <h3>1. Astraeus (The Seer)</h3>
+          <p>Astraeus turns a user request into an ordered atomic plan and decides whether the turn is chat-only or execution.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>2. Thanatos (The executor)</h3>
+          <p>Thanatos executes the active atomic step and selects the exact next tool call needed for that step.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>3. Validation and repair</h3>
+          <p>Tool calls are forced into strict JSON, checked against the tool catalog, repaired if malformed, and blocked if the tool is unsupported or disabled.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>4. Thanatos state update</h3>
+          <p>After each tool run, state is updated with goal, plan, facts, open questions, next step, and tool history so current-turn execution stays grounded.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>5. Minos (The Arbiter)</h3>
+          <p>Minos returns one validation decision (CONTINUE, RETRY, ASK_USER, FAIL, or FINAL) and checks whether the turn still needs another atomic step.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>6. Hermes (The voice)</h3>
+          <p>Hermes renders the final user-facing response after execution and validation have converged.</p>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Guardrails</span>
+        <h2>Why Hydra stays controlled.</h2>
+      </div>
+      <div class="panel">
+        <ul class="stack-list">
+          <li>Tool-first router: execution, retrieval, setting changes, add/remove requests, and system diagnostics route to tools.</li><li>Beast Mode routing: base servers can handle AI Calls while Chat/Astraeus/Thanatos/Minos/Hermes can route to per-head models.</li><li>Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.</li><li>Atomic execution lock: Thanatos and Minos both focus on one next step instead of merging unrelated actions.</li><li>Fresh-run behavior: ASK_USER ends the current run and a new user message starts a fresh run.</li><li>Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.</li><li>Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.</li><li>Memory context: user and room memory summaries can be injected into Minos decisions without bloating the turn.</li>
+        </ul>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Default runtime budgets</span>
+        <h2>Defaults pulled from the current source.</h2>
+      </div>
+      <div class="runtime-grid">
+
+        <article class="stat-card stat-card-wide">
+          <strong>0</strong>
+          <span>Max rounds</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>0</strong>
+          <span>Max tool calls</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>1</strong>
+          <span>Step retry limit</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>1500</strong>
+          <span>Max ledger items</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>0</strong>
+          <span>Astraeus second plan check</span>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

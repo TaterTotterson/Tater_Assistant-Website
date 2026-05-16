@@ -1,0 +1,157 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Control your MiSTer FPGA setup—launch games, check status, or take screenshots.">
+          <title>Tater Assistant | MiSTer Remote</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="plugins">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link is-active" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Verba profile</span>
+        <h1>MiSTer Remote</h1>
+        <p>Control your MiSTer FPGA setup—launch games, check status, or take screenshots.</p>
+        <div class="chip-row">
+          <span class="chip">mister_remote</span>
+          <span class="chip">Version 1.1.9</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Supported portals</span>
+        <div class="chip-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">ESPHome Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">When to use</span>
+          <h2>Best-fit scenarios</h2>
+          <p>Use this when you want Tater to browse or control a MiSTer setup from chat, voice, or the WebUI without dealing with the MiSTer Remote API directly.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">How to call it</span>
+          <h2>Execution guidance</h2>
+          <p>Set MISTER_HOST and MISTER_PORT in plugin settings, make sure MiSTer Remote and Search are installed on the MiSTer, then send one natural-language request in query such as play super mario on super nintendo or what is playing on mister.</p>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Arguments</span>
+          <h2>Input shape</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>query</strong>
+              <span>string</span>
+              <p>play super mario on super nintendo</p>
+            </li>
+            </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Required configuration</h2>
+          <p>This Verba does not declare plugin-specific settings in its metadata. Any dependencies are handled through portal config, environment variables, or the backing service itself.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Usage guide</span>
+        <h2>How this plugin fits real-world workflows.</h2>
+        <p>These notes focus on the setup, calling pattern, and runtime behavior that matter most for this plugin.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">mrext</span><span class="chip">Port 8182</span><span class="chip">Search index</span></div>
+          <h3>Quick setup on MiSTer</h3>
+          <p>MiSTer Remote depends on the mrext Remote and Search tools running on the MiSTer box.</p>
+          <ul class="stack-list"><li>Install the MiSTer Remote and Search scripts from the mrext release bundle and place them under /media/fat/Scripts on the MiSTer.</li><li>Run Search at least once so the game database exists before Tater tries to launch titles by search.</li><li>Start remote.sh and confirm the Remote UI is reachable from the Tater machine, usually at http://YOUR_MISTER_IP:8182.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">MISTER_HOST</span><span class="chip">MISTER_PORT</span><span class="chip">Reachability</span></div>
+          <h3>Tater plugin settings</h3>
+          <p>Tater only needs the MiSTer host and port, but the Remote index must already be healthy.</p>
+          <ul class="stack-list"><li>Set MISTER_HOST to the MiSTer Remote host URL and MISTER_PORT to the API port if you changed it from 8182.</li><li>If MiSTer Remote can see your library and search it, Tater can search and launch it too, including CIFS-backed libraries that are already indexed.</li><li>If launch lookups fail or the library seems empty, rebuild the MiSTer Search index first before troubleshooting Tater.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">play</span><span class="chip">now_playing</span><span class="chip">go_to_menu</span><span class="chip">screenshot_take</span></div>
+          <h3>Supported commands</h3>
+          <p>The plugin maps natural language into four main MiSTer actions.</p>
+          <ul class="stack-list"><li>play launches the closest matching game on the chosen or inferred system, for example play mario on snes.</li><li>now_playing reports the current game and system, go_to_menu returns to the MiSTer menu, and screenshot_take captures a screenshot artifact.</li><li>The screenshot action returns image payload data when available so the current portal can display or attach the screenshot cleanly.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">gamesdb</span><span class="chip">No systems</span><span class="chip">Reindex</span></div>
+          <h3>Troubleshooting</h3>
+          <p>Most setup failures come down to reachability or a missing search database.</p>
+          <ul class="stack-list"><li>If you see behavior like gamesdb does not exist or no systems are found, run Search once and refresh the MiSTer Remote index.</li><li>If Tater cannot talk to MiSTer at all, double-check MISTER_HOST and MISTER_PORT in plugin settings and verify the Remote web UI is reachable from the Tater box.</li><li>Natural-language launch requests work best after the Search index is current, because Tater relies on MiSTer Remote search results to pick the right game path.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Example call</span>
+        <h2>Canonical usage JSON</h2>
+        <pre class="code-block"><code>{
+  &quot;function&quot;: &quot;mister_remote&quot;,
+  &quot;arguments&quot;: {
+    &quot;query&quot;: &quot;play super mario on super nintendo&quot;
+  }
+}</code></pre>
+      </article>
+    </section>
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../kernel-tools/index.html">Kernel tools</a>
+        <a class="button button-ghost" href="../cerberus/index.html">Hydra</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

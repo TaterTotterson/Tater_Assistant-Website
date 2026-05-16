@@ -1,0 +1,187 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Reference for Tater Assistant portals and their integration behavior.">
+          <title>Tater Assistant | Portals</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal reference</span>
+        <h1>Tater runs across purpose-built portals.</h1>
+        <p>
+          Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas through the main Tater WebUI/API port.
+        </p>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">What is documented</span>
+        <p>9 portals with current descriptions, settings snapshots, API notes, and related Verba context.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="grid grid-3">
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Operator console</span>
+            <span class="chip">Bundled</span>
+            <span class="chip">Configured in app</span>
+            <span class="chip">66 Verbas</span>
+          </div>
+          <h3>WebUI</h3>
+          <p>FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="webui.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.3</span>
+            <span class="chip">2 settings</span>
+            <span class="chip">65 Verbas</span>
+          </div>
+          <h3>Discord</h3>
+          <p>Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="discord.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.1</span>
+            <span class="chip">5 settings</span>
+            <span class="chip">60 Verbas</span>
+          </div>
+          <h3>Telegram</h3>
+          <p>Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba execution.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="telegram.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.2</span>
+            <span class="chip">13 settings</span>
+            <span class="chip">59 Verbas</span>
+          </div>
+          <h3>Matrix</h3>
+          <p>Federated Matrix client with encryption support, Markdown rendering, and full Verba compatibility.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="matrix.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.1</span>
+            <span class="chip">6 settings</span>
+            <span class="chip">59 Verbas</span>
+          </div>
+          <h3>IRC</h3>
+          <p>Lightweight IRC bot that responds to mentions and runs compatible Verbas.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="irc.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Social research endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">45 settings</span>
+            <span class="chip">Internal runtime</span>
+          </div>
+          <h3>Moltbook</h3>
+          <p>Social/research community portal that keeps Tater active on Moltbook with a structured, safety-first loop.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="moltbook.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Voice endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">5 settings</span>
+            <span class="chip">47 Verbas</span>
+          </div>
+          <h3>HomeKit</h3>
+          <p>Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="homekit.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Desktop endpoint</span>
+            <span class="chip">v1.1.1</span>
+            <span class="chip">5 settings</span>
+            <span class="chip">66 Verbas</span>
+          </div>
+          <h3>macOS</h3>
+          <p>Native desktop portal used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="macos.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Console endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">4 settings</span>
+            <span class="chip">43 Verbas</span>
+          </div>
+          <h3>XBMC4Xbox</h3>
+          <p>Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="xbmc.html">Read portal page</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

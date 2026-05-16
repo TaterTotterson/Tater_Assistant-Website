@@ -1,0 +1,112 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Installation paths for Tater Assistant from the current README.">
+          <title>Tater Assistant | Install</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="install">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link is-active" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Install Tater</span>
+        <h1>Pick the install path that fits your stack.</h1>
+        <p>
+          Tater ships with four main setup paths: Unraid, Home Assistant, local Python, and Docker.
+        </p>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">README note</span>
+        <p>Tater currently recommends using gemma-4-26b-a4b (disable thinking), qwen/qwen3.5-35b-a3b (disable thinking), qwen3-coder-next, qwen3-next-80b, or gpt-oss-120b (disable thinking)</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../esphome/index.html">ESPHome tab</a>
+        </div>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="grid grid-2">
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Low</span>
+          </div>
+          <h3>Unraid Community Apps</h3>
+          <p>Install Tater and Redis Stack from Unraid Community Apps with persistent storage for Agent Lab and runtime config.</p>
+          <p><strong>Best for:</strong> Unraid users who want the smoothest packaged deployment.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="unraid.html">Read install path</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Low to medium</span>
+          </div>
+          <h3>Home Assistant Add-on</h3>
+          <p>Install Tater through the dedicated Home Assistant add-on repository, with Redis Stack as the required companion service.</p>
+          <p><strong>Best for:</strong> Home Assistant users who want Tater inside the supervisor/add-on workflow.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="home-assistant.html">Read install path</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Medium</span>
+          </div>
+          <h3>Local Python Install</h3>
+          <p>Run Tater from source with Python 3.11 and Redis Stack, then configure Redis/Hydra in WebUI.</p>
+          <p><strong>Best for:</strong> Developers and operators who want direct source control and local customization.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="local.html">Read install path</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Medium</span>
+          </div>
+          <h3>Docker Image</h3>
+          <p>Run the published container image with persistent Agent Lab/.runtime volumes, then configure Redis + Hydra in WebUI.</p>
+          <p><strong>Best for:</strong> Operators who want a direct container deployment outside packaged add-on/app-store flows.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="docker.html">Read install path</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

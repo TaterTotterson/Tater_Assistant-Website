@@ -1,0 +1,223 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Federated Matrix client with encryption support, Markdown rendering, and full Verba compatibility.">
+          <title>Tater Assistant | Matrix</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>Matrix</h1>
+        <p>Federated Matrix client with encryption support, Markdown rendering, and full Verba compatibility.</p>
+        <div class="chip-row">
+          <span class="chip">Chat endpoint</span>
+          <span class="chip">v1.0.2</span>
+          <span class="chip">13 settings</span>
+          <span class="chip">59 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Matrix Settings</p>
+        <p>Settings extracted from <code>matrix_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Chat endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Brings Tater to federated chat networks like Element and Cinny.</li><li>Can operate with end-to-end encryption and persistent Matrix device state.</li><li>Supports mention triggers, room response modes, and Verba-backed actions.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>59 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a><a class="chip-link" href="../plugins/device_compare.html">Device Compare</a><a class="chip-link" href="../plugins/ecobee_homekit_thermostat.html">Ecobee HomeKit Thermostat</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Access Token (optional)</strong>
+              <span>string</span>
+              <p>Prefer access token; if blank, password login will be attempted.</p>
+              <small>Key: matrix_access_token</small>
+
+
+            </li>
+
+            <li>
+              <strong>Device Name</strong>
+              <span>string</span>
+              <p>Device name shown in Matrix sessions</p>
+              <small>Key: matrix_device_name</small>
+              <small>Default: TaterBot</small>
+
+            </li>
+
+            <li>
+              <strong>Encryption Mode</strong>
+              <span>select</span>
+              <p>auto = use E2EE if dependencies exist, otherwise continue unencrypted.</p>
+              <small>Key: matrix_encryption_mode</small>
+              <small>Default: auto</small>
+              <small>Options: auto, on, off</small>
+            </li>
+
+            <li>
+              <strong>Homeserver URL</strong>
+              <span>string</span>
+              <p>Matrix homeserver base URL (e.g., https://matrix.example.com)</p>
+              <small>Key: matrix_hs</small>
+              <small>Default: https://matrix-client.matrix.org</small>
+
+            </li>
+
+            <li>
+              <strong>Password (fallback)</strong>
+              <span>string</span>
+              <p>Used only if access token is empty.</p>
+              <small>Key: matrix_password</small>
+
+
+            </li>
+
+            <li>
+              <strong>Pickle Key</strong>
+              <span>string</span>
+              <p>Secret used to encrypt local store; fallback to MATRIX_PICKLE_KEY env</p>
+              <small>Key: matrix_pickle_key</small>
+
+
+            </li>
+
+            <li>
+              <strong>Store Path</strong>
+              <span>string</span>
+              <p>Persistent path for nio store. Leave blank to auto-use agent_lab/matrix-store.</p>
+              <small>Key: matrix_store_path</small>
+
+
+            </li>
+
+            <li>
+              <strong>User ID</strong>
+              <span>string</span>
+              <p>Matrix user id for the bot (e.g., @tater:example.com)</p>
+              <small>Key: matrix_user</small>
+              <small>Default: @tater:example.com</small>
+
+            </li>
+
+            <li>
+              <strong>Max Response Chunk Length</strong>
+              <span>number</span>
+              <p>Max Response Chunk Length</p>
+              <small>Key: max_response_length</small>
+              <small>Default: 4000</small>
+
+            </li>
+
+            <li>
+              <strong>Mention Keywords</strong>
+              <span>string</span>
+              <p>Comma-separated triggers (e.g. &#x27;tater, taterbot&#x27;) to count as mentions</p>
+              <small>Key: mention_keywords</small>
+
+
+            </li>
+
+            <li>
+              <strong>Response Policy</strong>
+              <span>select</span>
+              <p>When to respond in rooms</p>
+              <small>Key: response_policy</small>
+              <small>Default: mention_only</small>
+              <small>Options: mention_only, all_messages</small>
+            </li>
+
+            <li>
+              <strong>Resume Mode</strong>
+              <span>select</span>
+              <p>from_now = ignore backlog on startup; from_last_sync = process all missed messages</p>
+              <small>Key: resume_mode</small>
+              <small>Default: from_now</small>
+              <small>Options: from_now, from_last_sync</small>
+            </li>
+
+            <li>
+              <strong>Trust Unverified Devices</strong>
+              <span>select</span>
+              <p>If true, the bot auto-trusts/ignores unverified devices so it can send E2EE.</p>
+              <small>Key: trust_unverified_devices</small>
+              <small>Default: true</small>
+              <small>Options: true, false</small>
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

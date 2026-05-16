@@ -1,0 +1,407 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Overview of Tater Assistant, supported portals, and the current wiki structure.">
+          <title>Tater | Home</title>
+          <link rel="stylesheet" href="assets/site.css">
+          <script src="assets/site.js" defer></script>
+        </head>
+        <body data-page="home">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="index.html">
+                <img src="assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link is-active" href="index.html">Home</a>
+<a class="nav-link" href="install/index.html">Install</a>
+<a class="nav-link" href="cerberus/index.html">Hydra</a>
+<a class="nav-link" href="portals/index.html">Portals</a>
+<a class="nav-link" href="esphome/index.html">ESPHome</a>
+<a class="nav-link" href="cores/index.html">Cores</a>
+<a class="nav-link" href="kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+
+    <section class="hero hero-home">
+      <div class="hero-copy">
+        <span class="eyebrow">Source-backed wiki</span>
+        <h1>Tater is an AI assistant built to act.</h1>
+        <p>
+          Hydra plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
+          smart-home, direct voice devices, media, and automation workflows.
+        </p>
+        <div class="action-row">
+          <a class="button" href="install/index.html">Install Tater</a>
+          <a class="button" href="portals/index.html">Explore portals</a>
+          <a class="button button-ghost" href="esphome/index.html">ESPHome</a>
+          <a class="button" href="cores/index.html">Explore cores</a>
+          <a class="button" href="plugins/index.html">Explore Verbas</a>
+          <a class="button button-ghost" href="cerberus/index.html">Read Hydra</a>
+        </div>
+      </div>
+      <aside class="hero-art">
+        <div class="orbital-frame">
+          <img src="assets/images/tater-logo.png" alt="Tater Assistant emblem">
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card"><strong>74</strong><span>documented Verbas</span></div>
+          <div class="stat-card"><strong>19</strong><span>kernel tools</span></div>
+          <div class="stat-card"><strong>9</strong><span>portals</span></div>
+          <div class="stat-card"><strong>4</strong><span>install paths</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">What Tater does</span>
+        <h2>Tater plans, acts, and connects across your stack.</h2>
+      </div>
+      <div class="grid grid-4">
+
+        <article class="feature-card">
+          <h3>Smart chaining</h3>
+          <p>Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Tater Dashboard</h3>
+          <p>The default WebUI view now gives a cached home brief, health, environment, awareness snapshots, voice devices, Speaker ID, and Emotion ID without blocking page load.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Native ESPHome voice</h3>
+          <p>ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Tater S3Box displays</h3>
+          <p>ESP32-S3-BOX-3 displays can run a Tater LVGL firmware with sensor bubbles, weather history bars, voice states, tool-call visuals, and camera snapshot notifications.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Firmware recovery</h3>
+          <p>The ESPHome firmware tab supports browser USB flashing, USB device selection, OTA and USB logs, and safe-mode recovery erases for ESP32 devices.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Voice identity and tone</h3>
+          <p>Speaker ID and Emotion ID can warm SpeechBrain models, detect enrolled speakers or tone, and pass useful context into voice turns.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>People identity layer</h3>
+          <p>Settings -&gt; People creates master users that link portal accounts and ESPHome voice identities, with scoped per-person response instructions.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Display notifications</h3>
+          <p>Tater apps and cores can publish display events with text, images, snapshots, and tool-progress metadata to targeted ESPHome screens.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Remote wake and intercom</h3>
+          <p>Satellites can switch between microWakeWord and remote openWakeWord, fall back locally if the OWW server is unavailable, and use Tater intercom broadcasts across room devices.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Environment-aware sensors</h3>
+          <p>Environment Core supplies normalized readings for displays and dashboard briefs, including Ecowitt rain, Ecobee remote sensors, and Fahrenheit/Celsius conversion.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Hugging Face integration</h3>
+          <p>A saved Hugging Face token can be injected into model download environments for private, gated, or higher-rate model pulls.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Beast Mode routing</h3>
+          <p>Base servers can run normal AI calls while Chat/Astraeus/Thanatos/Minos/Hermes optionally route to per-head models.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Redis control + encryption</h3>
+          <p>Redis setup, connectivity checks, and live encrypt/decrypt controls are managed directly in WebUI settings.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>API key protection</h3>
+          <p>Portal routes on the main Tater port can be locked behind X-Tater-Token so companion apps and integrations use shared API keys.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Core layer</h3>
+          <p>Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Verbas</h3>
+          <p>Actions speak louder then words. Verbas extend Tater into smart-home, media, camera, note, download, and admin workflows.</p>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Portals + cores</span>
+        <h2>One assistant. Verbas, portals, and cores.</h2>
+      </div>
+      <h3>Portals</h3>
+      <div class="grid grid-3">
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Operator console</span>
+            <span class="chip">Bundled</span>
+            <span class="chip">Configured in app</span>
+          </div>
+          <h3>WebUI</h3>
+          <p>FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/webui.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.3</span>
+            <span class="chip">2 settings</span>
+          </div>
+          <h3>Discord</h3>
+          <p>Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/discord.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.1</span>
+            <span class="chip">5 settings</span>
+          </div>
+          <h3>Telegram</h3>
+          <p>Telegram bot integration with allowlists, DM restrictions, queued notifications, media delivery, and Verba execution.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/telegram.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.2</span>
+            <span class="chip">13 settings</span>
+          </div>
+          <h3>Matrix</h3>
+          <p>Federated Matrix client with encryption support, Markdown rendering, and full Verba compatibility.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/matrix.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Chat endpoint</span>
+            <span class="chip">v1.0.1</span>
+            <span class="chip">6 settings</span>
+          </div>
+          <h3>IRC</h3>
+          <p>Lightweight IRC bot that responds to mentions and runs compatible Verbas.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/irc.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Social research endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">45 settings</span>
+          </div>
+          <h3>Moltbook</h3>
+          <p>Social/research community portal that keeps Tater active on Moltbook with a structured, safety-first loop.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/moltbook.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Voice endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">5 settings</span>
+          </div>
+          <h3>HomeKit</h3>
+          <p>Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/homekit.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Desktop endpoint</span>
+            <span class="chip">v1.1.1</span>
+            <span class="chip">5 settings</span>
+          </div>
+          <h3>macOS</h3>
+          <p>Native desktop portal used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/macos.html">Read portal page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Console endpoint</span>
+            <span class="chip">v1.1.2</span>
+            <span class="chip">4 settings</span>
+          </div>
+          <h3>XBMC4Xbox</h3>
+          <p>Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="portals/xbmc.html">Read portal page</a>
+          </div>
+        </article>
+
+      </div>
+      <h3>Cores</h3>
+      <div class="grid grid-3">
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Scheduler</span>
+            <span class="chip">v1.0.37</span>
+            <span class="chip">No required fields</span>
+          </div>
+          <h3>AI Task Runner</h3>
+          <p>Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier portals.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="cores/ai_task.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Background service</span>
+            <span class="chip">v1.0.23</span>
+            <span class="chip">10 settings</span>
+          </div>
+          <h3>Memory Core</h3>
+          <p>Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="cores/memory.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Personal intelligence engine</span>
+            <span class="chip">v1.0.42</span>
+            <span class="chip">1 settings</span>
+          </div>
+          <h3>Personal Core</h3>
+          <p>Email intelligence core that scans inboxes, builds a structured personal profile, injects optional Hydra context, and supports cross-portal notifications.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="cores/personal.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Background service</span>
+            <span class="chip">v1.0.8</span>
+            <span class="chip">1 settings</span>
+          </div>
+          <h3>RSS</h3>
+          <p>Background feed watcher that summarizes articles and dispatches updates through notifier portals.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="cores/rss.html">Read core page</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Documentation map</span>
+        <h2>Start broad, then drill into the details.</h2>
+      </div>
+
+    <div class="grid grid-3">
+      <article class="panel">
+        <h3>Overview</h3>
+        <p>Start with the core story and the docs map.</p>
+        <a class="button button-ghost" href="index.html">Stay here</a>
+      </article>
+      <article class="panel">
+        <h3>Install docs</h3>
+        <p>Unraid, Home Assistant, local Python, and Docker.</p>
+        <a class="button button-ghost" href="install/index.html">Open install guide</a>
+      </article>
+      <article class="panel">
+        <h3>Portal docs</h3>
+        <p>See every portal, its role, and its settings.</p>
+        <a class="button button-ghost" href="portals/index.html">Open portals</a>
+      </article>
+      <article class="panel">
+        <h3>ESPHome tab</h3>
+        <p>Built-in voice runtime docs for satellites, live entities, and playback flows.</p>
+        <a class="button button-ghost" href="esphome/index.html">Open ESPHome</a>
+      </article>
+      <article class="panel">
+        <h3>Core docs</h3>
+        <p>Built-in runtime services such as awareness automation, scheduling, memory, personal email intelligence, and RSS monitoring.</p>
+        <a class="button button-ghost" href="cores/index.html">Open cores</a>
+      </article>
+      <article class="panel">
+        <h3>Hydra core</h3>
+        <p>Astraeus -> Thanatos -> Minos -> Hermes loop, Beast Mode routing, and guardrails.</p>
+        <a class="button button-ghost" href="cerberus/index.html">Open Hydra</a>
+      </article>
+      <article class="panel">
+        <h3>Tools + Verbas</h3>
+        <p>Browse built-in tools and the current Verba snapshot.</p>
+        <a class="button button-ghost" href="plugins/index.html">Open Verbas</a>
+      </article>
+    </div>
+
+    </section>
+    <section class="section">
+
+    <div class="showcase-grid">
+      <div class="panel panel-tight">
+        <span class="eyebrow">WebUI snapshot</span>
+        <h2>The operator side is live.</h2>
+        <p>
+          The WebUI handles setup, chat, plugin browsing, settings, Hydra runtime controls, and Redis encryption in one place.
+        </p>
+      </div>
+      <div class="screenshot-frame">
+        <img src="assets/images/webui.png" alt="Tater WebUI screenshot">
+      </div>
+    </div>
+
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

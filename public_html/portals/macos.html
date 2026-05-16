@@ -1,0 +1,310 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Native desktop portal used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.">
+          <title>Tater Assistant | macOS</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>macOS</h1>
+        <p>Native desktop portal used by the Tater Menu status-bar app for chat, quick actions, notification polling, and attachment workflows.</p>
+        <div class="chip-row">
+          <span class="chip">Desktop endpoint</span>
+          <span class="chip">v1.1.1</span>
+          <span class="chip">5 settings</span>
+          <span class="chip">66 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>macOS Settings</p>
+        <p>Settings extracted from <code>macos_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Desktop endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Mounts /macos/... routes under the main Tater WebUI/API port for the Tater Menu app.</li><li>Maintains scoped session history with configurable limits and TTL so desktop context stays stable but bounded.</li><li>Supports long-poll notifications plus tool_wait status handling for menu-app feedback loops.</li><li>Includes asset upload and download endpoints for screen captures, clipboard artifacts, and returned files.</li><li>Supports optional API key protection through the X-Tater-Token header.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>66 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/automatic_plugin.html">Automatic1111 Image</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/comfyui_image_video.html">ComfyUI Animate Image</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Require API Key</strong>
+              <span>select</span>
+              <p>Require X-Tater-Token on macOS portal API requests.</p>
+              <small>Key: API_AUTH_ENABLED</small>
+              <small>Default: false</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>API Key</strong>
+              <span>password</span>
+              <p>Shared API key expected in the X-Tater-Token header when auth is enabled.</p>
+              <small>Key: API_AUTH_KEY</small>
+
+
+            </li>
+
+            <li>
+              <strong>Legacy Auth Token (optional)</strong>
+              <span>password</span>
+              <p>Backward-compatible fallback token if API Key is empty.</p>
+              <small>Key: AUTH_TOKEN</small>
+
+
+            </li>
+
+            <li>
+              <strong>Session TTL</strong>
+              <span>select</span>
+              <p>How long to keep a Mac conversation history alive.</p>
+              <small>Key: SESSION_TTL_SECONDS</small>
+              <small>Default: 2h</small>
+              <small>Options: 5m, 30m, 1h, 2h, 6h, 24h</small>
+            </li>
+
+            <li>
+              <strong>Legacy Bind Port</strong>
+              <span>number</span>
+              <p>Deprecated. macOS now uses Tater&#x27;s main API path: /api/portals/macos_portal/api/macos</p>
+              <small>Key: bind_port</small>
+              <small>Default: 8791</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Client app</span>
+        <h2>macOS app that connects to these Tater routes.</h2>
+        <p>The menu-bar app is the main user-facing client for this portal and handles quick actions, chat UI, and attachment flows.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Status bar app</span><span class="chip">Main Tater port</span><span class="chip">Quick actions</span></div>
+          <h3>Tater Menu (macOS app)</h3>
+          <p>Lightweight menu-bar app that connects to Tater&#x27;s built-in macOS routes for chat, quick actions, clipboard workflows, screen captures, and attachment handling.</p>
+          <ul class="stack-list"><li>Install with python3.11 -m pip install -e . inside the Tater-MacOS repo, then run python3.11 tater_menu.py.</li><li>It can also run in the background with python3.11 tater_menu.py --background and stays as a menu-bar-only app.</li><li>Set Server URL to the main Tater URL, for example http://127.0.0.1:8501, plus optional API key/Auth Token and Quick Action Plugin from the app Settings menu.</li><li>The app uses /macos/... routes mounted inside Tater instead of a separate desktop bridge port.</li><li>The local config is stored at ~/Library/Application Support/TaterMenu/config.json.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://github.com/TaterTotterson/Tater-MacOS">Tater-MacOS Repo</a></div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">App setup</span>
+        <h2>How to run and connect the Tater Menu app.</h2>
+        <p>These notes are based on the current Tater-MacOS app README and the active macOS routes.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Server URL</span><span class="chip">Auth token</span><span class="chip">Bootstrap</span></div>
+          <h3>First connection</h3>
+          <p>Point the app at the main Tater URL and verify bootstrap and polling are healthy.</p>
+          <ul class="stack-list"><li>Default Tater URL is http://127.0.0.1:8501, but the app can target any reachable Tater host.</li><li>If API auth is enabled in macOS portal settings, the app must send the same API key in X-Tater-Token.</li><li>The app bootstraps assistant identity and recent history from /macos/bootstrap before normal chat usage.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">/macos/plugin</span><span class="chip">/macos/chat</span><span class="chip">Plugin fallback</span></div>
+          <h3>Quick actions</h3>
+          <p>Clipboard and screen presets call the plugin endpoint first, then fall back to chat when needed.</p>
+          <ul class="stack-list"><li>Quick actions are sent to /macos/plugin with a configured plugin name, defaulting to macos_quick_action.</li><li>If plugin handling fails or is unavailable, the app can fall back to /macos/chat for normal assistant handling.</li><li>This keeps menu actions fast while still allowing broader Hydra-driven behavior when needed.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Screen Recording</span><span class="chip">Accessibility</span><span class="chip">Apple Events</span></div>
+          <h3>Permissions</h3>
+          <p>Screen and rewrite flows depend on standard macOS privacy permissions.</p>
+          <ul class="stack-list"><li>Screen capture tools require macOS Screen Recording permission for the Python process or packaged app.</li><li>Rewrite selected text relies on Accessibility permission because it drives keystrokes with AppleScript.</li><li>Frontmost-app context and rewrite flows can also require Apple Events access depending on target apps.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">/macos/notifications/next</span><span class="chip">Assets</span><span class="chip">Downloads</span></div>
+          <h3>Notifications and attachments</h3>
+          <p>The app long-polls notifications and can download or auto-open returned attachments.</p>
+          <ul class="stack-list"><li>The client polls /macos/notifications/next for queued notices, including tool_wait status updates.</li><li>Returned artifacts are exposed through /macos/asset/{asset_id} download URLs scoped to the active device or session.</li><li>Image attachments from direct actions can be opened automatically, while other files are saved in app-support downloads.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+
+        <section class="section">
+          <div class="section-head">
+            <span class="eyebrow">Built-in APIs</span>
+            <h2>HTTP endpoints exposed by this portal.</h2>
+          </div>
+
+            <article class="panel">
+              <span class="eyebrow">API auth</span>
+              <p>When API auth is enabled, requests must include <code>X-Tater-Token</code> with the configured portal API key.</p>
+            </article>
+
+          <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/health</span>
+              </div>
+              <h3>Health check for the desktop portal.</h3>
+              <p>Returns ok, platform=macos, and version 1.0 so clients can confirm the route is alive.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/bootstrap</span>
+              </div>
+              <h3>Bootstrap assistant identity and recent history.</h3>
+              <p>Returns assistant identity plus recent scoped history so the menu app can initialize quickly.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/notifications/next</span>
+              </div>
+              <h3>Long-poll next queued notification item.</h3>
+              <p>Polls scoped notification queues with optional wait_seconds and returns the next pending notification payload.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/macos/chat</span>
+              </div>
+              <h3>Main macOS chat endpoint.</h3>
+              <p>Accepts user_text, clipboard context, optional assets, and scope/device context, then runs a Hydra turn.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/macos/plugin</span>
+              </div>
+              <h3>Direct plugin call path for quick actions.</h3>
+              <p>Executes a named plugin with args for deterministic quick-action flows, then returns narrated text plus attachments/actions.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/macos/asset</span>
+              </div>
+              <h3>Upload one client asset into scoped artifact storage.</h3>
+              <p>Stores an incoming asset payload and returns an attachment-ready artifact reference for later use.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/asset/{asset_id}</span>
+              </div>
+              <h3>Download a scoped artifact by asset_id.</h3>
+              <p>Returns raw file bytes for stored artifacts so the app can save or open returned attachments.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/history</span>
+              </div>
+              <h3>Fetch scoped conversation history.</h3>
+              <p>Returns client-safe history entries for a scope or device with server-side cap enforcement.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/macos/assistant</span>
+              </div>
+              <h3>Fetch assistant identity metadata.</h3>
+              <p>Returns assistant display-name identity data for app UI labels and chat headers.</p>
+            </article>
+
+          </div>
+        </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

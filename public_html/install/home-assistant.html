@@ -1,0 +1,111 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Install Tater through the dedicated Home Assistant add-on repository, with Redis Stack as the required companion service.">
+          <title>Tater Assistant | Home Assistant Add-on</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="install">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link is-active" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Smart-home path</span>
+        <h1>Home Assistant Add-on</h1>
+        <p>Install Tater through the dedicated Home Assistant add-on repository, with Redis Stack as the required companion service.</p>
+        <div class="chip-row">
+          <span class="chip">Low to medium</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Best for</span>
+        <p>Home Assistant users who want Tater inside the supervisor/add-on workflow.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Why choose this</span>
+          <h2>Key points</h2>
+          <ul class="stack-list"><li>The README points to a dedicated Home Assistant add-on repository for Tater.</li><li>The add-on store exposes Redis Stack and Tater AI Assistant together.</li><li>This path is for running the Tater container stack from Home Assistant&#x27;s add-on workflow; Tater&#x27;s current voice/display work is managed from the built-in WebUI.</li></ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Install flow</span>
+          <h2>Steps</h2>
+          <ol class="stack-list"><li>Add the Tater add-on repository: https://github.com/TaterTotterson/hassio-addons-tater</li><li>Install and start Redis Stack first.</li><li>Install Tater AI Assistant second.</li><li>Start Tater and open the WebUI ingress page.</li><li>Complete Redis setup in the popup if prompted, then configure Hydra model settings in WebUI.</li><li>Verify the WebUI loads through ingress and that Tater&#x27;s main API routes are reachable.</li></ol>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Important notes</span>
+        <ul class="stack-list"><li>Awareness automations now run in Awareness Core inside Tater rather than a separate automation bridge endpoint.</li><li>Dashboard briefs, environment summaries, awareness snapshots, and ESPHome display notifications are now Tater-native surfaces.</li><li>Companion and smart-home routes can use the shared X-Tater-Token header when API auth is enabled.</li></ul>
+      </article>
+    </section>
+
+
+
+        <section class="section">
+          <div class="section-head">
+            <span class="eyebrow">Commands and config</span>
+            <h2>README snippets for this install path.</h2>
+          </div>
+          <div class="grid grid-2">
+
+        <article class="panel">
+          <span class="eyebrow">Add-on repository</span>
+          <pre class="code-block"><code>https://github.com/TaterTotterson/hassio-addons-tater</code></pre>
+        </article>
+
+          </div>
+        </section>
+
+
+        <section class="section">
+          <article class="panel">
+            <span class="eyebrow">Related links</span>
+            <div class="action-row"><a class="button button-ghost" href="https://github.com/TaterTotterson/hassio-addons-tater">Add-on Repository</a></div>
+          </article>
+        </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to install guide</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

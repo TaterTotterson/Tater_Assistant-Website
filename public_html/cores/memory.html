@@ -1,0 +1,193 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.">
+          <title>Tater Assistant | Memory Core</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cores">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link is-active" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Core profile</span>
+        <h1>Memory Core</h1>
+        <p>Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.</p>
+        <div class="chip-row">
+          <span class="chip">Background service</span>
+          <span class="chip">v1.0.23</span>
+          <span class="chip">10 settings</span>
+          <span class="chip">Memory service</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Memory Core Settings</p>
+        <p>Settings extracted from <code>memory_core.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Core role</span>
+          <h2>What this core is for</h2>
+          <p>Background service</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Incrementally mines durable facts from prior conversations instead of relying only on the active turn.</li><li>Builds user and room summaries in Redis for later Hydra injection.</li><li>Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and ESPHome voice identities.</li><li>Includes confidence thresholds, identity linking options, and context-size limits.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct core support</h2>
+          <p>Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects memory context back into Hydra instead of acting like a direct Verba surface.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Extraction Max Tokens</strong>
+              <span>number</span>
+              <p>Max completion tokens for memory extraction.</p>
+              <small>Key: extraction_max_tokens</small>
+              <small>Default: 2700</small>
+
+            </li>
+
+            <li>
+              <strong>Hydra Memory Items</strong>
+              <span>number</span>
+              <p>Max memory facts injected per scope (user and room).</p>
+              <small>Key: hydra_max_items</small>
+              <small>Default: 12</small>
+
+            </li>
+
+            <li>
+              <strong>Hydra Summary Chars</strong>
+              <span>number</span>
+              <p>Max characters for user/room memory summaries in context.</p>
+              <small>Key: hydra_summary_max_chars</small>
+              <small>Default: 2100</small>
+
+            </li>
+
+            <li>
+              <strong>Hydra Value Chars</strong>
+              <span>number</span>
+              <p>Max characters per memory fact value in context.</p>
+              <small>Key: hydra_value_max_chars</small>
+              <small>Default: 288</small>
+
+            </li>
+
+            <li>
+              <strong>Interval (sec)</strong>
+              <span>select</span>
+              <p>How often memory extraction runs.</p>
+              <small>Key: interval_seconds</small>
+              <small>Default: 180</small>
+              <small>Options: 1 minute, 2 minutes, 3 minutes, 5 minutes, 10 minutes, 15 minutes, 30 minutes, 1 hour</small>
+            </li>
+
+            <li>
+              <strong>Lookback Limit</strong>
+              <span>number</span>
+              <p>Max new messages processed per scope each pass.</p>
+              <small>Key: lookback_limit</small>
+              <small>Default: 80</small>
+
+            </li>
+
+            <li>
+              <strong>Min Confidence</strong>
+              <span>number</span>
+              <p>Minimum confidence required before storing facts.</p>
+              <small>Key: min_confidence</small>
+              <small>Default: 0.65</small>
+
+            </li>
+
+            <li>
+              <strong>Use People Identity Links</strong>
+              <span>checkbox</span>
+              <p>Use Settings &gt; People links to merge selected portal users into one master memory profile.</p>
+              <small>Key: use_people_identities</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Write Room Memory</strong>
+              <span>checkbox</span>
+              <p>Enable writes to mem:room:{platform}:{room_id}.</p>
+              <small>Key: write_room_memory</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Write User Memory</strong>
+              <span>checkbox</span>
+              <p>Enable writes to durable user docs. Linked People use mem:user:identity:{person_id}; unlinked portal users use mem:user:{platform}:{user_id}.</p>
+              <small>Key: write_user_memory</small>
+              <small>Default: True</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to cores</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

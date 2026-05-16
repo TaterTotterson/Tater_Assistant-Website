@@ -1,0 +1,112 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Email intelligence core that scans inboxes, builds a structured personal profile, injects optional Hydra context, and supports cross-portal notifications.">
+          <title>Tater Assistant | Personal Core</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cores">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link is-active" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Core profile</span>
+        <h1>Personal Core</h1>
+        <p>Email intelligence core that scans inboxes, builds a structured personal profile, injects optional Hydra context, and supports cross-portal notifications.</p>
+        <div class="chip-row">
+          <span class="chip">Personal intelligence engine</span>
+          <span class="chip">v1.0.42</span>
+          <span class="chip">1 settings</span>
+          <span class="chip">Email intelligence</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Personal Core Settings</p>
+        <p>Settings extracted from <code>personal_core.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Core role</span>
+          <h2>What this core is for</h2>
+          <p>Personal intelligence engine</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Scans one or more IMAP inboxes on a configurable interval and stores normalized email history in Redis.</li><li>Extracts structured signals such as spending habits, upcoming events, subscriptions, deliveries, action items, and important notes.</li><li>Publishes personal kernel tools for search, summarization, spending, plans, subscriptions, deliveries, actions, notes, and favorite places.</li><li>Can inject bounded personal context into Hydra prompts per portal, with Discord/IRC/Telegram/Matrix controls.</li><li>Supports notification routing through notifier portals with destination controls and per-cycle limits.</li><li>Includes a dedicated WebUI tab for stats, context previews, manual scans, notification tests, and safe data cleanup actions.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct core support</h2>
+          <p>Personal Core is background email intelligence. It scans connected inboxes, extracts structured profile signals, and exposes personal kernel tools plus optional prompt-context injection rather than acting like a direct Verba surface.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Scan Interval (sec)</strong>
+              <span>select</span>
+              <p>How often Personal Core checks connected inboxes. Full account setup lives in the Personal core tab.</p>
+              <small>Key: interval_seconds</small>
+              <small>Default: 300</small>
+              <small>Options: 1 minute, 2 minutes, 5 minutes, 10 minutes, 15 minutes, 30 minutes, 1 hour</small>
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to cores</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

@@ -1,0 +1,139 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.">
+          <title>Tater Assistant | Awareness Core</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cores">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link is-active" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Core profile</span>
+        <h1>Awareness Core</h1>
+        <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.</p>
+        <div class="chip-row">
+          <span class="chip">Home awareness engine</span>
+          <span class="chip">v3.3.8</span>
+          <span class="chip">4 settings</span>
+          <span class="chip">Awareness engine</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Awareness Core Settings</p>
+        <p>Settings extracted from <code>awareness_core.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Core role</span>
+          <h2>What this core is for</h2>
+          <p>Home awareness engine</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Replaces the old HA automations bridge with an in-core awareness runtime.</li><li>Connects to Home Assistant state changes and runs camera, doorbell, and entry-sensor rules directly.</li><li>Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.</li><li>Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.</li><li>Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.</li><li>The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.</li><li>Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct core support</h2>
+          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Entity Catalog Cache (sec)</strong>
+              <span>number</span>
+              <p>How long to cache provider entity discovery for UI dropdowns.</p>
+              <small>Key: entity_catalog_ttl_sec</small>
+              <small>Default: 30</small>
+
+            </li>
+
+            <li>
+              <strong>Snapshot Max Size (KB)</strong>
+              <span>number</span>
+              <p>Maximum JPEG size to store per event snapshot.</p>
+              <small>Key: event_snapshot_max_kb</small>
+              <small>Default: 768</small>
+
+            </li>
+
+            <li>
+              <strong>Events Retention</strong>
+              <span>select</span>
+              <p>How long to retain awareness events written to Redis.</p>
+              <small>Key: events_retention</small>
+              <small>Default: 7d</small>
+              <small>Options: 2d, 7d, 30d, forever</small>
+            </li>
+
+            <li>
+              <strong>Store Event Snapshots</strong>
+              <span>checkbox</span>
+              <p>Store camera/doorbell snapshot images in Redis for future event gallery UI.</p>
+              <small>Key: store_event_snapshots</small>
+              <small>Default: True</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to cores</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

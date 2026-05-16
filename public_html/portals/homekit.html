@@ -1,0 +1,219 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.">
+          <title>Tater Assistant | HomeKit</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html">
+                <img src="../assets/images/tater-logo.png" alt="Tater Assistant logo">
+                <span class="brand-copy">
+                  <strong>Tater Assistant</strong>
+                  <small>Source-backed docs</small>
+                </span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>HomeKit</h1>
+        <p>Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.</p>
+        <div class="chip-row">
+          <span class="chip">Voice endpoint</span>
+          <span class="chip">v1.1.2</span>
+          <span class="chip">5 settings</span>
+          <span class="chip">47 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>HomeKit / Siri</p>
+        <p>Settings extracted from <code>homekit_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Voice endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Provides lightweight Siri and Apple Shortcuts routes mounted inside the main Tater app.</li><li>Designed for Shortcut-driven voice loops where Siri captures speech, posts JSON to Tater, then speaks the reply back aloud.</li><li>Maintains per-device conversation sessions instead of treating every request as stateless.</li><li>Supports optional API key protection so Shortcuts must send X-Tater-Token when enabled.</li><li>Uses the default Tater port, so no separate HomeKit service port is needed.</li><li>Good fit for Apple-first households that want voice access without a full chat client.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>47 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/ecobee_homekit_thermostat.html">Ecobee HomeKit Thermostat</a><a class="chip-link" href="../plugins/find_my_phone.html">Find My Phone</a><a class="chip-link" href="../plugins/ha_camera_area.html">Home Assistant Camera Area</a><a class="chip-link" href="../plugins/ha_climate.html">Home Assistant Climate</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Require API Key</strong>
+              <span>select</span>
+              <p>Require X-Tater-Token on HomeKit API requests.</p>
+              <small>Key: API_AUTH_ENABLED</small>
+              <small>Default: false</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>API Key</strong>
+              <span>password</span>
+              <p>Shared API key expected in the X-Tater-Token header when auth is enabled.</p>
+              <small>Key: API_AUTH_KEY</small>
+
+
+            </li>
+
+            <li>
+              <strong>Legacy Auth Token (optional)</strong>
+              <span>password</span>
+              <p>Backward-compatible fallback token if API Key is empty.</p>
+              <small>Key: AUTH_TOKEN</small>
+
+
+            </li>
+
+            <li>
+              <strong>Session TTL (seconds)</strong>
+              <span>number</span>
+              <p>How long to keep a Siri session alive.</p>
+              <small>Key: SESSION_TTL_SECONDS</small>
+              <small>Default: 3600</small>
+
+            </li>
+
+            <li>
+              <strong>Legacy Bind Port</strong>
+              <span>number</span>
+              <p>Deprecated. Siri / Shortcuts now uses Tater&#x27;s main API path: /api/portals/homekit_portal/api/tater-homekit/v1</p>
+              <small>Key: bind_port</small>
+              <small>Default: 8789</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Shortcut guide</span>
+        <h2>How to connect Siri and Apple Shortcuts to this portal.</h2>
+        <p>These notes focus on the Shortcut flow, session handling, optional auth, and the Siri voice round-trip.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Shortcut</span><span class="chip">Siri</span><span class="chip">Quick start</span></div>
+          <h3>Premade shortcut</h3>
+          <p>A ready-made Apple Shortcut already exists for the HomeKit portal.</p>
+          <ul class="stack-list"><li>You can start from the premade Ask Tater shortcut instead of building the flow by hand.</li><li>It is a good baseline even if you later customize the session_id, endpoint IP, or auth header.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://www.icloud.com/shortcuts/9e1c8b3bd58745c9b0c0881c81a306a4">Premade Shortcut</a></div>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Dictate Text</span><span class="chip">POST JSON</span><span class="chip">Speak Text</span></div>
+          <h3>Build the shortcut</h3>
+          <p>The common Shortcut flow is Dictate Text -&gt; Get Contents of URL -&gt; Get Dictionary Value -&gt; Speak Text.</p>
+          <ul class="stack-list"><li>Create a shortcut such as Ask Tater, then add Dictate Text with stop listening set to After Pause.</li><li>Use Get Contents of URL to POST JSON to http://YOUR-TATER-IP:8501/tater-homekit/v1/message with text and session_id fields.</li><li>Extract the reply key from the JSON response, then feed it into Speak Text so Siri or a HomePod reads it back.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">session_id</span><span class="chip">X-Tater-Token</span><span class="chip">Per-device memory</span></div>
+          <h3>Session IDs and auth</h3>
+          <p>Each device should use its own session_id, and protected routes can require the X-Tater-Token header.</p>
+          <ul class="stack-list"><li>Use a stable session_id such as iphone, ipad, or bedroom_homepod so conversations do not mix between devices.</li><li>If API auth is enabled in Tater HomeKit settings, add an X-Tater-Token header inside the shortcut request.</li><li>The portal keeps short Siri-friendly session history in Redis using the configured session TTL and history limits.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">HomePod</span><span class="chip">Handoff</span><span class="chip">Siri phrase</span></div>
+          <h3>HomePod behavior</h3>
+          <p>HomePods can use the same shortcut flow by handing off through the iPhone that owns the shortcut.</p>
+          <ul class="stack-list"><li>After adding the shortcut to Siri, phrases like Ask Tater or Talk to Tater can trigger the round-trip hands-free.</li><li>If the shortcut lives on the iPhone, a HomePod can hand off the shortcut execution and still speak Tater&#x27;s reply.</li><li>This gives Apple households a practical voice surface without needing a separate Apple-native Tater app.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+
+        <section class="section">
+          <div class="section-head">
+            <span class="eyebrow">Built-in APIs</span>
+            <h2>HTTP endpoints exposed by this portal.</h2>
+          </div>
+
+            <article class="panel">
+              <span class="eyebrow">API auth</span>
+              <p>When API auth is enabled, requests must include <code>X-Tater-Token</code> with the configured portal API key.</p>
+            </article>
+
+          <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/tater-homekit/v1/message</span>
+              </div>
+              <h3>Main Siri / Shortcuts message endpoint.</h3>
+              <p>Accepts JSON with text plus an optional session_id, enforces X-Tater-Token when API auth is enabled, and returns a plain reply field sized for Siri speech.</p>
+            </article>
+
+          </div>
+        </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>
