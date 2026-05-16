@@ -858,7 +858,7 @@ PLATFORM_DOCS = {
             "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
             "Settings -> ESPHome now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
             "Wake engine controls support device-local microWakeWord and remote openWakeWord with a per-device server URL, so switching can stay on the satellite while Tater or a standalone OWW server handles detection.",
-            "Remote openWakeWord posts audio chunks to Tater's /api/openwakeword/detect endpoint, uses model threshold, patience, and debounce tuning, and falls back to microWakeWord on firmware when the remote server is unavailable.",
+            "Remote openWakeWord keeps a live WebSocket stream to Tater's /api/openwakeword/stream endpoint, uses model threshold, patience, and debounce tuning, and falls back to microWakeWord on firmware when the remote server is unavailable.",
             "Room-level wake arbitration keeps two satellites in the same room from running simultaneous turns, holding the room through STT, TTS, and follow-up mic reopen windows.",
             "Voice intercom flows let Tater broadcast or target spoken messages across ESPHome satellites while preserving the normal voice pipeline and auto-reply behavior.",
             "The firmware tab supports Tater VoicePE, Tater Sat1, and Tater S3Box Display targets, including device images, editable substitutions, Environment Core sensor dropdowns, reply playback options, update checks, and per-device update actions.",
@@ -924,7 +924,7 @@ PLATFORM_DOCS = {
                 "chips": ["openWakeWord", "Server URL", "Fallback"],
                 "details": [
                     "Firmware exposes a wake engine selector and openWakeWord server URL live entity so users can switch between microWakeWord and remote OWW from the device side.",
-                    "When remote OWW is selected, satellites stream short wake audio chunks to /api/openwakeword/detect on Tater or to the same endpoint on the standalone Tater OWW Server.",
+                    "When remote OWW is selected, satellites stream live wake audio to /api/openwakeword/stream on Tater or to the same WebSocket endpoint on the standalone Tater OWW Server.",
                     "Tater applies the configured model, framework, threshold, patience, and debounce settings before reporting a wake back to the device.",
                     "If the remote endpoint fails repeatedly, firmware falls back to microWakeWord and continues listening locally instead of leaving the room without a wake path.",
                     "Companion projects: https://github.com/TaterTotterson/Tater-OWW-Server and https://github.com/TaterTotterson/openWakeWord-Trainer.",
@@ -1024,10 +1024,10 @@ PLATFORM_DOCS = {
                 "details": "Returns selected speech backends, effective fallback state, model roots, discovery state, selector sessions, and availability of local STT/TTS backends.",
             },
             {
-                "method": "POST",
-                "path": "/api/openwakeword/detect",
-                "summary": "Accept remote openWakeWord audio chunks from satellites or a compatible standalone OWW server contract.",
-                "details": "Runs the configured OWW model with threshold, patience, and debounce handling, then returns whether the device should treat the chunk as a wake.",
+                "method": "WS",
+                "path": "/api/openwakeword/stream",
+                "summary": "Accept live remote openWakeWord audio streams from satellites or the standalone Tater OWW Server contract.",
+                "details": "Runs the configured OWW model with threshold, patience, debounce, and stale-frame handling, then sends wake detections back to the device over the same stream.",
             },
             {
                 "method": "POST",
@@ -2043,12 +2043,9 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         <body data-page="{escape(nav_key)}">
           <div class="page-shell">
             <header class="site-header">
-              <a class="brand" href="{base}index.html">
-                <img src="{base}assets/images/tater-logo.png" alt="Tater Assistant logo">
-                <span class="brand-copy">
-                  <strong>Tater Assistant</strong>
-                  <small>Source-backed docs</small>
-                </span>
+              <a class="brand" href="{base}index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="{base}assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
               </a>
               <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
               <nav class="site-nav" id="site-nav">
@@ -2218,25 +2215,22 @@ def render_home_page(
     hero = f"""
     <section class="hero hero-home">
       <div class="hero-copy">
-        <span class="eyebrow">Source-backed wiki</span>
-        <h1>Tater is an AI assistant built to act.</h1>
+        <span class="eyebrow">Tater docs</span>
+        <h1>Voice, home, tools, and automations in one Tater-shaped stack.</h1>
         <p>
-          Hydra plans the work, chains kernel tools with Verbas, and finishes tasks across chat,
-          smart-home, direct voice devices, media, and automation workflows.
+          Tater connects direct voice devices, Hydra planning, Verbas, portals, cores,
+          firmware workflows, openWakeWord, intercom, and smart-home control from one operator surface.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
-          {button("Explore portals", "portals/index.html")}
-          {button("ESPHome", "esphome/index.html", ghost=True)}
-          {button("Explore cores", "cores/index.html")}
-          {button("Explore Verbas", "plugins/index.html")}
+          {button("ESPHome voice", "esphome/index.html")}
+          {button("Explore Verbas", "plugins/index.html", ghost=True)}
           {button("Read Hydra", "cerberus/index.html", ghost=True)}
         </div>
       </div>
-      <aside class="hero-art">
-        <div class="orbital-frame">
-          <img src="assets/images/tater-logo.png" alt="Tater Assistant emblem">
-        </div>
+      <aside class="hero-art mascot-stage">
+        <img class="hero-wordmark" src="assets/images/tater-logo-primary.png" alt="Tater Assistant">
+        <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
         <div class="hero-stats">
           <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
           <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
@@ -2244,6 +2238,21 @@ def render_home_page(
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
       </aside>
+    </section>
+    """
+
+    mascot_intro = """
+    <section class="section mascot-band">
+      <div class="mascot-band-copy">
+        <span class="eyebrow">New Tater theme</span>
+        <h2>More operator console, less generic docs page.</h2>
+        <p>
+          The site now follows the new Tater identity: black glass, bright white type,
+          graphite panels, orange signal lines, and a full-body Tater mascot that shows up
+          around the docs like a guide instead of a logo stamp.
+        </p>
+      </div>
+      <img class="mascot mascot-present" src="assets/images/tater-mascot-present.png" alt="" aria-hidden="true">
     </section>
     """
 
@@ -2418,6 +2427,7 @@ def render_home_page(
 
     body = f"""
     {hero}
+    {mascot_intro}
     <section class="section">
       <div class="section-head">
         <span class="eyebrow">What Tater does</span>
@@ -2489,7 +2499,7 @@ def render_install_index() -> str:
           Tater ships with four main setup paths: Unraid, Home Assistant, local Python, and Docker.
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">README note</span>
         <p>{escape(readme_note)}</p>
         <div class="action-row">
@@ -2615,7 +2625,7 @@ def render_install_detail(method: dict[str, Any]) -> str:
           {chip(method['complexity'])}
         </div>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Best for</span>
         <p>{escape(method['best_for'])}</p>
       </aside>
@@ -2691,7 +2701,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
           Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas through the main Tater WebUI/API port.
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">What is documented</span>
         <p>{len(platforms)} portals with current descriptions, settings snapshots, API notes, and related Verba context.</p>
       </aside>
@@ -2740,7 +2750,7 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
           Cores are always-on internal services like awareness automation, scheduling, memory extraction, personal email intelligence, and feed monitoring.
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">What is documented</span>
         <p>{len(cores)} cores with current descriptions, settings snapshots, and runtime behavior notes.</p>
       </aside>
@@ -2899,7 +2909,7 @@ def render_platform_detail(
           {chip(platform_runtime_chip(platform))}
         </div>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">{escape(hero_panel_eyebrow)}</span>
         <p>{escape(hero_panel_text)}</p>
         {source_note}
@@ -3051,7 +3061,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
           It runs a guarded Astraeus -> Thanatos -> Minos -> Hermes loop that validates actions, repairs bad calls, and mixes kernel tools with Verbas one step at a time.
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <img class="cerberus-badge" src="../assets/images/cerberus-badge.png" alt="Hydra AI Core badge">
         <span class="eyebrow">State fields</span>
         <div class="chip-row">{state_html}</div>
@@ -3146,7 +3156,7 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
           They handle files, web inspection, memory, artifacts, and delivery before Hydra reaches for a Verba.
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Why they matter</span>
         <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
       </aside>
@@ -3185,7 +3195,7 @@ def render_plugins_page(plugins: list[dict[str, Any]]) -> str:
           {source_copy}
         </p>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Filter the list</span>
         <div class="plugins-toolbar">
           <input class="search-input" type="search" placeholder="Search Verbas" data-plugin-search>
@@ -3294,7 +3304,7 @@ def render_plugin_detail(plugin: dict[str, Any]) -> str:
           {chip(f"Version {plugin['version']}")}
         </div>
       </div>
-      <aside class="panel hero-panel">
+      <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Supported portals</span>
         <div class="chip-row">{render_platform_badges(plugin['platforms'])}</div>
       </aside>

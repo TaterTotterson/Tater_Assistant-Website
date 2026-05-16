@@ -16,6 +16,8 @@ BASE_DIR = SCRIPT_DIR.parent
 SITE_ROOT = ((BASE_DIR / "public_html") if (BASE_DIR / "public_html").exists() else BASE_DIR).resolve()
 BUILD_SCRIPT = SCRIPT_DIR / "build_wiki.py"
 STATE_FILE = SCRIPT_DIR / ".wiki-sync-state.json"
+SELF_UPDATED_ENV = "TATER_WIKI_SELF_UPDATED"
+SITE_UPDATED_ENV = "TATER_WIKI_SITE_UPDATED"
 
 DEFAULT_TATER_URL = "https://github.com/TaterTotterson/Tater.git"
 DEFAULT_TATER_SHOP_URL = "https://github.com/TaterTotterson/Tater_Shop.git"
@@ -79,6 +81,71 @@ def can_fast_forward(repo_dir: Path, local_ref: str, remote_ref: str) -> bool:
 def local_ahead_of_remote(repo_dir: Path, local_ref: str, remote_ref: str) -> bool:
     completed = git(repo_dir, "merge-base", "--is-ancestor", remote_ref, local_ref, check=False)
     return completed.returncode == 0
+
+
+def self_update_site_repo(*, skip_fetch: bool, autostash: bool) -> dict[str, Any]:
+    result = {
+        "path": str(BASE_DIR),
+        "head_before": "",
+        "head_after": "",
+        "changed": False,
+        "dirty": False,
+        "status": "not-git",
+    }
+    if not (BASE_DIR / ".git").exists():
+        log("Website repo self-update skipped: this directory is not a git checkout.")
+        return result
+
+    head_before = repo_head(BASE_DIR)
+    branch = repo_branch(BASE_DIR)
+    dirty = repo_dirty(BASE_DIR)
+    result.update(
+        {
+            "head_before": head_before,
+            "head_after": head_before,
+            "dirty": dirty,
+            "status": "unchanged",
+        }
+    )
+
+    if not branch:
+        result["status"] = "detached"
+        return result
+    if skip_fetch:
+        result["status"] = "checked-local"
+        return result
+    if os.getenv(SELF_UPDATED_ENV) == "1":
+        result["status"] = "already-updated"
+        return result
+
+    log(f"Fetching website repo ({branch})")
+    git(BASE_DIR, "fetch", "--quiet", "origin", branch)
+    remote_ref = f"origin/{branch}"
+    remote_head = git_stdout(BASE_DIR, "rev-parse", remote_ref)
+    if remote_head == head_before:
+        return result
+
+    if not can_fast_forward(BASE_DIR, head_before, remote_head):
+        if local_ahead_of_remote(BASE_DIR, head_before, remote_head):
+            result["status"] = "local-ahead"
+        else:
+            result["status"] = "diverged"
+        return result
+
+    if dirty and not autostash:
+        result["status"] = "dirty"
+        return result
+
+    log(f"Fast-forwarding website repo to {remote_head[:12]}")
+    merge_args = ["merge", "--ff-only"]
+    if autostash:
+        merge_args.append("--autostash")
+    merge_args.append(remote_ref)
+    git(BASE_DIR, *merge_args)
+    result["head_after"] = repo_head(BASE_DIR)
+    result["changed"] = result["head_after"] != head_before
+    result["status"] = "updated" if result["changed"] else "unchanged"
+    return result
 
 
 def clone_repo(url: str, target_dir: Path) -> dict[str, Any]:
@@ -171,7 +238,7 @@ def missing_outputs(root: Path) -> bool:
     expected = [
         root / "index.html",
         root / "plugins" / "index.html",
-        root / "platforms" / "index.html",
+        root / "portals" / "index.html",
         root / "kernel-tools" / "index.html",
         root / "cerberus" / "index.html",
     ]
@@ -198,6 +265,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-fetch", action="store_true", help="Do not contact remotes; only inspect local checkouts and state.")
     parser.add_argument("--force-build", action="store_true", help="Run build_wiki.py even if the repo heads did not change.")
     parser.add_argument(
+        "--self-update",
+        action="store_true",
+        help="Fetch and fast-forward this website repo before syncing sources. If updated, re-exec the freshly pulled script.",
+    )
+    parser.add_argument(
+        "--no-self-update-autostash",
+        action="store_true",
+        help="Do not use git merge --autostash when self-updating the website repo.",
+    )
+    parser.add_argument(
         "--allow-dirty-build",
         action="store_true",
         help="Allow a rebuild even when a source checkout has uncommitted changes. Default is to block the rebuild.",
@@ -213,6 +290,23 @@ def main() -> int:
     shop_dir = Path(args.shop_dir).expanduser().resolve()
     state_path = Path(args.state_file).expanduser().resolve()
     site_root = Path(args.site_dir).expanduser().resolve()
+    site_updated = os.getenv(SITE_UPDATED_ENV) == "1"
+
+    site_self_update: dict[str, Any] | None = None
+    if args.self_update:
+        site_self_update = self_update_site_repo(
+            skip_fetch=args.skip_fetch,
+            autostash=not args.no_self_update_autostash,
+        )
+        if site_self_update["status"] in {"dirty", "diverged"}:
+            log(f"Website repo self-update blocked: status={site_self_update['status']} path={site_self_update['path']}")
+            return 2
+        if site_self_update["changed"]:
+            env = os.environ.copy()
+            env[SELF_UPDATED_ENV] = "1"
+            env[SITE_UPDATED_ENV] = "1"
+            log("Website repo updated. Re-executing freshly pulled sync script.")
+            os.execvpe(args.python, [args.python, str(Path(__file__).resolve()), *sys.argv[1:]], env)
 
     state = load_state(state_path)
     previous_heads = state.get("heads") if isinstance(state.get("heads"), dict) else {}
@@ -238,6 +332,7 @@ def main() -> int:
 
     needs_build = bool(
         args.force_build
+        or site_updated
         or missing_outputs(site_root)
         or changed_heads
         or remote_updates
@@ -256,6 +351,15 @@ def main() -> int:
             "site_root": str(site_root),
             "heads": current_heads,
             "sources": {name: {"status": info["status"], "path": info["path"]} for name, info in sources.items()},
+            "site": (
+                {
+                    "status": site_self_update["status"],
+                    "path": site_self_update["path"],
+                    "head": site_self_update["head_after"],
+                }
+                if site_self_update
+                else {}
+            ),
         },
     )
     log("Wiki rebuild complete.")

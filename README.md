@@ -64,12 +64,21 @@ What it does:
 - skips rebuilds when nothing changed
 - blocks rebuilds if a source repo is dirty or diverged
 
+To let the website repo update itself before rebuilding, use:
+
+```bash
+python3 /home/taterassistant/scripts/sync_wiki_sources.py --self-update
+```
+
+With `--self-update`, the script fetches the current website checkout, fast-forwards it when possible, and re-runs the freshly pulled script before syncing `Tater` and `Tater_Shop`.
+
 Useful flags:
 
 ```bash
 python3 /home/taterassistant/scripts/sync_wiki_sources.py --force-build
 python3 /home/taterassistant/scripts/sync_wiki_sources.py --skip-fetch
 python3 /home/taterassistant/scripts/sync_wiki_sources.py --allow-dirty-build
+python3 /home/taterassistant/scripts/sync_wiki_sources.py --self-update
 ```
 
 ## Force rebuild
@@ -93,7 +102,7 @@ For a headless Linux server, use cron.
 Cron line:
 
 ```cron
-0 4,16 * * * /bin/bash -lc '/usr/bin/python3 /home/taterassistant/scripts/sync_wiki_sources.py >> /home/taterassistant/scripts/wiki-sync.log 2>&1'
+0 4,16 * * * /bin/bash -lc '/usr/bin/python3 /home/taterassistant/scripts/sync_wiki_sources.py --self-update >> /home/taterassistant/scripts/wiki-sync.log 2>&1'
 ```
 
 Webmin cron job values:
@@ -101,7 +110,7 @@ Webmin cron job values:
 - user: `taterassistant`
 - minute: `0`
 - hour: `4,16`
-- command: `/bin/bash -lc '/usr/bin/python3 /home/taterassistant/scripts/sync_wiki_sources.py >> /home/taterassistant/scripts/wiki-sync.log 2>&1'`
+- command: `/bin/bash -lc '/usr/bin/python3 /home/taterassistant/scripts/sync_wiki_sources.py --self-update >> /home/taterassistant/scripts/wiki-sync.log 2>&1'`
 
 For the Linux-specific sync notes, see `docs/auto-sync-linux.md`.
 
