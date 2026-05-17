@@ -838,13 +838,13 @@ PLATFORM_DOCS = {
     },
     "esphome": {
         "label": "ESPHome",
-        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
+        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
         "role": "Native device runtime",
         "source": None,
         "plugin_surface": "voice_core",
         "hero_eyebrow": "Native ESPHome",
         "hero_panel_eyebrow": "What it powers",
-        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote wake detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
+        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote openWakeWord and NanoWakeWord detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
         "role_eyebrow": "Why it matters",
         "role_title": "What native ESPHome unlocks",
         "role_text": "Tater now owns the ESPHome device experience directly: discovery, room-aware voice sessions, remote wake detection, intercom sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
@@ -857,8 +857,9 @@ PLATFORM_DOCS = {
         "highlights": [
             "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
             "Settings -> ESPHome now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
-            "Wake engine controls support device-local microWakeWord and remote openWakeWord with a per-device server URL, so switching can stay on the satellite while Tater or a standalone OWW server handles detection.",
+            "Wake engine controls support device-local microWakeWord, remote openWakeWord, and remote NanoWakeWord with per-device server URLs, so switching can stay on the satellite while Tater or a standalone wake server handles detection.",
             "Remote openWakeWord keeps a live WebSocket stream to Tater's /api/openwakeword/stream endpoint, uses model threshold, patience, and debounce tuning, and falls back to microWakeWord on firmware when the remote server is unavailable.",
+            "Remote NanoWakeWord uses the same satellite streaming pattern through /api/nanowakeword/stream, can run custom .onnx/.pt/.pth models downloaded from the NanoWakeWord trainer, and resets in-memory detectors after trainer downloads so replacement models load on the next stream.",
             "Room-level wake arbitration keeps two satellites in the same room from running simultaneous turns, holding the room through STT, TTS, and follow-up mic reopen windows.",
             "Voice intercom flows let Tater broadcast or target spoken messages across ESPHome satellites while preserving the normal voice pipeline and auto-reply behavior.",
             "The firmware tab supports Tater VoicePE, Tater Sat1, and Tater S3Box Display targets, including device images, editable substitutions, Environment Core sensor dropdowns, reply playback options, update checks, and per-device update actions.",
@@ -869,7 +870,7 @@ PLATFORM_DOCS = {
             "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding models.",
             "Speaker ID and Emotion ID can warm SpeechBrain models at startup and feed speaker/tone context into voice turns when enabled.",
             "Reply playback targets can stay on the listening satellite, go silent/display-only, or route TTS to another media/announcement device without breaking mic reopening.",
-            "Live entity views expose sensors plus writable controls such as switches, buttons, numbers, selects, lights, wake engine, openWakeWord URL, and RGB color when the device supports it.",
+            "Live entity views expose sensors plus writable controls such as switches, buttons, numbers, selects, lights, wake engine, openWakeWord URL, NanoWakeWord URL, and RGB color when the device supports it.",
             "Firmware update checks show per-device current and available versions, include connected older Tater devices with unknown firmware versions, and can update all matched devices one at a time.",
             "Per-device logs, stats, room awareness, display refresh nudges, and direct playback make Tater hardware feel local to the room instead of remote to the browser.",
         ],
@@ -928,6 +929,20 @@ PLATFORM_DOCS = {
                     "Tater applies the configured model, framework, threshold, patience, and debounce settings before reporting a wake back to the device.",
                     "If the remote endpoint fails repeatedly, firmware falls back to microWakeWord and continues listening locally instead of leaving the room without a wake path.",
                     "Companion projects: https://github.com/TaterTotterson/Tater-OWW-Server and https://github.com/TaterTotterson/openWakeWord-Trainer.",
+                ],
+            },
+            {
+                "title": "Remote NanoWakeWord",
+                "summary": "Satellites can switch to NanoWakeWord remote detection and use models trained by the Tater NanoWakeWord trainer.",
+                "chips": ["NanoWakeWord", "Trainer", "Server URL"],
+                "details": [
+                    "Firmware exposes NanoWakeWord as a wake-engine option alongside microWakeWord and openWakeWord, plus a NanoWakeWord server URL live entity for remote streaming.",
+                    "When NanoWakeWord is selected, satellites stream 16 kHz mono audio to /api/nanowakeword/stream on Tater or to the standalone Tater NWW Server.",
+                    "Tater loads NanoWakeWord models from agent_lab/models/nanowakeword, including trainer-downloaded .onnx, .pt, and .pth artifacts.",
+                    "Settings -> Models exposes NanoWakeWord enablement, model source, threshold, patience, debounce, trainer URL, trainer model catalog, and download action.",
+                    "Downloading a trainer model overwrites the same local artifact path when the filename matches, saves that path as the active model source, and resets loaded detectors so the next audio stream uses the new model bytes.",
+                    "The NanoWakeWord trainer now uses the stronger default recipe: synthetic positives, adversarial negatives, phoneme hard negatives, validation splits, augmentation, and optional Colab-style negative feature banks from feature_banks/.",
+                    "Companion projects: https://github.com/TaterTotterson/Tater-NWW-Server and https://github.com/TaterTotterson/nanoWakeWord-Trainer.",
                 ],
             },
             {
@@ -997,7 +1012,7 @@ PLATFORM_DOCS = {
                     "Live Tool Progress Speech can speak short Hydra tool-progress lines and drive updated VoicePE/Sat1 LED animations while tools run.",
                     "Partial STT can keep partial transcript state during live capture so the system gets earlier visibility into what the user is saying.",
                     "Early-Start TTS can begin speaking long replies sooner by preparing smaller response chunks before the whole answer is finished.",
-                    "Wake word settings can use prebuilt microWakeWord models, trained microWakeWord models, remote openWakeWord, or a standalone OWW server URL.",
+                    "Wake word settings can use prebuilt microWakeWord models, trained microWakeWord models, remote openWakeWord, remote NanoWakeWord, or standalone wake-word server URLs.",
                 ],
             },
         ],
@@ -1030,10 +1045,28 @@ PLATFORM_DOCS = {
                 "details": "Runs the configured OWW model with threshold, patience, debounce, and stale-frame handling, then sends wake detections back to the device over the same stream.",
             },
             {
+                "method": "WS",
+                "path": "/api/nanowakeword/stream",
+                "summary": "Accept live remote NanoWakeWord audio streams from satellites or the standalone Tater NWW Server contract.",
+                "details": "Runs the configured NanoWakeWord model with threshold, patience, debounce, per-detector reset handling, and optional diagnostic logging, then sends wake detections back to the device over the same stream.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/settings/nanowakeword/trainer-models",
+                "summary": "Load available NanoWakeWord artifacts from a trainer URL.",
+                "details": "Reads /api/artifacts and /api/trained_wake_words/catalog from the NanoWakeWord trainer so operators can pick newly trained models from Settings -> Models.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/settings/nanowakeword/download-trainer-model",
+                "summary": "Download a NanoWakeWord trainer artifact into Tater's local model store.",
+                "details": "Downloads the selected artifact into agent_lab/models/nanowakeword/trainer/{model}, saves it as the active model source, and resets NanoWakeWord detectors so a same-name replacement model is loaded on the next stream.",
+            },
+            {
                 "method": "POST",
                 "path": "/tater-ha/v1/voice/esphome/entities",
                 "summary": "Fetch live ESPHome entity rows for one connected satellite.",
-                "details": "Returns the live entity snapshot so verbas and operators can inspect sensors, buttons, numbers, switches, lights, wake-engine controls, openWakeWord URL state, and other exposed device entities.",
+                "details": "Returns the live entity snapshot so verbas and operators can inspect sensors, buttons, numbers, switches, lights, wake-engine controls, openWakeWord/NanoWakeWord URL state, and other exposed device entities.",
             },
             {
                 "method": "POST",
@@ -1171,7 +1204,7 @@ PLATFORM_META = {
 }
 PLATFORM_META["voice_core"] = {
     "label": "ESPHome Voice",
-    "description": "Built-in ESPHome voice runtime, remote openWakeWord, and intercom handling inside Tater.",
+    "description": "Built-in ESPHome voice runtime, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
 }
 
 INSTALL_METHODS = [
@@ -2138,8 +2171,8 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "ESPHome is configured through Settings -> ESPHome for Satellites, Settings, Stats, firmware, wake engine, openWakeWord URL, intercom, and Tater Voice Extras. "
-            "Shared STT/TTS, VAD, speaker/emotion ID, and openWakeWord model choices live in Settings -> Models. "
+            "ESPHome is configured through Settings -> ESPHome for Satellites, Settings, Stats, firmware, wake engine, openWakeWord URL, NanoWakeWord URL, intercom, and Tater Voice Extras. "
+            "Shared STT/TTS, VAD, speaker/emotion ID, openWakeWord model choices, and NanoWakeWord model choices live in Settings -> Models. "
             "Firmware builds, browser recovery, update checks, live logs, display control, voice settings, and wake-word capture toggles live in the same native UI."
         )
     if platform.get("has_settings_schema"):
@@ -2159,7 +2192,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "ESPHome is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native ESPHome room assignment, live entity access, playback routing, remote wake status, intercom targeting, and follow-up mic handling."
+            "ESPHome is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native ESPHome room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
         )
     if platform["slug"] == "ai_task":
         return (
@@ -2219,7 +2252,7 @@ def render_home_page(
         <h1>Voice, home, tools, and automations in one Tater-shaped stack.</h1>
         <p>
           Tater connects direct voice devices, Hydra planning, Verbas, portals, cores,
-          firmware workflows, openWakeWord, intercom, and smart-home control from one operator surface.
+          firmware workflows, openWakeWord, NanoWakeWord, intercom, and smart-home control from one operator surface.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
@@ -2267,7 +2300,7 @@ def render_home_page(
         ),
         (
             "Native ESPHome voice",
-            "ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
+            "ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, remote NanoWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
         ),
         (
             "Tater S3Box displays",
@@ -2291,7 +2324,7 @@ def render_home_page(
         ),
         (
             "Remote wake and intercom",
-            "Satellites can switch between microWakeWord and remote openWakeWord, fall back locally if the OWW server is unavailable, and use Tater intercom broadcasts across room devices.",
+            "Satellites can switch between microWakeWord, remote openWakeWord, and remote NanoWakeWord, fall back locally if a remote wake server is unavailable, and use Tater intercom broadcasts across room devices.",
         ),
         (
             "Environment-aware sensors",
