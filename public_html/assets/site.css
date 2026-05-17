@@ -1060,11 +1060,12 @@ h1 {
 
 @media (max-width: 1100px) {
   .hero-home {
+    grid-template-columns: 1fr;
     min-height: auto;
   }
 
   .mascot-stage {
-    min-height: 520px;
+    min-height: 500px;
   }
 
   .mascot-wave {
@@ -1100,6 +1101,12 @@ h1 {
 
   .hero {
     border-radius: 20px;
+    padding: 1.25rem;
+  }
+
+  .hero-home {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   .hero-home h1,
@@ -1109,18 +1116,39 @@ h1 {
     font-size: clamp(2.25rem, 14vw, 4rem);
   }
 
+  .action-row {
+    align-items: stretch;
+  }
+
+  .hero-home .action-row .button {
+    flex: 1 1 calc(50% - 0.45rem);
+    padding-inline: 0.8rem;
+    text-align: center;
+  }
+
   .mascot-stage {
-    min-height: 440px;
+    display: grid;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .hero-wordmark {
+    display: none;
   }
 
   .mascot-wave {
-    bottom: 5rem;
-    width: min(74vw, 330px);
+    position: relative;
+    right: auto;
+    bottom: auto;
+    justify-self: center;
+    width: min(72vw, 300px);
+    transform: none;
   }
 
   .hero-stats {
     position: relative;
-    margin-top: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
   }
 
   .mascot-band {
@@ -1142,5 +1170,11 @@ h1 {
     opacity: 0.14;
     right: -3.5rem;
     width: 170px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-home .action-row .button {
+    flex-basis: 100%;
   }
 }
