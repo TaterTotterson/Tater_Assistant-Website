@@ -860,7 +860,7 @@ body::before {
 }
 
 .hero-home {
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
   min-height: min(760px, calc(100vh - 8rem));
   padding: clamp(2rem, 5vw, 4.8rem);
 }
@@ -927,10 +927,10 @@ h1 {
 
 .mascot-wave {
   position: absolute;
-  right: clamp(0.5rem, 4vw, 4rem);
-  bottom: 5.1rem;
+  right: 0;
+  bottom: 1.6rem;
   z-index: 2;
-  width: min(34vw, 430px);
+  width: min(30vw, 390px);
   max-height: 640px;
   object-fit: contain;
   filter: drop-shadow(0 30px 46px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 24px rgba(255, 106, 0, 0.18));
@@ -940,9 +940,20 @@ h1 {
   position: absolute;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: auto;
   z-index: 2;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(390px, 82%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 1281px) {
+  .hero-home {
+    padding-bottom: clamp(5.5rem, 7vw, 7.25rem);
+  }
+
+  .mascot-stage {
+    transform: translateY(clamp(3.25rem, 5vw, 5.75rem));
+  }
 }
 
 .stat-card,
@@ -1058,7 +1069,7 @@ h1 {
   border-radius: 14px;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .hero-home {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -1147,6 +1158,9 @@ h1 {
 
   .hero-stats {
     position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 0;
   }
