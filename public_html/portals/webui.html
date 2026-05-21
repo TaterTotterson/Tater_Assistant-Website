@@ -20,6 +20,7 @@
                 <a class="nav-link" href="../index.html">Home</a>
 <a class="nav-link" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link is-active" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
@@ -39,7 +40,7 @@
           <span class="chip">Operator console</span>
           <span class="chip">Bundled</span>
           <span class="chip">Configured in app</span>
-          <span class="chip">66 Verbas</span>
+          <span class="chip">67 Verbas</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -58,7 +59,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.</li><li>Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.</li><li>First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.</li><li>Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.</li><li>Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.</li><li>The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.</li><li>Integrations now include Hugging Face token storage so automatic model downloads can use authenticated Hub requests.</li><li>Settings -&gt; People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.</li><li>WebUI password login can be enabled from Settings -&gt; General and uses cookie-backed sessions.</li></ul>
+          <ul class="stack-list"><li>Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.</li><li>Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.</li><li>Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.</li><li>First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.</li><li>Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.</li><li>Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.</li><li>The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.</li><li>Integrations now include Hugging Face token storage so automatic model downloads can use authenticated Hub requests.</li><li>Settings -&gt; People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.</li><li>WebUI password login can be enabled from Settings -&gt; General and uses cookie-backed sessions.</li></ul>
         </article>
       </div>
     </section>
@@ -68,7 +69,7 @@
           <span class="eyebrow">Related Verbas</span>
           <h2>Direct portal support</h2>
 
-        <p>66 current Verbas advertise direct support for this portal.</p>
+        <p>67 current Verbas advertise direct support for this portal.</p>
         <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/automatic_plugin.html">Automatic1111 Image</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/comfyui_image_video.html">ComfyUI Animate Image</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a></div>
 
         </article>
@@ -120,6 +121,14 @@
 
         </article>
 
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Spudex</span><span class="chip">Terminal</span><span class="chip">Agent Lab</span></div>
+          <h3>Spudex workbench</h3>
+          <p>Run terminal-backed tasks from a dedicated WebUI tab while keeping sessions, logs, process controls, and policy settings visible.</p>
+          <ul class="stack-list"><li>The Spudex tab includes a console-style chat where an assistant can run commands, write files, inspect output, search when needed, and continue until the terminal task is complete.</li><li>Manual sessions let operators run one command directly, keep background processes visible, and stop model-started sessions from the UI.</li><li>Settings cover enabled platforms, the working folder under Agent Lab, approval behavior, command timeout, output caps, max task steps, and policy toggles for network, installs, shells, containers, host/admin commands, and other command classes.</li></ul>
+
+        </article>
+
       </div>
     </section>
 
@@ -148,6 +157,33 @@
               </div>
               <h3>Create, edit, delete, link, and unlink People records.</h3>
               <p>Supports people_create, people_save, people_delete, people_alias_attach, and people_alias_detach actions for the Settings -&gt; People panel.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">GET</span>
+                <span class="chip">/api/spudex</span>
+              </div>
+              <h3>Load Spudex settings, sessions, logs, process state, and platform options.</h3>
+              <p>Feeds the Spudex tab with current settings, active sessions, recent terminal history, tracked processes, and available platform toggles.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/api/spudex/chat</span>
+              </div>
+              <h3>Run a direct Spudex chat turn.</h3>
+              <p>Bypasses Hydra and sends the request into the Spudex console loop, where the model can run commands, write files, search, verify results, and report back in the same session.</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row">
+                <span class="chip">POST</span>
+                <span class="chip">/api/spudex/run</span>
+              </div>
+              <h3>Start a manual Spudex command session.</h3>
+              <p>Runs a single command from the configured Agent Lab working folder, optionally in the background, with live log streaming and stop controls.</p>
             </article>
 
           </div>

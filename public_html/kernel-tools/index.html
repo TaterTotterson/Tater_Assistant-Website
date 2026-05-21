@@ -20,6 +20,7 @@
                 <a class="nav-link" href="../index.html">Home</a>
 <a class="nav-link" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
@@ -35,12 +36,12 @@
         <span class="eyebrow">Built-in capabilities</span>
         <h1>Kernel tools are Tater's native action layer.</h1>
         <p>
-          They handle files, web inspection, memory, artifacts, and delivery before Hydra reaches for a Verba.
+          They handle files, web inspection, memory, artifacts, delivery, and optional Spudex terminal console work before Hydra reaches for a Verba.
         </p>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Why they matter</span>
-        <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
+        <p>Kernel tools let Tater inspect the workspace, search live information, move files, coordinate delivery, and run controlled terminal work through Spudex.</p>
       </aside>
     </section>
 
@@ -106,12 +107,6 @@
 
             <article class="tool-card">
               <div class="chip-row"><span class="chip">Workspace and files</span></div>
-              <h3>list_workspace</h3>
-              <p>list workspace notes</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Workspace and files</span></div>
               <h3>read_file</h3>
               <p>read local file contents</p>
             </article>
@@ -126,12 +121,6 @@
               <div class="chip-row"><span class="chip">Workspace and files</span></div>
               <h3>write_file</h3>
               <p>write content to a local file</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Workspace and files</span></div>
-              <h3>write_workspace_note</h3>
-              <p>append a workspace note</p>
             </article>
 
               </div>
@@ -157,12 +146,6 @@
               <p>inspect and extract content from a specific webpage URL (title, summary text, links, images)</p>
             </article>
 
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Web and media</span></div>
-              <h3>search_web</h3>
-              <p>Search the public web through Google&#x27;s Programmable Search backend after Web Search is configured in Tater WebUI.</p>
-            </article>
-
               </div>
             </section>
 
@@ -182,6 +165,55 @@
 
               </div>
             </section>
+
+
+            <section class="tool-section">
+              <div class="section-head">
+                <span class="eyebrow">Kernel tools</span>
+                <h2>Terminal console</h2>
+              </div>
+              <div class="grid grid-2">
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Terminal console</span></div>
+              <h3>spudex_run</h3>
+              <p>full terminal console access to run one command or script on the Tater host from the configured working folder when a CLI command is the right way to answer or act and no Verba fits</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Terminal console</span></div>
+              <h3>spudex_status</h3>
+              <p>list terminal console settings and recent command sessions</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Terminal console</span></div>
+              <h3>spudex_stop</h3>
+              <p>stop a running terminal console session</p>
+            </article>
+
+            <article class="tool-card">
+              <div class="chip-row"><span class="chip">Terminal console</span></div>
+              <h3>spudex_task</h3>
+              <p>full terminal console access for multi-step tasks: run commands, write scripts/files, inspect output, retry, search if needed, and complete terminal work from the configured working folder when no Verba fits</p>
+            </article>
+
+              </div>
+            </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Terminal console</span>
+        <h2>Spudex tools are conditional kernel tools.</h2>
+      </div>
+      <div class="panel">
+        <p>
+          The spudex_run, spudex_task, spudex_status, and spudex_stop tools appear to Hydra only when Spudex is enabled for the active platform.
+          Configure them from the Spudex tab, then use the dedicated Spudex docs for policy, session, and direct-chat behavior.
+        </p>
+        <div class="action-row"><a class="button" href="../spudex/index.html">Read Spudex</a></div>
+      </div>
+    </section>
 
     <section class="section">
       <div class="section-head">

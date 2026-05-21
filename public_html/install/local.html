@@ -20,6 +20,7 @@
                 <a class="nav-link" href="../index.html">Home</a>
 <a class="nav-link is-active" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
@@ -49,7 +50,7 @@
         <article class="panel">
           <span class="eyebrow">Why choose this</span>
           <h2>Key points</h2>
-          <ul class="stack-list"><li>Requires Python 3.11, Redis Stack, and an OpenAI-compatible LLM backend such as Ollama, LocalAI, LM Studio, Lemonade, or OpenAI API.</li><li>The README recommends running inside a virtual environment to keep dependencies isolated.</li><li>Redis is no longer configured in .env; connection setup is handled in-WebUI and saved in .runtime.</li></ul>
+          <ul class="stack-list"><li>Requires Python 3.11, Redis Stack, and an OpenAI-compatible LLM backend such as Ollama, LocalAI, LM Studio, Lemonade, or OpenAI API.</li><li>The README recommends running inside a virtual environment to keep dependencies isolated.</li><li>Redis is no longer configured in .env; connection setup is handled in-WebUI and saved in .runtime.</li><li>Spudex uses the local Agent Lab workspace for terminal-backed chat, scripts, files, and small hosted tasks.</li></ul>
         </article>
         <article class="panel">
           <span class="eyebrow">Install flow</span>
@@ -61,7 +62,7 @@
     <section class="section">
       <article class="panel">
         <span class="eyebrow">Important notes</span>
-        <ul class="stack-list"><li>Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models.</li><li>Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.</li><li>This path is the best fit when you want to inspect or modify the source directly.</li></ul>
+        <ul class="stack-list"><li>Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models and Spudex work starts under agent_lab/workspace.</li><li>Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.</li><li>This path is the best fit when you want to inspect or modify the source directly.</li></ul>
       </article>
     </section>
 

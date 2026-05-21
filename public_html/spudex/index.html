@@ -1,0 +1,243 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Overview of Spudex terminal console access, direct chat, Hydra tools, policies, sessions, and WebUI APIs.">
+          <title>Tater Assistant | Spudex</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="spudex">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link is-active" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Spudex</span>
+        <h1>Spudex gives Tater terminal console access with operator controls.</h1>
+        <p>
+          It is a built-in WebUI workbench and Hydra tool bridge for command-line tasks, scripts, local diagnostics, small hosted apps, and workspace automation.
+        </p>
+        <div class="action-row">
+          <a class="button" href="../kernel-tools/index.html">Kernel tools</a>
+          <a class="button button-ghost" href="../cerberus/index.html">Hydra</a>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Default scope</span>
+        <p>Spudex starts from an Agent Lab working folder, tracks sessions, and exposes policy toggles so operators decide how much terminal freedom it gets.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Capabilities</span>
+        <h2>What Spudex adds to Tater.</h2>
+      </div>
+      <div class="grid grid-3">
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">Chat</span><span class="chip">Commands</span><span class="chip">Context</span></div>
+          <h3>Direct Spudex chat</h3>
+          <p>A console-style chat tab bypasses Hydra and talks directly to the Spudex loop, so the model can run commands, write files, inspect output, search when needed, verify work, and keep context across turns.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">spudex_run</span><span class="chip">spudex_task</span><span class="chip">spudex_stop</span></div>
+          <h3>Hydra terminal tools</h3>
+          <p>When enabled for a platform, Hydra can call spudex_run for one command, spudex_task for multi-step terminal work, spudex_status for live state, and spudex_stop to stop a session.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">Manual</span><span class="chip">Background</span><span class="chip">Logs</span></div>
+          <h3>Manual sessions</h3>
+          <p>Operators can run a command manually, choose background execution, watch the log stream, inspect the working folder, and stop the session from the WebUI.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">Processes</span><span class="chip">Kill</span><span class="chip">Details</span></div>
+          <h3>Tracked processes</h3>
+          <p>Model-started sessions are visible in the Spudex header and details drawer so long-running tasks, small servers, and stuck commands can be reviewed or killed.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">Agent Lab</span><span class="chip">workspace</span><span class="chip">Files</span></div>
+          <h3>Agent Lab working folder</h3>
+          <p>Spudex resolves its configured working folder under Agent Lab by default, with workspace as the default folder name and file helpers constrained to Agent Lab paths.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="chip-row"><span class="chip">Models</span><span class="chip">Endpoint</span><span class="chip">Coding</span></div>
+          <h3>Separate model routing</h3>
+          <p>Settings -&gt; Models can define a dedicated Spudex LLM endpoint and model, letting terminal work use a coding-oriented model without changing the normal Hydra model mix.</p>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Runtime flow</span>
+        <h2>There are two ways into the same console layer.</h2>
+      </div>
+      <div class="timeline">
+
+        <article class="timeline-card">
+          <h3>Hydra call</h3>
+          <p>A normal chat, voice, or portal turn can expose Spudex tools only when Spudex is enabled for that platform.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>Direct chat</h3>
+          <p>The Spudex tab can talk directly to the Spudex loop, which is useful for iterative command-line work like creating a small website and hosting it.</p>
+        </article>
+
+        <article class="timeline-card">
+          <h3>Operator review</h3>
+          <p>The same tab shows logs, process state, file-change approvals, session details, and stop controls without needing to leave the WebUI.</p>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Policy and settings</span>
+        <h2>Operators can keep it narrow or open it up.</h2>
+      </div>
+      <div class="panel">
+        <ul class="stack-list">
+          <li>Enable or disable Spudex globally, then choose which platforms expose the Hydra-facing terminal tools.</li><li>Keep the policy layer on for normal use, or tune specific allowances for shells, network commands, installs, containers, host package managers, remote-control tools, host/admin commands, inline eval, and absolute executables.</li><li>Require approval for Hydra-triggered command runs, and separately require approval before file changes are accepted.</li><li>Limit max task steps, command timeout, output size, retained log entries, and retained sessions from the Spudex settings tab.</li><li>The Spudex chat loop receives system information so it can choose Linux, macOS, or Windows-style commands correctly.</li>
+        </ul>
+      </div>
+      <div class="runtime-grid">
+
+        <article class="stat-card stat-card-wide">
+          <strong>false</strong>
+          <span>Enabled by default</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>webui</strong>
+          <span>Default platforms</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>true</strong>
+          <span>Policy enabled</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>true</strong>
+          <span>Approval required</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>false</strong>
+          <span>File approval required</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>workspace</strong>
+          <span>Working folder</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>6</strong>
+          <span>Max task steps</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>45</strong>
+          <span>Command timeout</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>12000</strong>
+          <span>Output cap</span>
+        </article>
+
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">API surface</span>
+        <h2>The WebUI talks to Spudex through local Tater routes.</h2>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">GET</span><span class="chip">/api/spudex</span></div>
+          <h3>Load Spudex state</h3>
+          <p>Returns settings, platform options, sessions, active counts, tracked processes, and current log metadata for the Spudex tab.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/api/spudex/settings</span></div>
+          <h3>Save Spudex settings</h3>
+          <p>Persists enabled state, platform toggles, policy options, approval options, working folder, task limits, timeout, and output limits.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/api/spudex/chat/session</span></div>
+          <h3>Create a Spudex chat</h3>
+          <p>Creates a draft chat session with the configured Agent Lab working folder so users can switch between Spudex chats.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/api/spudex/chat</span></div>
+          <h3>Run a Spudex chat turn</h3>
+          <p>Runs the direct Spudex loop with conversation context, command execution, file writes, web research, verification, and live session logs.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/api/spudex/run</span></div>
+          <h3>Run a manual command</h3>
+          <p>Starts one manual command session from the configured working folder, optionally as a background process.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">GET</span><span class="chip">/api/spudex/sessions/{session_id}/logs</span></div>
+          <h3>Read session logs</h3>
+          <p>Streams terminal, assistant, command, system, and verification entries for the selected session.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/api/spudex/sessions/{session_id}/stop</span></div>
+          <h3>Stop a session</h3>
+          <p>Requests termination for a running Spudex session or model-started process.</p>
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">DELETE</span><span class="chip">/api/spudex/sessions/{session_id}</span></div>
+          <h3>Close a session</h3>
+          <p>Removes a retained Spudex session from the visible session list.</p>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

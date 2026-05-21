@@ -20,6 +20,7 @@
                 <a class="nav-link" href="../index.html">Home</a>
 <a class="nav-link" href="../install/index.html">Install</a>
 <a class="nav-link is-active" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
@@ -53,7 +54,7 @@
 
         <article class="feature-card">
           <h3>Kernel tools first</h3>
-          <p>Hydra can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.</p>
+          <p>Hydra can read files, search the web, inspect pages, search local code, manage memory, attach artifacts, or hand command-line work to Spudex before it ever needs a custom extension.</p>
         </article>
 
         <article class="feature-card">
@@ -114,7 +115,7 @@
       </div>
       <div class="panel">
         <ul class="stack-list">
-          <li>Tool-first router: execution, retrieval, setting changes, add/remove requests, and system diagnostics route to tools.</li><li>Beast Mode routing: base servers can handle AI Calls while Chat/Astraeus/Thanatos/Minos/Hermes can route to per-head models.</li><li>Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.</li><li>Atomic execution lock: Thanatos and Minos both focus on one next step instead of merging unrelated actions.</li><li>Fresh-run behavior: ASK_USER ends the current run and a new user message starts a fresh run.</li><li>Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.</li><li>Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.</li><li>Memory context: user and room memory summaries can be injected into Minos decisions without bloating the turn.</li>
+          <li>Tool-first router: execution, retrieval, setting changes, add/remove requests, and system diagnostics route to tools.</li><li>Beast Mode routing: base servers can handle AI Calls while Chat/Astraeus/Thanatos/Minos/Hermes can route to per-head models.</li><li>Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.</li><li>Spudex bridge: when enabled for a platform, Hydra can use terminal console tools for command-line work that does not fit a Verba.</li><li>Head-level auto-continue: final Chat and Hermes replies that promise to do the next step can trigger an internal continue turn without putting that check inside the core Hydra loop.</li><li>Atomic execution lock: Thanatos and Minos both focus on one next step instead of merging unrelated actions.</li><li>Fresh-run behavior: ASK_USER ends the current run and a new user message starts a fresh run.</li><li>Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.</li><li>Ledger and metrics: Redis-backed state keeps history, limits, and validation outcomes visible to operators.</li><li>Memory context: user and room memory summaries can be injected into Minos decisions without bloating the turn.</li>
         </ul>
       </div>
     </section>
@@ -136,11 +137,6 @@
         </article>
 
         <article class="stat-card stat-card-wide">
-          <strong>1</strong>
-          <span>Step retry limit</span>
-        </article>
-
-        <article class="stat-card stat-card-wide">
           <strong>1500</strong>
           <span>Max ledger items</span>
         </article>
@@ -148,6 +144,11 @@
         <article class="stat-card stat-card-wide">
           <strong>0</strong>
           <span>Astraeus second plan check</span>
+        </article>
+
+        <article class="stat-card stat-card-wide">
+          <strong>1</strong>
+          <span>Head auto-continue</span>
         </article>
 
       </div>

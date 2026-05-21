@@ -47,6 +47,8 @@ CERBERUS_SOURCE = resolve_path(
     TATER_DIR / "cerberus" / "__init__.py",
 )
 TOOL_RUNTIME_SOURCE = TATER_DIR / "tool_runtime.py"
+SPUDEX_TOOLS_SOURCE = TATER_DIR / "spudex" / "hydra_tools.py"
+SPUDEX_SETTINGS_SOURCE = TATER_DIR / "spudex" / "settings.py"
 PLUGIN_DIR = resolve_path("TATER_WIKI_VERBA_DIR", TATER_DIR / "verba")
 
 REMOVED_PORTAL_TAGS = {"homeassistant"}
@@ -510,6 +512,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.",
             "Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.",
+            "Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.",
             "First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.",
             "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
             "Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.",
@@ -552,6 +555,16 @@ PLATFORM_DOCS = {
                     "Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.",
                 ],
             },
+            {
+                "title": "Spudex workbench",
+                "summary": "Run terminal-backed tasks from a dedicated WebUI tab while keeping sessions, logs, process controls, and policy settings visible.",
+                "chips": ["Spudex", "Terminal", "Agent Lab"],
+                "details": [
+                    "The Spudex tab includes a console-style chat where an assistant can run commands, write files, inspect output, search when needed, and continue until the terminal task is complete.",
+                    "Manual sessions let operators run one command directly, keep background processes visible, and stop model-started sessions from the UI.",
+                    "Settings cover enabled platforms, the working folder under Agent Lab, approval behavior, command timeout, output caps, max task steps, and policy toggles for network, installs, shells, containers, host/admin commands, and other command classes.",
+                ],
+            },
         ],
         "apis": [
             {
@@ -565,6 +578,24 @@ PLATFORM_DOCS = {
                 "path": "/api/settings/people/action",
                 "summary": "Create, edit, delete, link, and unlink People records.",
                 "details": "Supports people_create, people_save, people_delete, people_alias_attach, and people_alias_detach actions for the Settings -> People panel.",
+            },
+            {
+                "method": "GET",
+                "path": "/api/spudex",
+                "summary": "Load Spudex settings, sessions, logs, process state, and platform options.",
+                "details": "Feeds the Spudex tab with current settings, active sessions, recent terminal history, tracked processes, and available platform toggles.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/spudex/chat",
+                "summary": "Run a direct Spudex chat turn.",
+                "details": "Bypasses Hydra and sends the request into the Spudex console loop, where the model can run commands, write files, search, verify results, and report back in the same session.",
+            },
+            {
+                "method": "POST",
+                "path": "/api/spudex/run",
+                "summary": "Start a manual Spudex command session.",
+                "details": "Runs a single command from the configured Agent Lab working folder, optionally in the background, with live log streaming and stop controls.",
             },
         ],
     },
@@ -1218,7 +1249,7 @@ INSTALL_METHODS = [
         "highlights": [
             "Tater is available in the Unraid Community Apps store.",
             "The README recommends installing both Tater and Redis Stack from the app store templates.",
-            "Persistent Agent Lab and .runtime storage matters so updates do not wipe workspace data, Redis setup/encryption state, or auto-downloaded voice models.",
+            "Persistent Agent Lab and .runtime storage matters so updates do not wipe workspace data, Spudex working files, Redis setup/encryption state, or auto-downloaded voice models.",
         ],
         "steps": [
             "Open Unraid Community Apps and install Redis Stack.",
@@ -1228,7 +1259,7 @@ INSTALL_METHODS = [
             "Start the containers and finish configuration in the WebUI.",
         ],
         "notes": [
-            "Without /app/agent_lab mapping, Agent Lab data and downloaded STT/TTS voice models can be lost on rebuild/update.",
+            "Without /app/agent_lab mapping, Agent Lab data, Spudex workspace files, and downloaded STT/TTS voice models can be lost on rebuild/update.",
             "Without /app/.runtime mapping, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
         ],
         "snippets": [],
@@ -1283,6 +1314,7 @@ INSTALL_METHODS = [
             "Requires Python 3.11, Redis Stack, and an OpenAI-compatible LLM backend such as Ollama, LocalAI, LM Studio, Lemonade, or OpenAI API.",
             "The README recommends running inside a virtual environment to keep dependencies isolated.",
             "Redis is no longer configured in .env; connection setup is handled in-WebUI and saved in .runtime.",
+            "Spudex uses the local Agent Lab workspace for terminal-backed chat, scripts, files, and small hosted tasks.",
         ],
         "steps": [
             "Clone the repository.",
@@ -1293,7 +1325,7 @@ INSTALL_METHODS = [
             "Configure Hydra LLM base server(s) and optional Beast Mode role routing in Settings.",
         ],
         "notes": [
-            "Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models.",
+            "Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models and Spudex work starts under agent_lab/workspace.",
             "Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.",
             "This path is the best fit when you want to inspect or modify the source directly.",
         ],
@@ -1326,7 +1358,7 @@ pip install -r requirements.txt""",
         "complexity": "Medium",
         "highlights": [
             "The README publishes the image at ghcr.io/tatertotterson/tater:latest.",
-            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve downloaded voice models.",
+            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve Spudex workspace files and downloaded voice models.",
             "The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.",
         ],
         "steps": [
@@ -1338,7 +1370,7 @@ pip install -r requirements.txt""",
             "Open the WebUI at http://localhost:8501 after the container is running.",
         ],
         "notes": [
-            "If /app/agent_lab is not mounted, runtime data and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.",
+            "If /app/agent_lab is not mounted, runtime data, Spudex workspace files, and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.",
             "If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
             "The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.",
         ],
@@ -1411,6 +1443,12 @@ KERNEL_TOOL_GROUPS = {
         "memory_explain",
         "memory_search",
         "send_message",
+    ],
+    "Terminal console": [
+        "spudex_run",
+        "spudex_task",
+        "spudex_status",
+        "spudex_stop",
     ],
 }
 
@@ -1489,6 +1527,8 @@ def extract_named_literal(path: Path, name: str) -> Any:
             for target in node.targets:
                 if isinstance(target, ast.Name):
                     assignments[target.id] = node.value
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) and node.value is not None:
+            assignments[node.target.id] = node.value
 
     cache: dict[str, Any] = {}
 
@@ -1861,22 +1901,42 @@ def extract_kernel_tools() -> list[dict[str, str]]:
     tool_ids = extract_named_literal(TOOL_RUNTIME_SOURCE, "META_TOOLS")
     purposes = extract_named_literal(TOOL_RUNTIME_SOURCE, "_KERNEL_TOOL_PURPOSE_HINTS")
     usage_hints = extract_named_literal(CERBERUS_SOURCE, "_KERNEL_TOOL_USAGE_HINTS")
+    spudex_rows: list[dict[str, str]] = []
+    if SPUDEX_TOOLS_SOURCE.exists():
+        try:
+            extracted = extract_named_literal(SPUDEX_TOOLS_SOURCE, "SPUDEX_TOOL_ROWS")
+        except Exception:
+            extracted = []
+        if isinstance(extracted, list):
+            for item in extracted:
+                if isinstance(item, dict) and item.get("id"):
+                    spudex_rows.append(
+                        {
+                            "id": str(item.get("id") or "").strip(),
+                            "purpose": str(item.get("description") or "").strip(),
+                            "usage": str(item.get("usage") or "").strip(),
+                        }
+                    )
 
-    ids = sorted(str(item) for item in (tool_ids or []))
+    ids = sorted({str(item) for item in (tool_ids or [])} | {row["id"] for row in spudex_rows if row.get("id")})
+    spudex_by_id = {row["id"]: row for row in spudex_rows}
     rows: list[dict[str, str]] = []
     for tool_id in ids:
         overrides = KERNEL_TOOL_OVERRIDES.get(tool_id, {})
+        spudex_row = spudex_by_id.get(tool_id, {})
         rows.append(
             {
                 "id": tool_id,
                 "purpose": str(
                     overrides.get("purpose")
+                    or spudex_row.get("purpose")
                     or (purposes or {}).get(tool_id)
                     or tool_id.replace("_", " ")
                 ).strip(),
                 "usage": pretty_json_string(
                     str(
                         overrides.get("usage")
+                        or spudex_row.get("usage")
                         or (usage_hints or {}).get(tool_id)
                         or json.dumps({"function": tool_id, "arguments": {}})
                     )
@@ -1907,9 +1967,9 @@ def extract_cerberus_defaults() -> list[dict[str, str]]:
     keys = [
         ("DEFAULT_MAX_ROUNDS", "Max rounds", ""),
         ("DEFAULT_MAX_TOOL_CALLS", "Max tool calls", ""),
-        ("DEFAULT_STEP_RETRY_LIMIT", "Step retry limit", ""),
         ("DEFAULT_MAX_LEDGER_ITEMS", "Max ledger items", ""),
         ("DEFAULT_ASTRAEUS_PLAN_REVIEW_ENABLED", "Astraeus second plan check", ""),
+        ("DEFAULT_AUTO_CONTINUE_INCOMPLETE_FINAL_ENABLED", "Head auto-continue", ""),
     ]
     rows: list[dict[str, str]] = []
     for constant_name, label, unit in keys:
@@ -2050,6 +2110,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("home", "Home", f"{base}index.html"),
         ("install", "Install", f"{base}install/index.html"),
         ("cerberus", "Hydra", f"{base}cerberus/index.html"),
+        ("spudex", "Spudex", f"{base}spudex/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("esphome", "ESPHome", f"{base}esphome/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
@@ -2259,6 +2320,7 @@ def render_home_page(
           {button("ESPHome voice", "esphome/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
+          {button("Open Spudex", "spudex/index.html")}
         </div>
       </div>
       <aside class="hero-art mascot-stage">
@@ -2286,6 +2348,7 @@ def render_home_page(
         <ul class="stack-list">
           <li>Talk through VoicePE, Sat1, or S3Box devices, then let Hydra route the request to Verbas, cores, and smart-home controls.</li>
           <li>Use the app or WebUI for private chat, quick actions, attachments, device health, dashboards, and firmware updates.</li>
+          <li>Use Spudex when Tater needs terminal console access for commands, scripts, local diagnostics, small apps, or hosted workspace tasks.</li>
           <li>Mix local or remote wake detection with microWakeWord, openWakeWord, or NanoWakeWord, plus intercom and display notifications.</li>
         </ul>
         <div class="action-row">
@@ -2301,6 +2364,10 @@ def render_home_page(
         (
             "Smart chaining",
             "Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.",
+        ),
+        (
+            "Spudex terminal workbench",
+            "Spudex gives Tater a console-style tab for direct assistant chat, manual commands, tracked sessions, policy controls, and Hydra-accessible terminal tools.",
         ),
         (
             "Tater Dashboard",
@@ -3059,6 +3126,8 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
         "Tool-first router: execution, retrieval, setting changes, add/remove requests, and system diagnostics route to tools.",
         "Beast Mode routing: base servers can handle AI Calls while Chat/Astraeus/Thanatos/Minos/Hermes can route to per-head models.",
         "Smart chaining: kernel tools and Verbas can be mixed across steps to finish a task instead of stopping after one tool result.",
+        "Spudex bridge: when enabled for a platform, Hydra can use terminal console tools for command-line work that does not fit a Verba.",
+        "Head-level auto-continue: final Chat and Hermes replies that promise to do the next step can trigger an internal continue turn without putting that check inside the core Hydra loop.",
         "Atomic execution lock: Thanatos and Minos both focus on one next step instead of merging unrelated actions.",
         "Fresh-run behavior: ASK_USER ends the current run and a new user message starts a fresh run.",
         "Recovery text path: validation failures can trigger a short recovery message instead of a broken tool call.",
@@ -3072,7 +3141,7 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     chaining_cards = [
         (
             "Kernel tools first",
-            "Hydra can read files, search the web, inspect pages, search local code, manage memory, and attach artifacts before it ever needs a custom extension.",
+            "Hydra can read files, search the web, inspect pages, search local code, manage memory, attach artifacts, or hand command-line work to Spudex before it ever needs a custom extension.",
         ),
         (
             "Verbas where action lives",
@@ -3156,6 +3225,210 @@ def render_cerberus_page(defaults: list[dict[str, str]]) -> str:
     )
 
 
+def render_spudex_page() -> str:
+    try:
+        settings_defaults = extract_named_literal(SPUDEX_SETTINGS_SOURCE, "DEFAULT_SPUDEX_SETTINGS")
+    except Exception:
+        settings_defaults = {}
+    if not isinstance(settings_defaults, dict):
+        settings_defaults = {}
+
+    default_items = [
+        ("Enabled by default", "enabled"),
+        ("Default platforms", "allowed_platforms"),
+        ("Policy enabled", "policy_enabled"),
+        ("Approval required", "require_approval"),
+        ("File approval required", "require_file_approval"),
+        ("Working folder", "default_cwd"),
+        ("Max task steps", "max_task_steps"),
+        ("Command timeout", "command_timeout_sec"),
+        ("Output cap", "max_output_chars"),
+    ]
+
+    def format_spudex_default(value: Any) -> str:
+        if isinstance(value, bool):
+            return "true" if value else "false"
+        if isinstance(value, list):
+            return ", ".join(str(item) for item in value)
+        return str(value)
+
+    default_cards = "".join(
+        f"""
+        <article class="stat-card stat-card-wide">
+          <strong>{escape(format_spudex_default(value))}</strong>
+          <span>{escape(label)}</span>
+        </article>
+        """
+        for label, key in default_items
+        for value in [settings_defaults.get(key, "")]
+    )
+
+    feature_cards = [
+        (
+            "Direct Spudex chat",
+            "A console-style chat tab bypasses Hydra and talks directly to the Spudex loop, so the model can run commands, write files, inspect output, search when needed, verify work, and keep context across turns.",
+            ["Chat", "Commands", "Context"],
+        ),
+        (
+            "Hydra terminal tools",
+            "When enabled for a platform, Hydra can call spudex_run for one command, spudex_task for multi-step terminal work, spudex_status for live state, and spudex_stop to stop a session.",
+            ["spudex_run", "spudex_task", "spudex_stop"],
+        ),
+        (
+            "Manual sessions",
+            "Operators can run a command manually, choose background execution, watch the log stream, inspect the working folder, and stop the session from the WebUI.",
+            ["Manual", "Background", "Logs"],
+        ),
+        (
+            "Tracked processes",
+            "Model-started sessions are visible in the Spudex header and details drawer so long-running tasks, small servers, and stuck commands can be reviewed or killed.",
+            ["Processes", "Kill", "Details"],
+        ),
+        (
+            "Agent Lab working folder",
+            "Spudex resolves its configured working folder under Agent Lab by default, with workspace as the default folder name and file helpers constrained to Agent Lab paths.",
+            ["Agent Lab", "workspace", "Files"],
+        ),
+        (
+            "Separate model routing",
+            "Settings -> Models can define a dedicated Spudex LLM endpoint and model, letting terminal work use a coding-oriented model without changing the normal Hydra model mix.",
+            ["Models", "Endpoint", "Coding"],
+        ),
+    ]
+    feature_html = "".join(
+        f"""
+        <article class="feature-card">
+          <div class="chip-row">{"".join(chip(item) for item in chips)}</div>
+          <h3>{escape(title)}</h3>
+          <p>{escape(text)}</p>
+        </article>
+        """
+        for title, text, chips in feature_cards
+    )
+
+    policy_items = [
+        "Enable or disable Spudex globally, then choose which platforms expose the Hydra-facing terminal tools.",
+        "Keep the policy layer on for normal use, or tune specific allowances for shells, network commands, installs, containers, host package managers, remote-control tools, host/admin commands, inline eval, and absolute executables.",
+        "Require approval for Hydra-triggered command runs, and separately require approval before file changes are accepted.",
+        "Limit max task steps, command timeout, output size, retained log entries, and retained sessions from the Spudex settings tab.",
+        "The Spudex chat loop receives system information so it can choose Linux, macOS, or Windows-style commands correctly.",
+    ]
+    policy_html = "".join(f"<li>{escape(item)}</li>" for item in policy_items)
+
+    api_cards = [
+        ("GET", "/api/spudex", "Load Spudex state", "Returns settings, platform options, sessions, active counts, tracked processes, and current log metadata for the Spudex tab."),
+        ("POST", "/api/spudex/settings", "Save Spudex settings", "Persists enabled state, platform toggles, policy options, approval options, working folder, task limits, timeout, and output limits."),
+        ("POST", "/api/spudex/chat/session", "Create a Spudex chat", "Creates a draft chat session with the configured Agent Lab working folder so users can switch between Spudex chats."),
+        ("POST", "/api/spudex/chat", "Run a Spudex chat turn", "Runs the direct Spudex loop with conversation context, command execution, file writes, web research, verification, and live session logs."),
+        ("POST", "/api/spudex/run", "Run a manual command", "Starts one manual command session from the configured working folder, optionally as a background process."),
+        ("GET", "/api/spudex/sessions/{session_id}/logs", "Read session logs", "Streams terminal, assistant, command, system, and verification entries for the selected session."),
+        ("POST", "/api/spudex/sessions/{session_id}/stop", "Stop a session", "Requests termination for a running Spudex session or model-started process."),
+        ("DELETE", "/api/spudex/sessions/{session_id}", "Close a session", "Removes a retained Spudex session from the visible session list."),
+    ]
+    api_html = "".join(
+        f"""
+        <article class="tool-card">
+          <div class="chip-row">{chip(method)}{chip(path)}</div>
+          <h3>{escape(title)}</h3>
+          <p>{escape(text)}</p>
+        </article>
+        """
+        for method, path, title, text in api_cards
+    )
+
+    workflow_cards = [
+        (
+            "Hydra call",
+            "A normal chat, voice, or portal turn can expose Spudex tools only when Spudex is enabled for that platform.",
+        ),
+        (
+            "Direct chat",
+            "The Spudex tab can talk directly to the Spudex loop, which is useful for iterative command-line work like creating a small website and hosting it.",
+        ),
+        (
+            "Operator review",
+            "The same tab shows logs, process state, file-change approvals, session details, and stop controls without needing to leave the WebUI.",
+        ),
+    ]
+    workflow_html = "".join(
+        f"""
+        <article class="timeline-card">
+          <h3>{escape(title)}</h3>
+          <p>{escape(text)}</p>
+        </article>
+        """
+        for title, text in workflow_cards
+    )
+
+    body = f"""
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Spudex</span>
+        <h1>Spudex gives Tater terminal console access with operator controls.</h1>
+        <p>
+          It is a built-in WebUI workbench and Hydra tool bridge for command-line tasks, scripts, local diagnostics, small hosted apps, and workspace automation.
+        </p>
+        <div class="action-row">
+          {button("Kernel tools", "../kernel-tools/index.html")}
+          {button("Hydra", "../cerberus/index.html", ghost=True)}
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Default scope</span>
+        <p>Spudex starts from an Agent Lab working folder, tracks sessions, and exposes policy toggles so operators decide how much terminal freedom it gets.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Capabilities</span>
+        <h2>What Spudex adds to Tater.</h2>
+      </div>
+      <div class="grid grid-3">
+        {feature_html}
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Runtime flow</span>
+        <h2>There are two ways into the same console layer.</h2>
+      </div>
+      <div class="timeline">
+        {workflow_html}
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Policy and settings</span>
+        <h2>Operators can keep it narrow or open it up.</h2>
+      </div>
+      <div class="panel">
+        <ul class="stack-list">
+          {policy_html}
+        </ul>
+      </div>
+      <div class="runtime-grid">
+        {default_cards}
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">API surface</span>
+        <h2>The WebUI talks to Spudex through local Tater routes.</h2>
+      </div>
+      <div class="grid grid-2">
+        {api_html}
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | Spudex",
+        description="Overview of Spudex terminal console access, direct chat, Hydra tools, policies, sessions, and WebUI APIs.",
+        body=body,
+        depth=1,
+        nav_key="spudex",
+    )
+
+
 def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     grouped: dict[str, list[dict[str, str]]] = {}
     for item in kernel_tools:
@@ -3194,12 +3467,12 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
         <span class="eyebrow">Built-in capabilities</span>
         <h1>Kernel tools are Tater's native action layer.</h1>
         <p>
-          They handle files, web inspection, memory, artifacts, and delivery before Hydra reaches for a Verba.
+          They handle files, web inspection, memory, artifacts, delivery, and optional Spudex terminal console work before Hydra reaches for a Verba.
         </p>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Why they matter</span>
-        <p>Kernel tools let Tater inspect the workspace, search live information, move files, and coordinate delivery on its own.</p>
+        <p>Kernel tools let Tater inspect the workspace, search live information, move files, coordinate delivery, and run controlled terminal work through Spudex.</p>
       </aside>
     </section>
     """
@@ -3211,7 +3484,23 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
         "This is a core capability, not a Verba. The current Tater WebUI path is Settings -> Integrations -> Web Search.",
     )
 
-    body = intro + "\n".join(sections) + guide_section
+    spudex_note = f"""
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Terminal console</span>
+        <h2>Spudex tools are conditional kernel tools.</h2>
+      </div>
+      <div class="panel">
+        <p>
+          The spudex_run, spudex_task, spudex_status, and spudex_stop tools appear to Hydra only when Spudex is enabled for the active platform.
+          Configure them from the Spudex tab, then use the dedicated Spudex docs for policy, session, and direct-chat behavior.
+        </p>
+        <div class="action-row">{button("Read Spudex", "../spudex/index.html")}</div>
+      </div>
+    </section>
+    """
+
+    body = intro + "\n".join(sections) + spudex_note + guide_section
     return page_template(
         title="Tater Assistant | Kernel Tools",
         description="Reference for Tater Assistant kernel tools and their purposes.",
@@ -3441,12 +3730,14 @@ def build() -> None:
     )
     write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
     write_page(SITE_ROOT / "cerberus" / "index.html", render_cerberus_page(cerberus_defaults))
+    write_page(SITE_ROOT / "spudex" / "index.html", render_spudex_page())
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
     write_page(SITE_ROOT / "plugins" / "index.html", render_plugins_page(plugins))
 
     cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
     cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
     cleanup_section_pages(SITE_ROOT / "esphome", [])
+    cleanup_section_pages(SITE_ROOT / "spudex", [])
     cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])
     cleanup_section_pages(SITE_ROOT / "plugins", [plugin["slug"] for plugin in plugins])
 

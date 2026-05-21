@@ -20,6 +20,7 @@
                 <a class="nav-link" href="../index.html">Home</a>
 <a class="nav-link is-active" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
@@ -49,7 +50,7 @@
         <article class="panel">
           <span class="eyebrow">Why choose this</span>
           <h2>Key points</h2>
-          <ul class="stack-list"><li>The README publishes the image at ghcr.io/tatertotterson/tater:latest.</li><li>Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve downloaded voice models.</li><li>The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.</li></ul>
+          <ul class="stack-list"><li>The README publishes the image at ghcr.io/tatertotterson/tater:latest.</li><li>Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve Spudex workspace files and downloaded voice models.</li><li>The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.</li></ul>
         </article>
         <article class="panel">
           <span class="eyebrow">Install flow</span>
@@ -61,7 +62,7 @@
     <section class="section">
       <article class="panel">
         <span class="eyebrow">Important notes</span>
-        <ul class="stack-list"><li>If /app/agent_lab is not mounted, runtime data and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.</li><li>If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.</li><li>The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.</li></ul>
+        <ul class="stack-list"><li>If /app/agent_lab is not mounted, runtime data, Spudex workspace files, and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.</li><li>If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.</li><li>The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.</li></ul>
       </article>
     </section>
 
