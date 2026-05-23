@@ -28,7 +28,14 @@ def resolve_path(env_name: str, *candidates: Path) -> Path:
 SITE_ROOT = resolve_path("TATER_WIKI_SITE_DIR", BASE_DIR / "public_html", BASE_DIR)
 TATER_DIR = resolve_path("TATER_WIKI_TATER_DIR", SCRIPT_DIR / "Tater", BASE_DIR / "Tater")
 TATER_SHOP_DIR = resolve_path("TATER_WIKI_TATER_SHOP_DIR", SCRIPT_DIR / "Tater_Shop", BASE_DIR / "Tater_Shop")
+TATER_INTEGRATIONS_DIR = resolve_path(
+    "TATER_WIKI_TATER_INTEGRATIONS_DIR",
+    SCRIPT_DIR / "Tater_Integrations",
+    BASE_DIR / "Tater_Integrations",
+    BASE_DIR.parent / "Tater_Integrations",
+)
 TATER_SHOP_MANIFEST = TATER_SHOP_DIR / "manifest.json"
+TATER_INTEGRATIONS_MANIFEST = TATER_INTEGRATIONS_DIR / "manifest.json"
 TATER_README = TATER_DIR / "README.md"
 
 LOGO_SOURCE = TATER_DIR / "images" / "tater-new-logo.png"
@@ -129,7 +136,7 @@ MACOS_APP_GUIDES = [
 
 KERNEL_TOOL_OVERRIDES = {
     "search_web": {
-        "purpose": "Search the public web through Google's Programmable Search backend after Web Search is configured in Tater WebUI.",
+        "purpose": "Search the public web through any enabled web-search integration, including SearXNG, Brave Search, Google Custom Search, or Serper.",
         "usage": """{
   "function": "search_web",
   "arguments": {
@@ -141,21 +148,153 @@ KERNEL_TOOL_OVERRIDES = {
     },
 }
 
+INTEGRATION_DOC_OVERRIDES = {
+    "aladdin": {
+        "category": "Access",
+        "capabilities": ["garage_door", "garage", "entry_sensor", "open_close", "door"],
+        "summary": "Exposes Genie/Aladdin garage doors as generic open/close devices.",
+        "notes": [
+            "Useful to Awareness Core and other device-aware flows without adding Aladdin-specific code to those cores.",
+            "Disabled installs do not import or log in to Aladdin.",
+        ],
+    },
+    "brave_search": {
+        "category": "Web search",
+        "capabilities": ["web_search"],
+        "summary": "Adds Brave Search as one selectable provider for the search_web kernel tool.",
+        "notes": [
+            "Enable it when you want Brave's API results instead of or alongside another provider.",
+            "Providers with the same order are tried by stable provider name/id order.",
+        ],
+    },
+    "google_search": {
+        "category": "Web search",
+        "capabilities": ["web_search"],
+        "summary": "Adds Google Custom Search as a modular search provider.",
+        "notes": [
+            "Requires both a Google API key and Programmable Search Engine CX value.",
+            "Existing legacy Google search settings can still be migrated by Tater.",
+        ],
+    },
+    "homeassistant": {
+        "category": "Smart home",
+        "capabilities": ["camera", "snapshot", "sensor", "thermostat", "light", "media_player", "announcement_target"],
+        "summary": "Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.",
+        "notes": [
+            "Home Assistant is now optional; Tater can boot and run without this module installed.",
+            "New device-aware cores should consume generic devices exposed by integrations instead of calling Home Assistant directly.",
+        ],
+    },
+    "homekit": {
+        "category": "Climate",
+        "capabilities": ["thermostat", "climate", "hvac", "temperature", "humidity"],
+        "summary": "Pairs Ecobee thermostats through HomeKit and exposes thermostats plus remote sensors.",
+        "notes": [
+            "The runtime owner maps Ecobee HomeKit devices under the HomeKit integration.",
+            "Environment Core can use the exposed temperature and humidity devices once enabled.",
+        ],
+    },
+    "hue": {
+        "category": "Lighting",
+        "capabilities": ["light", "switch", "sensor", "button", "motion"],
+        "summary": "Pairs a Philips Hue Bridge and exposes lights, switches, and Hue resources through generic device capabilities.",
+        "notes": [
+            "Bridge pairing and app-key storage stay inside the integration.",
+            "Tater cores can discover Hue lights without provider-specific core edits.",
+        ],
+    },
+    "huggingface": {
+        "category": "Models",
+        "capabilities": ["model_downloads", "token_storage"],
+        "summary": "Stores an optional Hugging Face token for gated models and higher-rate downloads.",
+        "notes": [
+            "The token can be injected into speech/model download environments when needed.",
+            "No model download happens at module import time.",
+        ],
+    },
+    "searxng_search": {
+        "category": "Web search",
+        "capabilities": ["web_search"],
+        "summary": "Adds a self-hosted SearXNG instance as a modular search provider.",
+        "notes": [
+            "Best fit when operators want self-hosted search routing.",
+            "Supports an optional bearer token for protected SearXNG instances.",
+        ],
+    },
+    "serper_search": {
+        "category": "Web search",
+        "capabilities": ["web_search"],
+        "summary": "Adds Serper's Google Search API as a modular search provider.",
+        "notes": [
+            "Enable it when you prefer Serper's API over direct Google Custom Search credentials.",
+            "It participates in the same ordered provider discovery as the other web-search integrations.",
+        ],
+    },
+    "sonos": {
+        "category": "Audio",
+        "capabilities": ["speaker", "media_player", "audio_output", "announcement_target", "play_media"],
+        "summary": "Discovers Sonos speakers and exposes them as announcement and playback targets.",
+        "notes": [
+            "Announcement routing can pull all speakers from all enabled integrations, not just Sonos.",
+            "Manual speaker hosts can be configured when SSDP discovery is not enough.",
+        ],
+    },
+    "unifi_network": {
+        "category": "Network",
+        "capabilities": ["network_device", "client", "presence", "connectivity"],
+        "summary": "Exposes UniFi Network clients and infrastructure devices for inventory and presence-aware flows.",
+        "notes": [
+            "Device and client inventory becomes available through generic integration device catalogs.",
+            "Presence-style workflows no longer need UniFi-specific code in every consumer.",
+        ],
+    },
+    "unifi_protect": {
+        "category": "Security",
+        "capabilities": ["camera", "snapshot", "motion", "doorbell", "entry_sensor", "speaker", "announcement_target"],
+        "summary": "Exposes UniFi Protect cameras, sensors, and direct speaker announcement targets.",
+        "notes": [
+            "Awareness Core can build camera and sensor rule options from generic camera, motion, doorbell, and entry-sensor capabilities.",
+            "Snapshot actions are exposed through the shared device-action hook.",
+        ],
+    },
+    "weather_api": {
+        "category": "Weather",
+        "capabilities": ["weather", "forecast", "temperature", "humidity"],
+        "summary": "Stores WeatherAPI.com credentials and defaults for weather forecast tools.",
+        "notes": [
+            "Weather providers stay optional and dormant until enabled.",
+            "Forecast flows can use this integration without bundling WeatherAPI credentials into Tater itself.",
+        ],
+    },
+}
+
 WEB_SEARCH_GUIDES = [
     {
-        "title": "Create a Google API key",
-        "summary": "The search_web kernel tool uses Google's Custom Search JSON API credentials.",
-        "chips": ["Google Cloud", "Custom Search JSON API", "API key"],
+        "title": "Pick a provider",
+        "summary": "The search_web kernel tool now discovers enabled web-search integrations.",
+        "chips": ["SearXNG", "Brave Search", "Google", "Serper"],
         "details": [
-            "Open Google Cloud Console, create or select a project, then enable Custom Search API under APIs and Services -> Library.",
-            "After the API is enabled, go to APIs and Services -> Credentials and create an API key for Tater.",
-            "Keep that key handy because Tater's WebUI expects it as the Google API Key for web search.",
+            "Open Settings -> Integrations, download the provider you want, then enable it from Manage.",
+            "Tater currently ships downloadable providers for SearXNG, Brave Search, Google Custom Search, and Serper.",
+            "You can enable more than one provider; Tater tries enabled web_search integrations in configured order.",
         ],
         "links": [
             {
-                "label": "Google Cloud Console",
-                "href": "https://console.cloud.google.com/",
+                "label": "Tater Integrations Repo",
+                "href": "https://github.com/TaterTotterson/Tater_Integrations",
             },
+        ],
+    },
+    {
+        "title": "Provider settings",
+        "summary": "Each provider owns its own settings and test action.",
+        "chips": ["Settings -> Integrations", "Setup", "Test"],
+        "details": [
+            "SearXNG needs the instance URL and optional bearer token.",
+            "Brave Search and Serper need their API keys.",
+            "Google Custom Search needs both a Google API key and Programmable Search Engine CX value.",
+        ],
+        "links": [
             {
                 "label": "Custom Search JSON API Docs",
                 "href": "https://developers.google.com/custom-search/v1/overview",
@@ -163,48 +302,26 @@ WEB_SEARCH_GUIDES = [
         ],
     },
     {
-        "title": "Create a Search Engine ID (CX)",
-        "summary": "Google also requires a Programmable Search Engine and its Search Engine ID.",
-        "chips": ["Programmable Search Engine", "CX", "Entire web"],
+        "title": "How Tater chooses",
+        "summary": "Search providers advertise the shared web_search capability.",
+        "chips": ["Capability discovery", "Provider order", "Fallback"],
         "details": [
-            "Create a Programmable Search Engine, then open its control panel and enable Search the entire web if you want broad public-web results.",
-            "Open the generated search page URL and copy the value after cx=, because that is the Search Engine ID Tater stores.",
-            "Tater's core search flow is only ready once both the API key and the CX value are saved.",
-        ],
-        "links": [
-            {
-                "label": "Programmable Search Engine",
-                "href": "https://programmablesearchengine.google.com/",
-            },
-        ],
-    },
-    {
-        "title": "Enter the keys in Tater",
-        "summary": "Web search is configured from Integrations because it powers a kernel tool, not a Verba.",
-        "chips": ["Settings -> Integrations", "Web Search", "Kernel tool"],
-        "details": [
-            "Open Tater WebUI and go to Settings -> Integrations -> Web Search.",
-            "Paste Google API Key and Google Search Engine ID (CX), then save the settings.",
-            "The current code stores those values as tater:web_search:google_api_key and tater:web_search:google_cx, with a legacy fallback for older plugin-style settings.",
-            "After that, Hydra can call search_web for current web research and article lookup tasks.",
+            "search_web asks the integration registry for enabled providers with the web_search capability.",
+            "Providers are sorted by order, then stable provider name/id, so equal orders are deterministic.",
+            "If a provider is not configured or fails, Tater can continue to the next enabled provider.",
         ],
         "links": [],
     },
     {
         "title": "What the kernel tool supports",
-        "summary": "The current search_web implementation accepts a few focused filters on top of the main query.",
+        "summary": "The search_web input shape stays the same even when providers change.",
         "chips": ["query", "site", "country", "language"],
         "details": [
             "query is required, while num_results, start, site, safe, country, and language are optional.",
-            "site narrows results to one domain, country maps to Google's gl parameter, and language maps to lr.",
-            "If the Google credentials are missing, the tool returns a configuration error that points operators back to WebUI settings.",
+            "site narrows results to one domain when the provider supports it.",
+            "Hydra can keep using search_web without caring which provider integration is currently enabled.",
         ],
-        "links": [
-            {
-                "label": "API Reference",
-                "href": "https://developers.google.com/custom-search/v1",
-            },
-        ],
+        "links": [],
     },
 ]
 
@@ -517,7 +634,10 @@ PLATFORM_DOCS = {
             "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
             "Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.",
             "The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.",
-            "Integrations now include Hugging Face token storage so automatic model downloads can use authenticated Hub requests.",
+            "Integrations now have a Store/Manage split: Store downloads optional modules, Manage enables/disables installed modules, and Setup refreshes available provider settings.",
+            "The integration runtime restores missing enabled integrations at boot and keeps disabled integrations unimported.",
+            "Web search providers are modular integrations, with SearXNG, Brave Search, Google Custom Search, and Serper available from the integration catalog.",
+            "Hugging Face token storage moved into the modular integration catalog so automatic model downloads can use authenticated Hub requests when enabled.",
             "Settings -> People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.",
             "WebUI password login can be enabled from Settings -> General and uses cookie-backed sessions.",
         ],
@@ -1139,13 +1259,14 @@ PLATFORM_DOCS = {
     },
     "awareness": {
         "label": "Awareness Core",
-        "description": "Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.",
+        "description": "Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.",
         "role": "Home awareness engine",
         "source": TATER_SHOP_DIR / "cores" / "awareness_core.py",
         "plugin_surface": "",
         "highlights": [
             "Replaces the old HA automations bridge with an in-core awareness runtime.",
-            "Connects to Home Assistant state changes and runs camera, doorbell, and entry-sensor rules directly.",
+            "Builds camera, doorbell, motion, and entry-sensor options from enabled integration device capabilities.",
+            "Existing rules that reference unavailable integrations report the missing integration/device until the provider is downloaded and enabled.",
             "Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.",
             "Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.",
             "Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.",
@@ -1720,6 +1841,123 @@ def build_plugins() -> list[dict[str, Any]]:
     return sorted(rows, key=lambda item: item["title"].lower())
 
 
+def integration_manifest_entries() -> list[dict[str, Any]]:
+    if not TATER_INTEGRATIONS_MANIFEST.exists():
+        return []
+
+    try:
+        payload = json.loads(read_text(TATER_INTEGRATIONS_MANIFEST))
+    except Exception:
+        return []
+
+    items = payload.get("integrations") if isinstance(payload, dict) else []
+    if not isinstance(items, list):
+        return []
+    return [item for item in items if isinstance(item, dict)]
+
+
+def integration_metadata_for_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    relative_entry = str(entry.get("entry") or "").strip()
+    if not relative_entry:
+        return {}
+    source_path = (TATER_INTEGRATIONS_DIR / relative_entry).resolve()
+    if not source_path.exists():
+        return {}
+    try:
+        meta = extract_named_literal(source_path, "INTEGRATION")
+    except Exception:
+        return {}
+    return meta if isinstance(meta, dict) else {}
+
+
+def _string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    out: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        text = str(item or "").strip()
+        if not text or text in seen:
+            continue
+        out.append(text)
+        seen.add(text)
+    return out
+
+
+def build_integrations() -> list[dict[str, Any]]:
+    manifest_entries = integration_manifest_entries()
+    rows: list[dict[str, Any]] = []
+    for index, entry in enumerate(manifest_entries):
+        integration_id = str(entry.get("id") or "").strip()
+        if not integration_id:
+            continue
+        meta = integration_metadata_for_entry(entry)
+        override = INTEGRATION_DOC_OVERRIDES.get(integration_id, {})
+
+        fields = meta.get("fields") if isinstance(meta.get("fields"), list) else []
+        actions = meta.get("actions") if isinstance(meta.get("actions"), list) else []
+        field_labels = [
+            str(field.get("label") or field.get("key") or "").strip()
+            for field in fields
+            if isinstance(field, dict) and str(field.get("label") or field.get("key") or "").strip()
+        ]
+        action_labels = [
+            str(action.get("label") or action.get("id") or "").strip()
+            for action in actions
+            if isinstance(action, dict) and str(action.get("label") or action.get("id") or "").strip()
+        ]
+
+        capabilities = (
+            _string_list(entry.get("capabilities"))
+            or _string_list(meta.get("capabilities"))
+            or _string_list(override.get("capabilities"))
+        )
+        category = str(override.get("category") or ("Web search" if "web_search" in capabilities else "Device")).strip()
+        description = str(entry.get("description") or meta.get("description") or "").strip()
+        summary = str(override.get("summary") or description).strip()
+        rows.append(
+            {
+                "id": integration_id,
+                "slug": integration_id,
+                "title": str(entry.get("name") or meta.get("name") or integration_id.replace("_", " ").title()).strip(),
+                "description": " ".join(description.split()),
+                "summary": " ".join(summary.split()),
+                "version": str(entry.get("version") or "").strip() or "unknown",
+                "entry": str(entry.get("entry") or "").strip(),
+                "required": bool(entry.get("required")),
+                "category": category,
+                "capabilities": capabilities,
+                "fields": field_labels,
+                "actions": action_labels,
+                "order": int(meta.get("order") or 1000),
+                "notes": _string_list(override.get("notes")),
+                "source_index": index,
+            }
+        )
+
+    category_order = {
+        "Web search": 0,
+        "Smart home": 1,
+        "Security": 2,
+        "Audio": 3,
+        "Lighting": 4,
+        "Climate": 5,
+        "Access": 6,
+        "Network": 7,
+        "Weather": 8,
+        "Models": 9,
+        "Device": 10,
+    }
+    return sorted(
+        rows,
+        key=lambda item: (
+            category_order.get(str(item.get("category") or ""), 99),
+            int(item.get("order") or 1000),
+            str(item.get("title") or "").lower(),
+        ),
+    )
+
+
 def normalize_plugin(raw: dict[str, Any]) -> dict[str, Any]:
     plugin_id = str(raw.get("id") or "").strip()
     overrides = PLUGIN_OVERRIDES.get(plugin_id, {})
@@ -2112,6 +2350,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("cerberus", "Hydra", f"{base}cerberus/index.html"),
         ("spudex", "Spudex", f"{base}spudex/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
+        ("integrations", "Integrations", f"{base}integrations/index.html"),
         ("esphome", "ESPHome", f"{base}esphome/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
@@ -2299,11 +2538,12 @@ def render_home_page(
     kernel_tools: list[dict[str, Any]],
     portals: list[dict[str, Any]],
     cores: list[dict[str, Any]],
+    integrations: list[dict[str, Any]],
 ) -> str:
     plugin_count = len(plugins)
     kernel_count = len(kernel_tools)
     portal_count = len(portals)
-    surface_count = portal_count
+    integration_count = len(integrations)
     install_count = len(INSTALL_METHODS)
 
     hero = f"""
@@ -2317,10 +2557,10 @@ def render_home_page(
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
+          {button("Integrations", "integrations/index.html")}
           {button("ESPHome voice", "esphome/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
-          {button("Open Spudex", "spudex/index.html")}
         </div>
       </div>
       <aside class="hero-art mascot-stage">
@@ -2329,7 +2569,8 @@ def render_home_page(
         <div class="hero-stats">
           <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
           <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
-          <div class="stat-card"><strong>{surface_count}</strong><span>portals</span></div>
+          <div class="stat-card"><strong>{portal_count}</strong><span>portals</span></div>
+          <div class="stat-card"><strong>{integration_count}</strong><span>integrations</span></div>
           <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
         </div>
       </aside>
@@ -2348,6 +2589,7 @@ def render_home_page(
         <ul class="stack-list">
           <li>Talk through VoicePE, Sat1, or S3Box devices, then let Hydra route the request to Verbas, cores, and smart-home controls.</li>
           <li>Use the app or WebUI for private chat, quick actions, attachments, device health, dashboards, and firmware updates.</li>
+          <li>Download only the integrations you enable, then let cores discover cameras, sensors, speakers, garage doors, search providers, and weather sources by capability.</li>
           <li>Use Spudex when Tater needs terminal console access for commands, scripts, local diagnostics, small apps, or hosted workspace tasks.</li>
           <li>Mix local or remote wake detection with microWakeWord, openWakeWord, or NanoWakeWord, plus intercom and display notifications.</li>
         </ul>
@@ -2361,6 +2603,18 @@ def render_home_page(
     """
 
     feature_cards = [
+        (
+            "Modular integrations",
+            "Integrations live in Tater_Integrations and download only when enabled, so new providers can expose devices, actions, and web search without editing Tater core.",
+        ),
+        (
+            "Capability-driven devices",
+            "Cores can ask for all cameras, speakers, garage doors, sensors, lights, weather sources, or search providers across every enabled integration.",
+        ),
+        (
+            "Search provider choice",
+            "search_web can use enabled providers such as SearXNG, Brave Search, Google Custom Search, or Serper instead of one baked-in backend.",
+        ),
         (
             "Smart chaining",
             "Hydra breaks work into steps, picks the next tool, and keeps going until the task is done.",
@@ -2478,6 +2732,24 @@ def render_home_page(
         for platform in home_cores
     )
 
+    integration_cards = "".join(
+        f"""
+        <article class="platform-card">
+          <div class="chip-row">
+            {chip(integration['category'])}
+            {chip(f"v{integration['version']}")}
+            {chip("Optional" if not integration.get("required") else "Required")}
+          </div>
+          <h3>{escape(integration['title'])}</h3>
+          <p>{escape(integration['summary'])}</p>
+          <div class="plugin-links">
+            {button("Read integration page", f"integrations/{integration['slug']}.html", ghost=True)}
+          </div>
+        </article>
+        """
+        for integration in integrations[:6]
+    )
+
     page_links = f"""
     <div class="grid grid-3">
       <article class="panel">
@@ -2494,6 +2766,11 @@ def render_home_page(
         <h3>Portal docs</h3>
         <p>See every portal, its role, and its settings.</p>
         {button("Open portals", "portals/index.html", ghost=True)}
+      </article>
+      <article class="panel">
+        <h3>Integration docs</h3>
+        <p>Browse optional downloaded integrations, device capabilities, and search providers.</p>
+        {button("Open integrations", "integrations/index.html", ghost=True)}
       </article>
       <article class="panel">
         <h3>ESPHome tab</h3>
@@ -2547,12 +2824,16 @@ def render_home_page(
     </section>
     <section class="section">
       <div class="section-head">
-        <span class="eyebrow">Portals + cores</span>
-        <h2>One assistant. Verbas, portals, and cores.</h2>
+        <span class="eyebrow">Portals + integrations + cores</span>
+        <h2>One assistant. Verbas, portals, integrations, and cores.</h2>
       </div>
       <h3>Portals</h3>
       <div class="grid grid-3">
         {portal_cards}
+      </div>
+      <h3>Integrations</h3>
+      <div class="grid grid-3">
+        {integration_cards}
       </div>
       <h3>Cores</h3>
       <div class="grid grid-3">
@@ -2572,7 +2853,7 @@ def render_home_page(
     """
     return page_template(
         title="Tater | Home",
-        description="Overview of Tater Assistant, supported portals, and the current wiki structure.",
+        description="Overview of Tater Assistant, supported portals, modular integrations, and the current wiki structure.",
         body=body,
         depth=0,
         nav_key="home",
@@ -2806,7 +3087,7 @@ def render_platforms_page(platforms: list[dict[str, Any]]) -> str:
         <span class="eyebrow">Portal reference</span>
         <h1>Tater runs across purpose-built portals.</h1>
         <p>
-          Portals are chat, voice, and integration entry points that route requests into Hydra and Verbas through the main Tater WebUI/API port.
+          Portals are chat, voice, and app entry points that route requests into Hydra and Verbas through the main Tater WebUI/API port.
         </p>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -2875,6 +3156,167 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
         body=body,
         depth=1,
         nav_key="cores",
+    )
+
+
+def render_integrations_page(integrations: list[dict[str, Any]]) -> str:
+    web_search_count = sum(1 for item in integrations if "web_search" in item.get("capabilities", []))
+    categories = sorted({str(item.get("category") or "Device") for item in integrations})
+    cards = "".join(
+        f"""
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            {chip(integration['category'])}
+            {chip(f"v{integration['version']}")}
+            {chip("Downloaded when enabled")}
+          </div>
+          <h3>{escape(integration['title'])}</h3>
+          <p>{escape(integration['summary'])}</p>
+          <div class="chip-row platform-row">
+            {"".join(chip(capability) for capability in integration.get("capabilities", [])[:5]) or chip("settings")}
+          </div>
+          <div class="plugin-links">
+            {button("Read integration page", f"{integration['slug']}.html", ghost=True)}
+          </div>
+        </article>
+        """
+        for integration in integrations
+    )
+
+    category_chips = "".join(chip(category) for category in categories)
+    body = f"""
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Integration reference</span>
+        <h1>Tater integrations are optional downloaded providers.</h1>
+        <p>
+          Integrations live in the Tater_Integrations repo and download into Tater only when enabled. They expose settings, devices, actions, runtime events, and web-search providers through shared hooks.
+        </p>
+        <div class="action-row">
+          {button("Tater Integrations repo", "https://github.com/TaterTotterson/Tater_Integrations")}
+          {button("Kernel search", "../kernel-tools/index.html", ghost=True)}
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Current catalog</span>
+        <p>{len(integrations)} integrations are documented from the current manifest, including {web_search_count} web-search providers.</p>
+        <div class="chip-row">{category_chips}</div>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Runtime model</span>
+          <h2>Disabled means dormant.</h2>
+          <ul class="stack-list">
+            <li>Store buttons download integrations, while the Manage tab enables, disables, updates, and removes installed modules.</li>
+            <li>On boot, Tater restores missing enabled integrations but leaves disabled integrations unimported.</li>
+            <li>Provider code stays self-contained, so a new integration can add devices or actions without changing Tater core.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Shared contracts</span>
+          <h2>Cores consume capabilities.</h2>
+          <ul class="stack-list">
+            <li>Device-aware flows ask for capabilities such as camera, snapshot, speaker, garage_door, temperature, motion, web_search, and announcement_target.</li>
+            <li>Awareness and Environment Core can build choices from all enabled integrations instead of hard-coded provider lists.</li>
+            <li>search_web discovers enabled integrations with the web_search capability and tries them in provider order.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Catalog</span>
+        <h2>Available integrations.</h2>
+      </div>
+      <div class="grid grid-3">
+        {cards}
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | Integrations",
+        description="Reference for optional Tater integrations, device capabilities, and web-search providers.",
+        body=body,
+        depth=1,
+        nav_key="integrations",
+    )
+
+
+def render_integration_detail(integration: dict[str, Any]) -> str:
+    capability_html = "".join(chip(capability) for capability in integration.get("capabilities", [])) or chip("settings")
+    settings_html = "".join(f"<li>{escape(field)}</li>" for field in integration.get("fields", []))
+    if not settings_html:
+        settings_html = "<li>No Settings UI fields are declared in the module metadata.</li>"
+    actions_html = "".join(f"<li>{escape(action)}</li>" for action in integration.get("actions", []))
+    if not actions_html:
+        actions_html = "<li>No shop/settings actions are declared in the module metadata.</li>"
+    notes_html = "".join(f"<li>{escape(note)}</li>" for note in integration.get("notes", []))
+    if not notes_html:
+        notes_html = "<li>This integration follows the shared optional integration runtime and stays dormant until enabled.</li>"
+
+    body = f"""
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Integration profile</span>
+        <h1>{escape(integration['title'])}</h1>
+        <p>{escape(integration['summary'])}</p>
+        <div class="chip-row">
+          {chip(integration['category'])}
+          {chip(f"v{integration['version']}")}
+          {chip("Optional" if not integration.get("required") else "Required")}
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Source module</span>
+        <p>{escape(integration.get("entry") or "No entry listed")}</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Description</span>
+          <h2>What it provides</h2>
+          <p>{escape(integration['description'] or integration['summary'])}</p>
+          <div class="chip-row">{capability_html}</div>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Behavior</span>
+          <h2>Operational notes</h2>
+          <ul class="stack-list">{notes_html}</ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Declared fields</h2>
+          <ul class="stack-list">{settings_html}</ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Actions</span>
+          <h2>Declared setup actions</h2>
+          <ul class="stack-list">{actions_html}</ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="action-row">
+        {button("Back to integrations", "index.html", ghost=True)}
+        {button("Kernel tools", "../kernel-tools/index.html", ghost=True)}
+        {button("Cores", "../cores/index.html", ghost=True)}
+        {button("Home", "../index.html", ghost=True)}
+      </div>
+    </section>
+    """
+    return page_template(
+        title=f"Tater Assistant | {integration['title']}",
+        description=integration["description"] or integration["summary"],
+        body=body,
+        depth=1,
+        nav_key="integrations",
     )
 
 
@@ -3480,8 +3922,8 @@ def render_kernel_page(kernel_tools: list[dict[str, str]]) -> str:
     guide_section = render_companion_section(
         WEB_SEARCH_GUIDES,
         "Web search setup",
-        "How to enable Google's search backend for the search_web kernel tool.",
-        "This is a core capability, not a Verba. The current Tater WebUI path is Settings -> Integrations -> Web Search.",
+        "How to enable modular search providers for the search_web kernel tool.",
+        "This is a core capability, not a Verba. Download and enable providers from Settings -> Integrations.",
     )
 
     spudex_note = f"""
@@ -3710,15 +4152,17 @@ def cleanup_section_pages(section_dir: Path, keep_slugs: list[str]) -> None:
 
 def build() -> None:
     plugins = build_plugins()
+    integrations = build_integrations()
     portals = build_platforms(plugins, docs_order=PORTAL_DOCS_ORDER, surface_kind="portal")
     esphome_runtime = build_platforms(plugins, docs_order=["esphome"], surface_kind="runtime")[0]
     cores = build_platforms(plugins, docs_order=CORE_DOCS_ORDER, surface_kind="core")
     kernel_tools = extract_kernel_tools()
     cerberus_defaults = extract_cerberus_defaults()
 
-    write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores))
+    write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores, integrations))
     write_page(SITE_ROOT / "install" / "index.html", render_install_index())
     write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))
+    write_page(SITE_ROOT / "integrations" / "index.html", render_integrations_page(integrations))
     write_page(
         SITE_ROOT / "esphome" / "index.html",
         render_platform_detail(
@@ -3736,6 +4180,7 @@ def build() -> None:
 
     cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
     cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
+    cleanup_section_pages(SITE_ROOT / "integrations", [integration["slug"] for integration in integrations])
     cleanup_section_pages(SITE_ROOT / "esphome", [])
     cleanup_section_pages(SITE_ROOT / "spudex", [])
     cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])
@@ -3745,6 +4190,8 @@ def build() -> None:
         write_page(SITE_ROOT / "install" / f"{method['slug']}.html", render_install_detail(method))
     for platform in portals:
         write_page(SITE_ROOT / "portals" / f"{platform['slug']}.html", render_platform_detail(platform))
+    for integration in integrations:
+        write_page(SITE_ROOT / "integrations" / f"{integration['slug']}.html", render_integration_detail(integration))
     for core in cores:
         write_page(SITE_ROOT / "cores" / f"{core['slug']}.html", render_platform_detail(core))
     for plugin in plugins:

@@ -3,7 +3,7 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.">
+          <meta name="description" content="Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.">
           <title>Tater Assistant | Awareness Core</title>
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
@@ -22,6 +22,7 @@
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
 <a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link is-active" href="../cores/index.html">Cores</a>
 <a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
@@ -35,10 +36,10 @@
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
         <h1>Awareness Core</h1>
-        <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows.</p>
+        <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.</p>
         <div class="chip-row">
           <span class="chip">Home awareness engine</span>
-          <span class="chip">v3.3.9</span>
+          <span class="chip">v3.4.0</span>
           <span class="chip">4 settings</span>
           <span class="chip">Awareness engine</span>
         </div>
@@ -59,7 +60,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Replaces the old HA automations bridge with an in-core awareness runtime.</li><li>Connects to Home Assistant state changes and runs camera, doorbell, and entry-sensor rules directly.</li><li>Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.</li><li>Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.</li><li>Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.</li><li>The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.</li><li>Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.</li></ul>
+          <ul class="stack-list"><li>Replaces the old HA automations bridge with an in-core awareness runtime.</li><li>Builds camera, doorbell, motion, and entry-sensor options from enabled integration device capabilities.</li><li>Existing rules that reference unavailable integrations report the missing integration/device until the provider is downloaded and enabled.</li><li>Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.</li><li>Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.</li><li>Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.</li><li>The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.</li><li>Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.</li></ul>
         </article>
       </div>
     </section>

@@ -3,7 +3,7 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Overview of Tater Assistant, supported portals, and the current wiki structure.">
+          <meta name="description" content="Overview of Tater Assistant, supported portals, modular integrations, and the current wiki structure.">
           <title>Tater | Home</title>
           <link rel="stylesheet" href="assets/site.css">
           <script src="assets/site.js" defer></script>
@@ -22,6 +22,7 @@
 <a class="nav-link" href="cerberus/index.html">Hydra</a>
 <a class="nav-link" href="spudex/index.html">Spudex</a>
 <a class="nav-link" href="portals/index.html">Portals</a>
+<a class="nav-link" href="integrations/index.html">Integrations</a>
 <a class="nav-link" href="esphome/index.html">ESPHome</a>
 <a class="nav-link" href="cores/index.html">Cores</a>
 <a class="nav-link" href="kernel-tools/index.html">Kernel Tools</a>
@@ -42,10 +43,10 @@
         </p>
         <div class="action-row">
           <a class="button" href="install/index.html">Install Tater</a>
+          <a class="button" href="integrations/index.html">Integrations</a>
           <a class="button" href="esphome/index.html">ESPHome voice</a>
           <a class="button" href="plugins/index.html">Explore Verbas</a>
           <a class="button" href="cerberus/index.html">Read Hydra</a>
-          <a class="button" href="spudex/index.html">Open Spudex</a>
         </div>
       </div>
       <aside class="hero-art mascot-stage">
@@ -53,8 +54,9 @@
         <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
         <div class="hero-stats">
           <div class="stat-card"><strong>75</strong><span>documented Verbas</span></div>
-          <div class="stat-card"><strong>21</strong><span>kernel tools</span></div>
+          <div class="stat-card"><strong>18</strong><span>kernel tools</span></div>
           <div class="stat-card"><strong>9</strong><span>portals</span></div>
+          <div class="stat-card"><strong>13</strong><span>integrations</span></div>
           <div class="stat-card"><strong>4</strong><span>install paths</span></div>
         </div>
       </aside>
@@ -72,6 +74,7 @@
         <ul class="stack-list">
           <li>Talk through VoicePE, Sat1, or S3Box devices, then let Hydra route the request to Verbas, cores, and smart-home controls.</li>
           <li>Use the app or WebUI for private chat, quick actions, attachments, device health, dashboards, and firmware updates.</li>
+          <li>Download only the integrations you enable, then let cores discover cameras, sensors, speakers, garage doors, search providers, and weather sources by capability.</li>
           <li>Use Spudex when Tater needs terminal console access for commands, scripts, local diagnostics, small apps, or hosted workspace tasks.</li>
           <li>Mix local or remote wake detection with microWakeWord, openWakeWord, or NanoWakeWord, plus intercom and display notifications.</li>
         </ul>
@@ -89,6 +92,21 @@
         <h2>Tater plans, acts, and connects across your stack.</h2>
       </div>
       <div class="grid grid-4">
+
+        <article class="feature-card">
+          <h3>Modular integrations</h3>
+          <p>Integrations live in Tater_Integrations and download only when enabled, so new providers can expose devices, actions, and web search without editing Tater core.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Capability-driven devices</h3>
+          <p>Cores can ask for all cameras, speakers, garage doors, sensors, lights, weather sources, or search providers across every enabled integration.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Search provider choice</h3>
+          <p>search_web can use enabled providers such as SearXNG, Brave Search, Google Custom Search, or Serper instead of one baked-in backend.</p>
+        </article>
 
         <article class="feature-card">
           <h3>Smart chaining</h3>
@@ -179,8 +197,8 @@
     </section>
     <section class="section">
       <div class="section-head">
-        <span class="eyebrow">Portals + cores</span>
-        <h2>One assistant. Verbas, portals, and cores.</h2>
+        <span class="eyebrow">Portals + integrations + cores</span>
+        <h2>One assistant. Verbas, portals, integrations, and cores.</h2>
       </div>
       <h3>Portals</h3>
       <div class="grid grid-3">
@@ -303,6 +321,88 @@
         </article>
 
       </div>
+      <h3>Integrations</h3>
+      <div class="grid grid-3">
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>Brave Search</h3>
+          <p>Adds Brave Search as one selectable provider for the search_web kernel tool.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/brave_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>SearXNG</h3>
+          <p>Adds a self-hosted SearXNG instance as a modular search provider.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/searxng_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>Google Custom Search</h3>
+          <p>Adds Google Custom Search as a modular search provider.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/google_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>Serper</h3>
+          <p>Adds Serper&#x27;s Google Search API as a modular search provider.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/serper_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Smart home</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>Home Assistant</h3>
+          <p>Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/homeassistant.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card">
+          <div class="chip-row">
+            <span class="chip">Security</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Optional</span>
+          </div>
+          <h3>UniFi Protect</h3>
+          <p>Exposes UniFi Protect cameras, sensors, and direct speaker announcement targets.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="integrations/unifi_protect.html">Read integration page</a>
+          </div>
+        </article>
+
+      </div>
       <h3>Cores</h3>
       <div class="grid grid-3">
 
@@ -335,7 +435,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Personal intelligence engine</span>
-            <span class="chip">v1.0.46</span>
+            <span class="chip">v1.0.47</span>
             <span class="chip">1 settings</span>
           </div>
           <h3>Personal Core</h3>
@@ -381,6 +481,11 @@
         <h3>Portal docs</h3>
         <p>See every portal, its role, and its settings.</p>
         <a class="button button-ghost" href="portals/index.html">Open portals</a>
+      </article>
+      <article class="panel">
+        <h3>Integration docs</h3>
+        <p>Browse optional downloaded integrations, device capabilities, and search providers.</p>
+        <a class="button button-ghost" href="integrations/index.html">Open integrations</a>
       </article>
       <article class="panel">
         <h3>ESPHome tab</h3>

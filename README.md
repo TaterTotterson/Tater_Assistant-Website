@@ -23,6 +23,7 @@ This repo is set up for a Linux host with this layout:
     sync_wiki_sources.py
     Tater/
     Tater_Shop/
+    Tater_Integrations/
 ```
 
 ## What it does
@@ -30,15 +31,16 @@ This repo is set up for a Linux host with this layout:
 - builds the website into `public_html`
 - reads core runtime and portal info from `Tater`
 - reads Verbas inventory from `Tater_Shop/manifest.json`
+- reads optional integration inventory from `Tater_Integrations/manifest.json`
 - reads plugin detail metadata from the actual plugin files in `Tater_Shop/plugins`
-- can clone/update both repos automatically and rebuild the site when they change
+- can clone/update all source repos automatically and rebuild the site when they change
 
 ## Main files
 
 - `scripts/build_wiki.py`
   Generates the HTML site in `public_html`
 - `scripts/sync_wiki_sources.py`
-  Clones or updates `Tater` and `Tater_Shop`, then runs the wiki build when source heads change
+  Clones or updates `Tater`, `Tater_Shop`, and `Tater_Integrations`, then runs the wiki build when source heads change
 - `scripts/.wiki-sync-state.json`
   Stores the last built source heads so unchanged runs can skip the rebuild
 - `public_html/assets/`
@@ -51,7 +53,7 @@ This repo is set up for a Linux host with this layout:
 
 ## Manual build
 
-If `scripts/Tater` and `scripts/Tater_Shop` already exist:
+If `scripts/Tater`, `scripts/Tater_Shop`, and `scripts/Tater_Integrations` already exist:
 
 ```bash
 python3 /home/taterassistant/scripts/build_wiki.py
@@ -69,6 +71,7 @@ What it does:
 
 - clones `Tater` into `scripts/Tater` if missing
 - clones `Tater_Shop` into `scripts/Tater_Shop` if missing
+- clones `Tater_Integrations` into `scripts/Tater_Integrations` if missing
 - fast-forwards clean repos
 - skips rebuilds when nothing changed
 - blocks rebuilds if a source repo is dirty or diverged

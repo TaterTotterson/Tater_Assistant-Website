@@ -22,6 +22,7 @@
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
 <a class="nav-link" href="../spudex/index.html">Spudex</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
 <a class="nav-link is-active" href="../kernel-tools/index.html">Kernel Tools</a>
@@ -174,30 +175,6 @@
               </div>
               <div class="grid grid-2">
 
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Terminal console</span></div>
-              <h3>spudex_run</h3>
-              <p>full terminal console access to run one command or script on the Tater host from the configured working folder when a CLI command is the right way to answer or act and no Verba fits</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Terminal console</span></div>
-              <h3>spudex_status</h3>
-              <p>list terminal console settings and recent command sessions</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Terminal console</span></div>
-              <h3>spudex_stop</h3>
-              <p>stop a running terminal console session</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row"><span class="chip">Terminal console</span></div>
-              <h3>spudex_task</h3>
-              <p>full terminal console access for multi-step tasks: run commands, write scripts/files, inspect output, retry, search if needed, and complete terminal work from the configured working folder when no Verba fits</p>
-            </article>
-
               </div>
             </section>
 
@@ -218,41 +195,41 @@
     <section class="section">
       <div class="section-head">
         <span class="eyebrow">Web search setup</span>
-        <h2>How to enable Google&#x27;s search backend for the search_web kernel tool.</h2>
-        <p>This is a core capability, not a Verba. The current Tater WebUI path is Settings -&gt; Integrations -&gt; Web Search.</p>
+        <h2>How to enable modular search providers for the search_web kernel tool.</h2>
+        <p>This is a core capability, not a Verba. Download and enable providers from Settings -&gt; Integrations.</p>
       </div>
       <div class="grid grid-2">
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Google Cloud</span><span class="chip">Custom Search JSON API</span><span class="chip">API key</span></div>
-          <h3>Create a Google API key</h3>
-          <p>The search_web kernel tool uses Google&#x27;s Custom Search JSON API credentials.</p>
-          <ul class="stack-list"><li>Open Google Cloud Console, create or select a project, then enable Custom Search API under APIs and Services -&gt; Library.</li><li>After the API is enabled, go to APIs and Services -&gt; Credentials and create an API key for Tater.</li><li>Keep that key handy because Tater&#x27;s WebUI expects it as the Google API Key for web search.</li></ul>
-          <div class="action-row"><a class="button button-ghost" href="https://console.cloud.google.com/">Google Cloud Console</a><a class="button button-ghost" href="https://developers.google.com/custom-search/v1/overview">Custom Search JSON API Docs</a></div>
+          <div class="chip-row"><span class="chip">SearXNG</span><span class="chip">Brave Search</span><span class="chip">Google</span><span class="chip">Serper</span></div>
+          <h3>Pick a provider</h3>
+          <p>The search_web kernel tool now discovers enabled web-search integrations.</p>
+          <ul class="stack-list"><li>Open Settings -&gt; Integrations, download the provider you want, then enable it from Manage.</li><li>Tater currently ships downloadable providers for SearXNG, Brave Search, Google Custom Search, and Serper.</li><li>You can enable more than one provider; Tater tries enabled web_search integrations in configured order.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://github.com/TaterTotterson/Tater_Integrations">Tater Integrations Repo</a></div>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Programmable Search Engine</span><span class="chip">CX</span><span class="chip">Entire web</span></div>
-          <h3>Create a Search Engine ID (CX)</h3>
-          <p>Google also requires a Programmable Search Engine and its Search Engine ID.</p>
-          <ul class="stack-list"><li>Create a Programmable Search Engine, then open its control panel and enable Search the entire web if you want broad public-web results.</li><li>Open the generated search page URL and copy the value after cx=, because that is the Search Engine ID Tater stores.</li><li>Tater&#x27;s core search flow is only ready once both the API key and the CX value are saved.</li></ul>
-          <div class="action-row"><a class="button button-ghost" href="https://programmablesearchengine.google.com/">Programmable Search Engine</a></div>
+          <div class="chip-row"><span class="chip">Settings -&gt; Integrations</span><span class="chip">Setup</span><span class="chip">Test</span></div>
+          <h3>Provider settings</h3>
+          <p>Each provider owns its own settings and test action.</p>
+          <ul class="stack-list"><li>SearXNG needs the instance URL and optional bearer token.</li><li>Brave Search and Serper need their API keys.</li><li>Google Custom Search needs both a Google API key and Programmable Search Engine CX value.</li></ul>
+          <div class="action-row"><a class="button button-ghost" href="https://developers.google.com/custom-search/v1/overview">Custom Search JSON API Docs</a></div>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Settings -&gt; Integrations</span><span class="chip">Web Search</span><span class="chip">Kernel tool</span></div>
-          <h3>Enter the keys in Tater</h3>
-          <p>Web search is configured from Integrations because it powers a kernel tool, not a Verba.</p>
-          <ul class="stack-list"><li>Open Tater WebUI and go to Settings -&gt; Integrations -&gt; Web Search.</li><li>Paste Google API Key and Google Search Engine ID (CX), then save the settings.</li><li>The current code stores those values as tater:web_search:google_api_key and tater:web_search:google_cx, with a legacy fallback for older plugin-style settings.</li><li>After that, Hydra can call search_web for current web research and article lookup tasks.</li></ul>
+          <div class="chip-row"><span class="chip">Capability discovery</span><span class="chip">Provider order</span><span class="chip">Fallback</span></div>
+          <h3>How Tater chooses</h3>
+          <p>Search providers advertise the shared web_search capability.</p>
+          <ul class="stack-list"><li>search_web asks the integration registry for enabled providers with the web_search capability.</li><li>Providers are sorted by order, then stable provider name/id, so equal orders are deterministic.</li><li>If a provider is not configured or fails, Tater can continue to the next enabled provider.</li></ul>
 
         </article>
 
         <article class="tool-card">
           <div class="chip-row"><span class="chip">query</span><span class="chip">site</span><span class="chip">country</span><span class="chip">language</span></div>
           <h3>What the kernel tool supports</h3>
-          <p>The current search_web implementation accepts a few focused filters on top of the main query.</p>
-          <ul class="stack-list"><li>query is required, while num_results, start, site, safe, country, and language are optional.</li><li>site narrows results to one domain, country maps to Google&#x27;s gl parameter, and language maps to lr.</li><li>If the Google credentials are missing, the tool returns a configuration error that points operators back to WebUI settings.</li></ul>
-          <div class="action-row"><a class="button button-ghost" href="https://developers.google.com/custom-search/v1">API Reference</a></div>
+          <p>The search_web input shape stays the same even when providers change.</p>
+          <ul class="stack-list"><li>query is required, while num_results, start, site, safe, country, and language are optional.</li><li>site narrows results to one domain when the provider supports it.</li><li>Hydra can keep using search_web without caring which provider integration is currently enabled.</li></ul>
+
         </article>
 
       </div>

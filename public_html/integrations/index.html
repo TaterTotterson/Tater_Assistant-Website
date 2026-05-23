@@ -1,0 +1,299 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Reference for optional Tater integrations, device capabilities, and web-search providers.">
+          <title>Tater Assistant | Integrations</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="integrations">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link is-active" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Integration reference</span>
+        <h1>Tater integrations are optional downloaded providers.</h1>
+        <p>
+          Integrations live in the Tater_Integrations repo and download into Tater only when enabled. They expose settings, devices, actions, runtime events, and web-search providers through shared hooks.
+        </p>
+        <div class="action-row">
+          <a class="button" href="https://github.com/TaterTotterson/Tater_Integrations">Tater Integrations repo</a>
+          <a class="button button-ghost" href="../kernel-tools/index.html">Kernel search</a>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Current catalog</span>
+        <p>13 integrations are documented from the current manifest, including 4 web-search providers.</p>
+        <div class="chip-row"><span class="chip">Access</span><span class="chip">Audio</span><span class="chip">Climate</span><span class="chip">Lighting</span><span class="chip">Models</span><span class="chip">Network</span><span class="chip">Security</span><span class="chip">Smart home</span><span class="chip">Weather</span><span class="chip">Web search</span></div>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Runtime model</span>
+          <h2>Disabled means dormant.</h2>
+          <ul class="stack-list">
+            <li>Store buttons download integrations, while the Manage tab enables, disables, updates, and removes installed modules.</li>
+            <li>On boot, Tater restores missing enabled integrations but leaves disabled integrations unimported.</li>
+            <li>Provider code stays self-contained, so a new integration can add devices or actions without changing Tater core.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Shared contracts</span>
+          <h2>Cores consume capabilities.</h2>
+          <ul class="stack-list">
+            <li>Device-aware flows ask for capabilities such as camera, snapshot, speaker, garage_door, temperature, motion, web_search, and announcement_target.</li>
+            <li>Awareness and Environment Core can build choices from all enabled integrations instead of hard-coded provider lists.</li>
+            <li>search_web discovers enabled integrations with the web_search capability and tries them in provider order.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Catalog</span>
+        <h2>Available integrations.</h2>
+      </div>
+      <div class="grid grid-3">
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Brave Search</h3>
+          <p>Adds Brave Search as one selectable provider for the search_web kernel tool.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">web_search</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="brave_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>SearXNG</h3>
+          <p>Adds a self-hosted SearXNG instance as a modular search provider.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">web_search</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="searxng_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Google Custom Search</h3>
+          <p>Adds Google Custom Search as a modular search provider.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">web_search</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="google_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Web search</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Serper</h3>
+          <p>Adds Serper&#x27;s Google Search API as a modular search provider.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">web_search</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="serper_search.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Smart home</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Home Assistant</h3>
+          <p>Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">sensor</span><span class="chip">thermostat</span><span class="chip">light</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="homeassistant.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Security</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>UniFi Protect</h3>
+          <p>Exposes UniFi Protect cameras, sensors, and direct speaker announcement targets.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">motion</span><span class="chip">doorbell</span><span class="chip">entry_sensor</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="unifi_protect.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Audio</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Sonos</h3>
+          <p>Discovers Sonos speakers and exposes them as announcement and playback targets.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span><span class="chip">play_media</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="sonos.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Lighting</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Philips Hue</h3>
+          <p>Pairs a Philips Hue Bridge and exposes lights, switches, and Hue resources through generic device capabilities.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">light</span><span class="chip">switch</span><span class="chip">sensor</span><span class="chip">button</span><span class="chip">motion</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="hue.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Climate</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Ecobee (HomeKit)</h3>
+          <p>Pairs Ecobee thermostats through HomeKit and exposes thermostats plus remote sensors.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">thermostat</span><span class="chip">climate</span><span class="chip">hvac</span><span class="chip">temperature</span><span class="chip">humidity</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="homekit.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Access</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Aladdin Connect</h3>
+          <p>Exposes Genie/Aladdin garage doors as generic open/close devices.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">garage_door</span><span class="chip">garage</span><span class="chip">entry_sensor</span><span class="chip">open_close</span><span class="chip">door</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="aladdin.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Network</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>UniFi Network</h3>
+          <p>Exposes UniFi Network clients and infrastructure devices for inventory and presence-aware flows.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">network_device</span><span class="chip">client</span><span class="chip">presence</span><span class="chip">connectivity</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="unifi_network.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Weather</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>WeatherAPI.com</h3>
+          <p>Stores WeatherAPI.com credentials and defaults for weather forecast tools.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">weather</span><span class="chip">forecast</span><span class="chip">temperature</span><span class="chip">humidity</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="weather_api.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Models</span>
+            <span class="chip">v1.0.0</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Hugging Face</h3>
+          <p>Stores an optional Hugging Face token for gated models and higher-rate downloads.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">model_downloads</span><span class="chip">token_storage</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="huggingface.html">Read integration page</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

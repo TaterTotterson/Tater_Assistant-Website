@@ -1,0 +1,95 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Sonos speaker discovery and direct playback targets for announcements.">
+          <title>Tater Assistant | Sonos</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="integrations">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link is-active" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Integration profile</span>
+        <h1>Sonos</h1>
+        <p>Discovers Sonos speakers and exposes them as announcement and playback targets.</p>
+        <div class="chip-row">
+          <span class="chip">Audio</span>
+          <span class="chip">v1.1.0</span>
+          <span class="chip">Optional</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Source module</span>
+        <p>integrations/sonos.py</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Description</span>
+          <h2>What it provides</h2>
+          <p>Sonos speaker discovery and direct playback targets for announcements.</p>
+          <div class="chip-row"><span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span><span class="chip">play_media</span></div>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Behavior</span>
+          <h2>Operational notes</h2>
+          <ul class="stack-list"><li>Announcement routing can pull all speakers from all enabled integrations, not just Sonos.</li><li>Manual speaker hosts can be configured when SSDP discovery is not enough.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Declared fields</h2>
+          <ul class="stack-list"><li>Enable Sonos announcements</li><li>Discovery Timeout Seconds</li><li>Manual Speaker Hosts</li></ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Actions</span>
+          <h2>Declared setup actions</h2>
+          <ul class="stack-list"><li>Discover Speakers</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to integrations</a>
+        <a class="button button-ghost" href="../kernel-tools/index.html">Kernel tools</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

@@ -21,6 +21,7 @@ SITE_UPDATED_ENV = "TATER_WIKI_SITE_UPDATED"
 
 DEFAULT_TATER_URL = "https://github.com/TaterTotterson/Tater.git"
 DEFAULT_TATER_SHOP_URL = "https://github.com/TaterTotterson/Tater_Shop.git"
+DEFAULT_TATER_INTEGRATIONS_URL = "https://github.com/TaterTotterson/Tater_Integrations.git"
 
 
 def utc_now() -> str:
@@ -239,17 +240,19 @@ def missing_outputs(root: Path) -> bool:
         root / "index.html",
         root / "plugins" / "index.html",
         root / "portals" / "index.html",
+        root / "integrations" / "index.html",
         root / "kernel-tools" / "index.html",
         root / "cerberus" / "index.html",
     ]
     return any(not path.exists() for path in expected)
 
 
-def build_wiki(*, root: Path, tater_dir: Path, tater_shop_dir: Path, python_bin: str) -> None:
+def build_wiki(*, root: Path, tater_dir: Path, tater_shop_dir: Path, tater_integrations_dir: Path, python_bin: str) -> None:
     env = os.environ.copy()
     env["TATER_WIKI_SITE_DIR"] = str(root)
     env["TATER_WIKI_TATER_DIR"] = str(tater_dir)
     env["TATER_WIKI_TATER_SHOP_DIR"] = str(tater_shop_dir)
+    env["TATER_WIKI_TATER_INTEGRATIONS_DIR"] = str(tater_integrations_dir)
     log("Running build_wiki.py")
     run([python_bin, str(BUILD_SCRIPT)], cwd=SCRIPT_DIR, env=env)
 
@@ -258,9 +261,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Clone/sync Tater sources and rebuild the wiki when source heads change.")
     parser.add_argument("--tater-url", default=DEFAULT_TATER_URL, help="Git URL for the core Tater repo.")
     parser.add_argument("--shop-url", default=DEFAULT_TATER_SHOP_URL, help="Git URL for the Tater Shop repo.")
+    parser.add_argument("--integrations-url", default=DEFAULT_TATER_INTEGRATIONS_URL, help="Git URL for the Tater Integrations repo.")
     parser.add_argument("--site-dir", default=str(SITE_ROOT), help="Output directory for the generated website.")
     parser.add_argument("--tater-dir", default=str(SCRIPT_DIR / "Tater"), help="Checkout path for the Tater repo.")
     parser.add_argument("--shop-dir", default=str(SCRIPT_DIR / "Tater_Shop"), help="Checkout path for the Tater Shop repo.")
+    parser.add_argument("--integrations-dir", default=str(SCRIPT_DIR / "Tater_Integrations"), help="Checkout path for the Tater Integrations repo.")
     parser.add_argument("--python", default=sys.executable or "python3", help="Python interpreter used to run build_wiki.py.")
     parser.add_argument("--skip-fetch", action="store_true", help="Do not contact remotes; only inspect local checkouts and state.")
     parser.add_argument("--force-build", action="store_true", help="Run build_wiki.py even if the repo heads did not change.")
@@ -288,6 +293,7 @@ def main() -> int:
 
     tater_dir = Path(args.tater_dir).expanduser().resolve()
     shop_dir = Path(args.shop_dir).expanduser().resolve()
+    integrations_dir = Path(args.integrations_dir).expanduser().resolve()
     state_path = Path(args.state_file).expanduser().resolve()
     site_root = Path(args.site_dir).expanduser().resolve()
     site_updated = os.getenv(SITE_UPDATED_ENV) == "1"
@@ -314,6 +320,7 @@ def main() -> int:
     sources = {
         "tater": sync_repo("Tater", args.tater_url, tater_dir, skip_fetch=args.skip_fetch),
         "shop": sync_repo("Tater_Shop", args.shop_url, shop_dir, skip_fetch=args.skip_fetch),
+        "integrations": sync_repo("Tater_Integrations", args.integrations_url, integrations_dir, skip_fetch=args.skip_fetch),
     }
 
     blocked = {name: info for name, info in sources.items() if info["status"] in {"dirty", "diverged"}}
@@ -342,7 +349,13 @@ def main() -> int:
         log("No source changes detected. Wiki rebuild skipped.")
         return 0
 
-    build_wiki(root=site_root, tater_dir=tater_dir, tater_shop_dir=shop_dir, python_bin=args.python)
+    build_wiki(
+        root=site_root,
+        tater_dir=tater_dir,
+        tater_shop_dir=shop_dir,
+        tater_integrations_dir=integrations_dir,
+        python_bin=args.python,
+    )
 
     save_state(
         state_path,
