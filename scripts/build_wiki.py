@@ -613,6 +613,7 @@ PORTAL_DOCS_ORDER = [
 
 CORE_DOCS_ORDER = [
     "awareness",
+    "guardian",
     "ai_task",
     "memory",
     "personal",
@@ -1272,6 +1273,75 @@ PLATFORM_DOCS = {
             "Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.",
             "The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.",
             "Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.",
+        ],
+        "apis": [],
+    },
+    "guardian": {
+        "label": "Guardian Core",
+        "description": "Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.",
+        "role": "Network security monitor",
+        "source": TATER_SHOP_DIR / "cores" / "guardian_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Builds a network inventory from the selected network integration. UniFi Network is supported now, and the selector is ready for future network providers.",
+            "Can also use local passive ARP cache discovery as an optional source when Tater runs on the same network.",
+            "Tracks online, offline, untrusted, and critical devices, plus source health, scan freshness, and recent Guardian events.",
+            "Records events for newly observed unknown devices and monitored devices going offline.",
+            "Lets operators edit device names, notes, trust state, and critical-device flags from the Guardian WebUI tab.",
+            "Runs optional TCP watch checks for important endpoints such as routers, DNS, servers, WAN dependencies, or local infrastructure.",
+            "Computes a Guardian posture score from stale inventory data, source errors, offline critical devices, untrusted devices, unknown devices, and failed watch checks.",
+            "Uses LLM calls where they improve the feature: posture interpretation, risk level, findings, device suggestions, watch-target suggestions, and follow-up questions.",
+            "Does not use a local deterministic fallback for the AI analysis path; if model processing fails, the old analysis is preserved and the error is shown.",
+            "Adds a guided Confirm tab where the user answers only Guardian's active questions with quick choices and optional typed context.",
+            "Processes confirmations through the model, stores the human answers, and folds that context into the next Guardian analysis.",
+            "Injects compact Guardian context into Hydra prompts, including stats, findings, offline/untrusted devices, source health, recent events, and human confirmations.",
+            "Includes dark Tater-themed Guardian UI cards for Network Posture/Security Map, AI Threat Brief, and the Guardian Question Queue.",
+            "Tunnel integrations were intentionally removed; Guardian does not manage Tailscale, WireGuard, or Cloudflare Tunnel.",
+        ],
+        "guides_eyebrow": "Guardian workflow",
+        "guides_title": "How Guardian moves from discovery to guided review.",
+        "guides_intro": "Guardian is meant to be an operator view for the home or small-business network: collect device facts, let the model interpret them, ask focused questions, then feed the useful context back into Tater.",
+        "guides": [
+            {
+                "title": "Choose a network source",
+                "summary": "Guardian starts from an explicit network provider choice instead of assuming one integration forever.",
+                "chips": ["Provider selector", "UniFi now", "Future integrations"],
+                "details": [
+                    "The current provider path pulls clients and devices from the existing UniFi Network integration.",
+                    "The settings model is built so future network integrations can appear as selectable sources without redesigning Guardian.",
+                    "Passive ARP cache discovery can add local observations when Tater has network visibility.",
+                ],
+            },
+            {
+                "title": "Review posture and inventory",
+                "summary": "The Guardian tab turns raw network state into an operator-friendly posture view.",
+                "chips": ["Posture score", "Device trust", "Watch checks"],
+                "details": [
+                    "The page groups useful stats such as online, offline, untrusted, unknown, and critical devices.",
+                    "Operators can mark devices as trusted or critical and add human-readable labels and notes.",
+                    "TCP watch targets help verify infrastructure dependencies that matter even if they are not discovered as rich integration devices.",
+                ],
+            },
+            {
+                "title": "Answer Guardian questions",
+                "summary": "Guardian questions are not just things to think about; they are prompts the model wants answered so it can refine the analysis.",
+                "chips": ["Question cards", "Yes/no", "Typed context"],
+                "details": [
+                    "Questions appear in a centered, chat-like confirmation card instead of a free-form assistant chat.",
+                    "The user can answer simple questions with quick choices and add detail when the answer needs context.",
+                    "Save & Process sends only those answers back through Guardian's AI processing path.",
+                ],
+            },
+            {
+                "title": "Feed Hydra better context",
+                "summary": "Guardian can make Tater's general assistant responses more network-aware without exposing an open-ended Guardian chat.",
+                "chips": ["Prompt injection", "Recent findings", "Human confirmations"],
+                "details": [
+                    "Hydra receives a compact snapshot of Guardian stats, risk notes, source health, recent events, and selected findings.",
+                    "User confirmations are included so future recommendations know what has already been recognized or explained.",
+                    "The injected context stays bounded so Guardian helps the turn without flooding the prompt.",
+                ],
+            },
         ],
         "apis": [],
     },
@@ -2561,6 +2631,7 @@ def render_home_page(
           {button("ESPHome voice", "esphome/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
+          {button("Open Spudex", "spudex/index.html", ghost=True)}
         </div>
       </div>
       <aside class="hero-art mascot-stage">
@@ -2622,6 +2693,10 @@ def render_home_page(
         (
             "Spudex terminal workbench",
             "Spudex gives Tater a console-style tab for direct assistant chat, manual commands, tracked sessions, policy controls, and Hydra-accessible terminal tools.",
+        ),
+        (
+            "Guardian Core",
+            "Guardian watches network inventory, source health, posture scoring, AI findings, device trust, watch checks, and guided security confirmations from a dark Tater-themed UI.",
         ),
         (
             "Tater Dashboard",
@@ -2778,8 +2853,13 @@ def render_home_page(
         {button("Open ESPHome", "esphome/index.html", ghost=True)}
       </article>
       <article class="panel">
+        <h3>Spudex</h3>
+        <p>Open the terminal workbench docs for direct chat, controlled commands, sessions, policy, and Hydra tools.</p>
+        {button("Open Spudex", "spudex/index.html", ghost=True)}
+      </article>
+      <article class="panel">
         <h3>Core docs</h3>
-        <p>Built-in runtime services such as awareness automation, scheduling, memory, personal email intelligence, and RSS monitoring.</p>
+        <p>Built-in runtime services such as awareness automation, Guardian network review, scheduling, memory, personal email intelligence, and RSS monitoring.</p>
         {button("Open cores", "cores/index.html", ghost=True)}
       </article>
       <article class="panel">

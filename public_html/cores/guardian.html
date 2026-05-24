@@ -1,0 +1,262 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.">
+          <title>Tater Assistant | Guardian Core</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cores">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link is-active" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Core profile</span>
+        <h1>Guardian Core</h1>
+        <p>Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.</p>
+        <div class="chip-row">
+          <span class="chip">Network security monitor</span>
+          <span class="chip">v1.3.2</span>
+          <span class="chip">13 settings</span>
+          <span class="chip">Internal runtime</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Guardian Core Settings</p>
+        <p>Settings extracted from <code>guardian_core.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Core role</span>
+          <h2>What this core is for</h2>
+          <p>Network security monitor</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Builds a network inventory from the selected network integration. UniFi Network is supported now, and the selector is ready for future network providers.</li><li>Can also use local passive ARP cache discovery as an optional source when Tater runs on the same network.</li><li>Tracks online, offline, untrusted, and critical devices, plus source health, scan freshness, and recent Guardian events.</li><li>Records events for newly observed unknown devices and monitored devices going offline.</li><li>Lets operators edit device names, notes, trust state, and critical-device flags from the Guardian WebUI tab.</li><li>Runs optional TCP watch checks for important endpoints such as routers, DNS, servers, WAN dependencies, or local infrastructure.</li><li>Computes a Guardian posture score from stale inventory data, source errors, offline critical devices, untrusted devices, unknown devices, and failed watch checks.</li><li>Uses LLM calls where they improve the feature: posture interpretation, risk level, findings, device suggestions, watch-target suggestions, and follow-up questions.</li><li>Does not use a local deterministic fallback for the AI analysis path; if model processing fails, the old analysis is preserved and the error is shown.</li><li>Adds a guided Confirm tab where the user answers only Guardian&#x27;s active questions with quick choices and optional typed context.</li><li>Processes confirmations through the model, stores the human answers, and folds that context into the next Guardian analysis.</li><li>Injects compact Guardian context into Hydra prompts, including stats, findings, offline/untrusted devices, source health, recent events, and human confirmations.</li><li>Includes dark Tater-themed Guardian UI cards for Network Posture/Security Map, AI Threat Brief, and the Guardian Question Queue.</li><li>Tunnel integrations were intentionally removed; Guardian does not manage Tailscale, WireGuard, or Cloudflare Tunnel.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct core support</h2>
+          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>AI Analysis Interval Seconds</strong>
+              <span>number</span>
+              <p>How often Guardian asks the LLM to analyze network posture after local facts are refreshed.</p>
+              <small>Key: ai_analysis_interval_seconds</small>
+              <small>Default: 300</small>
+
+            </li>
+
+            <li>
+              <strong>Use ARP Cache</strong>
+              <span>checkbox</span>
+              <p>Read the local ARP cache as passive fallback discovery.</p>
+              <small>Key: enable_arp_cache</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Use TCP Watch Checks</strong>
+              <span>checkbox</span>
+              <p>Run configured TCP checks for WAN, DNS, or important hosts.</p>
+              <small>Key: enable_tcp_checks</small>
+              <small>Default: False</small>
+
+            </li>
+
+            <li>
+              <strong>Event Retention</strong>
+              <span>number</span>
+              <p>Maximum Guardian events to keep in Redis.</p>
+              <small>Key: event_retention</small>
+              <small>Default: 1000</small>
+
+            </li>
+
+            <li>
+              <strong>Network Integration</strong>
+              <span>select</span>
+              <p>Choose which network integration Guardian should poll for client and device inventory.</p>
+              <small>Key: network_integration_provider</small>
+              <small>Default: unifi_network</small>
+              <small>Options: unifi_network, none</small>
+            </li>
+
+            <li>
+              <strong>Offline Device Events</strong>
+              <span>checkbox</span>
+              <p>Record events when monitored devices change to offline.</p>
+              <small>Key: offline_device_alerts</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Poll Interval Seconds</strong>
+              <span>number</span>
+              <p>How often Guardian Core refreshes network inventory.</p>
+              <small>Key: poll_interval_seconds</small>
+              <small>Default: 60</small>
+
+            </li>
+
+            <li>
+              <strong>Prompt Context Enabled</strong>
+              <span>checkbox</span>
+              <p>Inject compact Guardian context into Hydra system prompts.</p>
+              <small>Key: prompt_context_enabled</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Prompt Context Max Characters</strong>
+              <span>number</span>
+              <p>Maximum Guardian context characters added to Hydra system prompts.</p>
+              <small>Key: prompt_context_max_chars</small>
+              <small>Default: 2400</small>
+
+            </li>
+
+            <li>
+              <strong>Stale After Minutes</strong>
+              <span>number</span>
+              <p>How old inventory data can be before Guardian marks it stale.</p>
+              <small>Key: stale_after_minutes</small>
+              <small>Default: 15</small>
+
+            </li>
+
+            <li>
+              <strong>TCP Check Timeout (ms)</strong>
+              <span>number</span>
+              <p>Connection timeout for TCP watch checks.</p>
+              <small>Key: tcp_check_timeout_ms</small>
+              <small>Default: 1500</small>
+
+            </li>
+
+            <li>
+              <strong>Unknown Device Events</strong>
+              <span>checkbox</span>
+              <p>Record events when newly observed devices are not trusted yet.</p>
+              <small>Key: unknown_device_alerts</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Watch Targets</strong>
+              <span>textarea</span>
+              <p>Optional TCP checks, one per line: Label|host|port.</p>
+              <small>Key: watch_targets</small>
+
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Guardian workflow</span>
+        <h2>How Guardian moves from discovery to guided review.</h2>
+        <p>Guardian is meant to be an operator view for the home or small-business network: collect device facts, let the model interpret them, ask focused questions, then feed the useful context back into Tater.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Provider selector</span><span class="chip">UniFi now</span><span class="chip">Future integrations</span></div>
+          <h3>Choose a network source</h3>
+          <p>Guardian starts from an explicit network provider choice instead of assuming one integration forever.</p>
+          <ul class="stack-list"><li>The current provider path pulls clients and devices from the existing UniFi Network integration.</li><li>The settings model is built so future network integrations can appear as selectable sources without redesigning Guardian.</li><li>Passive ARP cache discovery can add local observations when Tater has network visibility.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Posture score</span><span class="chip">Device trust</span><span class="chip">Watch checks</span></div>
+          <h3>Review posture and inventory</h3>
+          <p>The Guardian tab turns raw network state into an operator-friendly posture view.</p>
+          <ul class="stack-list"><li>The page groups useful stats such as online, offline, untrusted, unknown, and critical devices.</li><li>Operators can mark devices as trusted or critical and add human-readable labels and notes.</li><li>TCP watch targets help verify infrastructure dependencies that matter even if they are not discovered as rich integration devices.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Question cards</span><span class="chip">Yes/no</span><span class="chip">Typed context</span></div>
+          <h3>Answer Guardian questions</h3>
+          <p>Guardian questions are not just things to think about; they are prompts the model wants answered so it can refine the analysis.</p>
+          <ul class="stack-list"><li>Questions appear in a centered, chat-like confirmation card instead of a free-form assistant chat.</li><li>The user can answer simple questions with quick choices and add detail when the answer needs context.</li><li>Save &amp; Process sends only those answers back through Guardian&#x27;s AI processing path.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Prompt injection</span><span class="chip">Recent findings</span><span class="chip">Human confirmations</span></div>
+          <h3>Feed Hydra better context</h3>
+          <p>Guardian can make Tater&#x27;s general assistant responses more network-aware without exposing an open-ended Guardian chat.</p>
+          <ul class="stack-list"><li>Hydra receives a compact snapshot of Guardian stats, risk notes, source health, recent events, and selected findings.</li><li>User confirmations are included so future recommendations know what has already been recognized or explained.</li><li>The injected context stays bounded so Guardian helps the turn without flooding the prompt.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to cores</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../esphome/index.html">ESPHome</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>
