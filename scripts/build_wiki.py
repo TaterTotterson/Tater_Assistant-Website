@@ -2419,6 +2419,8 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("install", "Install", f"{base}install/index.html"),
         ("cerberus", "Hydra", f"{base}cerberus/index.html"),
         ("spudex", "Spudex", f"{base}spudex/index.html"),
+        ("llms", "LLMs", f"{base}llms/index.html"),
+        ("api", "API", f"{base}api/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("integrations", "Integrations", f"{base}integrations/index.html"),
         ("esphome", "ESPHome", f"{base}esphome/index.html"),
@@ -2628,6 +2630,8 @@ def render_home_page(
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
           {button("Integrations", "integrations/index.html")}
+          {button("Local LLMs", "llms/index.html")}
+          {button("OpenAI API", "api/index.html")}
           {button("ESPHome voice", "esphome/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
@@ -2733,6 +2737,14 @@ def render_home_page(
         (
             "Environment-aware sensors",
             "Environment Core supplies normalized readings for displays and dashboard briefs, including Ecowitt rain, Ecobee remote sensors, and Fahrenheit/Celsius conversion.",
+        ),
+        (
+            "Local LLMs and vision",
+            "Tater can run Base, Hydra, and vision models through llama.cpp GGUF, Hugging Face Transformers, and MLX Engine, with runtime tuning, chat templates, and live debug output.",
+        ),
+        (
+            "OpenAI-compatible API",
+            "External apps can call Tater through /v1/models and /v1/chat/completions in Direct or Hydra mode, protected by a local API key.",
         ),
         (
             "Hugging Face integration",
@@ -2853,6 +2865,16 @@ def render_home_page(
         {button("Open ESPHome", "esphome/index.html", ghost=True)}
       </article>
       <article class="panel">
+        <h3>Local LLMs</h3>
+        <p>Model downloads, llama.cpp, Transformers, MLX Engine, vision, runtime tuning, chat templates, and live LLM debug tools.</p>
+        {button("Open LLM docs", "llms/index.html", ghost=True)}
+      </article>
+      <article class="panel">
+        <h3>OpenAI API</h3>
+        <p>Use Tater from external apps through /v1/models and /v1/chat/completions in Direct or Hydra mode.</p>
+        {button("Open API docs", "api/index.html", ghost=True)}
+      </article>
+      <article class="panel">
         <h3>Spudex</h3>
         <p>Open the terminal workbench docs for direct chat, controlled commands, sessions, policy, and Hydra tools.</p>
         {button("Open Spudex", "spudex/index.html", ghost=True)}
@@ -2937,6 +2959,348 @@ def render_home_page(
         body=body,
         depth=0,
         nav_key="home",
+    )
+
+
+def render_llms_page() -> str:
+    body = """
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Local model runtime</span>
+        <h1>LLMs, vision, and model tools</h1>
+        <p>Tater can run local models through llama.cpp, Hugging Face Transformers, and MLX Engine, or connect to remote OpenAI-compatible providers when you want an external server.</p>
+        <div class="chip-row">
+          <span class="chip">llama.cpp GGUF</span>
+          <span class="chip">Transformers</span>
+          <span class="chip">MLX Engine</span>
+          <span class="chip">Vision</span>
+          <span class="chip">Chat templates</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Where to configure</span>
+        <p>WebUI Settings -&gt; Models, Hugging Face, and Advanced.</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../api/index.html">OpenAI API docs</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Provider choices</span>
+        <h2>Choose the local runtime that matches the model and machine.</h2>
+        <p>The Base model controls normal chat, Hydra planning, Memory Core extraction, briefs, and most internal AI calls. Vision can use the Base model when supported or a dedicated vision model.</p>
+      </div>
+      <div class="responsive-table-wrap">
+        <table class="spec-table">
+          <thead>
+            <tr><th>Provider</th><th>Best for</th><th>Model shape</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>llama_cpp</code></td>
+              <td>Fast GGUF text and vision on NVIDIA, Apple Metal, CPU, and other llama.cpp-supported backends.</td>
+              <td>Single GGUF file, or GGUF plus matching <code>mmproj</code> for vision.</td>
+              <td>Supports context, batch, micro-batch, GPU KV offload, Flash Attention, MTP settings, and chat template overrides.</td>
+            </tr>
+            <tr>
+              <td><code>hf_transformers</code></td>
+              <td>Transformers models that need PyTorch, custom architectures, or Hugging Face-native loading.</td>
+              <td>Full Hugging Face repo with config, tokenizer, and weights.</td>
+              <td>Supports device, dtype, device map, attention implementation, trust remote code, context, and chat template overrides.</td>
+            </tr>
+            <tr>
+              <td><code>mlx_lm</code></td>
+              <td>Apple Silicon local text and vision through Tater's MLX Engine path.</td>
+              <td>Full MLX repo, including sharded safetensors, tokenizer, config, and processor files when needed.</td>
+              <td>MLX Engine is always used for MLX text and vision. There is no fallback to the older plain MLX-LM or MLX-VLM runtime.</td>
+            </tr>
+            <tr>
+              <td><code>openai_compatible</code></td>
+              <td>Remote or external local servers such as OpenAI-compatible chat endpoints.</td>
+              <td>Provider model name served by the external endpoint.</td>
+              <td>Useful when another service owns model loading, GPU scheduling, or hosted inference.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Model browser</span>
+          <h2>Hugging Face downloads</h2>
+          <p>The Hugging Face tab can browse, filter, and download local models for each runtime.</p>
+          <ul class="stack-list">
+            <li>llama.cpp uses the Hub <code>apps=llama.cpp</code> filter and downloads individual GGUF files, including matching projectors when needed.</li>
+            <li>MLX downloads the full repo instead of one file, because tokenizer, config, safetensors shards, and processor files must stay together.</li>
+            <li>Transformers downloads the full repo for PyTorch/Transformers loading.</li>
+            <li>Download cards show repo/file progress, bytes, speed, ETA, and cancellation state across refreshes and tab changes.</li>
+            <li>A Hugging Face token can be saved through the Hugging Face integration for gated/private models and higher Hub rate limits.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Runtime state</span>
+          <h2>Loading and monitoring</h2>
+          <p>Save &amp; Load warms selected local models. The runtime pill and popup show loaded models, CPU/GPU/RAM/VRAM, LLM calls, vision calls, context estimates, and recent activity.</p>
+          <ul class="stack-list">
+            <li>The Debug mini-tab shows live prompt and generation events for local model calls.</li>
+            <li>Context cards estimate model fit without forcing dashboard refreshes or expensive reloads.</li>
+            <li>Local vision workers isolate crash-prone llama.cpp vision calls so Tater stays online if a native backend fails.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Local tuning</span>
+        <h2>The settings are runtime-specific.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">llama.cpp</span><span class="chip">GGUF</span></div>
+          <h3>Context and GPU controls</h3>
+          <p>Set text context separately from vision context, then tune eval batch, micro-batch, Flash Attention, GPU KV offload, and Multi-Token Prediction draft tokens.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Transformers</span><span class="chip">PyTorch</span></div>
+          <h3>Device and precision</h3>
+          <p>Select device, dtype, device map, attention implementation, trust remote code, and context length for Transformers models.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">MLX Engine</span><span class="chip">Apple Silicon</span></div>
+          <h3>Engine-backed MLX</h3>
+          <p>Tater routes MLX text and vision through MLX Engine with context length, lazy load, trust remote code, prefill step, and quantized KV settings.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Vision</span>
+          <h2>Image understanding</h2>
+          <p>Vision calls are separate from text chat. If a core, Verba, or chat attachment asks for image understanding, Tater routes the request through the configured vision path.</p>
+          <ul class="stack-list">
+            <li>llama.cpp vision needs a compatible model GGUF and matching <code>mmproj</code> projector.</li>
+            <li>MLX vision uses the MLX Engine path and expects the selected model/repo to include the required vision processor and weights.</li>
+            <li>Dedicated vision models can be selected when the Base text model is not vision-capable.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Thinking control</span>
+          <h2>Templates and response shape</h2>
+          <p>Tater strips visible thinking blocks where possible, supports provider-specific chat template overrides, and keeps the prompt separate from the model chat template.</p>
+          <ul class="stack-list">
+            <li>Use the Chat Template button beside local models to inspect embedded templates and save overrides.</li>
+            <li>Overrides persist in Redis and are reused after restart until reset to the embedded template.</li>
+            <li>For models whose template supports thinking flags, edit the template itself rather than injecting extra system prompt text.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">How calls flow</span>
+        <h2>Hydra and direct calls share the same configured model layer.</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Direct</span><span class="chip">Base model</span></div>
+          <h3>Normal LLM calls</h3>
+          <p>Dashboard briefs, Memory Core extraction, Guardian checks, direct chat, and API direct mode use the active Base model unless a feature explicitly selects a dedicated local model.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Hydra</span><span class="chip">Tools</span></div>
+          <h3>Reasoning and orchestration</h3>
+          <p>Hydra uses the configured model to plan, validate tool calls, run Verbas, and return final answers. Beast Mode can assign different models to Hydra heads while Base remains available for normal AI calls.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button" href="../api/index.html">OpenAI-compatible API</a>
+        <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
+        <a class="button button-ghost" href="../integrations/huggingface.html">Hugging Face integration</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | Local LLMs",
+        description="Tater local LLM, vision, model download, runtime tuning, chat template, and debug console documentation.",
+        body=body,
+        depth=1,
+        nav_key="llms",
+    )
+
+
+def render_openai_api_page() -> str:
+    body = """
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">External app access</span>
+        <h1>OpenAI-compatible API</h1>
+        <p>Tater can expose a local OpenAI-compatible chat API so other apps can use the active Tater model directly or route requests through Hydra and Verbas.</p>
+        <div class="chip-row">
+          <span class="chip">/v1/models</span>
+          <span class="chip">/v1/chat/completions</span>
+          <span class="chip">Direct mode</span>
+          <span class="chip">Hydra mode</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Security</span>
+        <p>Enable the API and set an API key in WebUI Settings -&gt; Advanced before external clients can connect.</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../llms/index.html">Local LLM docs</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Configuration</span>
+          <h2>Enable and authenticate</h2>
+          <p>The API is off until enabled. Requests must include the configured key as a bearer token, <code>X-API-Key</code>, or <code>api_key</code> query parameter.</p>
+          <ul class="stack-list">
+            <li><code>Authorization: Bearer YOUR_KEY</code> is the recommended header.</li>
+            <li><code>X-API-Key: YOUR_KEY</code> is also accepted.</li>
+            <li>If the API is disabled, Tater returns 404. If no key is configured, it returns 403. Invalid keys return 401.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Modes</span>
+          <h2>Direct or Hydra</h2>
+          <p>The API mode controls whether external calls use the active Base model directly or go through Hydra orchestration.</p>
+          <ul class="stack-list">
+            <li><strong>Direct</strong> sends the normalized chat messages to the active configured LLM client.</li>
+            <li><strong>Hydra</strong> gives the latest user message and history to Hydra, optionally with Verba tool access enabled.</li>
+            <li>The request model aliases <code>tater/base</code> and <code>tater/direct</code> force Direct mode. <code>tater/hydra</code> forces Hydra mode.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Endpoints</span>
+        <h2>The API speaks the common chat completion shape.</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">GET</span><span class="chip">/v1/models</span></div>
+          <h3>List available aliases</h3>
+          <p>Returns <code>tater/base</code>, <code>tater/direct</code>, <code>tater/hydra</code>, and configured local/remote model rows for discovery.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/v1/chat/completions</span></div>
+          <h3>Run a chat completion</h3>
+          <p>Accepts OpenAI-style messages and returns an OpenAI-style response with <code>choices</code>, <code>message.content</code>, and usage fields when available.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Model routing</span>
+        <h2>API calls use Tater's configured model layer.</h2>
+        <p>The API advertises provider-qualified model IDs for visibility, but chat completions currently route through the active configured LLM provider selected in Tater settings.</p>
+      </div>
+      <div class="responsive-table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Requested model</th><th>Effect</th><th>Runtime used</th></tr></thead>
+          <tbody>
+            <tr><td><code>tater/base</code> or <code>tater/direct</code></td><td>Forces direct chat mode.</td><td>The active Base provider in Settings -&gt; Models.</td></tr>
+            <tr><td><code>tater/hydra</code></td><td>Forces Hydra mode.</td><td>The active configured LLM client behind Hydra.</td></tr>
+            <tr><td><code>mlx_lm::repo/model</code></td><td>Listed for discovery of configured MLX rows.</td><td>Current chat route still uses the active configured provider; MLX rows run through MLX Engine when selected as active.</td></tr>
+            <tr><td><code>llama_cpp::repo::file.gguf</code></td><td>Listed for discovery of configured llama.cpp rows.</td><td>Current chat route still uses the active configured provider; llama.cpp rows run through llama.cpp when selected as active.</td></tr>
+            <tr><td><code>hf_transformers::repo/model</code></td><td>Listed for discovery of configured Transformers rows.</td><td>Current chat route still uses the active configured provider; Transformers rows run through Hugging Face Transformers when selected as active.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Request example</span>
+          <h2>Direct chat</h2>
+          <pre class="code-block"><code>curl http://localhost:8501/v1/chat/completions \\
+  -H "Authorization: Bearer YOUR_TATER_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "tater/base",
+    "messages": [
+      {"role": "system", "content": "You are concise."},
+      {"role": "user", "content": "What is Tater?"}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 256
+  }'</code></pre>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Request example</span>
+          <h2>Hydra with tools</h2>
+          <pre class="code-block"><code>curl http://localhost:8501/v1/chat/completions \\
+  -H "Authorization: Bearer YOUR_TATER_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "tater/hydra",
+    "user": "external-app",
+    "messages": [
+      {"role": "user", "content": "Turn on the office lights."}
+    ]
+  }'</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Compatibility notes</span>
+        <h2>Useful details for external clients.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Streaming</span></div>
+          <h3>Streaming shape</h3>
+          <p>When <code>stream</code> is true, Tater returns a server-sent event stream with a single completion chunk followed by <code>[DONE]</code>.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Messages</span></div>
+          <h3>Text content</h3>
+          <p>Tater normalizes string message content and OpenAI-style text parts. Non-text multimodal parts are ignored by this endpoint.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Tools</span></div>
+          <h3>Hydra tool access</h3>
+          <p>Hydra mode can expose enabled Verbas to external requests when the API setting allows Hydra tools.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button" href="../llms/index.html">Local LLMs</a>
+        <a class="button button-ghost" href="../cerberus/index.html">Hydra docs</a>
+        <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | OpenAI-Compatible API",
+        description="Tater OpenAI-compatible API endpoint documentation for /v1/models and /v1/chat/completions.",
+        body=body,
+        depth=1,
+        nav_key="api",
     )
 
 
@@ -4255,6 +4619,8 @@ def build() -> None:
     write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
     write_page(SITE_ROOT / "cerberus" / "index.html", render_cerberus_page(cerberus_defaults))
     write_page(SITE_ROOT / "spudex" / "index.html", render_spudex_page())
+    write_page(SITE_ROOT / "llms" / "index.html", render_llms_page())
+    write_page(SITE_ROOT / "api" / "index.html", render_openai_api_page())
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
     write_page(SITE_ROOT / "plugins" / "index.html", render_plugins_page(plugins))
 
@@ -4263,6 +4629,8 @@ def build() -> None:
     cleanup_section_pages(SITE_ROOT / "integrations", [integration["slug"] for integration in integrations])
     cleanup_section_pages(SITE_ROOT / "esphome", [])
     cleanup_section_pages(SITE_ROOT / "spudex", [])
+    cleanup_section_pages(SITE_ROOT / "llms", [])
+    cleanup_section_pages(SITE_ROOT / "api", [])
     cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])
     cleanup_section_pages(SITE_ROOT / "plugins", [plugin["slug"] for plugin in plugins])
 

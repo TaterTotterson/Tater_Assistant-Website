@@ -21,6 +21,8 @@
 <a class="nav-link" href="install/index.html">Install</a>
 <a class="nav-link" href="cerberus/index.html">Hydra</a>
 <a class="nav-link" href="spudex/index.html">Spudex</a>
+<a class="nav-link" href="llms/index.html">LLMs</a>
+<a class="nav-link" href="api/index.html">API</a>
 <a class="nav-link" href="portals/index.html">Portals</a>
 <a class="nav-link" href="integrations/index.html">Integrations</a>
 <a class="nav-link" href="esphome/index.html">ESPHome</a>
@@ -44,6 +46,8 @@
         <div class="action-row">
           <a class="button" href="install/index.html">Install Tater</a>
           <a class="button" href="integrations/index.html">Integrations</a>
+          <a class="button" href="llms/index.html">Local LLMs</a>
+          <a class="button" href="api/index.html">OpenAI API</a>
           <a class="button" href="esphome/index.html">ESPHome voice</a>
           <a class="button" href="plugins/index.html">Explore Verbas</a>
           <a class="button" href="cerberus/index.html">Read Hydra</a>
@@ -54,7 +58,7 @@
         <img class="hero-wordmark" src="assets/images/tater-logo-primary.png" alt="Tater Assistant">
         <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
         <div class="hero-stats">
-          <div class="stat-card"><strong>75</strong><span>documented Verbas</span></div>
+          <div class="stat-card"><strong>66</strong><span>documented Verbas</span></div>
           <div class="stat-card"><strong>18</strong><span>kernel tools</span></div>
           <div class="stat-card"><strong>9</strong><span>portals</span></div>
           <div class="stat-card"><strong>13</strong><span>integrations</span></div>
@@ -170,6 +174,16 @@
         </article>
 
         <article class="feature-card">
+          <h3>Local LLMs and vision</h3>
+          <p>Tater can run Base, Hydra, and vision models through llama.cpp GGUF, Hugging Face Transformers, and MLX Engine, with runtime tuning, chat templates, and live debug output.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>OpenAI-compatible API</h3>
+          <p>External apps can call Tater through /v1/models and /v1/chat/completions in Direct or Hydra mode, protected by a local API key.</p>
+        </article>
+
+        <article class="feature-card">
           <h3>Hugging Face integration</h3>
           <p>A saved Hugging Face token can be injected into model download environments for private, gated, or higher-rate model pulls.</p>
         </article>
@@ -225,7 +239,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Chat endpoint</span>
-            <span class="chip">v1.0.4</span>
+            <span class="chip">v1.0.5</span>
             <span class="chip">2 settings</span>
           </div>
           <h3>Discord</h3>
@@ -238,7 +252,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Chat endpoint</span>
-            <span class="chip">v1.0.2</span>
+            <span class="chip">v1.0.3</span>
             <span class="chip">5 settings</span>
           </div>
           <h3>Telegram</h3>
@@ -251,7 +265,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Chat endpoint</span>
-            <span class="chip">v1.0.3</span>
+            <span class="chip">v1.0.4</span>
             <span class="chip">13 settings</span>
           </div>
           <h3>Matrix</h3>
@@ -264,7 +278,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Chat endpoint</span>
-            <span class="chip">v1.0.2</span>
+            <span class="chip">v1.0.3</span>
             <span class="chip">6 settings</span>
           </div>
           <h3>IRC</h3>
@@ -277,7 +291,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Social research endpoint</span>
-            <span class="chip">v1.1.2</span>
+            <span class="chip">v1.1.3</span>
             <span class="chip">45 settings</span>
           </div>
           <h3>Moltbook</h3>
@@ -290,7 +304,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Voice endpoint</span>
-            <span class="chip">v1.1.3</span>
+            <span class="chip">v1.1.4</span>
             <span class="chip">5 settings</span>
           </div>
           <h3>HomeKit</h3>
@@ -303,7 +317,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Desktop endpoint</span>
-            <span class="chip">v1.1.2</span>
+            <span class="chip">v1.1.3</span>
             <span class="chip">5 settings</span>
           </div>
           <h3>macOS</h3>
@@ -316,7 +330,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Console endpoint</span>
-            <span class="chip">v1.1.3</span>
+            <span class="chip">v1.1.4</span>
             <span class="chip">4 settings</span>
           </div>
           <h3>XBMC4Xbox</h3>
@@ -415,7 +429,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Network security monitor</span>
-            <span class="chip">v1.3.2</span>
+            <span class="chip">v1.3.7</span>
             <span class="chip">13 settings</span>
           </div>
           <h3>Guardian Core</h3>
@@ -428,7 +442,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Scheduler</span>
-            <span class="chip">v1.0.37</span>
+            <span class="chip">v1.0.38</span>
             <span class="chip">No required fields</span>
           </div>
           <h3>AI Task Runner</h3>
@@ -441,7 +455,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Background service</span>
-            <span class="chip">v1.0.25</span>
+            <span class="chip">v1.0.26</span>
             <span class="chip">10 settings</span>
           </div>
           <h3>Memory Core</h3>
@@ -454,7 +468,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Personal intelligence engine</span>
-            <span class="chip">v1.0.48</span>
+            <span class="chip">v1.0.49</span>
             <span class="chip">1 settings</span>
           </div>
           <h3>Personal Core</h3>
@@ -467,7 +481,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Background service</span>
-            <span class="chip">v1.0.8</span>
+            <span class="chip">v1.0.9</span>
             <span class="chip">1 settings</span>
           </div>
           <h3>RSS</h3>
@@ -510,6 +524,16 @@
         <h3>ESPHome tab</h3>
         <p>Built-in voice runtime docs for satellites, live entities, and playback flows.</p>
         <a class="button button-ghost" href="esphome/index.html">Open ESPHome</a>
+      </article>
+      <article class="panel">
+        <h3>Local LLMs</h3>
+        <p>Model downloads, llama.cpp, Transformers, MLX Engine, vision, runtime tuning, chat templates, and live LLM debug tools.</p>
+        <a class="button button-ghost" href="llms/index.html">Open LLM docs</a>
+      </article>
+      <article class="panel">
+        <h3>OpenAI API</h3>
+        <p>Use Tater from external apps through /v1/models and /v1/chat/completions in Direct or Hydra mode.</p>
+        <a class="button button-ghost" href="api/index.html">Open API docs</a>
       </article>
       <article class="panel">
         <h3>Spudex</h3>

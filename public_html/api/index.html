@@ -1,0 +1,196 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Tater OpenAI-compatible API endpoint documentation for /v1/models and /v1/chat/completions.">
+          <title>Tater Assistant | OpenAI-Compatible API</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="api">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../llms/index.html">LLMs</a>
+<a class="nav-link is-active" href="../api/index.html">API</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">External app access</span>
+        <h1>OpenAI-compatible API</h1>
+        <p>Tater can expose a local OpenAI-compatible chat API so other apps can use the active Tater model directly or route requests through Hydra and Verbas.</p>
+        <div class="chip-row">
+          <span class="chip">/v1/models</span>
+          <span class="chip">/v1/chat/completions</span>
+          <span class="chip">Direct mode</span>
+          <span class="chip">Hydra mode</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Security</span>
+        <p>Enable the API and set an API key in WebUI Settings -&gt; Advanced before external clients can connect.</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../llms/index.html">Local LLM docs</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Configuration</span>
+          <h2>Enable and authenticate</h2>
+          <p>The API is off until enabled. Requests must include the configured key as a bearer token, <code>X-API-Key</code>, or <code>api_key</code> query parameter.</p>
+          <ul class="stack-list">
+            <li><code>Authorization: Bearer YOUR_KEY</code> is the recommended header.</li>
+            <li><code>X-API-Key: YOUR_KEY</code> is also accepted.</li>
+            <li>If the API is disabled, Tater returns 404. If no key is configured, it returns 403. Invalid keys return 401.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Modes</span>
+          <h2>Direct or Hydra</h2>
+          <p>The API mode controls whether external calls use the active Base model directly or go through Hydra orchestration.</p>
+          <ul class="stack-list">
+            <li><strong>Direct</strong> sends the normalized chat messages to the active configured LLM client.</li>
+            <li><strong>Hydra</strong> gives the latest user message and history to Hydra, optionally with Verba tool access enabled.</li>
+            <li>The request model aliases <code>tater/base</code> and <code>tater/direct</code> force Direct mode. <code>tater/hydra</code> forces Hydra mode.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Endpoints</span>
+        <h2>The API speaks the common chat completion shape.</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">GET</span><span class="chip">/v1/models</span></div>
+          <h3>List available aliases</h3>
+          <p>Returns <code>tater/base</code>, <code>tater/direct</code>, <code>tater/hydra</code>, and configured local/remote model rows for discovery.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">POST</span><span class="chip">/v1/chat/completions</span></div>
+          <h3>Run a chat completion</h3>
+          <p>Accepts OpenAI-style messages and returns an OpenAI-style response with <code>choices</code>, <code>message.content</code>, and usage fields when available.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Model routing</span>
+        <h2>API calls use Tater's configured model layer.</h2>
+        <p>The API advertises provider-qualified model IDs for visibility, but chat completions currently route through the active configured LLM provider selected in Tater settings.</p>
+      </div>
+      <div class="responsive-table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Requested model</th><th>Effect</th><th>Runtime used</th></tr></thead>
+          <tbody>
+            <tr><td><code>tater/base</code> or <code>tater/direct</code></td><td>Forces direct chat mode.</td><td>The active Base provider in Settings -&gt; Models.</td></tr>
+            <tr><td><code>tater/hydra</code></td><td>Forces Hydra mode.</td><td>The active configured LLM client behind Hydra.</td></tr>
+            <tr><td><code>mlx_lm::repo/model</code></td><td>Listed for discovery of configured MLX rows.</td><td>Current chat route still uses the active configured provider; MLX rows run through MLX Engine when selected as active.</td></tr>
+            <tr><td><code>llama_cpp::repo::file.gguf</code></td><td>Listed for discovery of configured llama.cpp rows.</td><td>Current chat route still uses the active configured provider; llama.cpp rows run through llama.cpp when selected as active.</td></tr>
+            <tr><td><code>hf_transformers::repo/model</code></td><td>Listed for discovery of configured Transformers rows.</td><td>Current chat route still uses the active configured provider; Transformers rows run through Hugging Face Transformers when selected as active.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Request example</span>
+          <h2>Direct chat</h2>
+          <pre class="code-block"><code>curl http://localhost:8501/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_TATER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "tater/base",
+    "messages": [
+      {"role": "system", "content": "You are concise."},
+      {"role": "user", "content": "What is Tater?"}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 256
+  }'</code></pre>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Request example</span>
+          <h2>Hydra with tools</h2>
+          <pre class="code-block"><code>curl http://localhost:8501/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_TATER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "tater/hydra",
+    "user": "external-app",
+    "messages": [
+      {"role": "user", "content": "Turn on the office lights."}
+    ]
+  }'</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Compatibility notes</span>
+        <h2>Useful details for external clients.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Streaming</span></div>
+          <h3>Streaming shape</h3>
+          <p>When <code>stream</code> is true, Tater returns a server-sent event stream with a single completion chunk followed by <code>[DONE]</code>.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Messages</span></div>
+          <h3>Text content</h3>
+          <p>Tater normalizes string message content and OpenAI-style text parts. Non-text multimodal parts are ignored by this endpoint.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Tools</span></div>
+          <h3>Hydra tool access</h3>
+          <p>Hydra mode can expose enabled Verbas to external requests when the API setting allows Hydra tools.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button" href="../llms/index.html">Local LLMs</a>
+        <a class="button button-ghost" href="../cerberus/index.html">Hydra docs</a>
+        <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <p>Built from the current Tater source snapshot in this repository.</p>
+            </footer>
+          </div>
+        </body>
+        </html>

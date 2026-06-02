@@ -21,6 +21,8 @@
 <a class="nav-link" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
 <a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../llms/index.html">LLMs</a>
+<a class="nav-link" href="../api/index.html">API</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../integrations/index.html">Integrations</a>
 <a class="nav-link" href="../esphome/index.html">ESPHome</a>
@@ -35,7 +37,7 @@
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Verba reference</span>
-        <h1>Actions speak louder then words. 75 Verbas are documented here.</h1>
+        <h1>Actions speak louder then words. 66 Verbas are documented here.</h1>
         <p>
           This index reflects the current Tater Shop manifest and Verba files. Each entry links to a source-backed detail page with usage, portals, and current behavior.
         </p>
@@ -50,7 +52,7 @@
             <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
             <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
           </div>
-          <p class="results-copy"><span data-results-count>75</span> Verbas shown</p>
+          <p class="results-copy"><span data-results-count>66</span> Verbas shown</p>
         </div>
       </aside>
     </section>
@@ -129,7 +131,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.3</span>
+          <span class="chip">v1.0.4</span>
           <span class="chip">comfyui_image_video</span>
         </div>
         <h3>ComfyUI Animate Image</h3>
@@ -150,7 +152,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.17</span>
+          <span class="chip">v1.0.18</span>
           <span class="chip">comfyui_audio_ace</span>
         </div>
         <h3>ComfyUI Audio Ace</h3>
@@ -186,13 +188,34 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="comfyui lofi video"
+      data-description="create a cozy comfyui lofi video by generating music and looping a matching animation."
+      data-platforms="webui macos"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.1.6</span>
+          <span class="chip">lowfi_video</span>
+        </div>
+        <h3>ComfyUI Lofi Video</h3>
+        <p>Create a cozy ComfyUI lofi video by generating music and looping a matching animation.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="lowfi_video.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="comfyui music video"
       data-description="build a full ai music video—lyrics, music, and animated visuals—using comfyui."
       data-platforms="webui macos"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.4</span>
+          <span class="chip">v1.0.6</span>
           <span class="chip">comfyui_music_video</span>
         </div>
         <h3>ComfyUI Music Video</h3>
@@ -213,7 +236,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.4</span>
+          <span class="chip">v1.0.5</span>
           <span class="chip">comfyui_video_plugin</span>
         </div>
         <h3>ComfyUI Video</h3>
@@ -381,7 +404,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.6</span>
+          <span class="chip">v1.0.7</span>
           <span class="chip">ha_camera_area</span>
         </div>
         <h3>Home Assistant Camera Area</h3>
@@ -774,27 +797,6 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="lofi video"
-      data-description="create a cozy lofi video by generating music and looping a matching animation."
-      data-platforms="webui macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.3</span>
-          <span class="chip">lowfi_video</span>
-        </div>
-        <h3>Lofi Video</h3>
-        <p>Create a cozy lofi video by generating music and looping a matching animation.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="lowfi_video.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
       data-name="microwakeword"
       data-description="change or suggest the local microwakeword wake word on a tater voice core satellite."
       data-platforms="voice_core homekit xbmc webui macos discord telegram matrix irc meshtastic"
@@ -838,16 +840,16 @@
       class="plugin-card"
       data-plugin-card
       data-name="moltbook account summary"
-      data-description="moltbook account snapshot with profile link and key counters."
+      data-description="moltbook account/profile summary, profile url, following/fellow agents, and target agent profiles."
       data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.3</span>
+          <span class="chip">v1.0.4</span>
           <span class="chip">moltbook_account_summary</span>
         </div>
         <h3>Moltbook Account Summary</h3>
-        <p>Moltbook account snapshot with profile link and key counters.</p>
+        <p>Moltbook account/profile summary, profile URL, following/fellow agents, and target agent profiles.</p>
       </div>
       <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
@@ -858,210 +860,21 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="moltbook activity on posts"
-      data-description="read /home activity buckets for your posts and summarize engagement."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_activity_on_posts</span>
-        </div>
-        <h3>Moltbook Activity On Posts</h3>
-        <p>Read /home activity buckets for your posts and summarize engagement.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_activity_on_posts.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook agent profile"
-      data-description="lookup target moltbook agent profile details."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_agent_profile</span>
-        </div>
-        <h3>Moltbook Agent Profile</h3>
-        <p>Lookup target Moltbook agent profile details.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_agent_profile.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook fellow taters"
-      data-description="show tracked fellow tater moltbook agents."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_fellow_taters</span>
-        </div>
-        <h3>Moltbook Fellow Taters</h3>
-        <p>Show tracked fellow Tater Moltbook agents.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_fellow_taters.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook following"
-      data-description="list known followed agents and active authors from following feed."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_following</span>
-        </div>
-        <h3>Moltbook Following</h3>
-        <p>List known followed agents and active authors from following feed.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_following.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
       data-name="moltbook home overview"
-      data-description="moltbook /home dashboard overview with unread/activity counters."
+      data-description="moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts."
       data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.3</span>
+          <span class="chip">v1.0.4</span>
           <span class="chip">moltbook_home_overview</span>
         </div>
         <h3>Moltbook Home Overview</h3>
-        <p>Moltbook /home dashboard overview with unread/activity counters.</p>
+        <p>Moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts.</p>
       </div>
       <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
         <a class="button button-ghost" href="moltbook_home_overview.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook latest announcement"
-      data-description="get the newest moltbook announcement/news entry."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_latest_announcement</span>
-        </div>
-        <h3>Moltbook Latest Announcement</h3>
-        <p>Get the newest Moltbook announcement/news entry.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_latest_announcement.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook latest posts"
-      data-description="fetch latest posts authored by this moltbook agent."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_latest_posts</span>
-        </div>
-        <h3>Moltbook Latest Posts</h3>
-        <p>Fetch latest posts authored by this Moltbook agent.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_latest_posts.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook monitoring submolts"
-      data-description="read moltbook portal settings for submolts to monitor/prefer/avoid."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_monitoring_submolts</span>
-        </div>
-        <h3>Moltbook Monitoring Submolts</h3>
-        <p>Read Moltbook portal settings for submolts to monitor/prefer/avoid.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_monitoring_submolts.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook profile link"
-      data-description="get the current moltbook profile url."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_profile_link</span>
-        </div>
-        <h3>Moltbook Profile Link</h3>
-        <p>Get the current Moltbook profile URL.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_profile_link.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook subscriptions"
-      data-description="show subscribed submolts from moltbook portal state."
-      data-platforms="webui macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">moltbook_subscriptions</span>
-        </div>
-        <h3>Moltbook Subscriptions</h3>
-        <p>Show subscribed submolts from Moltbook portal state.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">ESPHome Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_subscriptions.html">Read Verba</a>
       </div>
     </article>
 
