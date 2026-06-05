@@ -639,7 +639,7 @@ PLATFORM_DOCS = {
             "The integration runtime restores missing enabled integrations at boot and keeps disabled integrations unimported.",
             "Web search providers are modular integrations, with SearXNG, Brave Search, Google Custom Search, and Serper available from the integration catalog.",
             "Hugging Face token storage moved into the modular integration catalog so automatic model downloads can use authenticated Hub requests when enabled.",
-            "Settings -> People creates master users that can link portal accounts, WebUI identities, and ESPHome voice identities into one person record.",
+            "Settings -> People creates master users that can link portal accounts, WebUI identities, and Tater Voice identities into one person record.",
             "WebUI password login can be enabled from Settings -> General and uses cookie-backed sessions.",
         ],
         "guides_eyebrow": "Identity layer",
@@ -651,9 +651,9 @@ PLATFORM_DOCS = {
                 "summary": "Create one master user per real person, then link all of their known identities to that record.",
                 "chips": ["Settings -> People", "Master user", "Identity links"],
                 "details": [
-                    "A master user can represent the same person across WebUI, Discord, Telegram, Matrix, IRC, HomeKit, macOS, XBMC, Meshtastic, and ESPHome voice identities.",
+                    "A master user can represent the same person across WebUI, Discord, Telegram, Matrix, IRC, HomeKit, macOS, XBMC, Meshtastic, and Tater Voice identities.",
                     "Linked identities let Tater resolve a request origin into one person_id and person_name instead of treating every portal account as a separate user.",
-                    "Speaker ID aliases from ESPHome voice turns can also be linked, so a recognized voice can map back to the same master user as that person's chat accounts.",
+                    "Speaker ID aliases from Tater Voice turns can also be linked, so a recognized voice can map back to the same master user as that person's chat accounts.",
                 ],
             },
             {
@@ -989,19 +989,19 @@ PLATFORM_DOCS = {
         ],
     },
     "esphome": {
-        "label": "ESPHome",
-        "description": "Built-in ESPHome device runtime inside Tater for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
+        "label": "Tater Voice",
+        "description": "Tater Voice device runtime built on ESPHome for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
         "role": "Native device runtime",
         "source": None,
         "plugin_surface": "voice_core",
-        "hero_eyebrow": "Native ESPHome",
+        "hero_eyebrow": "Tater Voice",
         "hero_panel_eyebrow": "What it powers",
         "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote openWakeWord and NanoWakeWord detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
         "role_eyebrow": "Why it matters",
-        "role_title": "What native ESPHome unlocks",
-        "role_text": "Tater now owns the ESPHome device experience directly: discovery, room-aware voice sessions, remote wake detection, intercom sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
+        "role_title": "What Tater Voice unlocks",
+        "role_text": "Tater now owns the Tater Voice device experience directly: discovery, room-aware voice sessions, remote wake detection, intercom sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
         "highlights_eyebrow": "Feature set",
-        "highlights_title": "What makes the built-in ESPHome stack feel like a real device platform",
+        "highlights_title": "What makes Tater Voice feel like a real device platform",
         "plugin_eyebrow": "Voice-aware verbas",
         "plugin_title": "Verbas that can act on the speaking device",
         "settings_eyebrow": "Operator controls",
@@ -1028,7 +1028,7 @@ PLATFORM_DOCS = {
         ],
         "guides": [
             {
-                "title": "Native ESPHome runtime",
+                "title": "Tater Voice runtime",
                 "summary": "ESPHome is no longer a shop core. It is part of the main Tater app and starts with Tater.",
                 "chips": ["Built in", "One app", "Main port"],
                 "details": [
@@ -1061,7 +1061,7 @@ PLATFORM_DOCS = {
             },
             {
                 "title": "Voice pipeline and shared models",
-                "summary": "The live voice loop uses shared STT/TTS choices from the Models tab while keeping ESPHome-specific controls in one native screen.",
+                "summary": "The live voice loop uses shared STT/TTS choices from the Models tab while keeping Tater Voice controls in one native screen.",
                 "chips": ["STT", "TTS", "Models"],
                 "details": [
                     "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, Piper, or external announcement paths.",
@@ -1146,7 +1146,7 @@ PLATFORM_DOCS = {
             },
             {
                 "title": "Runtime observability",
-                "summary": "The ESPHome screen now separates devices, settings, and stats so tuning is based on real behavior instead of guesswork.",
+                "summary": "The Tater Voice screen now separates devices, settings, and stats so tuning is based on real behavior instead of guesswork.",
                 "chips": ["Satellites", "Stats", "Live logs"],
                 "details": [
                     "Satellites shows discovered devices, saved room assignments, live entity state, device facts, and an ESPHome-style live log console.",
@@ -1169,19 +1169,19 @@ PLATFORM_DOCS = {
             },
         ],
         "guides_eyebrow": "Voice experience",
-        "guides_title": "How native ESPHome makes Tater feel like a real device assistant.",
-        "guides_intro": "These notes focus on the built-in ESPHome runtime, the live voice pipeline, shared speech backends, and the operator tools now living directly inside Tater.",
+        "guides_title": "How Tater Voice makes Tater feel like a real device assistant.",
+        "guides_intro": "These notes focus on the built-in Tater Voice runtime, the live voice pipeline, shared speech backends, and the operator tools now living directly inside Tater.",
         "apis": [
             {
                 "method": "GET",
                 "path": "/api/settings/esphome/runtime",
-                "summary": "Load the native ESPHome runtime view used by Settings -> ESPHome.",
+                "summary": "Load the Tater Voice runtime view used by Settings -> ESPHome.",
                 "details": "Returns the current Satellites, Settings, and Stats payload so the WebUI can render discovery state, device cards, voice metrics, and runtime controls.",
             },
             {
                 "method": "POST",
                 "path": "/api/settings/esphome/runtime/action",
-                "summary": "Run a native ESPHome runtime action from the WebUI.",
+                "summary": "Run a Tater Voice runtime action from the WebUI.",
                 "details": "Handles refresh, connect/disconnect, save/forget satellite actions, live log lifecycle, and direct entity-control actions from the ESPHome settings screen.",
             },
             {
@@ -1367,7 +1367,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Incrementally mines durable facts from prior conversations instead of relying only on the active turn.",
             "Builds user and room summaries in Redis for later Hydra injection.",
-            "Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and ESPHome voice identities.",
+            "Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and Tater Voice identities.",
             "Includes confidence thresholds, identity linking options, and context-size limits.",
         ],
         "apis": [],
@@ -1425,8 +1425,8 @@ PLATFORM_META = {
     for key, value in PLATFORM_DOCS.items()
 }
 PLATFORM_META["voice_core"] = {
-    "label": "ESPHome Voice",
-    "description": "Built-in ESPHome voice runtime, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
+    "label": "Tater Voice",
+    "description": "Tater Voice runtime built on ESPHome, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
 }
 
 INSTALL_METHODS = [
@@ -2423,7 +2423,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("api", "API", f"{base}api/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
         ("integrations", "Integrations", f"{base}integrations/index.html"),
-        ("esphome", "ESPHome", f"{base}esphome/index.html"),
+        ("esphome", "Tater Voice", f"{base}tater-voice/index.html"),
         ("cores", "Cores", f"{base}cores/index.html"),
         ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
         ("plugins", "Verbas", f"{base}plugins/index.html"),
@@ -2461,7 +2461,10 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
               {body}
             </main>
             <footer class="page-footer">
-              <p>Built from the current Tater source snapshot in this repository.</p>
+              <div class="footer-row">
+                <p>Built from the current Tater source snapshot in this repository.</p>
+                <button class="footer-contact" type="button" data-contact-open>Contact us</button>
+              </div>
             </footer>
           </div>
         </body>
@@ -2564,7 +2567,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "ESPHome is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native ESPHome room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
+            "Tater Voice is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native ESPHome room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
         )
     if platform["slug"] == "ai_task":
         return (
@@ -2632,7 +2635,7 @@ def render_home_page(
           {button("Integrations", "integrations/index.html")}
           {button("Local LLMs", "llms/index.html")}
           {button("OpenAI API", "api/index.html")}
-          {button("ESPHome voice", "esphome/index.html")}
+          {button("Tater Voice", "tater-voice/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
           {button("Open Spudex", "spudex/index.html", ghost=True)}
@@ -2658,7 +2661,7 @@ def render_home_page(
         <span class="eyebrow">Tater Assistant</span>
         <h2>Your local voice assistant for rooms, devices, and automations.</h2>
         <p>
-          Tater ties the app, WebUI, ESPHome voice satellites, wake-word engines,
+          Tater ties the app, WebUI, Tater Voice satellites, wake-word engines,
           dashboard, firmware tools, and Verbas into one control surface for your home.
         </p>
         <ul class="stack-list">
@@ -2670,7 +2673,7 @@ def render_home_page(
         </ul>
         <div class="action-row">
           <a class="button" href="https://github.com/TaterTotterson/Tater/releases" target="_blank" rel="noreferrer">Latest releases</a>
-          <a class="button button-ghost" href="esphome/index.html">Voice docs</a>
+          <a class="button button-ghost" href="tater-voice/index.html">Voice docs</a>
         </div>
       </div>
       <img class="mascot mascot-present" src="assets/images/tater-mascot-present.png" alt="" aria-hidden="true">
@@ -2707,7 +2710,7 @@ def render_home_page(
             "The default WebUI view now gives a cached home brief, health, environment, awareness snapshots, voice devices, Speaker ID, and Emotion ID without blocking page load.",
         ),
         (
-            "Native ESPHome voice",
+            "Tater Voice",
             "ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, remote NanoWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
         ),
         (
@@ -2724,7 +2727,7 @@ def render_home_page(
         ),
         (
             "People identity layer",
-            "Settings -> People creates master users that link portal accounts and ESPHome voice identities, with scoped per-person response instructions.",
+            "Settings -> People creates master users that link portal accounts and Tater Voice identities, with scoped per-person response instructions.",
         ),
         (
             "Display notifications",
@@ -2860,9 +2863,9 @@ def render_home_page(
         {button("Open integrations", "integrations/index.html", ghost=True)}
       </article>
       <article class="panel">
-        <h3>ESPHome tab</h3>
+        <h3>Tater Voice</h3>
         <p>Built-in voice runtime docs for satellites, live entities, and playback flows.</p>
-        {button("Open ESPHome", "esphome/index.html", ghost=True)}
+        {button("Open Tater Voice", "tater-voice/index.html", ghost=True)}
       </article>
       <article class="panel">
         <h3>Local LLMs</h3>
@@ -3336,7 +3339,7 @@ def render_install_index() -> str:
         <span class="eyebrow">README note</span>
         <p>{escape(readme_note)}</p>
         <div class="action-row">
-          {button("ESPHome tab", "../esphome/index.html", ghost=True)}
+          {button("Tater Voice", "../tater-voice/index.html", ghost=True)}
         </div>
       </aside>
     </section>
@@ -3946,7 +3949,7 @@ def render_platform_detail(
         {button(back_label or f"Back to {'cores' if is_core else 'portals'}", back_href, ghost=True)}
         {button("Verbas", "../plugins/index.html", ghost=True)}
         {button("Portals", "../portals/index.html", ghost=True)}
-        {button("ESPHome", "../esphome/index.html", ghost=True)}
+        {button("Tater Voice", "../tater-voice/index.html", ghost=True)}
         {button("Cores", "../cores/index.html", ghost=True)}
         {button("Home", "../index.html", ghost=True)}
       </div>
@@ -4585,6 +4588,26 @@ def write_page(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def render_redirect_page(*, title: str, target: str, label: str) -> str:
+    return textwrap.dedent(
+        f"""\
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta http-equiv="refresh" content="0; url={escape(target)}">
+          <link rel="canonical" href="{escape(target)}">
+          <title>{escape(title)}</title>
+        </head>
+        <body>
+          <p>{escape(label)} moved to <a href="{escape(target)}">{escape(target)}</a>.</p>
+        </body>
+        </html>
+        """
+    )
+
+
 def cleanup_section_pages(section_dir: Path, keep_slugs: list[str]) -> None:
     if not section_dir.exists():
         return
@@ -4608,12 +4631,20 @@ def build() -> None:
     write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))
     write_page(SITE_ROOT / "integrations" / "index.html", render_integrations_page(integrations))
     write_page(
-        SITE_ROOT / "esphome" / "index.html",
+        SITE_ROOT / "tater-voice" / "index.html",
         render_platform_detail(
             esphome_runtime,
             nav_key_override="esphome",
             back_href="../portals/index.html",
             back_label="Back to portals",
+        ),
+    )
+    write_page(
+        SITE_ROOT / "esphome" / "index.html",
+        render_redirect_page(
+            title="Tater Voice moved",
+            target="../tater-voice/index.html",
+            label="Tater Voice",
         ),
     )
     write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
@@ -4627,6 +4658,7 @@ def build() -> None:
     cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
     cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
     cleanup_section_pages(SITE_ROOT / "integrations", [integration["slug"] for integration in integrations])
+    cleanup_section_pages(SITE_ROOT / "tater-voice", [])
     cleanup_section_pages(SITE_ROOT / "esphome", [])
     cleanup_section_pages(SITE_ROOT / "spudex", [])
     cleanup_section_pages(SITE_ROOT / "llms", [])

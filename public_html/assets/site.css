@@ -251,7 +251,7 @@ code:not(pre code) {
 
 .hero-home h1,
 .hero-subpage:not(.hero-plugin) h1 {
-  font-size: clamp(1.95rem, 3.6vw, 3.45rem);
+  font-size: clamp(1.8rem, 3vw, 3rem);
 }
 
 .hero-subpage,
@@ -291,12 +291,12 @@ h3 {
 
 h1 {
   max-width: 14ch;
-  font-size: clamp(2.5rem, 5vw, 4.9rem);
+  font-size: clamp(2rem, 4vw, 4rem);
 }
 
 h2 {
   max-width: 20ch;
-  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-size: clamp(1.45rem, 2.4vw, 2.25rem);
 }
 
 h3 {
@@ -694,9 +694,126 @@ p {
   padding: 1rem 0 0;
 }
 
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .page-footer p {
   color: #8e857b;
   font-size: 0.9rem;
+}
+
+.footer-contact {
+  min-height: 38px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(255, 106, 0, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 106, 0, 0.08);
+  color: var(--accent-strong);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.contact-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.contact-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  width: min(620px, 100%);
+  max-height: min(760px, calc(100vh - 2rem));
+  overflow-y: auto;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(11, 12, 14, 0.98);
+  box-shadow: var(--shadow);
+}
+
+.contact-dialog h2 {
+  max-width: none;
+}
+
+.contact-dialog a {
+  color: var(--accent-strong);
+}
+
+.contact-close {
+  justify-self: end;
+  min-height: 34px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.26);
+  color: var(--text);
+  font: inherit;
+}
+
+.contact-form input {
+  min-height: 44px;
+  padding: 0.7rem 0.85rem;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+  padding: 0.85rem;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 [hidden] {
@@ -916,7 +1033,7 @@ body::before {
 .hero-subpage:not(.hero-plugin) h1,
 h1 {
   max-width: 15ch;
-  font-size: clamp(2.55rem, 5.8vw, 5.75rem);
+  font-size: clamp(2.15rem, 4.4vw, 4.55rem);
   font-weight: 900;
   letter-spacing: 0;
 }
@@ -950,7 +1067,12 @@ h1 {
 
 .mascot-stage {
   position: relative;
-  min-height: 500px;
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: end;
+  align-items: end;
+  gap: 1rem;
+  min-height: 560px;
 }
 
 .hero-wordmark {
@@ -967,9 +1089,11 @@ h1 {
 }
 
 .mascot-wave {
-  position: absolute;
-  right: 0;
-  bottom: 1.6rem;
+  position: relative;
+  right: auto;
+  bottom: auto;
+  justify-self: end;
+  align-self: end;
   z-index: 2;
   width: min(30vw, 390px);
   max-height: 640px;
@@ -978,11 +1102,12 @@ h1 {
 }
 
 .hero-stats {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  right: auto;
+  bottom: auto;
   left: auto;
-  z-index: 2;
+  z-index: 3;
+  justify-self: end;
   width: min(390px, 82%);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1121,9 +1246,15 @@ h1 {
   }
 
   .mascot-wave {
-    right: 50%;
-    transform: translateX(50%);
+    right: auto;
+    justify-self: center;
+    transform: none;
     width: min(66vw, 410px);
+  }
+
+  .hero-stats {
+    justify-self: center;
+    width: min(520px, 100%);
   }
 
   .hero-wordmark {
@@ -1165,7 +1296,7 @@ h1 {
   .hero-subpage:not(.hero-plugin) h1,
   h1 {
     max-width: none;
-    font-size: clamp(2.25rem, 14vw, 4rem);
+    font-size: clamp(1.85rem, 9.2vw, 2.85rem);
   }
 
   .action-row {

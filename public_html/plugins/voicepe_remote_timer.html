@@ -25,7 +25,7 @@
 <a class="nav-link" href="../api/index.html">API</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
 <a class="nav-link" href="../integrations/index.html">Integrations</a>
-<a class="nav-link" href="../esphome/index.html">ESPHome</a>
+<a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
 <a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
 <a class="nav-link is-active" href="../plugins/index.html">Verbas</a>
@@ -87,7 +87,7 @@
       <div class="grid grid-2">
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Voice PE</span><span class="chip">ESPHome</span><span class="chip">Required firmware</span></div>
+          <div class="chip-row"><span class="chip">Voice PE</span><span class="chip">Tater Voice</span><span class="chip">Required firmware</span></div>
           <h3>Flash the right Voice PE firmware first</h3>
           <p>This plugin expects a Voice PE build that exposes the remote timer entities in Home Assistant.</p>
           <ul class="stack-list"><li>Before using this plugin, flash your Voice PE with the Tater timer configuration so the expected timer entities exist in Home Assistant.</li><li>The plugin works against entity patterns such as number.voicepe_*_remote_timer_seconds, button.voicepe_*_remote_timer_start, button.voicepe_*_remote_timer_cancel, sensor.voicepe_*_remote_timer_remaining_seconds, and binary_sensor.voicepe_*_remote_timer_running.</li><li>If those entities do not exist yet, the plugin will not be able to infer or control the device timer correctly.</li></ul>
@@ -127,7 +127,10 @@
 
             </main>
             <footer class="page-footer">
-              <p>Built from the current Tater source snapshot in this repository.</p>
+              <div class="footer-row">
+                <p>Built from the current Tater source snapshot in this repository.</p>
+                <button class="footer-contact" type="button" data-contact-open>Contact us</button>
+              </div>
             </footer>
           </div>
         </body>
