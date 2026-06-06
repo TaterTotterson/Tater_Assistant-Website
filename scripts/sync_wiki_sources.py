@@ -18,6 +18,7 @@ BUILD_SCRIPT = SCRIPT_DIR / "build_wiki.py"
 STATE_FILE = SCRIPT_DIR / ".wiki-sync-state.json"
 SELF_UPDATED_ENV = "TATER_WIKI_SELF_UPDATED"
 SITE_UPDATED_ENV = "TATER_WIKI_SITE_UPDATED"
+SELF_UPDATE_RECOVERABLE_PREFIXES = ("public_html/",)
 
 DEFAULT_TATER_URL = "https://github.com/TaterTotterson/Tater.git"
 DEFAULT_TATER_SHOP_URL = "https://github.com/TaterTotterson/Tater_Shop.git"
@@ -74,6 +75,40 @@ def repo_dirty(repo_dir: Path) -> bool:
     return bool(git_stdout(repo_dir, "status", "--porcelain"))
 
 
+def repo_unmerged_paths(repo_dir: Path) -> list[str]:
+    output = git_stdout(repo_dir, "diff", "--name-only", "--diff-filter=U", check=False)
+    return sorted({line.strip() for line in output.splitlines() if line.strip()})
+
+
+def recover_self_update_conflicts(repo_dir: Path, paths: list[str]) -> bool:
+    unsafe_paths = [
+        path
+        for path in paths
+        if not any(path == prefix.rstrip("/") or path.startswith(prefix) for prefix in SELF_UPDATE_RECOVERABLE_PREFIXES)
+    ]
+    if unsafe_paths:
+        log(
+            "Website repo self-update has unresolved conflicts outside generated output: "
+            + ", ".join(unsafe_paths[:12])
+            + (" ..." if len(unsafe_paths) > 12 else "")
+        )
+        return False
+
+    log(
+        "Recovering stale website self-update conflicts in generated output: "
+        + ", ".join(paths[:12])
+        + (" ..." if len(paths) > 12 else "")
+    )
+    git(repo_dir, "merge", "--abort", check=False)
+    remaining_paths = repo_unmerged_paths(repo_dir)
+    if not remaining_paths:
+        return True
+
+    for start in range(0, len(remaining_paths), 100):
+        git(repo_dir, "restore", "--source=HEAD", "--staged", "--worktree", "--", *remaining_paths[start : start + 100])
+    return not repo_unmerged_paths(repo_dir)
+
+
 def can_fast_forward(repo_dir: Path, local_ref: str, remote_ref: str) -> bool:
     completed = git(repo_dir, "merge-base", "--is-ancestor", local_ref, remote_ref, check=False)
     return completed.returncode == 0
@@ -91,6 +126,8 @@ def self_update_site_repo(*, skip_fetch: bool, autostash: bool) -> dict[str, Any
         "head_after": "",
         "changed": False,
         "dirty": False,
+        "recovered_unmerged": False,
+        "unmerged_paths": [],
         "status": "not-git",
     }
     if not (BASE_DIR / ".git").exists():
@@ -99,6 +136,22 @@ def self_update_site_repo(*, skip_fetch: bool, autostash: bool) -> dict[str, Any
 
     head_before = repo_head(BASE_DIR)
     branch = repo_branch(BASE_DIR)
+    unmerged_paths = repo_unmerged_paths(BASE_DIR)
+    if unmerged_paths:
+        result["unmerged_paths"] = unmerged_paths
+        if not autostash or not recover_self_update_conflicts(BASE_DIR, unmerged_paths):
+            result.update(
+                {
+                    "head_before": head_before,
+                    "head_after": head_before,
+                    "dirty": True,
+                    "status": "unmerged",
+                }
+            )
+            return result
+        result["recovered_unmerged"] = True
+        head_before = repo_head(BASE_DIR)
+
     dirty = repo_dirty(BASE_DIR)
     result.update(
         {
@@ -142,7 +195,28 @@ def self_update_site_repo(*, skip_fetch: bool, autostash: bool) -> dict[str, Any
     if autostash:
         merge_args.append("--autostash")
     merge_args.append(remote_ref)
-    git(BASE_DIR, *merge_args)
+    try:
+        git(BASE_DIR, *merge_args)
+    except RuntimeError:
+        post_merge_unmerged = repo_unmerged_paths(BASE_DIR)
+        if not post_merge_unmerged:
+            raise
+        result["unmerged_paths"] = post_merge_unmerged
+        if not recover_self_update_conflicts(BASE_DIR, post_merge_unmerged):
+            result["status"] = "unmerged"
+            result["dirty"] = True
+            return result
+        result["recovered_unmerged"] = True
+
+    post_merge_unmerged = repo_unmerged_paths(BASE_DIR)
+    if post_merge_unmerged:
+        result["unmerged_paths"] = post_merge_unmerged
+        if not recover_self_update_conflicts(BASE_DIR, post_merge_unmerged):
+            result["status"] = "unmerged"
+            result["dirty"] = True
+            return result
+        result["recovered_unmerged"] = True
+
     result["head_after"] = repo_head(BASE_DIR)
     result["changed"] = result["head_after"] != head_before
     result["status"] = "updated" if result["changed"] else "unchanged"
@@ -304,7 +378,7 @@ def main() -> int:
             skip_fetch=args.skip_fetch,
             autostash=not args.no_self_update_autostash,
         )
-        if site_self_update["status"] in {"dirty", "diverged"}:
+        if site_self_update["status"] in {"dirty", "diverged", "unmerged"}:
             log(f"Website repo self-update blocked: status={site_self_update['status']} path={site_self_update['path']}")
             return 2
         if site_self_update["changed"]:

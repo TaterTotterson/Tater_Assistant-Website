@@ -83,6 +83,7 @@ python3 /home/taterassistant/scripts/sync_wiki_sources.py --self-update
 ```
 
 With `--self-update`, the script fetches the current website checkout, fast-forwards it when possible, and re-runs the freshly pulled script before syncing `Tater` and `Tater_Shop`.
+If a previous autostash left unresolved conflicts only in generated `public_html` files, the next self-update restores those generated files from `HEAD` and continues. Source-file conflicts still block the run.
 
 Useful flags:
 

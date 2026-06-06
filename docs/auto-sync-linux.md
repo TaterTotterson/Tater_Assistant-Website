@@ -101,4 +101,5 @@ Webmin cron job settings:
 
 - Self-update uses a fast-forward-only merge, so it will not create merge commits on the server.
 - By default it uses Git autostash so generated `public_html` changes from a previous build do not block a clean fast-forward.
+- If a previous autostash left unresolved conflicts only in generated `public_html` files, the next self-update restores those generated files from `HEAD` and continues.
 - If the website repo has conflicting local edits or has diverged from GitHub, the script stops and logs the reason instead of guessing.
