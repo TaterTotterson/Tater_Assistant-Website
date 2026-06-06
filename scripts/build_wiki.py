@@ -2644,14 +2644,14 @@ def render_home_page(
       <aside class="hero-art mascot-stage">
         <img class="hero-wordmark" src="assets/images/tater-logo-primary.png" alt="Tater Assistant">
         <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
-        <div class="hero-stats">
-          <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
-          <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
-          <div class="stat-card"><strong>{portal_count}</strong><span>portals</span></div>
-          <div class="stat-card"><strong>{integration_count}</strong><span>integrations</span></div>
-          <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
-        </div>
       </aside>
+      <div class="hero-stats" aria-label="Tater documentation counts">
+        <div class="stat-card"><strong>{plugin_count}</strong><span>documented Verbas</span></div>
+        <div class="stat-card"><strong>{kernel_count}</strong><span>kernel tools</span></div>
+        <div class="stat-card"><strong>{portal_count}</strong><span>portals</span></div>
+        <div class="stat-card"><strong>{integration_count}</strong><span>integrations</span></div>
+        <div class="stat-card"><strong>{install_count}</strong><span>install paths</span></div>
+      </div>
     </section>
     """
 

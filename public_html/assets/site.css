@@ -87,6 +87,7 @@ code:not(pre code) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 0.9rem 1rem;
@@ -100,6 +101,7 @@ code:not(pre code) {
 .brand {
   display: inline-flex;
   align-items: center;
+  flex: 1 1 auto;
   gap: 0.85rem;
   min-width: 0;
 }
@@ -140,17 +142,29 @@ code:not(pre code) {
 }
 
 .site-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  flex-wrap: wrap;
+  display: none;
+  flex: 1 0 100%;
+  width: 100%;
+  gap: 0.5rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-nav.is-open {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
   padding: 0.72rem 1rem;
   border-radius: 999px;
   color: var(--muted);
   font-size: 0.78rem;
+  text-align: center;
   transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
@@ -193,13 +207,28 @@ code:not(pre code) {
 }
 
 .nav-toggle {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.65rem 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
   font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.nav-toggle:hover,
+.nav-toggle[aria-expanded="true"] {
+  border-color: rgba(255, 139, 45, 0.3);
+  background: rgba(255, 139, 45, 0.13);
+  color: #fff7ee;
 }
 
 .page-main {
@@ -247,6 +276,10 @@ code:not(pre code) {
 
 .hero-home {
   grid-template-columns: 1.3fr 0.9fr;
+}
+
+.hero-home > .hero-stats {
+  grid-column: 1 / -1;
 }
 
 .hero-home h1,
@@ -381,7 +414,7 @@ p {
 
 .hero-stats {
   margin-top: 1rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .stat-card,
@@ -908,26 +941,19 @@ body.modal-open {
 
   .site-header {
     top: 0.45rem;
-    flex-wrap: wrap;
     border-radius: 28px;
   }
 
-  .nav-toggle {
-    display: inline-flex;
-  }
-
   .site-nav {
-    display: none;
-    width: 100%;
-    padding-top: 0.4rem;
+    padding-top: 0.55rem;
   }
 
   .site-nav.is-open {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .site-nav .nav-link {
-    flex: 1 1 calc(50% - 0.5rem);
     text-align: center;
   }
 
@@ -1061,6 +1087,7 @@ body::before {
 
 .hero-home {
   grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
+  grid-template-rows: minmax(0, 1fr) auto;
   min-height: min(760px, calc(100vh - 8rem));
   padding: clamp(2rem, 5vw, 4.8rem);
 }
@@ -1110,10 +1137,8 @@ h1 {
 .mascot-stage {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto;
   align-content: end;
   align-items: end;
-  gap: 1rem;
   min-height: 560px;
 }
 
@@ -1149,18 +1174,25 @@ h1 {
   bottom: auto;
   left: auto;
   z-index: 3;
-  justify-self: end;
-  width: min(390px, 82%);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  margin-top: clamp(0.5rem, 2vw, 1.25rem);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.hero-home > .hero-stats .stat-card {
+  min-height: 104px;
+  padding: 0.9rem 1rem;
 }
 
 @media (min-width: 1281px) {
   .hero-home {
-    padding-bottom: clamp(5.5rem, 7vw, 7.25rem);
+    padding-bottom: clamp(2rem, 5vw, 4.8rem);
   }
 
   .mascot-stage {
-    transform: translateY(clamp(3.25rem, 5vw, 5.75rem));
+    transform: none;
   }
 }
 
@@ -1277,7 +1309,7 @@ h1 {
   border-radius: 14px;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1120px) {
   .hero-home {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -1296,7 +1328,8 @@ h1 {
 
   .hero-stats {
     justify-self: center;
-    width: min(520px, 100%);
+    width: min(760px, 100%);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .hero-wordmark {
