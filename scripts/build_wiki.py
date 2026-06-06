@@ -2463,7 +2463,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
             <footer class="page-footer">
               <div class="footer-row">
                 <p>Built from the current Tater source snapshot in this repository.</p>
-                <button class="footer-contact" type="button" data-contact-open>Contact us</button>
+                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>
           </div>

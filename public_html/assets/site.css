@@ -697,38 +697,53 @@ p {
 .footer-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
 .page-footer p {
+  margin-right: auto;
   color: #8e857b;
   font-size: 0.9rem;
 }
 
 .footer-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
   min-height: 38px;
-  padding: 0.55rem 0.85rem;
-  border: 1px solid rgba(255, 106, 0, 0.22);
+  padding: 0.62rem 1rem;
+  border: 1px solid rgba(255, 145, 36, 0.58);
   border-radius: 999px;
-  background: rgba(255, 106, 0, 0.08);
-  color: var(--accent-strong);
+  background: linear-gradient(180deg, #ffb15a 0%, #ff6a00 100%);
+  color: #090909;
   font: inherit;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
+  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
+  box-shadow: 0 12px 34px rgba(255, 106, 0, 0.2);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.footer-contact:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 42px rgba(255, 106, 0, 0.26);
 }
 
 .contact-modal {
   position: fixed;
   inset: 0;
   z-index: 20;
-  display: grid;
-  place-items: center;
-  padding: 1rem;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: 0;
 }
 
 .contact-backdrop {
@@ -745,20 +760,37 @@ p {
   z-index: 1;
   display: grid;
   gap: 1rem;
-  width: min(620px, 100%);
-  max-height: min(760px, calc(100vh - 2rem));
+  align-content: start;
+  width: min(460px, calc(100vw - 1.25rem));
+  height: 100%;
+  max-height: 100vh;
   overflow-y: auto;
   padding: clamp(1.25rem, 4vw, 2rem);
-  border: 1px solid rgba(255, 106, 0, 0.3);
-  border-radius: 18px;
+  border: 1px solid rgba(255, 106, 0, 0.34);
+  border-right: 0;
+  border-radius: 24px 0 0 24px;
   background:
+    linear-gradient(90deg, rgba(255, 106, 0, 0.18), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
     rgba(11, 12, 14, 0.98);
-  box-shadow: var(--shadow);
+  box-shadow: -28px 0 90px rgba(0, 0, 0, 0.48);
+  animation: contact-slide-in 180ms ease-out;
+}
+
+.contact-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .contact-dialog h2 {
   max-width: none;
+  font-size: clamp(1.85rem, 4vw, 2.55rem);
+}
+
+.contact-dialog p {
+  color: var(--muted);
 }
 
 .contact-dialog a {
@@ -766,7 +798,6 @@ p {
 }
 
 .contact-close {
-  justify-self: end;
   min-height: 34px;
   padding: 0.45rem 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -818,6 +849,17 @@ body.modal-open {
 
 [hidden] {
   display: none !important;
+}
+
+@keyframes contact-slide-in {
+  from {
+    transform: translateX(18px);
+    opacity: 0.65;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes float-logo {
@@ -1362,5 +1404,19 @@ h1 {
 @media (max-width: 520px) {
   .hero-home .action-row .button {
     flex-basis: 100%;
+  }
+
+  .page-footer p {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+
+  .footer-contact {
+    margin-left: auto;
+  }
+
+  .contact-dialog {
+    width: 100%;
+    border-radius: 0;
   }
 }

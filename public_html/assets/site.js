@@ -25,10 +25,12 @@
     contactModal.innerHTML = `
       <button class="contact-backdrop" type="button" data-contact-close aria-label="Close contact form"></button>
       <section class="contact-dialog" role="document">
-        <button class="contact-close" type="button" data-contact-close aria-label="Close contact form">Close</button>
-        <span class="eyebrow">Contact</span>
-        <h2 id="contact-title">Contact Tater</h2>
-        <p>Send questions, install notes, or integration ideas to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>
+        <div class="contact-dialog-header">
+          <span class="eyebrow">Contact Tater</span>
+          <button class="contact-close" type="button" data-contact-close aria-label="Close contact form">Close</button>
+        </div>
+        <h2 id="contact-title">Tell us what you are building.</h2>
+        <p>Questions, install notes, app feedback, integration ideas, and weird edge cases can all go to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>
         <form class="contact-form" data-contact-form>
           <label>
             <span>Name</span>
@@ -67,11 +69,12 @@
     document.body.classList.remove("modal-open");
   };
 
-  const openContact = () => {
+  const openContact = (event) => {
     if (!contactModal) {
       return;
     }
-    contactModal.hidden = false;
+    event?.preventDefault();
+    contactModal.removeAttribute("hidden");
     document.body.classList.add("modal-open");
     const firstField = contactModal.querySelector(".contact-form input, .contact-form textarea, .contact-close");
     firstField?.focus();
