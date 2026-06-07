@@ -3,7 +3,7 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.">
+          <meta name="description" content="FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, Tater Voice firmware, voice tuning, Hydra runtime stats, and Redis operations.">
           <title>Tater Assistant | WebUI</title>
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
@@ -21,6 +21,7 @@
 <a class="nav-link" href="../install/index.html">Install</a>
 <a class="nav-link" href="../cerberus/index.html">Hydra</a>
 <a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
 <a class="nav-link" href="../llms/index.html">LLMs</a>
 <a class="nav-link" href="../api/index.html">API</a>
 <a class="nav-link is-active" href="../portals/index.html">Portals</a>
@@ -38,7 +39,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Portal profile</span>
         <h1>WebUI</h1>
-        <p>FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.</p>
+        <p>FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, Tater Voice firmware, voice tuning, Hydra runtime stats, and Redis operations.</p>
         <div class="chip-row">
           <span class="chip">Operator console</span>
           <span class="chip">Bundled</span>
@@ -62,7 +63,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.</li><li>Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.</li><li>Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.</li><li>First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.</li><li>Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.</li><li>Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.</li><li>The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.</li><li>Integrations now have a Store/Manage split: Store downloads optional modules, Manage enables/disables installed modules, and Setup refreshes available provider settings.</li><li>The integration runtime restores missing enabled integrations at boot and keeps disabled integrations unimported.</li><li>Web search providers are modular integrations, with SearXNG, Brave Search, Google Custom Search, and Serper available from the integration catalog.</li><li>Hugging Face token storage moved into the modular integration catalog so automatic model downloads can use authenticated Hub requests when enabled.</li><li>Settings -&gt; People creates master users that can link portal accounts, WebUI identities, and Tater Voice identities into one person record.</li><li>WebUI password login can be enabled from Settings -&gt; General and uses cookie-backed sessions.</li></ul>
+          <ul class="stack-list"><li>Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.</li><li>Hosts private chat, Verba browsing, settings, Tater Voice firmware management, and runtime controls in one place.</li><li>Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.</li><li>First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.</li><li>Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.</li><li>Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.</li><li>The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.</li><li>Integrations now have a Store/Manage split: Store downloads optional modules, Manage enables/disables installed modules, and Setup refreshes available provider settings.</li><li>The integration runtime restores missing enabled integrations at boot and keeps disabled integrations unimported.</li><li>Web search providers are modular integrations, with SearXNG, Brave Search, Google Custom Search, and Serper available from the integration catalog.</li><li>Hugging Face token storage moved into the modular integration catalog so automatic model downloads can use authenticated Hub requests when enabled.</li><li>Settings -&gt; People creates master users that can link portal accounts, WebUI identities, and Tater Voice identities into one person record.</li><li>WebUI password login can be enabled from Settings -&gt; General and uses cookie-backed sessions.</li></ul>
         </article>
       </div>
     </section>
@@ -120,7 +121,7 @@
           <div class="chip-row"><span class="chip">Discovery</span><span class="chip">Portals</span><span class="chip">Speaker ID</span></div>
           <h3>Discovered identities</h3>
           <p>The People panel can surface identities Tater has seen but not yet linked.</p>
-          <ul class="stack-list"><li>Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and ESPHome Speaker ID aliases.</li><li>Operators can attach a discovered identity to an existing master user or create a new master user first.</li><li>Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.</li></ul>
+          <ul class="stack-list"><li>Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and Tater Voice Speaker ID aliases.</li><li>Operators can attach a discovered identity to an existing master user or create a new master user first.</li><li>Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.</li></ul>
 
         </article>
 
@@ -150,7 +151,7 @@
                 <span class="chip">/api/settings/people</span>
               </div>
               <h3>Load People settings, master users, and discovered identity rows.</h3>
-              <p>Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and ESPHome Speaker ID.</p>
+              <p>Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and Tater Voice Speaker ID.</p>
             </article>
 
             <article class="tool-card">

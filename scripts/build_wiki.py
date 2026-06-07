@@ -537,7 +537,7 @@ PLUGIN_OVERRIDES = {
             {
                 "title": "Flash the right Voice PE firmware first",
                 "summary": "This plugin expects a Voice PE build that exposes the remote timer entities in Home Assistant.",
-                "chips": ["Voice PE", "ESPHome", "Required firmware"],
+                "chips": ["Voice PE", "Tater Voice", "Required firmware"],
                 "details": [
                     "Before using this plugin, flash your Voice PE with the Tater timer configuration so the expected timer entities exist in Home Assistant.",
                     "The plugin works against entity patterns such as number.voicepe_*_remote_timer_seconds, button.voicepe_*_remote_timer_start, button.voicepe_*_remote_timer_cancel, sensor.voicepe_*_remote_timer_remaining_seconds, and binary_sensor.voicepe_*_remote_timer_running.",
@@ -623,13 +623,13 @@ CORE_DOCS_ORDER = [
 PLATFORM_DOCS = {
     "webui": {
         "label": "WebUI",
-        "description": "FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, ESPHome firmware, voice tuning, Hydra runtime stats, and Redis operations.",
+        "description": "FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, Tater Voice firmware, voice tuning, Hydra runtime stats, and Redis operations.",
         "role": "Operator console",
         "source": None,
         "plugin_surface": "webui",
         "highlights": [
             "Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.",
-            "Hosts private chat, Verba browsing, settings, ESPHome firmware management, and runtime controls in one place.",
+            "Hosts private chat, Verba browsing, settings, Tater Voice firmware management, and runtime controls in one place.",
             "Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.",
             "First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.",
             "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
@@ -671,7 +671,7 @@ PLATFORM_DOCS = {
                 "summary": "The People panel can surface identities Tater has seen but not yet linked.",
                 "chips": ["Discovery", "Portals", "Speaker ID"],
                 "details": [
-                    "Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and ESPHome Speaker ID aliases.",
+                    "Tater discovers candidate identities from recent WebUI users, portal history, Memory Core identity docs, and Tater Voice Speaker ID aliases.",
                     "Operators can attach a discovered identity to an existing master user or create a new master user first.",
                     "Manual links keep matching explicit, which is safer than guessing when multiple people share devices or rooms.",
                 ],
@@ -692,7 +692,7 @@ PLATFORM_DOCS = {
                 "method": "GET",
                 "path": "/api/settings/people",
                 "summary": "Load People settings, master users, and discovered identity rows.",
-                "details": "Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and ESPHome Speaker ID.",
+                "details": "Returns summary metrics, saved people, linked aliases, and discovered identities from WebUI, portals, Memory Core, and Tater Voice Speaker ID.",
             },
             {
                 "method": "POST",
@@ -990,13 +990,13 @@ PLATFORM_DOCS = {
     },
     "esphome": {
         "label": "Tater Voice",
-        "description": "Tater Voice device runtime built on ESPHome for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
+        "description": "Tater Voice device runtime for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
         "role": "Native device runtime",
         "source": None,
         "plugin_surface": "voice_core",
         "hero_eyebrow": "Tater Voice",
         "hero_panel_eyebrow": "What it powers",
-        "hero_panel_text": "ESPHome is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote openWakeWord and NanoWakeWord detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> ESPHome.",
+        "hero_panel_text": "Tater Voice is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote openWakeWord and NanoWakeWord detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> Tater Voice.",
         "role_eyebrow": "Why it matters",
         "role_title": "What Tater Voice unlocks",
         "role_text": "Tater now owns the Tater Voice device experience directly: discovery, room-aware voice sessions, remote wake detection, intercom sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
@@ -1008,16 +1008,16 @@ PLATFORM_DOCS = {
         "settings_title": "How operators use it in Tater",
         "highlights": [
             "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
-            "Settings -> ESPHome now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
+            "Settings -> Tater Voice now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
             "Wake engine controls support device-local microWakeWord, remote openWakeWord, and remote NanoWakeWord with per-device server URLs, so switching can stay on the satellite while Tater or a standalone wake server handles detection.",
             "Remote openWakeWord keeps a live WebSocket stream to Tater's /api/openwakeword/stream endpoint, uses model threshold, patience, and debounce tuning, and falls back to microWakeWord on firmware when the remote server is unavailable.",
             "Remote NanoWakeWord uses the same satellite streaming pattern through /api/nanowakeword/stream, can run custom .onnx/.pt/.pth models downloaded from the NanoWakeWord trainer, and resets in-memory detectors after trainer downloads so replacement models load on the next stream.",
             "Room-level wake arbitration keeps two satellites in the same room from running simultaneous turns, holding the room through STT, TTS, and follow-up mic reopen windows.",
-            "Voice intercom flows let Tater broadcast or target spoken messages across ESPHome satellites while preserving the normal voice pipeline and auto-reply behavior.",
+            "Voice intercom flows let Tater broadcast or target spoken messages across Tater Voice satellites while preserving the normal voice pipeline and auto-reply behavior.",
             "The firmware tab supports Tater VoicePE, Tater Sat1, and Tater S3Box Display targets, including device images, editable substitutions, Environment Core sensor dropdowns, reply playback options, update checks, and per-device update actions.",
             "Browser USB flashing and USB logs let operators recover ESP32 devices from the browser, choose the USB device before building, erase flash for safe-mode recovery, and watch logs after flashing.",
             "Tater S3Box Display firmware uses LVGL for Tater-themed status, weather bubbles, history bars, voice states, tool-call states, display brightness, and camera snapshot notifications.",
-            "Display feed and display event APIs let apps send compact sensor values, transient cards, camera snapshots, doorbell notices, and tool-progress states to ESPHome screens.",
+            "Display feed and display event APIs let apps send compact sensor values, transient cards, camera snapshots, doorbell notices, and tool-progress states to Tater Voice screens.",
             "Shared speech backends live in Settings -> Models, with Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, and Home Assistant announcement TTS available where they make sense.",
             "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding models.",
             "Speaker ID and Emotion ID can warm SpeechBrain models at startup and feed speaker/tone context into voice turns when enabled.",
@@ -1029,21 +1029,21 @@ PLATFORM_DOCS = {
         "guides": [
             {
                 "title": "Tater Voice runtime",
-                "summary": "ESPHome is no longer a shop core. It is part of the main Tater app and starts with Tater.",
+                "summary": "Tater Voice is no longer a shop core. It is part of the main Tater app and starts with Tater.",
                 "chips": ["Built in", "One app", "Main port"],
                 "details": [
-                    "The old external voice runtime has been folded into Tater's built-in ESPHome runtime so the voice stack no longer depends on a separate downloadable core or its own HTTP listener.",
+                    "The old external voice runtime has been folded into Tater's built-in Tater Voice runtime so the voice stack no longer depends on a separate downloadable core or its own HTTP listener.",
                     "That keeps the device lifecycle simpler: discovery, session handling, playback URLs, and operator screens now all live inside the same main application.",
-                    "This built-in shape also leaves room for future ESPHome device types beyond the current voice-pipeline hardware.",
+                    "This built-in shape also leaves room for future Tater Voice device types beyond the current voice-pipeline hardware.",
                 ],
             },
             {
                 "title": "Firmware manager and browser recovery",
-                "summary": "Tater can build, flash, recover, and log ESPHome firmware from the WebUI.",
+                "summary": "Tater can build, flash, recover, and log Tater Voice firmware from the WebUI.",
                 "chips": ["Firmware tab", "Browser USB", "Live logs"],
                 "details": [
                     "Firmware templates expose device-specific substitutions with safer controls instead of raw YAML edits for common setup.",
-                    "Browser USB recovery mirrors the familiar ESPHome web flashing flow: choose the USB serial device, build, flash, erase safe-mode state when needed, and stream USB logs.",
+                    "Browser USB recovery mirrors the Tater Voice browser flashing flow: choose the USB serial device, build, flash, erase safe-mode state when needed, and stream USB logs.",
                     "Update checks compare connected Tater devices against the current firmware package, including older flashed satellites that do not report a version yet.",
                     "Per-device update buttons and Update All run OTA uploads one at a time and advance only after each upload finishes.",
                     "OTA and USB log windows use the same Tater firmware session UI so operators can debug failed boots without leaving the app.",
@@ -1067,7 +1067,7 @@ PLATFORM_DOCS = {
                     "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, Piper, or external announcement paths.",
                     "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding speech models.",
                     "Hugging Face tokens saved in Integrations are passed into model download environments for speech models that need authenticated Hub access.",
-                    "Shared model choices live in Settings -> Models, while satellite behavior, wake words, reply playback, Speaker ID, and Emotion ID live under Settings -> ESPHome.",
+                    "Shared model choices live in Settings -> Models, while satellite behavior, wake words, reply playback, Speaker ID, and Emotion ID live under Settings -> Tater Voice.",
                     "The mic reopen path keeps follow-up turns room-aware after TTS finishes, without letting another satellite in the same room start a competing turn.",
                 ],
             },
@@ -1110,13 +1110,13 @@ PLATFORM_DOCS = {
             },
             {
                 "title": "Voice intercom",
-                "summary": "Tater can use ESPHome satellites as targeted room intercom endpoints.",
+                "summary": "Tater can use Tater Voice satellites as targeted room intercom endpoints.",
                 "chips": ["Intercom", "Rooms", "Announcements"],
                 "details": [
                     "Intercom requests resolve Tater device names, rooms, and speaking targets before generating or routing the spoken message.",
                     "Announcements use the same speech backends and playback routing as normal assistant replies, so external media players and satellite speakers stay consistent.",
                     "Auto-reply and follow-up behavior can reopen the mic after the intercom message when the selected conversation flow calls for it.",
-                    "The flow shares native ESPHome session tracking, so LED/display states and room arbitration stay aligned with normal voice turns.",
+                    "The flow shares native Tater Voice session tracking, so LED/display states and room arbitration stay aligned with normal voice turns.",
                 ],
             },
             {
@@ -1129,7 +1129,7 @@ PLATFORM_DOCS = {
                     "Emotion ID is separate from Speaker ID: it classifies the user's tone after STT and can add a soft prompt hint when enabled, confident enough, and not filtered as neutral.",
                     "Both features are optional, and normal voice turns still work when either model is disabled, missing, warming, or unable to make a confident detection.",
                     "The Dashboard voice section shows last detection information so operators can see Speaker ID and Emotion ID behavior without digging through logs.",
-                    "Settings -> ESPHome contains the SpeechBrain model controls, enable/disable toggles, confidence thresholds, neutral-tone handling, enrollment controls, and warmup actions.",
+                    "Settings -> Tater Voice contains the SpeechBrain model controls, enable/disable toggles, confidence thresholds, neutral-tone handling, enrollment controls, and warmup actions.",
                     "Speaker ID and Emotion ID models are stored under agent_lab/models so container rebuilds keep the downloaded model cache when agent_lab is bind-mounted.",
                     "In the NVIDIA image, SpeechBrain models can use CUDA when configured, with CPU fallback if the GPU path is unavailable.",
                 ],
@@ -1149,14 +1149,14 @@ PLATFORM_DOCS = {
                 "summary": "The Tater Voice screen now separates devices, settings, and stats so tuning is based on real behavior instead of guesswork.",
                 "chips": ["Satellites", "Stats", "Live logs"],
                 "details": [
-                    "Satellites shows discovered devices, saved room assignments, live entity state, device facts, and an ESPHome-style live log console.",
+                    "Satellites shows discovered devices, saved room assignments, live entity state, device facts, and a Tater Voice live log console.",
                     "Stats surfaces wake behavior, no-op rates, false wakes, backend latency, fallback usage, and per-device voice summaries for tuning.",
                     "Writable entity controls are available inline for things like switches, lights, numbers, buttons, and select options.",
                 ],
             },
             {
                 "title": "Tater Voice Extras",
-                "summary": "Tune the higher-level voice behavior that sits around the standard ESPHome pipeline.",
+                "summary": "Tune the higher-level voice behavior that sits around the standard Tater Voice pipeline.",
                 "chips": ["Conversation flow", "Live progress", "Early TTS"],
                 "details": [
                     "Conversation Flow controls follow-up behavior, automatic mic reopen, external-player follow-up markers, and how long Tater keeps a room ready for the next turn.",
@@ -1175,14 +1175,14 @@ PLATFORM_DOCS = {
             {
                 "method": "GET",
                 "path": "/api/settings/esphome/runtime",
-                "summary": "Load the Tater Voice runtime view used by Settings -> ESPHome.",
+                "summary": "Load the Tater Voice runtime view used by Settings -> Tater Voice.",
                 "details": "Returns the current Satellites, Settings, and Stats payload so the WebUI can render discovery state, device cards, voice metrics, and runtime controls.",
             },
             {
                 "method": "POST",
                 "path": "/api/settings/esphome/runtime/action",
                 "summary": "Run a Tater Voice runtime action from the WebUI.",
-                "details": "Handles refresh, connect/disconnect, save/forget satellite actions, live log lifecycle, and direct entity-control actions from the ESPHome settings screen.",
+                "details": "Handles refresh, connect/disconnect, save/forget satellite actions, live log lifecycle, and direct entity-control actions from the Tater Voice settings screen.",
             },
             {
                 "method": "GET",
@@ -1217,25 +1217,25 @@ PLATFORM_DOCS = {
             {
                 "method": "POST",
                 "path": "/tater-ha/v1/voice/esphome/entities",
-                "summary": "Fetch live ESPHome entity rows for one connected satellite.",
+                "summary": "Fetch live Tater Voice entity rows for one connected satellite.",
                 "details": "Returns the live entity snapshot so verbas and operators can inspect sensors, buttons, numbers, switches, lights, wake-engine controls, openWakeWord/NanoWakeWord URL state, and other exposed device entities.",
             },
             {
                 "method": "POST",
                 "path": "/tater-ha/v1/voice/esphome/entities/command",
-                "summary": "Command a writable ESPHome entity on one satellite.",
+                "summary": "Command a writable Tater Voice entity on one satellite.",
                 "details": "Supports button, number, switch, select, text, and light-control actions so device-local flows can act directly on the speaking device.",
             },
             {
                 "method": "POST",
                 "path": "/tater-ha/v1/voice/esphome/play",
-                "summary": "Queue direct audio playback on a selected ESPHome satellite.",
+                "summary": "Queue direct audio playback on a selected Tater Voice satellite.",
                 "details": "Used for device-local playback flows such as announcements, generated audio, and other responses that should play on the speaking satellite itself.",
             },
             {
                 "method": "GET/POST",
                 "path": "/tater-ha/v1/display/feed",
-                "summary": "Serve compact display sensor data for ESPHome screens.",
+                "summary": "Serve compact display sensor data for Tater Voice screens.",
                 "details": "Returns display-ready slot values, flat readings, text labels, online state, and clock data; firmware profiles can map slots to Environment Core readings instead of hard-coded Home Assistant entity IDs.",
             },
             {
@@ -1254,7 +1254,7 @@ PLATFORM_DOCS = {
                 "method": "GET",
                 "path": "/tater-ha/v1/display/snapshots/{snapshot_id}",
                 "summary": "Serve Redis-backed awareness snapshots to displays.",
-                "details": "Allows ESPHome displays to show camera snapshots that were stored by Awareness Core, using the same display API token rules as the feed and event endpoints.",
+                "details": "Allows Tater Voice displays to show camera snapshots that were stored by Awareness Core, using the same display API token rules as the feed and event endpoints.",
             },
         ],
     },
@@ -1426,7 +1426,7 @@ PLATFORM_META = {
 }
 PLATFORM_META["voice_core"] = {
     "label": "Tater Voice",
-    "description": "Tater Voice runtime built on ESPHome, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
+    "description": "Tater Voice runtime, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
 }
 
 INSTALL_METHODS = [
@@ -1478,7 +1478,7 @@ INSTALL_METHODS = [
         ],
         "notes": [
             "Awareness automations now run in Awareness Core inside Tater rather than a separate automation bridge endpoint.",
-            "Dashboard briefs, environment summaries, awareness snapshots, and ESPHome display notifications are now Tater-native surfaces.",
+            "Dashboard briefs, environment summaries, awareness snapshots, and Tater Voice display notifications are now Tater-native surfaces.",
             "Companion and smart-home routes can use the shared X-Tater-Token header when API auth is enabled.",
         ],
         "snippets": [
@@ -2419,6 +2419,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
         ("install", "Install", f"{base}install/index.html"),
         ("cerberus", "Hydra", f"{base}cerberus/index.html"),
         ("spudex", "Spudex", f"{base}spudex/index.html"),
+        ("spud-hub", "Spud Hub", f"{base}spud-hub/index.html"),
         ("llms", "LLMs", f"{base}llms/index.html"),
         ("api", "API", f"{base}api/index.html"),
         ("portals", "Portals", f"{base}portals/index.html"),
@@ -2482,6 +2483,94 @@ def button(label: str, href: str, ghost: bool = False) -> str:
     return f'<a class="{class_name}" href="{href}">{escape(label)}</a>'
 
 
+def format_bytes(value: int) -> str:
+    size = float(max(0, int(value or 0)))
+    units = ["B", "KB", "MB", "GB"]
+    for unit in units:
+        if size < 1024 or unit == units[-1]:
+            if unit == "B":
+                return f"{int(size)} {unit}"
+            return f"{size:.1f} {unit}"
+        size /= 1024.0
+    return f"{int(value or 0)} B"
+
+
+def load_macos_release() -> dict[str, str]:
+    manifest_path = TATER_DIR / "macos" / "Tater" / "update-manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(manifest, dict):
+        return {}
+
+    version = str(manifest.get("version") or "").strip()
+    build = str(manifest.get("build") or "").strip()
+    zip_url = str(manifest.get("url") or "").strip()
+    sha256 = str(manifest.get("sha256") or "").strip()
+    notes = str(manifest.get("notes") or "").strip()
+    if not version or not zip_url:
+        return {}
+
+    version_label = version if version.lower().startswith("v") else f"v{version}"
+    dmg_url = zip_url[:-4] + ".dmg" if zip_url.lower().endswith(".zip") else zip_url
+    dmg_path = manifest_path.parent / "releases" / f"Tater-{version_label}.dmg"
+    zip_path = manifest_path.parent / "releases" / f"Tater-{version_label}.zip"
+    dmg_size = format_bytes(dmg_path.stat().st_size) if dmg_path.exists() else ""
+    zip_size = format_bytes(zip_path.stat().st_size) if zip_path.exists() else ""
+
+    return {
+        "version": version,
+        "version_label": version_label,
+        "build": build,
+        "zip_url": zip_url,
+        "dmg_url": dmg_url,
+        "sha256": sha256,
+        "notes": notes,
+        "dmg_size": dmg_size,
+        "zip_size": zip_size,
+    }
+
+
+def render_macos_release_card() -> str:
+    release = load_macos_release()
+    if not release:
+        return ""
+    version_label = release["version_label"]
+    build = release.get("build") or release["version"]
+    dmg_size = release.get("dmg_size") or "DMG"
+    notes = release.get("notes") or f"Tater macOS release {version_label}."
+    sha_short = release.get("sha256", "")[:12]
+
+    return f"""
+    <section class="release-card" aria-label="Latest macOS app release">
+      <aside class="release-visual" aria-hidden="true">
+        <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
+      </aside>
+      <div class="release-copy">
+        <span class="eyebrow">Mac app release</span>
+        <h2>Tater {escape(version_label)} is ready for macOS.</h2>
+        <p>
+          Download the native Tater server app with the menu bar icon, private runtime,
+          first-run setup, and automatic update checks.
+        </p>
+        <p>{escape(notes)}</p>
+        <div class="chip-row">
+          {chip(f"Release {version_label}")}
+          {chip(f"Build {build}")}
+          {chip(dmg_size)}
+          {chip("Auto-updates")}
+        </div>
+        <div class="action-row">
+          <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
+          <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
+        </div>
+        <small class="release-meta">Pulled from the Tater update manifest{escape(f" • SHA {sha_short}" if sha_short else "")}.</small>
+      </div>
+    </section>
+    """
+
+
 def render_platform_badges(platforms: list[str]) -> str:
     visible_platforms = clean_platforms(platforms)
     if not visible_platforms:
@@ -2493,7 +2582,7 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
     if platform["slug"] == "webui":
         return "Configured in app"
     if platform["slug"] == "esphome":
-        return "Settings -> ESPHome"
+        return "Settings -> Tater Voice"
     if platform.get("has_settings_schema"):
         if int(platform["setting_count"]) == 0:
             return "No required fields"
@@ -2546,7 +2635,7 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "ESPHome is configured through Settings -> ESPHome for Satellites, Settings, Stats, firmware, wake engine, openWakeWord URL, NanoWakeWord URL, intercom, and Tater Voice Extras. "
+            "Tater Voice is configured through Settings -> Tater Voice for Satellites, Settings, Stats, firmware, wake engine, openWakeWord URL, NanoWakeWord URL, intercom, and Tater Voice Extras. "
             "Shared STT/TTS, VAD, speaker/emotion ID, openWakeWord model choices, and NanoWakeWord model choices live in Settings -> Models. "
             "Firmware builds, browser recovery, update checks, live logs, display control, voice settings, and wake-word capture toggles live in the same native UI."
         )
@@ -2567,7 +2656,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "Tater Voice is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native ESPHome room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
+            "Tater Voice is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native Tater Voice room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
         )
     if platform["slug"] == "ai_task":
         return (
@@ -2635,6 +2724,7 @@ def render_home_page(
           {button("Integrations", "integrations/index.html")}
           {button("Local LLMs", "llms/index.html")}
           {button("OpenAI API", "api/index.html")}
+          {button("Spud Hub", "spud-hub/index.html")}
           {button("Tater Voice", "tater-voice/index.html")}
           {button("Explore Verbas", "plugins/index.html")}
           {button("Read Hydra", "cerberus/index.html")}
@@ -2654,6 +2744,8 @@ def render_home_page(
       </div>
     </section>
     """
+
+    macos_release = render_macos_release_card()
 
     mascot_intro = """
     <section class="section mascot-band">
@@ -2711,7 +2803,7 @@ def render_home_page(
         ),
         (
             "Tater Voice",
-            "ESPHome is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, remote NanoWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
+            "Tater Voice is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, remote NanoWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
         ),
         (
             "Tater S3Box displays",
@@ -2719,7 +2811,7 @@ def render_home_page(
         ),
         (
             "Firmware recovery",
-            "The ESPHome firmware tab supports browser USB flashing, USB device selection, OTA and USB logs, and safe-mode recovery erases for ESP32 devices.",
+            "The Tater Voice firmware tab supports browser USB flashing, USB device selection, OTA and USB logs, and safe-mode recovery erases for ESP32 devices.",
         ),
         (
             "Voice identity and tone",
@@ -2731,7 +2823,7 @@ def render_home_page(
         ),
         (
             "Display notifications",
-            "Tater apps and cores can publish display events with text, images, snapshots, and tool-progress metadata to targeted ESPHome screens.",
+            "Tater apps and cores can publish display events with text, images, snapshots, and tool-progress metadata to targeted Tater Voice screens.",
         ),
         (
             "Remote wake and intercom",
@@ -2917,6 +3009,7 @@ def render_home_page(
 
     body = f"""
     {hero}
+    {macos_release}
     {mascot_intro}
     <section class="section">
       <div class="section-head">
@@ -2985,6 +3078,7 @@ def render_llms_page() -> str:
         <p>WebUI Settings -&gt; Models, Hugging Face, and Advanced.</p>
         <div class="action-row">
           <a class="button button-ghost" href="../api/index.html">OpenAI API docs</a>
+          <a class="button button-ghost" href="../spud-hub/index.html">Spud Hub docs</a>
         </div>
       </aside>
     </section>
@@ -3128,6 +3222,7 @@ def render_llms_page() -> str:
     <section class="section">
       <div class="action-row">
         <a class="button" href="../api/index.html">OpenAI-compatible API</a>
+        <a class="button button-ghost" href="../spud-hub/index.html">Spud Hub</a>
         <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
         <a class="button button-ghost" href="../integrations/huggingface.html">Hugging Face integration</a>
         <a class="button button-ghost" href="../index.html">Home</a>
@@ -3140,6 +3235,175 @@ def render_llms_page() -> str:
         body=body,
         depth=1,
         nav_key="llms",
+    )
+
+
+def render_spud_hub_page() -> str:
+    body = """
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Spud Link</span>
+        <h1>Spud Hub links Tater nodes with a native Tater protocol.</h1>
+        <p>
+          Spud Hub lets one full Tater install become the main model and tool server for paired Spudlets
+          and Little Spud clients. Pairing uses a QR code or manual sync code, then each linked device
+          receives a saved node token for native Tater API calls.
+        </p>
+        <div class="chip-row">
+          <span class="chip">QR pairing</span>
+          <span class="chip">Manual code</span>
+          <span class="chip">Native Tater API</span>
+          <span class="chip">Spudlet</span>
+          <span class="chip">Little Spud</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Where to configure</span>
+        <p>Open WebUI Settings -&gt; Spud Hub to enable Hub or Spudlet mode, create pairing codes, link devices, and revoke nodes.</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../llms/index.html">Local LLM docs</a>
+          <a class="button button-ghost" href="../api/index.html">API docs</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Roles</span>
+        <h2>One Hub can power full Tater nodes and lightweight clients.</h2>
+        <p>Spud Link has explicit roles so the Hub knows whether the paired device needs raw model calls or full Hydra chat with tools, media, voice, and progress events.</p>
+      </div>
+      <div class="grid grid-3">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Server</span><span class="chip">GPU/model host</span></div>
+          <h3>Spud Hub</h3>
+          <p>The main Tater install. It owns the configured local or remote model stack, Hydra, Verbas, People records, history, TTS/STT settings, and linked-node management.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Full Tater</span><span class="chip">Borrowed model power</span></div>
+          <h3>Spudlet</h3>
+          <p>A full Tater node that pairs to the Hub. In Spudlet mode its Base model becomes <strong>Spudlet via Spud Hub</strong>, so LLM calls route through the Hub instead of local model settings.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Light client</span><span class="chip">Hydra chat</span></div>
+          <h3>Little Spud</h3>
+          <p>A lightweight chat client that sends user name and device name to the Hub, then receives native Tater chat events, tool notices, artifacts, TTS/STT behavior, and follow-up mic decisions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Pairing flow</span>
+          <h2>QR code or manual sync code</h2>
+          <p>The Hub creates a temporary pairing code and encodes the connection details into a Tater Spud Link QR payload. Clients can scan it or paste the manual code with the Hub URL.</p>
+          <ul class="stack-list">
+            <li>The QR payload includes the Hub URL, pair URL, temporary pairing code, allowed roles, Hub name, and expiration time.</li>
+            <li>A camera-capable client can scan the QR code. Clients without a camera can paste the manual pairing code and Tater URL.</li>
+            <li>When pairing succeeds, the Hub returns a node token. Future requests use that token through <code>Authorization: Bearer</code> and <code>X-Spudlink-Token</code>.</li>
+            <li>The Hub stores only token hashes for linked nodes and never shows the node token back after pairing.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Linked devices</span>
+          <h2>Hub-side visibility and revoke</h2>
+          <p>Spud Hub keeps a live list of linked nodes so operators can see what is connected and remove access when needed.</p>
+          <ul class="stack-list">
+            <li>Linked-node rows include role, node/device name, remote network information, last activity, and sanitized activity details.</li>
+            <li>Little Spud clients pass user and device information so history can be scoped like <code>little_spud:user:device</code> and mapped later in People.</li>
+            <li>The revoke button removes a node from the Hub. The client must pair again to regain access.</li>
+            <li>Heartbeat calls let the Hub show connection/activity state even when the client is not actively chatting.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Native protocol</span>
+        <h2>Spud Link is not the OpenAI-compatible API.</h2>
+        <p>Spud Link uses Tater-native endpoints because Tater needs more than plain chat completions: tool progress, generated media, active-run status, TTS, STT, follow-up mic decisions, identity, and linked-device telemetry.</p>
+      </div>
+      <div class="responsive-table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Endpoint</th><th>Used by</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>POST /api/spudlink/pairing-code</code></td><td>Hub WebUI</td><td>Creates a temporary pairing code plus QR payload for Spudlets and Little Spuds.</td></tr>
+            <tr><td><code>POST /api/spudlink/pair</code></td><td>Clients</td><td>Exchanges the pairing code for a linked node record and node token.</td></tr>
+            <tr><td><code>POST /api/spudlink/heartbeat</code></td><td>Clients</td><td>Updates device presence, role, metadata, and current activity on the Hub.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tater/llm</code></td><td>Spudlets</td><td>Runs native raw model calls on the Hub for a paired full Tater node.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tater/chat</code></td><td>Little Spud</td><td>Streams Hydra chat events, tool notices, final text, artifacts, and follow-up decisions.</td></tr>
+            <tr><td><code>GET /api/spudlink/v1/history</code></td><td>Little Spud</td><td>Fetches scoped chat history and active-run state for reconnects.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tts/speech</code></td><td>Little Spud</td><td>Uses the Hub's configured TTS voice to synthesize reply audio.</td></tr>
+            <tr><td><code>WS /api/spudlink/v1/stt/stream</code></td><td>Little Spud</td><td>Streams microphone audio to server-side STT with VAD-style turn ending.</td></tr>
+            <tr><td><code>GET /api/spudlink/v1/files/{file_id}</code></td><td>Little Spud</td><td>Serves generated images, videos, audio, and other returned artifacts to the paired client.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Spudlet model routing</span>
+          <h2>A full Tater can use the Hub model stack.</h2>
+          <p>When a Tater install is switched to Spudlet mode and paired with a Hub, the Base model dropdown shows <strong>Spudlet via Spud Hub</strong>.</p>
+          <ul class="stack-list">
+            <li>Hydra and normal LLM calls resolve to the Hub's native <code>/api/spudlink/v1/tater/llm</code> endpoint.</li>
+            <li>The Spudlet ignores its internal local LLM rows for Base model routing while paired in Spudlet mode.</li>
+            <li>The Hub still decides which actual model provider runs the call: llama.cpp, Transformers, MLX Engine, or an external provider configured on the Hub.</li>
+            <li>This keeps a lighter machine useful as a full Tater UI/node while the stronger Hub handles GPU and model work.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Little Spud experience</span>
+          <h2>Native chat with Tater-specific events</h2>
+          <p>Little Spud is designed as a lightweight client for phones, tablets, laptops, and future apps. It does not need to run Tater locally.</p>
+          <ul class="stack-list">
+            <li>Tool-call messages are streamed as soon as a tool starts, before the final answer.</li>
+            <li>Generated images and media return as artifacts, so the client can display the file and then animate the reply text below it.</li>
+            <li>TTS can use the Hub's configured voice, and STT can stream microphone audio to the Hub for transcription.</li>
+            <li>If the Hub decides the assistant should keep listening, it tells Little Spud to reopen the mic after the reply text and TTS playback finish.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Network notes</span>
+        <h2>Use matching HTTP/HTTPS paths for browser clients.</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">LAN</span><span class="chip">HTTP</span></div>
+          <h3>Local network pairing</h3>
+          <p>For LAN testing, the QR payload can use the Hub's local HTTP URL such as <code>http://tater.local:8501</code> or an IP address. Browser private-network rules can still require the Hub to allow CORS for Spud Link routes.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Remote</span><span class="chip">HTTPS</span></div>
+          <h3>Reverse proxy and remote use</h3>
+          <p>If Little Spud is opened over HTTPS, the Hub URL should also be HTTPS. Put the Hub behind the same public HTTPS route or configure Public / LAN URL so QR payloads point at the reachable address.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button" href="../llms/index.html">Local LLMs</a>
+        <a class="button button-ghost" href="../api/index.html">OpenAI-compatible API</a>
+        <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Tater Assistant | Spud Hub",
+        description="Spud Hub and Spud Link documentation for native Tater pairing, QR codes, Spudlets, Little Spud clients, node tokens, and native endpoints.",
+        body=body,
+        depth=1,
+        nav_key="spud-hub",
     )
 
 
@@ -3162,6 +3426,7 @@ def render_openai_api_page() -> str:
         <p>Enable the API and set an API key in WebUI Settings -&gt; Advanced before external clients can connect.</p>
         <div class="action-row">
           <a class="button button-ghost" href="../llms/index.html">Local LLM docs</a>
+          <a class="button button-ghost" href="../spud-hub/index.html">Spud Hub docs</a>
         </div>
       </aside>
     </section>
@@ -3292,6 +3557,7 @@ def render_openai_api_page() -> str:
     <section class="section">
       <div class="action-row">
         <a class="button" href="../llms/index.html">Local LLMs</a>
+        <a class="button button-ghost" href="../spud-hub/index.html">Spud Hub</a>
         <a class="button button-ghost" href="../cerberus/index.html">Hydra docs</a>
         <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
         <a class="button button-ghost" href="../index.html">Home</a>
@@ -4650,6 +4916,7 @@ def build() -> None:
     write_page(SITE_ROOT / "cores" / "index.html", render_cores_page(cores))
     write_page(SITE_ROOT / "cerberus" / "index.html", render_cerberus_page(cerberus_defaults))
     write_page(SITE_ROOT / "spudex" / "index.html", render_spudex_page())
+    write_page(SITE_ROOT / "spud-hub" / "index.html", render_spud_hub_page())
     write_page(SITE_ROOT / "llms" / "index.html", render_llms_page())
     write_page(SITE_ROOT / "api" / "index.html", render_openai_api_page())
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
@@ -4661,6 +4928,7 @@ def build() -> None:
     cleanup_section_pages(SITE_ROOT / "tater-voice", [])
     cleanup_section_pages(SITE_ROOT / "esphome", [])
     cleanup_section_pages(SITE_ROOT / "spudex", [])
+    cleanup_section_pages(SITE_ROOT / "spud-hub", [])
     cleanup_section_pages(SITE_ROOT / "llms", [])
     cleanup_section_pages(SITE_ROOT / "api", [])
     cleanup_section_pages(SITE_ROOT / "cores", [core["slug"] for core in cores])

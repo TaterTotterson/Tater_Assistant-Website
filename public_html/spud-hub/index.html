@@ -1,0 +1,205 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Spud Hub and Spud Link documentation for native Tater pairing, QR codes, Spudlets, Little Spud clients, node tokens, and native endpoints.">
+          <title>Tater Assistant | Spud Hub</title>
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="spud-hub">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link is-active" href="../spud-hub/index.html">Spud Hub</a>
+<a class="nav-link" href="../llms/index.html">LLMs</a>
+<a class="nav-link" href="../api/index.html">API</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Spud Link</span>
+        <h1>Spud Hub links Tater nodes with a native Tater protocol.</h1>
+        <p>
+          Spud Hub lets one full Tater install become the main model and tool server for paired Spudlets
+          and Little Spud clients. Pairing uses a QR code or manual sync code, then each linked device
+          receives a saved node token for native Tater API calls.
+        </p>
+        <div class="chip-row">
+          <span class="chip">QR pairing</span>
+          <span class="chip">Manual code</span>
+          <span class="chip">Native Tater API</span>
+          <span class="chip">Spudlet</span>
+          <span class="chip">Little Spud</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Where to configure</span>
+        <p>Open WebUI Settings -&gt; Spud Hub to enable Hub or Spudlet mode, create pairing codes, link devices, and revoke nodes.</p>
+        <div class="action-row">
+          <a class="button button-ghost" href="../llms/index.html">Local LLM docs</a>
+          <a class="button button-ghost" href="../api/index.html">API docs</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Roles</span>
+        <h2>One Hub can power full Tater nodes and lightweight clients.</h2>
+        <p>Spud Link has explicit roles so the Hub knows whether the paired device needs raw model calls or full Hydra chat with tools, media, voice, and progress events.</p>
+      </div>
+      <div class="grid grid-3">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Server</span><span class="chip">GPU/model host</span></div>
+          <h3>Spud Hub</h3>
+          <p>The main Tater install. It owns the configured local or remote model stack, Hydra, Verbas, People records, history, TTS/STT settings, and linked-node management.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Full Tater</span><span class="chip">Borrowed model power</span></div>
+          <h3>Spudlet</h3>
+          <p>A full Tater node that pairs to the Hub. In Spudlet mode its Base model becomes <strong>Spudlet via Spud Hub</strong>, so LLM calls route through the Hub instead of local model settings.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Light client</span><span class="chip">Hydra chat</span></div>
+          <h3>Little Spud</h3>
+          <p>A lightweight chat client that sends user name and device name to the Hub, then receives native Tater chat events, tool notices, artifacts, TTS/STT behavior, and follow-up mic decisions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Pairing flow</span>
+          <h2>QR code or manual sync code</h2>
+          <p>The Hub creates a temporary pairing code and encodes the connection details into a Tater Spud Link QR payload. Clients can scan it or paste the manual code with the Hub URL.</p>
+          <ul class="stack-list">
+            <li>The QR payload includes the Hub URL, pair URL, temporary pairing code, allowed roles, Hub name, and expiration time.</li>
+            <li>A camera-capable client can scan the QR code. Clients without a camera can paste the manual pairing code and Tater URL.</li>
+            <li>When pairing succeeds, the Hub returns a node token. Future requests use that token through <code>Authorization: Bearer</code> and <code>X-Spudlink-Token</code>.</li>
+            <li>The Hub stores only token hashes for linked nodes and never shows the node token back after pairing.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Linked devices</span>
+          <h2>Hub-side visibility and revoke</h2>
+          <p>Spud Hub keeps a live list of linked nodes so operators can see what is connected and remove access when needed.</p>
+          <ul class="stack-list">
+            <li>Linked-node rows include role, node/device name, remote network information, last activity, and sanitized activity details.</li>
+            <li>Little Spud clients pass user and device information so history can be scoped like <code>little_spud:user:device</code> and mapped later in People.</li>
+            <li>The revoke button removes a node from the Hub. The client must pair again to regain access.</li>
+            <li>Heartbeat calls let the Hub show connection/activity state even when the client is not actively chatting.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Native protocol</span>
+        <h2>Spud Link is not the OpenAI-compatible API.</h2>
+        <p>Spud Link uses Tater-native endpoints because Tater needs more than plain chat completions: tool progress, generated media, active-run status, TTS, STT, follow-up mic decisions, identity, and linked-device telemetry.</p>
+      </div>
+      <div class="responsive-table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Endpoint</th><th>Used by</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>POST /api/spudlink/pairing-code</code></td><td>Hub WebUI</td><td>Creates a temporary pairing code plus QR payload for Spudlets and Little Spuds.</td></tr>
+            <tr><td><code>POST /api/spudlink/pair</code></td><td>Clients</td><td>Exchanges the pairing code for a linked node record and node token.</td></tr>
+            <tr><td><code>POST /api/spudlink/heartbeat</code></td><td>Clients</td><td>Updates device presence, role, metadata, and current activity on the Hub.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tater/llm</code></td><td>Spudlets</td><td>Runs native raw model calls on the Hub for a paired full Tater node.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tater/chat</code></td><td>Little Spud</td><td>Streams Hydra chat events, tool notices, final text, artifacts, and follow-up decisions.</td></tr>
+            <tr><td><code>GET /api/spudlink/v1/history</code></td><td>Little Spud</td><td>Fetches scoped chat history and active-run state for reconnects.</td></tr>
+            <tr><td><code>POST /api/spudlink/v1/tts/speech</code></td><td>Little Spud</td><td>Uses the Hub's configured TTS voice to synthesize reply audio.</td></tr>
+            <tr><td><code>WS /api/spudlink/v1/stt/stream</code></td><td>Little Spud</td><td>Streams microphone audio to server-side STT with VAD-style turn ending.</td></tr>
+            <tr><td><code>GET /api/spudlink/v1/files/{file_id}</code></td><td>Little Spud</td><td>Serves generated images, videos, audio, and other returned artifacts to the paired client.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Spudlet model routing</span>
+          <h2>A full Tater can use the Hub model stack.</h2>
+          <p>When a Tater install is switched to Spudlet mode and paired with a Hub, the Base model dropdown shows <strong>Spudlet via Spud Hub</strong>.</p>
+          <ul class="stack-list">
+            <li>Hydra and normal LLM calls resolve to the Hub's native <code>/api/spudlink/v1/tater/llm</code> endpoint.</li>
+            <li>The Spudlet ignores its internal local LLM rows for Base model routing while paired in Spudlet mode.</li>
+            <li>The Hub still decides which actual model provider runs the call: llama.cpp, Transformers, MLX Engine, or an external provider configured on the Hub.</li>
+            <li>This keeps a lighter machine useful as a full Tater UI/node while the stronger Hub handles GPU and model work.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Little Spud experience</span>
+          <h2>Native chat with Tater-specific events</h2>
+          <p>Little Spud is designed as a lightweight client for phones, tablets, laptops, and future apps. It does not need to run Tater locally.</p>
+          <ul class="stack-list">
+            <li>Tool-call messages are streamed as soon as a tool starts, before the final answer.</li>
+            <li>Generated images and media return as artifacts, so the client can display the file and then animate the reply text below it.</li>
+            <li>TTS can use the Hub's configured voice, and STT can stream microphone audio to the Hub for transcription.</li>
+            <li>If the Hub decides the assistant should keep listening, it tells Little Spud to reopen the mic after the reply text and TTS playback finish.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Network notes</span>
+        <h2>Use matching HTTP/HTTPS paths for browser clients.</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">LAN</span><span class="chip">HTTP</span></div>
+          <h3>Local network pairing</h3>
+          <p>For LAN testing, the QR payload can use the Hub's local HTTP URL such as <code>http://tater.local:8501</code> or an IP address. Browser private-network rules can still require the Hub to allow CORS for Spud Link routes.</p>
+        </article>
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Remote</span><span class="chip">HTTPS</span></div>
+          <h3>Reverse proxy and remote use</h3>
+          <p>If Little Spud is opened over HTTPS, the Hub URL should also be HTTPS. Put the Hub behind the same public HTTPS route or configure Public / LAN URL so QR payloads point at the reachable address.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button" href="../llms/index.html">Local LLMs</a>
+        <a class="button button-ghost" href="../api/index.html">OpenAI-compatible API</a>
+        <a class="button button-ghost" href="../portals/webui.html">WebUI docs</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <div class="footer-row">
+                <p>Built from the current Tater source snapshot in this repository.</p>
+                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
+              </div>
+            </footer>
+          </div>
+        </body>
+        </html>
