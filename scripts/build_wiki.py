@@ -3058,6 +3058,135 @@ def render_home_page(
     )
 
 
+def render_little_spud_privacy_page() -> str:
+    body = """
+    <section class="hero hero-subpage">
+      <div class="hero-copy">
+        <span class="eyebrow">Little Spud</span>
+        <h1>Privacy Policy</h1>
+        <p>
+          Little Spud is a companion app for Tater, a local-first assistant platform.
+          It is designed to connect to a Tater instance that you control.
+        </p>
+        <div class="chip-row">
+          <span class="chip">No Little Spud cloud</span>
+          <span class="chip">No ads</span>
+          <span class="chip">No third-party tracking</span>
+          <span class="chip">Local-first</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel">
+        <span class="eyebrow">Effective date</span>
+        <h2>June 17, 2026</h2>
+        <p>This policy covers the Little Spud iOS and iPadOS app.</p>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Data we do not collect</span>
+          <h2>No cloud account, ads, or analytics.</h2>
+          <p>
+            Little Spud does not operate a Little Spud cloud account service,
+            advertising system, analytics service, or third-party tracking system.
+          </p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">On-device storage</span>
+          <h2>Settings stay on your device.</h2>
+          <p>
+            Little Spud stores app settings on your device, including preferences
+            such as notification and TTS settings. Pairing tokens for your Tater
+            instance are stored in the iOS Keychain. Recent chat messages may be
+            stored locally so the app can show conversation history.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Your Tater</span>
+        <h2>Messages go to the Tater URLs you configure.</h2>
+        <p>
+          When you pair Little Spud with Tater, the app sends messages directly
+          to the Tater URLs you configure. Depending on what you choose to do in
+          the app, this may include chat text, voice input audio, voice transcripts,
+          selected media, device name, user name, and app status information needed
+          for pairing, notifications, and sync.
+        </p>
+        <p>
+          This data is sent to your configured Tater instance, not to a Little Spud
+          cloud service.
+        </p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Permissions</span>
+        <h2>Little Spud asks only for the device access needed for app features.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="feature-card">
+          <h3>Camera</h3>
+          <p>Used to scan Tater pairing QR codes.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Microphone</h3>
+          <p>Used for voice input when you choose to speak to Tater.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Local network</h3>
+          <p>Used to connect to your Tater instance on your private network.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Notifications</h3>
+          <p>Used to show local device notifications from your paired Tater.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Photos</h3>
+          <p>Used only if you choose to attach media from your photo library.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Controls</h3>
+          <p>You can manage these permissions in iOS Settings.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Demo mode</span>
+          <h2>Demo mode runs locally.</h2>
+          <p>
+            Little Spud includes a local demo mode so users can preview the app
+            before pairing with Tater. Demo mode runs on the device and does not
+            connect to a private Tater server.
+          </p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Contact</span>
+          <h2>Privacy questions</h2>
+          <p>
+            For support or privacy questions, contact
+            <a class="chip-link" href="mailto:tater@tatertottersonai.com?subject=Little%20Spud%20privacy">tater@tatertottersonai.com</a>.
+          </p>
+        </article>
+      </div>
+    </section>
+    """
+    return page_template(
+        title="Little Spud Privacy Policy | Tater Assistant",
+        description="Privacy policy for the Little Spud companion app for Tater Assistant.",
+        body=body,
+        depth=2,
+        nav_key="privacy",
+    )
+
+
 def render_llms_page() -> str:
     body = """
     <section class="hero hero-subpage hero-plugin">
@@ -3265,6 +3394,32 @@ def render_spud_hub_page() -> str:
           <a class="button button-ghost" href="../api/index.html">API docs</a>
         </div>
       </aside>
+    </section>
+
+    <section class="app-store-banner" aria-label="Little Spud app">
+      <div class="app-store-copy">
+        <span class="eyebrow">Little Spud app</span>
+        <h2>Chat with your Tater from iPhone and iPad.</h2>
+        <p>
+          Little Spud pairs to Spud Hub with a QR code, keeps home and away Tater URLs,
+          streams tool progress, shows returned images and media, and uses the Hub's
+          voice settings for STT, TTS, notifications, and follow-up mic behavior.
+        </p>
+        <div class="chip-row">
+          <span class="chip">iPhone + iPad</span>
+          <span class="chip">QR pairing</span>
+          <span class="chip">Home / away URLs</span>
+          <span class="chip">No Little Spud cloud</span>
+        </div>
+      </div>
+      <div class="app-store-actions">
+        <a class="app-store-button" href="https://apps.apple.com/" target="_blank" rel="noreferrer" aria-label="Little Spud App Store link coming soon">
+          <span>Download on the</span>
+          <strong>App Store</strong>
+          <small>Coming soon</small>
+        </a>
+        <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy policy</a>
+      </div>
     </section>
 
     <section class="section">
@@ -4919,6 +5074,15 @@ def build() -> None:
     write_page(SITE_ROOT / "spud-hub" / "index.html", render_spud_hub_page())
     write_page(SITE_ROOT / "llms" / "index.html", render_llms_page())
     write_page(SITE_ROOT / "api" / "index.html", render_openai_api_page())
+    write_page(
+        SITE_ROOT / "privacy" / "index.html",
+        render_redirect_page(
+            title="Little Spud privacy policy",
+            target="little-spud/index.html",
+            label="Little Spud privacy policy",
+        ),
+    )
+    write_page(SITE_ROOT / "privacy" / "little-spud" / "index.html", render_little_spud_privacy_page())
     write_page(SITE_ROOT / "kernel-tools" / "index.html", render_kernel_page(kernel_tools))
     write_page(SITE_ROOT / "plugins" / "index.html", render_plugins_page(plugins))
 
