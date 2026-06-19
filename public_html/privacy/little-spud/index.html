@@ -44,7 +44,7 @@
           It is designed to connect to a Tater instance that you control.
         </p>
         <div class="chip-row">
-          <span class="chip">No Little Spud cloud</span>
+          <span class="chip">No cloud chat service</span>
           <span class="chip">No ads</span>
           <span class="chip">No third-party tracking</span>
           <span class="chip">Local-first</span>
@@ -52,7 +52,7 @@
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">Effective date</span>
-        <h2>June 17, 2026</h2>
+        <h2>June 18, 2026</h2>
         <p>This policy covers the Little Spud iOS and iPadOS app.</p>
       </aside>
     </section>
@@ -65,6 +65,8 @@
           <p>
             Little Spud does not operate a Little Spud cloud account service,
             advertising system, analytics service, or third-party tracking system.
+            The push notification service described below is used only for app
+            functionality.
           </p>
         </article>
         <article class="panel">
@@ -99,6 +101,34 @@
     </section>
 
     <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Push notifications</span>
+        <h2>Remote notifications use Firebase Cloud Messaging and Apple Push Notification service.</h2>
+        <p>
+          If you enable device notifications, Little Spud registers a Firebase
+          Cloud Messaging push token with the Little Spud push gateway. The gateway
+          stores the push token, an opaque push device ID and secret, app and bundle
+          identifiers, platform/environment details, optional device label metadata,
+          and limited technical metadata needed to deliver and rate-limit
+          notifications.
+        </p>
+        <p>
+          When your paired Tater sends a Little Spud notification, Tater sends a
+          generic wake-up request through the push gateway. The notification content
+          is fetched from your paired Tater instance by Little Spud or its
+          notification extension when possible. Chat messages, voice input, photos,
+          videos, and generated media are not sent through the Little Spud push
+          gateway.
+        </p>
+        <p>
+          Firebase/Google and Apple process push delivery data as part of their
+          notification delivery systems. Little Spud uses this only for app
+          functionality, not for advertising, analytics, or tracking.
+        </p>
+      </article>
+    </section>
+
+    <section class="section">
       <div class="section-head">
         <span class="eyebrow">Permissions</span>
         <h2>Little Spud asks only for the device access needed for app features.</h2>
@@ -118,7 +148,7 @@
         </article>
         <article class="feature-card">
           <h3>Notifications</h3>
-          <p>Used to show local device notifications from your paired Tater.</p>
+          <p>Used to show device notifications from your paired Tater, including remote push delivery when the app is not open.</p>
         </article>
         <article class="feature-card">
           <h3>Photos</h3>
