@@ -3413,10 +3413,10 @@ def render_spud_hub_page() -> str:
         </div>
       </div>
       <div class="app-store-actions">
-        <a class="app-store-button" href="https://apps.apple.com/" target="_blank" rel="noreferrer" aria-label="Little Spud App Store link coming soon">
+        <a class="app-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
           <span>Download on the</span>
           <strong>App Store</strong>
-          <small>Coming soon</small>
+          <small>Available now</small>
         </a>
         <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy policy</a>
       </div>
