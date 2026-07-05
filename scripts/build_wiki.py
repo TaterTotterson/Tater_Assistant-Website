@@ -2566,7 +2566,7 @@ def render_macos_release_card() -> str:
           <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
         </div>
         <div class="little-spud-attach">
-          <img class="little-spud-icon" src="assets/images/little-spud-icon.png" alt="" loading="lazy">
+          <img class="little-spud-icon" src="assets/images/little-spud-icon.png" width="52" height="52" alt="" loading="lazy">
           <div class="little-spud-copy">
             <span class="little-spud-kicker">iPhone + iPad companion</span>
             <strong>Little Spud</strong>
@@ -2577,7 +2577,7 @@ def render_macos_release_card() -> str:
               {chip("Home / Away")}
             </div>
           </div>
-          <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+          <a class="button little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
             <span>Download on the</span>
             <strong>App Store</strong>
           </a>
