@@ -2561,9 +2561,13 @@ def render_macos_release_card() -> str:
           {chip(dmg_size)}
           {chip("Auto-updates")}
         </div>
-        <div class="action-row">
+        <div class="action-row release-actions">
           <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
           <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
+          <a class="release-store-link" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span>Little Spud</span>
+            <strong>App Store</strong>
+          </a>
         </div>
         <small class="release-meta">Pulled from the Tater update manifest{escape(f" • SHA {sha_short}" if sha_short else "")}.</small>
       </div>

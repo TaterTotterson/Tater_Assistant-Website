@@ -1380,6 +1380,46 @@ h1 {
   font-size: 0.78rem;
 }
 
+.release-actions {
+  align-items: stretch;
+}
+
+.release-actions .button,
+.release-store-link {
+  flex: 1 1 170px;
+}
+
+.release-store-link {
+  display: grid;
+  align-content: center;
+  gap: 0.05rem;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.54rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035)),
+    #050608;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+}
+
+.release-store-link span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.release-store-link strong {
+  color: #ffffff;
+  font-size: 1.02rem;
+  line-height: 1.1;
+}
+
 .release-visual {
   position: relative;
   z-index: 1;
