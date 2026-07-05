@@ -2566,10 +2566,9 @@ def render_macos_release_card() -> str:
           <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
         </div>
         <div class="little-spud-attach">
-          <img class="little-spud-icon" src="assets/images/little-spud-icon.png" width="52" height="52" alt="" loading="lazy">
           <div class="little-spud-copy">
+            <span class="little-spud-title">Little Spud</span>
             <span class="little-spud-kicker">iPhone + iPad companion</span>
-            <strong>Little Spud</strong>
             <p>Pair by QR code, chat with your private Tater, use voice and TTS, view media replies, and switch between Home and Away routes.</p>
             <div class="chip-row">
               {chip("QR pairing")}

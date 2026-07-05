@@ -1391,7 +1391,7 @@ h1 {
 .little-spud-attach {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(154px, auto);
+  grid-template-columns: minmax(0, 1fr) minmax(154px, auto);
   align-items: center;
   gap: 0.9rem;
   min-width: 0;
@@ -1416,25 +1416,24 @@ h1 {
   background: linear-gradient(90deg, transparent, rgba(255, 106, 0, 0.62), transparent);
 }
 
-.little-spud-icon {
-  position: relative;
-  z-index: 1;
-  width: 52px;
-  height: 52px;
-  aspect-ratio: 1;
-  border-radius: 14px;
-  object-fit: cover;
-  box-shadow:
-    0 12px 22px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
-}
-
 .little-spud-copy {
   position: relative;
   z-index: 1;
   display: grid;
   gap: 0.24rem;
   min-width: 0;
+}
+
+.little-spud-title {
+  width: fit-content;
+  padding: 0.24rem 0.55rem;
+  border: 1px solid rgba(255, 106, 0, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 106, 0, 0.12);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.1;
 }
 
 .little-spud-kicker {
@@ -1444,12 +1443,6 @@ h1 {
   letter-spacing: 0.08em;
   line-height: 1.1;
   text-transform: uppercase;
-}
-
-.little-spud-copy strong {
-  color: #ffffff;
-  font-size: 1.08rem;
-  line-height: 1.15;
 }
 
 .little-spud-copy p {
@@ -1775,7 +1768,7 @@ h1 {
   }
 
   .little-spud-attach {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .little-spud-store-button {
@@ -1815,11 +1808,6 @@ h1 {
 
   .little-spud-attach {
     grid-template-columns: 1fr;
-  }
-
-  .little-spud-icon {
-    width: 52px;
-    height: 52px;
   }
 
   .page-footer p {
