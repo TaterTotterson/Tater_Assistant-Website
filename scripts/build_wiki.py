@@ -2576,7 +2576,7 @@ def render_macos_release_card() -> str:
               {chip("Home / Away")}
             </div>
           </div>
-          <a class="button little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+          <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
             <span>Download on the</span>
             <strong>App Store</strong>
           </a>

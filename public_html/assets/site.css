@@ -1391,7 +1391,7 @@ h1 {
 .little-spud-attach {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(154px, auto);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 240px);
   align-items: center;
   gap: 0.9rem;
   min-width: 0;
@@ -1467,9 +1467,10 @@ h1 {
   z-index: 1;
   display: grid;
   align-content: center;
-  justify-content: start;
+  justify-content: center;
+  justify-items: center;
   justify-self: stretch;
-  min-width: 0;
+  min-width: 220px;
   min-height: 62px;
   padding: 0.72rem 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -1478,22 +1479,36 @@ h1 {
     linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035)),
     #050608;
   color: #ffffff;
+  font-weight: 800;
   letter-spacing: 0;
-  text-align: left;
+  line-height: 1.1;
+  overflow-wrap: normal;
+  text-align: center;
+  text-decoration: none;
   text-transform: none;
+  white-space: nowrap;
+  word-break: normal;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
 }
 
 .little-spud-store-button span {
   color: rgba(255, 255, 255, 0.68);
+  display: block;
   font-size: 0.72rem;
   line-height: 1.15;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .little-spud-store-button strong {
   color: #ffffff;
+  display: block;
   font-size: 1.2rem;
   line-height: 1.1;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .release-visual {
@@ -1671,6 +1686,14 @@ h1 {
     inset: 2rem 50% auto auto;
     width: min(780px, 94vw);
     transform: translateX(50%);
+  }
+
+  .little-spud-attach {
+    grid-template-columns: 1fr;
+  }
+
+  .little-spud-store-button {
+    grid-column: 1 / -1;
   }
 
 }
