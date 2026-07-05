@@ -2564,8 +2564,21 @@ def render_macos_release_card() -> str:
         <div class="action-row release-actions">
           <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
           <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
-          <a class="release-store-link" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
-            <span>Little Spud</span>
+        </div>
+        <div class="little-spud-attach">
+          <img class="little-spud-icon" src="assets/images/little-spud-icon.png" alt="" loading="lazy">
+          <div class="little-spud-copy">
+            <span class="little-spud-kicker">iPhone + iPad companion</span>
+            <strong>Little Spud</strong>
+            <p>Pair by QR code, chat with your private Tater, use voice and TTS, view media replies, and switch between Home and Away routes.</p>
+            <div class="chip-row">
+              {chip("QR pairing")}
+              {chip("Voice + TTS")}
+              {chip("Home / Away")}
+            </div>
+          </div>
+          <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span>Download on the</span>
             <strong>App Store</strong>
           </a>
         </div>
