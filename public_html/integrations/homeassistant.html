@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Shared Home Assistant endpoint and token for portals, verbas, and announcement paths.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Home Assistant">
+          <meta property="og:description" content="Shared Home Assistant endpoint and token for portals, verbas, and announcement paths.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Home Assistant</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -39,10 +46,10 @@
       <div class="hero-copy">
         <span class="eyebrow">Integration profile</span>
         <h1>Home Assistant</h1>
-        <p>Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.</p>
+        <p>Imports Home Assistant devices, rooms, actions, media players, cameras, and sensors into Tater&#x27;s shared integration catalog.</p>
         <div class="chip-row">
           <span class="chip">Smart home</span>
-          <span class="chip">v1.1.0</span>
+          <span class="chip">v1.3.2</span>
           <span class="chip">Optional</span>
         </div>
       </div>
@@ -57,12 +64,12 @@
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
           <p>Shared Home Assistant endpoint and token for portals, verbas, and announcement paths.</p>
-          <div class="chip-row"><span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">sensor</span><span class="chip">thermostat</span><span class="chip">light</span><span class="chip">media_player</span><span class="chip">announcement_target</span></div>
+          <div class="chip-row"><span class="chip">light</span><span class="chip">switch</span><span class="chip">plug</span><span class="chip">fan</span><span class="chip">sensor</span><span class="chip">garage_door</span><span class="chip">entry_sensor</span><span class="chip">lock</span><span class="chip">motion</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">illuminance</span><span class="chip">energy</span><span class="chip">leak</span><span class="chip">battery</span><span class="chip">camera</span><span class="chip">cover</span><span class="chip">climate</span><span class="chip">media_player</span><span class="chip">remote</span><span class="chip">scene</span><span class="chip">script</span></div>
         </article>
         <article class="panel">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
-          <ul class="stack-list"><li>Home Assistant is now optional; Tater can boot and run without this module installed.</li><li>New device-aware cores should consume generic devices exposed by integrations instead of calling Home Assistant directly.</li></ul>
+          <ul class="stack-list"><li>Home Assistant is now optional; Tater can boot and run without this module installed.</li><li>Device Control, the Devices browser, room organization, Automation Core, Music Core, and other consumers use the same normalized metadata instead of Home Assistant-specific tool paths.</li><li>The current integration refreshes category metadata for lights, switches, plugs, fans, locks, covers, climate, cameras, media players, and common sensor types.</li></ul>
         </article>
       </div>
     </section>
@@ -92,7 +99,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

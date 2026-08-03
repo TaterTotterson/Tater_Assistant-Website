@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Reference for Tater Assistant core runtime services.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Cores">
+          <meta property="og:description" content="Reference for Tater Assistant core runtime services.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Cores</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -38,14 +45,14 @@
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Core reference</span>
-        <h1>Tater cores power built-in runtime services.</h1>
+        <h1>Cores give Tater persistent skills and background work.</h1>
         <p>
-          Cores are always-on internal services like awareness automation, scheduling, memory extraction, personal email intelligence, and feed monitoring.
+          Install only the services you want: automation, awareness, environment, network security, scheduling, memory, music, personal intelligence, feeds, and Tater Tube recommendations.
         </p>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">What is documented</span>
-        <p>6 cores with current descriptions, settings snapshots, and runtime behavior notes.</p>
+        <p>10 cores with current descriptions, settings snapshots, and runtime behavior notes.</p>
       </aside>
     </section>
     <section class="section">
@@ -53,8 +60,36 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
+            <span class="chip">Scheduler</span>
+            <span class="chip">v1.2.0</span>
+            <span class="chip">No required fields</span>
+            <span class="chip">Scheduler runtime</span>
+          </div>
+          <h3>AI Task Runner</h3>
+          <p>Scheduled and recurring AI jobs with direct notifier delivery, whole-home broadcast destinations, stereo pairs, and optional generated background-audio scenes.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="ai_task.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Automation engine</span>
+            <span class="chip">v1.1.0</span>
+            <span class="chip">No required fields</span>
+            <span class="chip">Internal runtime</span>
+          </div>
+          <h3>Automation Core</h3>
+          <p>Visual event-to-action automation builder powered by Tater&#x27;s shared rooms, integration devices, notifications, cameras, and voice destinations.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="automation.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
             <span class="chip">Home awareness engine</span>
-            <span class="chip">v3.4.6</span>
+            <span class="chip">v3.4.12</span>
             <span class="chip">4 settings</span>
             <span class="chip">Awareness engine</span>
           </div>
@@ -67,8 +102,22 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
+            <span class="chip">Environment telemetry</span>
+            <span class="chip">v1.4.19</span>
+            <span class="chip">No required fields</span>
+            <span class="chip">Internal runtime</span>
+          </div>
+          <h3>Environment Core</h3>
+          <p>Normalizes local weather and indoor sensor data for the Dashboard, Tater displays, voice answers, and other cores.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="environment.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
             <span class="chip">Network security monitor</span>
-            <span class="chip">v1.3.7</span>
+            <span class="chip">v1.3.12</span>
             <span class="chip">13 settings</span>
             <span class="chip">Internal runtime</span>
           </div>
@@ -81,23 +130,9 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
-            <span class="chip">Scheduler</span>
-            <span class="chip">v1.0.39</span>
-            <span class="chip">No required fields</span>
-            <span class="chip">Scheduler runtime</span>
-          </div>
-          <h3>AI Task Runner</h3>
-          <p>Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier portals.</p>
-          <div class="plugin-links">
-            <a class="button button-ghost" href="ai_task.html">Read core page</a>
-          </div>
-        </article>
-
-        <article class="platform-card platform-card-detail">
-          <div class="chip-row">
             <span class="chip">Background service</span>
-            <span class="chip">v1.0.26</span>
-            <span class="chip">10 settings</span>
+            <span class="chip">v1.0.29</span>
+            <span class="chip">9 settings</span>
             <span class="chip">Memory service</span>
           </div>
           <h3>Memory Core</h3>
@@ -109,8 +144,22 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
+            <span class="chip">Music library + player</span>
+            <span class="chip">v2.7.0</span>
+            <span class="chip">13 settings</span>
+            <span class="chip">Internal runtime</span>
+          </div>
+          <h3>Music Core</h3>
+          <p>Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="music.html">Read core page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
             <span class="chip">Personal intelligence engine</span>
-            <span class="chip">v1.0.53</span>
+            <span class="chip">v1.0.56</span>
             <span class="chip">1 settings</span>
             <span class="chip">Email intelligence</span>
           </div>
@@ -124,7 +173,7 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Background service</span>
-            <span class="chip">v1.0.9</span>
+            <span class="chip">v1.0.12</span>
             <span class="chip">1 settings</span>
             <span class="chip">Feed watcher</span>
           </div>
@@ -135,13 +184,27 @@
           </div>
         </article>
 
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
+            <span class="chip">Media intelligence</span>
+            <span class="chip">v1.2.3</span>
+            <span class="chip">9 settings</span>
+            <span class="chip">Internal runtime</span>
+          </div>
+          <h3>Tater Tube Core</h3>
+          <p>Connects Tater to Tater Tube Server for recent viewing context, AI-selected movie and series recommendations, and spoken Tater&#x27;s Picks.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="tater_tube.html">Read core page</a>
+          </div>
+        </article>
+
       </div>
     </section>
 
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

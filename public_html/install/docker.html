@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Run the published container image with persistent Agent Lab/.runtime volumes, then configure Redis + Hydra in WebUI.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Docker Image">
+          <meta property="og:description" content="Run the published container image with persistent Agent Lab/.runtime volumes, then configure Redis + Hydra in WebUI.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Docker Image</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -54,7 +61,7 @@
         <article class="panel">
           <span class="eyebrow">Why choose this</span>
           <h2>Key points</h2>
-          <ul class="stack-list"><li>The README publishes the image at ghcr.io/tatertotterson/tater:latest.</li><li>Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve Spudex workspace files and downloaded voice models.</li><li>The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.</li></ul>
+          <ul class="stack-list"><li>The README publishes the image at ghcr.io/tatertotterson/tater:latest.</li><li>Container persistence warnings include both /app/agent_lab and /app/.runtime host mappings, preserving Spudex workspaces, downloaded models, Redis setup, and native satellite pairing credentials.</li><li>The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.</li><li>Docker and local command-line runs read the same canonical packaged version as the macOS app, so the bottom-left WebUI label reports the installed build correctly.</li></ul>
         </article>
         <article class="panel">
           <span class="eyebrow">Install flow</span>
@@ -66,7 +73,7 @@
     <section class="section">
       <article class="panel">
         <span class="eyebrow">Important notes</span>
-        <ul class="stack-list"><li>If /app/agent_lab is not mounted, runtime data, Spudex workspace files, and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.</li><li>If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.</li><li>The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.</li></ul>
+        <ul class="stack-list"><li>If /app/agent_lab is not mounted, runtime data, Spudex workspace files, and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.</li><li>If /app/.runtime is not mounted, Redis setup, encryption state, and Tater Native satellite pairing credentials can be lost on rebuild/update.</li><li>The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.</li></ul>
       </article>
     </section>
 
@@ -124,7 +131,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

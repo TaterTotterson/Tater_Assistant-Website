@@ -1,0 +1,283 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Music Core">
+          <meta property="og:description" content="Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <title>Tater Assistant | Music Core</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="cores">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
+<a class="nav-link" href="../llms/index.html">LLMs</a>
+<a class="nav-link" href="../api/index.html">API</a>
+<a class="nav-link" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
+<a class="nav-link is-active" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Core profile</span>
+        <h1>Music Core</h1>
+        <p>Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.</p>
+        <div class="chip-row">
+          <span class="chip">Music library + player</span>
+          <span class="chip">v2.7.0</span>
+          <span class="chip">13 settings</span>
+          <span class="chip">Internal runtime</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Music Core Settings</p>
+        <p>Settings extracted from <code>music_core.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Core role</span>
+          <h2>What this core is for</h2>
+          <p>Music library + player</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, seek, volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct core support</h2>
+          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Catalog Sync Interval (sec)</strong>
+              <span>number</span>
+              <p>How often Music Core refreshes artists, albums, genres, and tracks.</p>
+              <small>Key: catalog_sync_interval_seconds</small>
+              <small>Default: 900</small>
+
+            </li>
+
+            <li>
+              <strong>Shuffle Broad Requests</strong>
+              <span>checkbox</span>
+              <p>Shuffle genre, artist, and general music requests by default.</p>
+              <small>Key: default_shuffle</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Default Players</strong>
+              <span>text</span>
+              <p>Fallback playback destinations when a room or speaking satellite is unavailable.</p>
+              <small>Key: default_targets</small>
+
+
+            </li>
+
+            <li>
+              <strong>Default Volume (%)</strong>
+              <span>number</span>
+              <p>Starting volume for Tater satellite media sessions.</p>
+              <small>Key: default_volume_percent</small>
+              <small>Default: 75</small>
+
+            </li>
+
+            <li>
+              <strong>Maximum Queue Tracks</strong>
+              <span>number</span>
+              <p>Maximum number of matched tracks placed in one queue.</p>
+              <small>Key: maximum_queue_tracks</small>
+              <small>Default: 200</small>
+
+            </li>
+
+            <li>
+              <strong>Default Mixed Sync Adjustment (ms)</strong>
+              <span>number</span>
+              <p>Fine-tunes mixed Sonos and Tater satellite groups. Positive values delay satellites; negative values start them earlier.</p>
+              <small>Key: mixed_sync_default_adjustment_ms</small>
+              <small>Default: 0</small>
+
+            </li>
+
+            <li>
+              <strong>Music Prompt Context</strong>
+              <span>checkbox</span>
+              <p>Share the selected Person&#x27;s compact music profile with Tater when that Person is speaking.</p>
+              <small>Key: prompt_context_enabled</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Music Profile Refresh (hours)</strong>
+              <span>number</span>
+              <p>How often Music Core refreshes the selected Person&#x27;s prompt-ready listening profile.</p>
+              <small>Key: prompt_profile_interval_hours</small>
+              <small>Default: 12</small>
+
+            </li>
+
+            <li>
+              <strong>Music Provider</strong>
+              <span>select</span>
+              <p>Music source used by Music Core. More providers can be added without changing the player.</p>
+              <small>Key: provider</small>
+              <small>Default: tater_tube</small>
+              <small>Options: Tater Tube Server, Plex, Emby, Jellyfin, Navidrome</small>
+            </li>
+
+            <li>
+              <strong>Recommendation Refresh (hours)</strong>
+              <span>number</span>
+              <p>How often Music Core refreshes Tater Recommendations in the background.</p>
+              <small>Key: recommendation_interval_hours</small>
+              <small>Default: 12</small>
+
+            </li>
+
+            <li>
+              <strong>Albums &amp; Songs Per Playlist</strong>
+              <span>number</span>
+              <p>Maximum recommended albums and songs in each playlist.</p>
+              <small>Key: recommendation_items_per_playlist</small>
+              <small>Default: 6</small>
+
+            </li>
+
+            <li>
+              <strong>Recommendation Playlists</strong>
+              <span>number</span>
+              <p>Number of AI-named recommendation playlists to prepare.</p>
+              <small>Key: recommendation_playlist_count</small>
+              <small>Default: 3</small>
+
+            </li>
+
+            <li>
+              <strong>Tater Recommendations</strong>
+              <span>checkbox</span>
+              <p>Use listening history and Tater&#x27;s primary AI model to prepare named music mixes.</p>
+              <small>Key: recommendations_enabled</small>
+              <small>Default: True</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Whole-home music</span>
+        <h2>Browse once, then play naturally by voice or from the live player</h2>
+        <p>Music Core keeps library browsing, room selection, active playback, history, and AI recommendations in one provider-neutral surface.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Tater Tube</span><span class="chip">Plex</span><span class="chip">Jellyfin + more</span></div>
+          <h3>Connect a library</h3>
+          <p>Choose the provider you already use and let Music Core build a local browse catalog.</p>
+          <ul class="stack-list"><li>Connect Tater Tube by pairing PIN, Plex by server and token, Emby or Jellyfin by server/API key, or Navidrome by OpenSubsonic credentials.</li><li>Catalog sync collects artists, albums, genres, tracks, and provider artwork, then refreshes in the background on the configured interval.</li><li>Provider setup and the player remain usable from the same Core tab, with the active provider clearly marked.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Room aware</span><span class="chip">Preferred player</span><span class="chip">Sonos first</span></div>
+          <h3>Choose where it plays</h3>
+          <p>Room context removes the need to ask which speaker when Tater already knows.</p>
+          <ul class="stack-list"><li>If a request names a room, that room wins. Otherwise the speaking satellite&#x27;s room is used when available.</li><li>A preferred player saved for the room is selected before global defaults, and Sonos is preferred when automatic selection finds several compatible players.</li><li>The player-bar speaker button opens every available satellite, stereo pair, Sonos speaker/group, and standard integration media player with readable labels.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">No reloads</span><span class="chip">Track list</span><span class="chip">Seek + volume</span></div>
+          <h3>Live queue and player</h3>
+          <p>The persistent player changes in place and keeps the active album or mix easy to navigate.</p>
+          <ul class="stack-list"><li>Playing another album replaces the active track list instead of appending it to the previous one.</li><li>The current song stays highlighted; double-click another row to jump directly to it, or use previous/next without leaving the page.</li><li>Live Core events update only when playback state changes, preserving the selected browse tab, open track list, forms, and scroll position.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Stereo pair</span><span class="chip">Native sync</span><span class="chip">Mixed groups</span></div>
+          <h3>Stereo and multi-room scenes</h3>
+          <p>One request can play through a calibrated stereo pair or a larger synchronized group.</p>
+          <ul class="stack-list"><li>Native members prebuffer the same media and start from a shared clock; stereo pairs retain left/right routing, level, and delay calibration.</li><li>Sonos groups can be formed temporarily, then restored without permanently disturbing the listener&#x27;s queue or prior grouping.</li><li>Music remains a persistent session while voice replies play as ducked overlays and restore the original music level afterward.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">People</span><span class="chip">Listening history</span><span class="chip">Recommendations</span></div>
+          <h3>Personalized music context</h3>
+          <p>A selected Person can receive better music suggestions without sharing that profile with everyone.</p>
+          <ul class="stack-list"><li>Music Core records recent listening and can generate favorite genres, favorite artists, recent tracks, and a short taste summary for one selected Person.</li><li>The prompt fragment is only added when Tater resolves the current speaker to that same Person; leaving the setting empty disables music prompt injection.</li><li>Tater Recommendations choose exact items from the current catalog and publish friendly AI-named mixes that can be played directly from the browser.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to cores</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../tater-voice/index.html">Tater Voice</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <div class="footer-row">
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
+                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
+              </div>
+            </footer>
+          </div>
+        </body>
+        </html>

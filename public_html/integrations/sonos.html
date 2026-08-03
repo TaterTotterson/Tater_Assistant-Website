@@ -3,8 +3,15 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Sonos speaker discovery and direct playback targets for announcements.">
+          <meta name="description" content="Sonos speaker discovery and direct playback targets for announcements and music.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Sonos">
+          <meta property="og:description" content="Sonos speaker discovery and direct playback targets for announcements and music.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Sonos</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -39,10 +46,10 @@
       <div class="hero-copy">
         <span class="eyebrow">Integration profile</span>
         <h1>Sonos</h1>
-        <p>Discovers Sonos speakers and exposes them as announcement and playback targets.</p>
+        <p>Discovers Sonos speakers for announcements, room-aware Music Core playback, synchronized temporary groups, and mixed Sonos/native scenes.</p>
         <div class="chip-row">
           <span class="chip">Audio</span>
-          <span class="chip">v1.1.0</span>
+          <span class="chip">v1.3.0</span>
           <span class="chip">Optional</span>
         </div>
       </div>
@@ -56,13 +63,13 @@
         <article class="panel">
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
-          <p>Sonos speaker discovery and direct playback targets for announcements.</p>
-          <div class="chip-row"><span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span><span class="chip">play_media</span></div>
+          <p>Sonos speaker discovery and direct playback targets for announcements and music.</p>
+          <div class="chip-row"><span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span></div>
         </article>
         <article class="panel">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
-          <ul class="stack-list"><li>Announcement routing can pull all speakers from all enabled integrations, not just Sonos.</li><li>Manual speaker hosts can be configured when SSDP discovery is not enough.</li></ul>
+          <ul class="stack-list"><li>Music Core can prefer Sonos for automatic room selection and create a temporary synchronized group for one playback session.</li><li>Existing Sonos grouping, queue, and playback state are restored after temporary music scenes and Audio Clip announcements.</li><li>Stereo-pair members and mixed Sonos/Tater satellite groups are normalized so users choose readable playback destinations instead of low-level member IDs.</li></ul>
         </article>
       </div>
     </section>
@@ -92,7 +99,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

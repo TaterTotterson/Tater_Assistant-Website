@@ -3,8 +3,15 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Control Home Assistant switches and plugs.">
-          <title>Tater Assistant | Home Assistant Switches</title>
+          <meta name="description" content="Play existing music through Roon in a room or zone: songs, artists, albums, genres, playlists, radio, shuffle/random playback, and playback controls. Do not use for generating new songs or audio.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Roon Music">
+          <meta property="og:description" content="Play existing music through Roon in a room or zone: songs, artists, albums, genres, playlists, radio, shuffle/random playback, and playback controls. Do not use for generating new songs or audio.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <title>Tater Assistant | Roon Music</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -38,16 +45,16 @@
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
         <span class="eyebrow">Verba profile</span>
-        <h1>Home Assistant Switches</h1>
-        <p>Control Home Assistant switches and plugs.</p>
+        <h1>Roon Music</h1>
+        <p>Play existing music through Roon in a room or zone: songs, artists, albums, genres, playlists, radio, shuffle/random playback, and playback controls. Do not use for generating new songs or audio.</p>
         <div class="chip-row">
-          <span class="chip">ha_switches</span>
-          <span class="chip">Version 2.0.6</span>
+          <span class="chip">roon_music</span>
+          <span class="chip">Version 1.0.1</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Supported portals</span>
-        <div class="chip-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+        <div class="chip-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       </aside>
     </section>
     <section class="section">
@@ -84,7 +91,7 @@
         <span class="eyebrow">Example call</span>
         <h2>Canonical usage JSON</h2>
         <pre class="code-block"><code>{
-  &quot;function&quot;: &quot;ha_switches&quot;,
+  &quot;function&quot;: &quot;roon_music&quot;,
   &quot;arguments&quot;: {}
 }</code></pre>
       </article>
@@ -102,7 +109,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

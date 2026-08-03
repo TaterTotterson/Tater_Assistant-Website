@@ -3,8 +3,15 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.">
+          <meta name="description" content="Full-featured Discord portal with rich interactions, media output, background jobs, trusted current-speaker identity, and Verba-backed actions.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Discord">
+          <meta property="og:description" content="Full-featured Discord portal with rich interactions, media output, background jobs, trusted current-speaker identity, and Verba-backed actions.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Discord</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -39,12 +46,12 @@
       <div class="hero-copy">
         <span class="eyebrow">Portal profile</span>
         <h1>Discord</h1>
-        <p>Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.</p>
+        <p>Full-featured Discord portal with rich interactions, media output, background jobs, trusted current-speaker identity, and Verba-backed actions.</p>
         <div class="chip-row">
           <span class="chip">Chat endpoint</span>
-          <span class="chip">v1.0.5</span>
+          <span class="chip">v1.0.9</span>
           <span class="chip">2 settings</span>
-          <span class="chip">57 Verbas</span>
+          <span class="chip">52 Verbas</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -63,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.</li><li>Runs Hydra turns per conversation so multi-step requests stay grounded.</li><li>Pairs well with admin-only Verbas and server management workflows.</li></ul>
+          <ul class="stack-list"><li>Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.</li><li>Runs Hydra turns per conversation so multi-step requests stay grounded.</li><li>The latest Discord message is authoritative for speaker, Person, room, and admin permissions; names or tool access from older shared-channel history cannot carry into a new user&#x27;s turn.</li><li>Pairs well with admin-only Verbas and server management workflows.</li></ul>
         </article>
       </div>
     </section>
@@ -73,8 +80,8 @@
           <span class="eyebrow">Related Verbas</span>
           <h2>Direct portal support</h2>
 
-        <p>57 current Verbas advertise direct support for this portal.</p>
-        <div class="chip-row"><a class="chip-link" href="../plugins/aladdin_connect.html">Aladdin Connect</a><a class="chip-link" href="../plugins/automatic_plugin.html">Automatic1111 Image</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a><a class="chip-link" href="../plugins/device_compare.html">Device Compare</a></div>
+        <p>52 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/automatic_plugin.html">Automatic1111 Image</a><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/camera_control.html">Camera Control</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a></div>
 
         </article>
         <article class="panel">
@@ -120,7 +127,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

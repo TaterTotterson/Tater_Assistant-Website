@@ -38,10 +38,6 @@ TATER_SHOP_MANIFEST = TATER_SHOP_DIR / "manifest.json"
 TATER_INTEGRATIONS_MANIFEST = TATER_INTEGRATIONS_DIR / "manifest.json"
 TATER_README = TATER_DIR / "README.md"
 
-LOGO_SOURCE = TATER_DIR / "images" / "tater-new-logo.png"
-WEBUI_SOURCE = TATER_DIR / "images" / "webui.png"
-LOGO_TARGET = SITE_ROOT / "assets" / "images" / "tater-logo.png"
-WEBUI_TARGET = SITE_ROOT / "assets" / "images" / "webui.png"
 DEFAULT_INSTALL_README_NOTE = (
     "Tater currently recommends using gemma-4-26b-a4b (disable thinking), "
     "qwen/qwen3.5-35b-a3b (disable thinking), qwen3-coder-next, qwen3-next-80b, "
@@ -178,11 +174,12 @@ INTEGRATION_DOC_OVERRIDES = {
     },
     "homeassistant": {
         "category": "Smart home",
-        "capabilities": ["camera", "snapshot", "sensor", "thermostat", "light", "media_player", "announcement_target"],
-        "summary": "Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.",
+        "capabilities": ["light", "switch", "plug", "fan", "sensor", "garage_door", "entry_sensor", "lock", "cover", "climate", "camera", "media_player"],
+        "summary": "Imports Home Assistant devices, rooms, actions, media players, cameras, and sensors into Tater's shared integration catalog.",
         "notes": [
             "Home Assistant is now optional; Tater can boot and run without this module installed.",
-            "New device-aware cores should consume generic devices exposed by integrations instead of calling Home Assistant directly.",
+            "Device Control, the Devices browser, room organization, Automation Core, Music Core, and other consumers use the same normalized metadata instead of Home Assistant-specific tool paths.",
+            "The current integration refreshes category metadata for lights, switches, plugs, fans, locks, covers, climate, cameras, media players, and common sensor types.",
         ],
     },
     "homekit": {
@@ -233,10 +230,29 @@ INTEGRATION_DOC_OVERRIDES = {
     "sonos": {
         "category": "Audio",
         "capabilities": ["speaker", "media_player", "audio_output", "announcement_target", "play_media"],
-        "summary": "Discovers Sonos speakers and exposes them as announcement and playback targets.",
+        "summary": "Discovers Sonos speakers for announcements, room-aware Music Core playback, synchronized temporary groups, and mixed Sonos/native scenes.",
         "notes": [
-            "Announcement routing can pull all speakers from all enabled integrations, not just Sonos.",
-            "Manual speaker hosts can be configured when SSDP discovery is not enough.",
+            "Music Core can prefer Sonos for automatic room selection and create a temporary synchronized group for one playback session.",
+            "Existing Sonos grouping, queue, and playback state are restored after temporary music scenes and Audio Clip announcements.",
+            "Stereo-pair members and mixed Sonos/Tater satellite groups are normalized so users choose readable playback destinations instead of low-level member IDs.",
+        ],
+    },
+    "roon": {
+        "category": "Audio",
+        "capabilities": ["speaker", "media_player", "audio_output", "music", "play_media"],
+        "summary": "Pairs with Roon, exposes zones as standard Tater media players, and supports browse-based playback from room-aware music requests.",
+        "notes": [
+            "Registration can continue after the initial request while the user authorizes Tater in Roon.",
+            "Roon zones participate in the same player chooser and preferred-room routing as other compatible integration media players.",
+        ],
+    },
+    "shelly": {
+        "category": "Smart home",
+        "capabilities": ["light", "switch", "plug", "cover", "sensor", "temperature", "humidity", "illuminance", "energy"],
+        "summary": "Discovers Shelly devices and exposes controls, covers, sensor readings, and power data through Tater's shared device catalog.",
+        "notes": [
+            "Shelly devices can be renamed, assigned to rooms, given Tater aliases, and controlled through the same Device Control Verba as other integrations.",
+            "Read-only environment and energy measurements remain available to status Verbas and device-aware cores.",
         ],
     },
     "unifi_network": {
@@ -605,6 +621,7 @@ PORTAL_DOCS_ORDER = [
     "telegram",
     "matrix",
     "irc",
+    "meshtastic",
     "moltbook",
     "homekit",
     "macos",
@@ -612,29 +629,38 @@ PORTAL_DOCS_ORDER = [
 ]
 
 CORE_DOCS_ORDER = [
-    "awareness",
-    "guardian",
     "ai_task",
+    "automation",
+    "awareness",
+    "environment",
+    "guardian",
     "memory",
+    "music",
     "personal",
     "rss",
+    "tater_tube",
 ]
 
 PLATFORM_DOCS = {
     "webui": {
         "label": "WebUI",
-        "description": "FastAPI + static control center for Dashboard, setup, private chat, Verba/Portal/Core management, Tater Voice firmware, voice tuning, Hydra runtime stats, and Redis operations.",
+        "description": "Local Vue 3 control center for the Dashboard, private chat, Music Core, Integrations, Verbas, Portals, Cores, Spudex, Voice, System Tasks, runtime telemetry, and settings.",
         "role": "Operator console",
         "source": None,
         "plugin_surface": "webui",
         "highlights": [
-            "Dashboard is now the default landing view, with cached scheduled briefs for Tater health, environment, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.",
-            "Hosts private chat, Verba browsing, settings, Tater Voice firmware management, and runtime controls in one place.",
+            "The Dashboard, Chat, Integrations, Verba, Portals, Cores, Spudex, Settings, Music Core, and live runtime popup now use Tater's locally bundled Vue 3 and TypeScript interface.",
+            "The orange-and-gray UI keeps navigation, cards, dialogs, settings forms, and responsive layouts consistent without downloading a frontend from a third party.",
+            "Dashboard is the default landing view, with alphabetized masonry sections for health, environment imagery, awareness snapshots, voice satellites, Speaker ID, and Emotion ID.",
+            "Live surfaces update in place without replacing the selected tab, scroll position, open dropdown, or in-progress form values.",
+            "Settings -> System Tasks shows Tater-owned and Core-owned jobs with run state, last and next run times, errors, and a Run Now control.",
+            "Satellite inventory, integration devices, Dashboard briefs, hardware telemetry, loaded models, and context estimates rebuild in the background and on relevant change events.",
+            "The installed Tater version appears at the bottom of the left menu and comes from the packaged build metadata on macOS, Docker, and local command-line installs.",
             "Adds the Spudex workbench for terminal-backed assistant sessions, direct Spudex chat, manual command runs, live logs, process control, and policy settings.",
             "First-run Redis setup is handled in-WebUI via popup and stored under .runtime so connection config persists.",
             "Redis settings include connection test/save plus live encryption and decryption controls for in-place data protection.",
             "Hydra settings cover base server pools, optional Beast Mode role routing, and runtime tuning values.",
-            "The top runtime stats pills open a colorized live activity popup for Hydra jobs, LLM calls, vision calls, and context budget.",
+            "The top runtime pill opens live model, Hydra, LLM, vision, context, Apple GPU/unified-memory, and unload controls without blocking Model Settings initialization.",
             "Integrations now have a Store/Manage split: Store downloads optional modules, Manage enables/disables installed modules, and Setup refreshes available provider settings.",
             "The integration runtime restores missing enabled integrations at boot and keeps disabled integrations unimported.",
             "Web search providers are modular integrations, with SearXNG, Brave Search, Google Custom Search, and Serper available from the integration catalog.",
@@ -722,13 +748,14 @@ PLATFORM_DOCS = {
     },
     "discord": {
         "label": "Discord",
-        "description": "Full-featured Discord bot with rich interactions, media output, background jobs, and Verba-backed actions.",
+        "description": "Full-featured Discord portal with rich interactions, media output, background jobs, trusted current-speaker identity, and Verba-backed actions.",
         "role": "Chat endpoint",
         "source": TATER_SHOP_DIR / "portals" / "discord_portal.py",
         "plugin_surface": "discord",
         "highlights": [
             "Supports channel allowlists, DMs, queued notifications, attachments, and slash-style server tooling.",
             "Runs Hydra turns per conversation so multi-step requests stay grounded.",
+            "The latest Discord message is authoritative for speaker, Person, room, and admin permissions; names or tool access from older shared-channel history cannot carry into a new user's turn.",
             "Pairs well with admin-only Verbas and server management workflows.",
         ],
     },
@@ -766,6 +793,20 @@ PLATFORM_DOCS = {
             "Simple low-overhead deployment for classic chat rooms and ZNC-style setups.",
             "Supports admin-user gating and Verba execution on mention.",
             "Keeps the interaction model intentionally lean and plain-text friendly.",
+        ],
+    },
+    "meshtastic": {
+        "label": "Meshtastic",
+        "description": "Off-grid Meshtastic portal that connects Tater to direct and channel conversations through the local Tater Meshtastic Bridge.",
+        "role": "Mesh radio endpoint",
+        "source": TATER_SHOP_DIR / "portals" / "meshtastic_portal.py",
+        "plugin_surface": "meshtastic",
+        "highlights": [
+            "Connects through the local Tater Meshtastic Bridge instead of requiring radio hardware inside the Tater process.",
+            "Supports direct messages, selected mesh channels, mention-only or broader response policies, and per-node conversation sessions.",
+            "Splits longer replies into compact numbered radio messages with configurable length and chunk limits.",
+            "Rejects stale bridge backlog, remembers processed messages, and can resume either from now or from the last stored event.",
+            "Uses the same current-speaker identity boundary and admin gating as Tater's other shared chat portals.",
         ],
     },
     "moltbook": {
@@ -990,273 +1031,216 @@ PLATFORM_DOCS = {
     },
     "esphome": {
         "label": "Tater Voice",
-        "description": "Tater Voice device runtime for VoicePE, Sat1, and ESP32-S3-BOX-3 display devices, with firmware builds, browser USB recovery, remote openWakeWord, remote NanoWakeWord, voice intercom, live logs, display feeds, voice satellites, and the full voice pipeline on the main app port.",
+        "description": "Built-in room-aware voice runtime for paired Tater Native satellites, local microWakeWord, secure trainer publishing, stereo pairs, intercom, synchronized playback, prebuilt firmware updates, and persistent voice statistics.",
         "role": "Native device runtime",
         "source": None,
         "plugin_surface": "voice_core",
         "hero_eyebrow": "Tater Voice",
-        "hero_panel_eyebrow": "What it powers",
-        "hero_panel_text": "Tater Voice is now a built-in Tater runtime. It owns Tater Voice devices, S3Box displays, firmware configuration, browser USB recovery, remote openWakeWord and NanoWakeWord detection, intercom flows, the live voice pipeline, and the operator controls under Settings -> Tater Voice.",
+        "hero_panel_eyebrow": "One local voice platform",
+        "hero_panel_text": "Pair a satellite, assign its room, choose a local microWakeWord model, and manage voice, firmware, stereo, playback, intercom, and diagnostics from Tater's own UI.",
         "role_eyebrow": "Why it matters",
-        "role_title": "What Tater Voice unlocks",
-        "role_text": "Tater now owns the Tater Voice device experience directly: discovery, room-aware voice sessions, remote wake detection, intercom sessions, live device state, firmware flashing, display notification feeds, and playback routing all run inside the main app instead of a downloadable core.",
-        "highlights_eyebrow": "Feature set",
-        "highlights_title": "What makes Tater Voice feel like a real device platform",
-        "plugin_eyebrow": "Voice-aware verbas",
-        "plugin_title": "Verbas that can act on the speaking device",
+        "role_title": "Voice that understands where it is",
+        "role_text": "Every voice turn carries the speaking satellite, room, resolved Person, and trusted permissions into Tater. That same room context drives device control, music playback, follow-up listening, intercom, and reply routing.",
+        "highlights_eyebrow": "Current voice stack",
+        "highlights_title": "Local wake detection, room context, and synchronized sound",
+        "plugin_eyebrow": "Voice-aware Verbas",
+        "plugin_title": "Actions can use the room and device that heard the request",
         "settings_eyebrow": "Operator controls",
-        "settings_title": "How operators use it in Tater",
+        "settings_title": "Everything lives under Settings -> Voice",
         "highlights": [
-            "Built into Tater itself, always on, and served from the main app port rather than a separate external voice service.",
-            "Settings -> Tater Voice now owns Satellites, Firmware, Settings, and Stats so operators can manage discovery, pairing, rooms, firmware builds, logs, live entities, and voice metrics in one place.",
-            "Wake engine controls support device-local microWakeWord, remote openWakeWord, and remote NanoWakeWord with per-device server URLs, so switching can stay on the satellite while Tater or a standalone wake server handles detection.",
-            "Remote openWakeWord keeps a live WebSocket stream to Tater's /api/openwakeword/stream endpoint, uses model threshold, patience, and debounce tuning, and falls back to microWakeWord on firmware when the remote server is unavailable.",
-            "Remote NanoWakeWord uses the same satellite streaming pattern through /api/nanowakeword/stream, can run custom .onnx/.pt/.pth models downloaded from the NanoWakeWord trainer, and resets in-memory detectors after trainer downloads so replacement models load on the next stream.",
-            "Room-level wake arbitration keeps two satellites in the same room from running simultaneous turns, holding the room through STT, TTS, and follow-up mic reopen windows.",
-            "Voice intercom flows let Tater broadcast or target spoken messages across Tater Voice satellites while preserving the normal voice pipeline and auto-reply behavior.",
-            "The firmware tab supports Tater VoicePE, Tater Sat1, and Tater S3Box Display targets, including device images, editable substitutions, Environment Core sensor dropdowns, reply playback options, update checks, and per-device update actions.",
-            "Browser USB flashing and USB logs let operators recover ESP32 devices from the browser, choose the USB device before building, erase flash for safe-mode recovery, and watch logs after flashing.",
-            "Tater S3Box Display firmware uses LVGL for Tater-themed status, weather bubbles, history bars, voice states, tool-call states, display brightness, and camera snapshot notifications.",
-            "Display feed and display event APIs let apps send compact sensor values, transient cards, camera snapshots, doorbell notices, and tool-progress states to Tater Voice screens.",
-            "Shared speech backends live in Settings -> Models, with Faster Whisper, Vosk, Wyoming, Kokoro, Pocket TTS, Piper, and Home Assistant announcement TTS available where they make sense.",
-            "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding models.",
-            "Speaker ID and Emotion ID can warm SpeechBrain models at startup and feed speaker/tone context into voice turns when enabled.",
-            "Reply playback targets can stay on the listening satellite, go silent/display-only, or route TTS to another media/announcement device without breaking mic reopening.",
-            "Live entity views expose sensors plus writable controls such as switches, buttons, numbers, selects, lights, wake engine, openWakeWord URL, NanoWakeWord URL, and RGB color when the device supports it.",
-            "Firmware update checks show per-device current and available versions, include connected older Tater devices with unknown firmware versions, and can update all matched devices one at a time.",
-            "Per-device logs, stats, room awareness, display refresh nudges, and direct playback make Tater hardware feel local to the room instead of remote to the browser.",
+            "Tater Voice is built into the main Tater runtime and uses secure Add Satellite pairing for supported Tater Native hardware.",
+            "Voice PE, Satellite1, ReSpeaker XVF3800, S3 Box, and compatible Tater Native devices keep their saved name, room, hardware family, firmware revision, and per-device settings.",
+            "Wake detection runs locally on each satellite with int8 microWakeWord models. Users can choose a built-in model, the shared Tater Wake Word Catalog, or a trainer-published custom JSON package.",
+            "Wake Word Trainer pairing uses a short-lived one-use code and a trainer-scoped credential; publishing a model cannot grant general Tater API access.",
+            "STT Wake Verification can run Disabled, Observe, or Enabled. Results fail open on timeout and now persist in Redis with a visible 30-day period and manual reset controls.",
+            "Room arbitration prevents two satellites in the same room from answering one wake while still allowing independent conversations in different rooms.",
+            "Stereo Pairs have their own Voice tab. Left and right members prebuffer one source, begin from a shared timestamp, preserve calibration, and remain one reusable playback destination.",
+            "Persistent native media sessions support music, synchronized multi-satellite scenes, TTS overlays, ducking, drift correction, and continued playback after a temporary reply.",
+            "Intercom can target a room, satellite, stereo pair, or broad group while using the same session state, playback routing, and TTS choices as normal voice replies.",
+            "The Firmware tab downloads signed prebuilt Tater Native images for OTA or Browser USB flashing; local compiling is no longer required.",
+            "Browser USB recovery can erase stale safe-mode state, flash the factory image, and keep USB logs visible through the restart.",
+            "S3 Box displays can show environment readings, voice and tool states, camera snapshots, doorbell notices, and targeted display cards.",
+            "Speaker ID can resolve an enrolled voice to a Person record, while optional Emotion ID adds bounded tone context without changing the trusted speaker boundary.",
+            "Reply playback can stay on the listening satellite, use a preferred room player, target another announcement device, or remain display-only.",
+            "Satellite inventory is cached and rebuilt on connect, disconnect, or settings changes with a periodic safety refresh, so the Voice UI opens quickly.",
         ],
         "guides": [
             {
-                "title": "Tater Voice runtime",
-                "summary": "Tater Voice is no longer a shop core. It is part of the main Tater app and starts with Tater.",
-                "chips": ["Built in", "One app", "Main port"],
+                "title": "Pair and organize satellites",
+                "summary": "Add Satellite creates a short-lived pairing code, then Tater remembers the device and its room.",
+                "chips": ["Add Satellite", "Rooms", "Secure pairing"],
                 "details": [
-                    "The old external voice runtime has been folded into Tater's built-in Tater Voice runtime so the voice stack no longer depends on a separate downloadable core or its own HTTP listener.",
-                    "That keeps the device lifecycle simpler: discovery, session handling, playback URLs, and operator screens now all live inside the same main application.",
-                    "This built-in shape also leaves room for future Tater Voice device types beyond the current voice-pipeline hardware.",
+                    "Flash a supported Tater Native image, connect to its setup network, and enter the pairing code shown in Settings -> Voice -> Satellites.",
+                    "After pairing, give the device a useful name and room. Room assignment becomes part of every trusted voice turn and can select devices or a preferred music player automatically.",
+                    "Saved device identity and pairing credentials persist across Tater restarts and Docker image updates when the documented runtime volume is mounted.",
                 ],
             },
             {
-                "title": "Firmware manager and browser recovery",
-                "summary": "Tater can build, flash, recover, and log Tater Voice firmware from the WebUI.",
-                "chips": ["Firmware tab", "Browser USB", "Live logs"],
+                "title": "Local microWakeWord and trainers",
+                "summary": "Wake detection stays on the satellite and custom words publish through a scoped trainer link.",
+                "chips": ["microWakeWord", "Wake catalog", "Trainer link"],
                 "details": [
-                    "Firmware templates expose device-specific substitutions with safer controls instead of raw YAML edits for common setup.",
-                    "Browser USB recovery mirrors the Tater Voice browser flashing flow: choose the USB serial device, build, flash, erase safe-mode state when needed, and stream USB logs.",
-                    "Update checks compare connected Tater devices against the current firmware package, including older flashed satellites that do not report a version yet.",
-                    "Per-device update buttons and Update All run OTA uploads one at a time and advance only after each upload finishes.",
-                    "OTA and USB log windows use the same Tater firmware session UI so operators can debug failed boots without leaving the app.",
+                    "Choose the active wake word from each satellite's settings popup: a built-in profile, a model from Tater-Wake-Words, or a custom trainer/GitHub JSON URL.",
+                    "The Apple Silicon and NVIDIA trainers link with a short-lived code from Tater, then publish only their own trained package and active-word selection.",
+                    "Sensitivity and room environment controls adjust acceptance around the model's JSON threshold, sliding window, and close-miss tuning.",
                 ],
             },
             {
-                "title": "S3Box display platform",
-                "summary": "ESP32-S3-BOX-3 devices can run a Tater-native LVGL display firmware.",
-                "chips": ["Tater S3Box", "LVGL", "Display events"],
+                "title": "Wake verification and persistent stats",
+                "summary": "A fast STT check can observe or reject wake-word mismatches without becoming a new point of failure.",
+                "chips": ["Observe", "Enabled", "30-day stats"],
                 "details": [
-                    "The Tater S3Box Display firmware shows assistant identity, online state, Environment Core sensor readings, weather/history bars, voice pipeline states, and tool-call activity.",
-                    "Display sensor fields use dropdowns sourced from Environment Core readings, with source labels and a clean install warning when Environment Core is missing.",
-                    "Apps and cores can publish display cards with text, image URLs, snapshot IDs, TTL, target display names, and event kinds such as notification, camera, doorbell, image, tool_call, voice, status, and alert.",
+                    "Observe records the transcript, match score, result, and latency while allowing the turn. Enabled rejects clear mismatches but fails open if verification errors or misses its deadline.",
+                    "Per-satellite checks, rejections, fail-opens, latest results, and the broader voice summary are stored in Redis and remain visible while a device is offline.",
+                    "Statistics automatically begin a new 30-day collection period and can be reset either for Wake Verification alone or for all voice statistics.",
                 ],
             },
             {
-                "title": "Voice pipeline and shared models",
-                "summary": "The live voice loop uses shared STT/TTS choices from the Models tab while keeping Tater Voice controls in one native screen.",
-                "chips": ["STT", "TTS", "Models"],
+                "title": "Stereo pairs and multi-room playback",
+                "summary": "Two satellites can become one stereo destination, and larger groups can play in sync across rooms.",
+                "chips": ["Stereo", "Multi-room", "Ducking"],
                 "details": [
-                    "STT can use Faster Whisper, Vosk, or Wyoming depending on the install and hardware, while TTS can use Wyoming, Kokoro, Pocket TTS, Piper, or external announcement paths.",
-                    "Runtime model files auto-download into agent_lab/models/stt and agent_lab/models/tts so rebuilds do not require hand-seeding speech models.",
-                    "Hugging Face tokens saved in Integrations are passed into model download environments for speech models that need authenticated Hub access.",
-                    "Shared model choices live in Settings -> Models, while satellite behavior, wake words, reply playback, Speaker ID, and Emotion ID live under Settings -> Tater Voice.",
-                    "The mic reopen path keeps follow-up turns room-aware after TTS finishes, without letting another satellite in the same room start a competing turn.",
+                    "Create a left/right pair under Voice -> Stereo Pairs. Music uses real channel routing, while speech stays centered across both members.",
+                    "Music Core and audio scenes can target individual satellites, stereo pairs, synchronized native groups, Sonos groups, generic media players, or mixed Sonos/native groups.",
+                    "Active music keeps its persistent session while TTS plays as a temporary overlay, ducks the group together, and restores the previous level afterward.",
+                    "Offline members are skipped safely, incomplete stereo pairs do not start, and playhead telemetry keeps synchronized members aligned.",
                 ],
             },
             {
-                "title": "Remote openWakeWord",
-                "summary": "Satellites can use remote openWakeWord while retaining on-device microWakeWord fallback.",
-                "chips": ["openWakeWord", "Server URL", "Fallback"],
+                "title": "Prebuilt firmware and recovery",
+                "summary": "Update by OTA or recover over Browser USB without compiling firmware locally.",
+                "chips": ["Prebuilt images", "OTA", "Browser USB"],
                 "details": [
-                    "Firmware exposes a wake engine selector and openWakeWord server URL live entity so users can switch between microWakeWord and remote OWW from the device side.",
-                    "When remote OWW is selected, satellites stream live wake audio to /api/openwakeword/stream on Tater or to the same WebSocket endpoint on the standalone Tater OWW Server.",
-                    "Tater applies the configured model, framework, threshold, patience, and debounce settings before reporting a wake back to the device.",
-                    "If the remote endpoint fails repeatedly, firmware falls back to microWakeWord and continues listening locally instead of leaving the room without a wake path.",
-                    "Companion projects: https://github.com/TaterTotterson/Tater-OWW-Server and https://github.com/TaterTotterson/openWakeWord-Trainer.",
+                    "Tater matches the selected satellite to the correct firmware family and board revision, then compares its installed version with the signed native release manifest.",
+                    "OTA updates run one device at a time with progress and live logs. Browser USB downloads the factory image, optionally erases flash, writes it directly, and follows the device through restart.",
+                    "Firmware currently covers Voice PE, Satellite1, ReSpeaker XVF3800, S3 Box, and the board variants published by Tater Native Firmware.",
                 ],
             },
             {
-                "title": "Remote NanoWakeWord",
-                "summary": "Satellites can switch to NanoWakeWord remote detection and use models trained by the Tater NanoWakeWord trainer.",
-                "chips": ["NanoWakeWord", "Trainer", "Server URL"],
+                "title": "Identity, rooms, and reply routing",
+                "summary": "The latest voice event decides who spoke, where they spoke, and what access applies to that turn.",
+                "chips": ["People", "Room aware", "Preferred player"],
                 "details": [
-                    "Firmware exposes NanoWakeWord as a wake-engine option alongside microWakeWord and openWakeWord, plus a NanoWakeWord server URL live entity for remote streaming.",
-                    "When NanoWakeWord is selected, satellites stream 16 kHz mono audio to /api/nanowakeword/stream on Tater or to the standalone Tater NWW Server.",
-                    "Tater loads NanoWakeWord models from agent_lab/models/nanowakeword, including trainer-downloaded .onnx, .pt, and .pth artifacts.",
-                    "Settings -> Models exposes NanoWakeWord enablement, model source, threshold, patience, debounce, trainer URL, trainer model catalog, and download action.",
-                    "Downloading a trainer model overwrites the same local artifact path when the filename matches, saves that path as the active model source, and resets loaded detectors so the next audio stream uses the new model bytes.",
-                    "The NanoWakeWord trainer now uses the stronger default recipe: synthetic positives, adversarial negatives, phoneme hard negatives, validation splits, augmentation, and optional Colab-style negative feature banks from feature_banks/.",
-                    "Companion projects: https://github.com/TaterTotterson/Tater-NWW-Server and https://github.com/TaterTotterson/nanoWakeWord-Trainer.",
+                    "Speaker ID aliases can link to a master Person alongside that person's WebUI and portal identities; older history cannot replace the current speaker or inherit their admin access.",
+                    "Device Control can use the speaking room when a request says only 'turn on the lights,' while an explicitly named room overrides the satellite room.",
+                    "Music Core follows the same rule and can honor the room's preferred player, preferring Sonos when several compatible automatic choices are available.",
+                    "Replies can play locally, on a preferred external device, or silently on display-only hardware while follow-up listening remains attached to the original satellite.",
                 ],
             },
             {
-                "title": "Wake arbitration and room ownership",
-                "summary": "Multiple satellites can live in one room without double-answering the same wake.",
-                "chips": ["Arbitration", "Rooms", "Follow-up"],
+                "title": "Intercom, displays, and observability",
+                "summary": "Tater Voice also carries targeted announcements, visual events, firmware status, and live diagnostics.",
+                "chips": ["Intercom", "Displays", "Live logs"],
                 "details": [
-                    "Tater claims the room when a satellite starts a wake-driven session and rejects competing starts from other satellites in that room while the turn is active.",
-                    "The claim is held through STT, assistant work, TTS playback, announcement-finished handling, and the short follow-up mic reopen window.",
-                    "Arbitration still allows satellites in different rooms to run independently, and stale claims expire if a device drops or a session aborts.",
-                    "This makes same-room VoicePE and Satellite1 installs practical without needing to disable one device manually.",
-                ],
-            },
-            {
-                "title": "Voice intercom",
-                "summary": "Tater can use Tater Voice satellites as targeted room intercom endpoints.",
-                "chips": ["Intercom", "Rooms", "Announcements"],
-                "details": [
-                    "Intercom requests resolve Tater device names, rooms, and speaking targets before generating or routing the spoken message.",
-                    "Announcements use the same speech backends and playback routing as normal assistant replies, so external media players and satellite speakers stay consistent.",
-                    "Auto-reply and follow-up behavior can reopen the mic after the intercom message when the selected conversation flow calls for it.",
-                    "The flow shares native Tater Voice session tracking, so LED/display states and room arbitration stay aligned with normal voice turns.",
-                ],
-            },
-            {
-                "title": "Speaker ID and Emotion ID",
-                "summary": "Tater can identify enrolled speakers and optionally add voice-tone context to Hydra prompts.",
-                "chips": ["Speaker ID", "Emotion ID", "SpeechBrain"],
-                "details": [
-                    "Speaker ID is for recognizing who is talking after a voice turn is captured; it uses enrolled voice samples and reports the best speaker plus match score.",
-                    "Speaker ID aliases can be linked in Settings -> People so the recognized voice maps to the same master user as that person's portal accounts.",
-                    "Emotion ID is separate from Speaker ID: it classifies the user's tone after STT and can add a soft prompt hint when enabled, confident enough, and not filtered as neutral.",
-                    "Both features are optional, and normal voice turns still work when either model is disabled, missing, warming, or unable to make a confident detection.",
-                    "The Dashboard voice section shows last detection information so operators can see Speaker ID and Emotion ID behavior without digging through logs.",
-                    "Settings -> Tater Voice contains the SpeechBrain model controls, enable/disable toggles, confidence thresholds, neutral-tone handling, enrollment controls, and warmup actions.",
-                    "Speaker ID and Emotion ID models are stored under agent_lab/models so container rebuilds keep the downloaded model cache when agent_lab is bind-mounted.",
-                    "In the NVIDIA image, SpeechBrain models can use CUDA when configured, with CPU fallback if the GPU path is unavailable.",
-                ],
-            },
-            {
-                "title": "Reply playback routing",
-                "summary": "Satellites can listen locally while replies play somewhere else.",
-                "chips": ["This device", "External player", "Silent display"],
-                "details": [
-                    "Each satellite can keep reply playback on its own speaker, go silent/display-only, or route the reply to another selected media or announcement target.",
-                    "This is useful for S3Box units that should act as microphones and displays while another speaker handles the answer.",
-                    "After external playback, the listening device reopens the mic so follow-up conversation behavior stays natural.",
-                ],
-            },
-            {
-                "title": "Runtime observability",
-                "summary": "The Tater Voice screen now separates devices, settings, and stats so tuning is based on real behavior instead of guesswork.",
-                "chips": ["Satellites", "Stats", "Live logs"],
-                "details": [
-                    "Satellites shows discovered devices, saved room assignments, live entity state, device facts, and a Tater Voice live log console.",
-                    "Stats surfaces wake behavior, no-op rates, false wakes, backend latency, fallback usage, and per-device voice summaries for tuning.",
-                    "Writable entity controls are available inline for things like switches, lights, numbers, buttons, and select options.",
-                ],
-            },
-            {
-                "title": "Tater Voice Extras",
-                "summary": "Tune the higher-level voice behavior that sits around the standard Tater Voice pipeline.",
-                "chips": ["Conversation flow", "Live progress", "Early TTS"],
-                "details": [
-                    "Conversation Flow controls follow-up behavior, automatic mic reopen, external-player follow-up markers, and how long Tater keeps a room ready for the next turn.",
-                    "Wake arbitration controls whether active voice turns are protected per room or more broadly across the home.",
-                    "Live Tool Progress Speech can speak short Hydra tool-progress lines and drive updated VoicePE/Sat1 LED animations while tools run.",
-                    "Partial STT can keep partial transcript state during live capture so the system gets earlier visibility into what the user is saying.",
-                    "Early-Start TTS can begin speaking long replies sooner by preparing smaller response chunks before the whole answer is finished.",
-                    "Wake word settings can use prebuilt microWakeWord models, trained microWakeWord models, remote openWakeWord, remote NanoWakeWord, or standalone wake-word server URLs.",
+                    "Intercom resolves device and room names before starting a targeted announcement and can preserve the normal follow-up flow afterward.",
+                    "Display APIs publish compact environment values and transient camera, doorbell, image, voice, tool-progress, status, or alert cards to selected Tater screens.",
+                    "Voice tabs separate Satellites, Firmware, Stereo Pairs, Stats, and Settings, with live logs and direct entity controls where supported.",
+                    "Satellite inventory and hardware state refresh through background System Tasks so opening the page does not perform a slow full-device scan.",
                 ],
             },
         ],
         "guides_eyebrow": "Voice experience",
-        "guides_title": "How Tater Voice makes Tater feel like a real device assistant.",
-        "guides_intro": "These notes focus on the built-in Tater Voice runtime, the live voice pipeline, shared speech backends, and the operator tools now living directly inside Tater.",
+        "guides_title": "How current Tater Voice works from wake to playback",
+        "guides_intro": "The current stack centers on paired Tater Native hardware, on-device microWakeWord, trusted room and Person context, prebuilt firmware, and synchronized audio.",
         "apis": [
             {
                 "method": "GET",
-                "path": "/api/settings/esphome/runtime",
-                "summary": "Load the Tater Voice runtime view used by Settings -> Tater Voice.",
-                "details": "Returns the current Satellites, Settings, and Stats payload so the WebUI can render discovery state, device cards, voice metrics, and runtime controls.",
+                "path": "/api/settings/voice/runtime",
+                "summary": "Load the complete Voice settings workspace.",
+                "details": "Returns cached satellite inventory, firmware state, stereo pairs, settings, logs, and persistent voice-stat sections for the local WebUI.",
             },
             {
                 "method": "POST",
-                "path": "/api/settings/esphome/runtime/action",
-                "summary": "Run a Tater Voice runtime action from the WebUI.",
-                "details": "Handles refresh, connect/disconnect, save/forget satellite actions, live log lifecycle, and direct entity-control actions from the Tater Voice settings screen.",
+                "path": "/api/settings/voice/runtime/action",
+                "summary": "Run a Voice UI action.",
+                "details": "Handles pairing, room and device settings, stereo-pair changes, firmware actions, intercom controls, live logs, direct entity actions, and voice-stat resets.",
             },
             {
                 "method": "GET",
                 "path": "/tater-ha/v1/voice/native/status",
-                "summary": "Inspect current voice-pipeline runtime state and backend availability.",
-                "details": "Returns selected speech backends, effective fallback state, model roots, discovery state, selector sessions, and availability of local STT/TTS backends.",
+                "summary": "Inspect current voice-pipeline and speech-backend state.",
+                "details": "Reports the effective speech backends, local model roots, runtime availability, and current native voice state.",
             },
             {
-                "method": "WS",
-                "path": "/api/openwakeword/stream",
-                "summary": "Accept live remote openWakeWord audio streams from satellites or the standalone Tater OWW Server contract.",
-                "details": "Runs the configured OWW model with threshold, patience, debounce, and stale-frame handling, then sends wake detections back to the device over the same stream.",
+                "method": "GET",
+                "path": "/tater-ha/v1/voice/satellites",
+                "summary": "List satellite playback and voice targets.",
+                "details": "Returns connected and saved native satellites for room-aware routing and compatible companion clients.",
             },
             {
-                "method": "WS",
-                "path": "/api/nanowakeword/stream",
-                "summary": "Accept live remote NanoWakeWord audio streams from satellites or the standalone Tater NWW Server contract.",
-                "details": "Runs the configured NanoWakeWord model with threshold, patience, debounce, per-detector reset handling, and optional diagnostic logging, then sends wake detections back to the device over the same stream.",
-            },
-            {
-                "method": "POST",
-                "path": "/api/settings/nanowakeword/trainer-models",
-                "summary": "Load available NanoWakeWord artifacts from a trainer URL.",
-                "details": "Reads /api/artifacts and /api/trained_wake_words/catalog from the NanoWakeWord trainer so operators can pick newly trained models from Settings -> Models.",
-            },
-            {
-                "method": "POST",
-                "path": "/api/settings/nanowakeword/download-trainer-model",
-                "summary": "Download a NanoWakeWord trainer artifact into Tater's local model store.",
-                "details": "Downloads the selected artifact into agent_lab/models/nanowakeword/trainer/{model}, saves it as the active model source, and resets NanoWakeWord detectors so a same-name replacement model is loaded on the next stream.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/voice/esphome/entities",
-                "summary": "Fetch live Tater Voice entity rows for one connected satellite.",
-                "details": "Returns the live entity snapshot so verbas and operators can inspect sensors, buttons, numbers, switches, lights, wake-engine controls, openWakeWord/NanoWakeWord URL state, and other exposed device entities.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/voice/esphome/entities/command",
-                "summary": "Command a writable Tater Voice entity on one satellite.",
-                "details": "Supports button, number, switch, select, text, and light-control actions so device-local flows can act directly on the speaking device.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/voice/esphome/play",
-                "summary": "Queue direct audio playback on a selected Tater Voice satellite.",
-                "details": "Used for device-local playback flows such as announcements, generated audio, and other responses that should play on the speaking satellite itself.",
+                "method": "GET/POST",
+                "path": "/tater-ha/v1/voice/intercom/*",
+                "summary": "Discover targets and control an intercom session.",
+                "details": "Lists available destinations, reports current state, starts a targeted spoken intercom message, or cancels an active session.",
             },
             {
                 "method": "GET/POST",
                 "path": "/tater-ha/v1/display/feed",
-                "summary": "Serve compact display sensor data for Tater Voice screens.",
-                "details": "Returns display-ready slot values, flat readings, text labels, online state, and clock data; firmware profiles can map slots to Environment Core readings instead of hard-coded Home Assistant entity IDs.",
+                "summary": "Serve compact environment and status data to Tater displays.",
+                "details": "Returns display-ready readings, labels, online state, and clock data sourced from Tater and enabled cores.",
             },
             {
-                "method": "GET",
+                "method": "GET/POST",
                 "path": "/tater-ha/v1/display/events",
-                "summary": "Poll queued display events for a target screen.",
-                "details": "Returns transient notification/display cards after a sequence number, with optional target filtering so one display can receive a specific camera, doorbell, tool-call, voice, status, or alert event.",
-            },
-            {
-                "method": "POST",
-                "path": "/tater-ha/v1/display/events",
-                "summary": "Publish a display event card.",
-                "details": "Accepts display event payloads with kind, title, message, image_url, snapshot_id, target, TTL, and optional metadata such as tool phase/status and step counts.",
-            },
-            {
-                "method": "GET",
-                "path": "/tater-ha/v1/display/snapshots/{snapshot_id}",
-                "summary": "Serve Redis-backed awareness snapshots to displays.",
-                "details": "Allows Tater Voice displays to show camera snapshots that were stored by Awareness Core, using the same display API token rules as the feed and event endpoints.",
+                "summary": "Poll or publish targeted display cards.",
+                "details": "Carries transient text, images, snapshot references, tool progress, voice states, and alert metadata to selected displays.",
             },
         ],
+    },
+    "automation": {
+        "label": "Automation Core",
+        "description": "Visual event-to-action automation builder powered by Tater's shared rooms, integration devices, notifications, cameras, and voice destinations.",
+        "role": "Automation engine",
+        "source": TATER_SHOP_DIR / "cores" / "automation_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Builds automations from the same integration categories, device actions, rooms, and aliases used throughout Tater.",
+            "Triggers include state changes, on/off and open/close transitions, motion, people, vehicles, animals, packages, faces, license plates, doorbells, text matches, connection changes, and numeric thresholds.",
+            "Actions can control devices or categories, send notifications, speak on satellites or announcement targets, and describe a camera image with Tater's vision model.",
+            "Reusable message fields expose event context without requiring users to hand-write integration-specific payloads.",
+            "Cooldowns, enable/disable controls, manual test runs, last-run state, and execution history make each rule observable from the Core UI.",
+        ],
+        "guides_eyebrow": "Automation builder",
+        "guides_title": "Build useful home flows without tying them to one provider",
+        "guides_intro": "Automation Core consumes Tater's generic device registry, so the same rule shape can work with Home Assistant, Hue, Shelly, UniFi Protect, and future integrations.",
+        "guides": [
+            {
+                "title": "Choose a trigger",
+                "summary": "Start with a device event or condition exposed by an enabled integration.",
+                "chips": ["Devices", "Events", "Thresholds"],
+                "details": [
+                    "Pick a category and device from the shared catalog instead of entering provider-specific identifiers by hand.",
+                    "Use event filters for camera detections or state filters for lights, doors, motion, connectivity, text, and numeric values.",
+                    "A cooldown prevents repeated sensor chatter from firing the same actions too frequently.",
+                ],
+            },
+            {
+                "title": "Compose actions",
+                "summary": "One rule can control the home, speak, notify, or ask vision what a camera sees.",
+                "chips": ["Device control", "TTS", "Vision"],
+                "details": [
+                    "Control an individual device or a compatible room/category group using advertised integration actions.",
+                    "Send a message through notifier portals or speak it on selected native satellites, stereo pairs, or announcement players.",
+                    "Camera actions can capture a current image, generate a short description, then use that result in a notification or spoken announcement.",
+                ],
+            },
+        ],
+        "apis": [],
+    },
+    "environment": {
+        "label": "Environment Core",
+        "description": "Normalizes local weather and indoor sensor data for the Dashboard, Tater displays, voice answers, and other cores.",
+        "role": "Environment telemetry",
+        "source": TATER_SHOP_DIR / "cores" / "environment_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Combines supported weather stations and enabled sensor integrations into one normalized environment snapshot.",
+            "Supplies current conditions and daily forecast cards to the Dashboard without making the page wait on every source.",
+            "Publishes display-friendly values for temperature, humidity, rain, wind, lightning, and other available readings.",
+            "Supports Ecowitt rain data, Ecobee remote sensors, and consistent Fahrenheit/Celsius conversion.",
+            "Keeps source labels attached so the WebUI and Tater screens can show where each value came from.",
+        ],
+        "apis": [],
     },
     "awareness": {
         "label": "Awareness Core",
@@ -1297,6 +1281,7 @@ PLATFORM_DOCS = {
             "Injects compact Guardian context into Hydra prompts, including stats, findings, offline/untrusted devices, source health, recent events, and human confirmations.",
             "Includes dark Tater-themed Guardian UI cards for Network Posture/Security Map, AI Threat Brief, and the Guardian Question Queue.",
             "Tunnel integrations were intentionally removed; Guardian does not manage Tailscale, WireGuard, or Cloudflare Tunnel.",
+            "Inventory scans and AI security reviews publish through the Core task contract, including their current state, last/next run, errors, and Run Now action in Settings -> System Tasks.",
         ],
         "guides_eyebrow": "Guardian workflow",
         "guides_title": "How Guardian moves from discovery to guided review.",
@@ -1347,14 +1332,16 @@ PLATFORM_DOCS = {
     },
     "ai_task": {
         "label": "AI Task Runner",
-        "description": "Built-in scheduled task runner for timed and recurring AI jobs with delivery routed through notifier portals.",
+        "description": "Scheduled and recurring AI jobs with direct notifier delivery, whole-home broadcast destinations, stereo pairs, and optional generated background-audio scenes.",
         "role": "Scheduler",
         "source": TATER_SHOP_DIR / "cores" / "ai_task_core.py",
         "plugin_surface": "",
         "highlights": [
             "Executes recurring jobs without requiring an external scheduler around Tater.",
-            "Routes output through supported notifier portals so scheduled results can land where users already are.",
-            "Best paired with concise task prompts and target-specific delivery rules.",
+            "Routes the prepared result directly through supported notifier portals without asking a second model to rewrite it.",
+            "Broadcast delivery can target everywhere, one native satellite, or a configured stereo pair.",
+            "Optional generated or uploaded background audio can loop beneath TTS with volume, ducking, attack, release, and finish-fade controls.",
+            "Persistent native audio scenes stop their background when the scheduled speech finishes and fall back clearly on older firmware.",
         ],
         "apis": [],
     },
@@ -1369,6 +1356,83 @@ PLATFORM_DOCS = {
             "Builds user and room summaries in Redis for later Hydra injection.",
             "Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and Tater Voice identities.",
             "Includes confidence thresholds, identity linking options, and context-size limits.",
+            "Memory scans publish as Core-owned System Tasks with schedule, run state, errors, and a manual Run Now control.",
+        ],
+        "apis": [],
+    },
+    "music": {
+        "label": "Music Core",
+        "description": "Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.",
+        "role": "Music library + player",
+        "source": TATER_SHOP_DIR / "cores" / "music_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.",
+            "Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.",
+            "Keeps a persistent player visible with play, stop, previous, next, seek, volume, speaker selection, shuffle, and a collapsible current track list.",
+            "Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.",
+            "An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.",
+            "Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.",
+            "Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.",
+            "Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.",
+            "Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.",
+            "Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.",
+            "Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -> System Tasks with next-run state and Run Now controls.",
+        ],
+        "guides_eyebrow": "Whole-home music",
+        "guides_title": "Browse once, then play naturally by voice or from the live player",
+        "guides_intro": "Music Core keeps library browsing, room selection, active playback, history, and AI recommendations in one provider-neutral surface.",
+        "guides": [
+            {
+                "title": "Connect a library",
+                "summary": "Choose the provider you already use and let Music Core build a local browse catalog.",
+                "chips": ["Tater Tube", "Plex", "Jellyfin + more"],
+                "details": [
+                    "Connect Tater Tube by pairing PIN, Plex by server and token, Emby or Jellyfin by server/API key, or Navidrome by OpenSubsonic credentials.",
+                    "Catalog sync collects artists, albums, genres, tracks, and provider artwork, then refreshes in the background on the configured interval.",
+                    "Provider setup and the player remain usable from the same Core tab, with the active provider clearly marked.",
+                ],
+            },
+            {
+                "title": "Choose where it plays",
+                "summary": "Room context removes the need to ask which speaker when Tater already knows.",
+                "chips": ["Room aware", "Preferred player", "Sonos first"],
+                "details": [
+                    "If a request names a room, that room wins. Otherwise the speaking satellite's room is used when available.",
+                    "A preferred player saved for the room is selected before global defaults, and Sonos is preferred when automatic selection finds several compatible players.",
+                    "The player-bar speaker button opens every available satellite, stereo pair, Sonos speaker/group, and standard integration media player with readable labels.",
+                ],
+            },
+            {
+                "title": "Live queue and player",
+                "summary": "The persistent player changes in place and keeps the active album or mix easy to navigate.",
+                "chips": ["No reloads", "Track list", "Seek + volume"],
+                "details": [
+                    "Playing another album replaces the active track list instead of appending it to the previous one.",
+                    "The current song stays highlighted; double-click another row to jump directly to it, or use previous/next without leaving the page.",
+                    "Live Core events update only when playback state changes, preserving the selected browse tab, open track list, forms, and scroll position.",
+                ],
+            },
+            {
+                "title": "Stereo and multi-room scenes",
+                "summary": "One request can play through a calibrated stereo pair or a larger synchronized group.",
+                "chips": ["Stereo pair", "Native sync", "Mixed groups"],
+                "details": [
+                    "Native members prebuffer the same media and start from a shared clock; stereo pairs retain left/right routing, level, and delay calibration.",
+                    "Sonos groups can be formed temporarily, then restored without permanently disturbing the listener's queue or prior grouping.",
+                    "Music remains a persistent session while voice replies play as ducked overlays and restore the original music level afterward.",
+                ],
+            },
+            {
+                "title": "Personalized music context",
+                "summary": "A selected Person can receive better music suggestions without sharing that profile with everyone.",
+                "chips": ["People", "Listening history", "Recommendations"],
+                "details": [
+                    "Music Core records recent listening and can generate favorite genres, favorite artists, recent tracks, and a short taste summary for one selected Person.",
+                    "The prompt fragment is only added when Tater resolves the current speaker to that same Person; leaving the setting empty disables music prompt injection.",
+                    "Tater Recommendations choose exact items from the current catalog and publish friendly AI-named mixes that can be played directly from the browser.",
+                ],
+            },
         ],
         "apis": [],
     },
@@ -1385,6 +1449,7 @@ PLATFORM_DOCS = {
             "Can inject bounded personal context into Hydra prompts per portal, with Discord/IRC/Telegram/Matrix controls.",
             "Supports notification routing through notifier portals with destination controls and per-cycle limits.",
             "Includes a dedicated WebUI tab for stats, context previews, manual scans, notification tests, and safe data cleanup actions.",
+            "Mailbox scans and profile refreshes appear as Core-owned System Tasks instead of running as invisible background work.",
         ],
         "apis": [],
     },
@@ -1398,6 +1463,22 @@ PLATFORM_DOCS = {
             "Polls feeds, extracts article bodies, and creates digest-style summaries.",
             "Designed for automated broadcast and notification workflows rather than direct user chat.",
             "Lets Tater act as a content monitor in addition to an assistant.",
+            "Feed polling publishes its schedule, latest run, next run, errors, and Run Now action through Settings -> System Tasks.",
+        ],
+        "apis": [],
+    },
+    "tater_tube": {
+        "label": "Tater Tube Core",
+        "description": "Connects Tater to Tater Tube Server for recent viewing context, AI-selected movie and series recommendations, and spoken Tater's Picks.",
+        "role": "Media intelligence",
+        "source": TATER_SHOP_DIR / "cores" / "tater_tube_core.py",
+        "plugin_surface": "",
+        "highlights": [
+            "Pairs with Tater Tube Server and reads recent viewing activity without turning the general assistant into a media-server client.",
+            "Can inject a bounded recent-viewing summary so Tater understands what the selected user has been watching.",
+            "Builds AI-selected movie and series recommendations and publishes them as Tater's Picks.",
+            "Uses the user's configured TTS path when a recommendation should be voiced.",
+            "Recurring sync and recommendation work publishes through the Core task contract so it appears in Settings -> System Tasks.",
         ],
         "apis": [],
     },
@@ -1426,7 +1507,7 @@ PLATFORM_META = {
 }
 PLATFORM_META["voice_core"] = {
     "label": "Tater Voice",
-    "description": "Tater Voice runtime, remote openWakeWord, remote NanoWakeWord, and intercom handling inside Tater.",
+    "description": "Built-in room-aware Tater Native voice runtime with local microWakeWord, intercom, stereo pairs, synchronized playback, and trusted speaking-device context.",
 }
 
 INSTALL_METHODS = [
@@ -1549,8 +1630,9 @@ pip install -r requirements.txt""",
         "complexity": "Medium",
         "highlights": [
             "The README publishes the image at ghcr.io/tatertotterson/tater:latest.",
-            "Container persistence warnings now include both /app/agent_lab and /app/.runtime host mappings, which also preserve Spudex workspace files and downloaded voice models.",
+            "Container persistence warnings include both /app/agent_lab and /app/.runtime host mappings, preserving Spudex workspaces, downloaded models, Redis setup, and native satellite pairing credentials.",
             "The container exposes the WebUI/API on port 8501; portal routes mount under that same Tater port.",
+            "Docker and local command-line runs read the same canonical packaged version as the macOS app, so the bottom-left WebUI label reports the installed build correctly.",
         ],
         "steps": [
             "Pull the published image.",
@@ -1562,7 +1644,7 @@ pip install -r requirements.txt""",
         ],
         "notes": [
             "If /app/agent_lab is not mounted, runtime data, Spudex workspace files, and downloaded Faster Whisper/Vosk/Kokoro/Pocket TTS/Piper models can be lost on rebuild/update.",
-            "If /app/.runtime is not mounted, Redis setup popup config and Redis encryption key/state can be lost on rebuild/update.",
+            "If /app/.runtime is not mounted, Redis setup, encryption state, and Tater Native satellite pairing credentials can be lost on rebuild/update.",
             "The README also calls out Unraid-specific time-zone mappings for /etc/localtime and /etc/timezone.",
         ],
         "snippets": [
@@ -2442,7 +2524,14 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="{escape(description)}">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="{escape(title)}">
+          <meta property="og:description" content="{escape(description)}">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>{escape(title)}</title>
+          <link rel="icon" href="{base}assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="{base}assets/site.css">
           <script src="{base}assets/site.js" defer></script>
         </head>
@@ -2463,7 +2552,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>
@@ -2595,7 +2684,7 @@ def platform_settings_chip(platform: dict[str, Any]) -> str:
     if platform["slug"] == "webui":
         return "Configured in app"
     if platform["slug"] == "esphome":
-        return "Settings -> Tater Voice"
+        return "Settings -> Voice"
     if platform.get("has_settings_schema"):
         if int(platform["setting_count"]) == 0:
             return "No required fields"
@@ -2648,9 +2737,9 @@ def platform_settings_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "Tater Voice is configured through Settings -> Tater Voice for Satellites, Settings, Stats, firmware, wake engine, openWakeWord URL, NanoWakeWord URL, intercom, and Tater Voice Extras. "
-            "Shared STT/TTS, VAD, speaker/emotion ID, openWakeWord model choices, and NanoWakeWord model choices live in Settings -> Models. "
-            "Firmware builds, browser recovery, update checks, live logs, display control, voice settings, and wake-word capture toggles live in the same native UI."
+            "Tater Voice is configured through Settings -> Voice, with separate Satellites, Firmware, Stereo Pairs, Stats, and Settings tabs. "
+            "Each satellite owns its local microWakeWord profile, room, playback, brightness, and supported live controls, while shared STT/TTS and SpeechBrain choices live in Settings -> Models. "
+            "Prebuilt OTA and Browser USB firmware, secure trainer pairing, wake verification, intercom, persistent statistics, and live logs are managed from the same local UI."
         )
     if platform.get("has_settings_schema"):
         return (
@@ -2669,7 +2758,7 @@ def platform_plugin_text(platform: dict[str, Any]) -> str:
         )
     if platform["slug"] == "esphome":
         return (
-            "Tater Voice is a built-in runtime surface. Verbas currently advertise speaking-device support through the voice_core platform tag, which Tater maps onto native Tater Voice room assignment, live entity access, playback routing, remote wake status for openWakeWord and NanoWakeWord, intercom targeting, and follow-up mic handling."
+            "Tater Voice is a built-in runtime surface. Verbas advertise speaking-device support through the voice_core platform tag, which Tater maps onto trusted Person and room context, native satellite identity, playback routing, stereo/intercom targets, and follow-up mic handling."
         )
     if platform["slug"] == "ai_task":
         return (
@@ -2726,22 +2815,17 @@ def render_home_page(
     hero = f"""
     <section class="hero hero-home">
       <div class="hero-copy">
-        <span class="eyebrow">Tater docs</span>
-        <h1>Tater connects your voice to home, tools, and automations.</h1>
+        <span class="eyebrow">Local AI, throughout your home</span>
+        <h1>One private assistant for every room.</h1>
         <p>
-          Talk to Tater from voice devices or the app, and Hydra routes the request through
-          Verbas, portals, cores, firmware, and smart-home controls from one place.
+          Talk from a Tater satellite, the WebUI, Little Spud, or your favorite chat portal.
+          Tater carries the right Person, room, devices, music, memory, and permissions into every turn.
         </p>
         <div class="action-row">
           {button("Install Tater", "install/index.html")}
-          {button("Integrations", "integrations/index.html")}
-          {button("Local LLMs", "llms/index.html")}
-          {button("OpenAI API", "api/index.html")}
-          {button("Spud Hub", "spud-hub/index.html")}
-          {button("Tater Voice", "tater-voice/index.html")}
-          {button("Explore Verbas", "plugins/index.html")}
-          {button("Read Hydra", "cerberus/index.html")}
-          {button("Open Spudex", "spudex/index.html", ghost=True)}
+          {button("Explore Music Core", "cores/music.html")}
+          {button("Meet Tater Voice", "tater-voice/index.html")}
+          {button("Browse all docs", "cores/index.html", ghost=True)}
         </div>
       </div>
       <aside class="hero-art mascot-stage">
@@ -2763,18 +2847,18 @@ def render_home_page(
     mascot_intro = """
     <section class="section mascot-band">
       <div class="mascot-band-copy">
-        <span class="eyebrow">Tater Assistant</span>
-        <h2>Your local voice assistant for rooms, devices, and automations.</h2>
+        <span class="eyebrow">Tater today</span>
+        <h2>Private AI, a whole-home music player, and one polished local control center.</h2>
         <p>
-          Tater ties the app, WebUI, Tater Voice satellites, wake-word engines,
-          dashboard, firmware tools, and Verbas into one control surface for your home.
+          The current Tater brings voice, media, devices, automations, people, cores,
+          and live system work together without turning the WebUI into a collection of separate apps.
         </p>
         <ul class="stack-list">
-          <li>Talk through VoicePE, Sat1, or S3Box devices, then let Hydra route the request to Verbas, cores, and smart-home controls.</li>
-          <li>Use the app or WebUI for private chat, quick actions, attachments, device health, dashboards, and firmware updates.</li>
-          <li>Download only the integrations you enable, then let cores discover cameras, sensors, speakers, garage doors, search providers, and weather sources by capability.</li>
-          <li>Use Spudex when Tater needs terminal console access for commands, scripts, local diagnostics, small apps, or hosted workspace tasks.</li>
-          <li>Mix local or remote wake detection with microWakeWord, openWakeWord, or NanoWakeWord, plus intercom and display notifications.</li>
+          <li>Browse and play your own music through Tater Tube, Plex, Emby, Jellyfin, or Navidrome, then send it to a room, stereo pair, Sonos group, or synchronized set of satellites.</li>
+          <li>Use the locally bundled Vue WebUI for the Dashboard, Chat, Music, Integrations, Verbas, Portals, Cores, Spudex, Voice, Settings, and live runtime state.</li>
+          <li>Pair Tater Native satellites securely, run microWakeWord on-device, verify wakes with fast STT, and keep 30 days of voice statistics in Redis.</li>
+          <li>Let cached System Tasks refresh devices, satellites, models, hardware, Dashboard briefs, recommendations, memory, security, feeds, and other Core work in the background.</li>
+          <li>Control devices through one room- and alias-aware Device Control Verba, with dedicated Camera Control and Reachy Vision for current visual questions.</li>
         </ul>
         <div class="action-row">
           <a class="button" href="https://github.com/TaterTotterson/Tater/releases" target="_blank" rel="noreferrer">Latest releases</a>
@@ -2785,7 +2869,56 @@ def render_home_page(
     </section>
     """
 
+    spotlight_cards = [
+        (
+            "Music Core",
+            "Browse Search, Genres, Artists, Albums, and Tater Recommendations from a live player that understands rooms, preferred speakers, listening history, and your own media library.",
+        ),
+        (
+            "Stereo pairs",
+            "Turn two Tater Native satellites into one calibrated left/right destination with shared starts, channel routing, playhead telemetry, and synchronized TTS ducking.",
+        ),
+        (
+            "Multi-room playback",
+            "Play across native satellites, Sonos, stereo pairs, integration media players, or mixed groups while temporary voice replies duck the music instead of stopping it.",
+        ),
+        (
+            "A new local WebUI",
+            "Tater's main workspaces now share a fast Vue 3 interface with responsive cards, stable live updates, compact controls, smoother dialogs, and the orange-and-gray Tater theme.",
+        ),
+        (
+            "Background System Tasks",
+            "Slow discovery and recurring Core work run outside page loads, with last run, next run, state, errors, and Run Now gathered under one Settings tab.",
+        ),
+        (
+            "People and trusted identity",
+            "The newest portal or voice event decides who is speaking. Master People link accounts and voices without letting old shared-channel history inherit another user's name or tools.",
+        ),
+        (
+            "Smarter device control",
+            "One Device Control Verba handles lights, switches, plugs, fans, covers, locks, climate, media players, scenes, scripts, and more with AI selection for ambiguous devices.",
+        ),
+        (
+            "Reachy can look and respond",
+            "Reachy Vision captures a fresh authenticated snapshot for questions such as 'what do you see?' while expressive tracking and motion continue through Tater's segmented speech.",
+        ),
+    ]
+    spotlight_html = "".join(
+        f"""
+        <article class="feature-card feature-card-spotlight">
+          <span class="card-index">{index:02d}</span>
+          <h3>{escape(title)}</h3>
+          <p>{escape(text)}</p>
+        </article>
+        """
+        for index, (title, text) in enumerate(spotlight_cards, start=1)
+    )
+
     feature_cards = [
+        (
+            "Local-first by design",
+            "Tater, its modern WebUI, enabled cores, speech models, and device state run on the system you control, with local command-line, Docker, Home Assistant, Unraid, and macOS paths.",
+        ),
         (
             "Modular integrations",
             "Integrations live in Tater_Integrations and download only when enabled, so new providers can expose devices, actions, and web search without editing Tater core.",
@@ -2811,12 +2944,12 @@ def render_home_page(
             "Guardian watches network inventory, source health, posture scoring, AI findings, device trust, watch checks, and guided security confirmations from a dark Tater-themed UI.",
         ),
         (
-            "Tater Dashboard",
-            "The default WebUI view now gives a cached home brief, health, environment, awareness snapshots, voice devices, Speaker ID, and Emotion ID without blocking page load.",
+            "Fast, cached Dashboard",
+            "The default Dashboard uses background snapshots and masonry sections for health, environment imagery, awareness events, voice devices, Speaker ID, and Emotion ID without blocking page load.",
         ),
         (
             "Tater Voice",
-            "Tater Voice is built into Tater, powering VoicePE, Sat1, and S3Box devices with room-aware voice sessions, remote openWakeWord, remote NanoWakeWord, intercom, wake arbitration, live entities, reply playback routing, logs, and native operator screens.",
+            "Tater Voice is built into Tater, powering paired native satellites with local microWakeWord, trusted room context, intercom, wake arbitration, live controls, reply routing, logs, and native operator screens.",
         ),
         (
             "Tater S3Box displays",
@@ -2824,7 +2957,7 @@ def render_home_page(
         ),
         (
             "Firmware recovery",
-            "The Tater Voice firmware tab supports browser USB flashing, USB device selection, OTA and USB logs, and safe-mode recovery erases for ESP32 devices.",
+            "The Voice firmware tab matches prebuilt signed images by board and revision, then supports OTA, Browser USB, live logs, and safe-mode recovery without a local compile.",
         ),
         (
             "Voice identity and tone",
@@ -2839,8 +2972,8 @@ def render_home_page(
             "Tater apps and cores can publish display events with text, images, snapshots, and tool-progress metadata to targeted Tater Voice screens.",
         ),
         (
-            "Remote wake and intercom",
-            "Satellites can switch between microWakeWord, remote openWakeWord, and remote NanoWakeWord, fall back locally if a remote wake server is unavailable, and use Tater intercom broadcasts across room devices.",
+            "Local wake and intercom",
+            "Satellites run microWakeWord locally with built-in, catalog, or securely trainer-published models, while intercom can target individual devices, rooms, stereo pairs, or broader groups.",
         ),
         (
             "Environment-aware sensors",
@@ -2864,7 +2997,7 @@ def render_home_page(
         ),
         (
             "Redis control + encryption",
-            "Redis setup, connectivity checks, and live encrypt/decrypt controls are managed directly in WebUI settings.",
+            "Redis setup, connectivity checks, live encrypt/decrypt controls, persistent voice statistics, and runtime caches are managed directly in WebUI settings.",
         ),
         (
             "API key protection",
@@ -2872,11 +3005,11 @@ def render_home_page(
         ),
         (
             "Core layer",
-            "Built-in tools handle files, web research, memory, images, notes, attachments, and delivery.",
+            "Downloadable cores add automation, awareness, environment, Guardian, memory, music, personal intelligence, RSS, scheduling, and Tater Tube without bloating the base runtime.",
         ),
         (
             "Verbas",
-            "Actions speak louder then words. Verbas extend Tater into smart-home, media, camera, note, download, and admin workflows.",
+            "Actions speak louder than words. Standalone Verbas extend Tater into smart-home, media, camera, vision, note, download, and admin workflows.",
         ),
     ]
     feature_html = "".join(
@@ -2889,7 +3022,22 @@ def render_home_page(
         for title, text in feature_cards
     )
 
-    home_cores = [core for core in cores if core.get("slug") != "awareness"]
+    home_cores = list(cores)
+    featured_integration_slugs = {
+        "homeassistant",
+        "hue",
+        "roon",
+        "shelly",
+        "sonos",
+        "unifi_network",
+        "unifi_protect",
+        "weather_api",
+    }
+    home_integrations = [
+        integration
+        for integration in integrations
+        if integration.get("slug") in featured_integration_slugs
+    ]
 
     portal_cards = "".join(
         f"""
@@ -2942,7 +3090,7 @@ def render_home_page(
           </div>
         </article>
         """
-        for integration in integrations[:6]
+        for integration in home_integrations
     )
 
     page_links = f"""
@@ -2989,7 +3137,7 @@ def render_home_page(
       </article>
       <article class="panel">
         <h3>Core docs</h3>
-        <p>Built-in runtime services such as awareness automation, Guardian network review, scheduling, memory, personal email intelligence, and RSS monitoring.</p>
+        <p>Automation, awareness, environment, Guardian, scheduling, memory, music, personal intelligence, RSS, and Tater Tube.</p>
         {button("Open cores", "cores/index.html", ghost=True)}
       </article>
       <article class="panel">
@@ -3008,20 +3156,102 @@ def render_home_page(
     screenshot = """
     <div class="showcase-grid">
       <div class="panel panel-tight">
-        <span class="eyebrow">WebUI snapshot</span>
-        <h2>The operator side is live.</h2>
+        <span class="eyebrow">The local control center</span>
+        <h2>One UI for the whole assistant.</h2>
         <p>
-          The WebUI handles setup, chat, plugin browsing, settings, Hydra runtime controls, and Redis encryption in one place.
+          Dashboard, Chat, Music, Integrations, Verbas, Portals, Cores, Spudex,
+          Voice, Settings, System Tasks, and runtime telemetry now share one
+          responsive orange-and-gray interface bundled with Tater itself.
         </p>
+        <div class="chip-row">
+          <span class="chip">Vue 3 + TypeScript</span>
+          <span class="chip">Local assets</span>
+          <span class="chip">Live updates</span>
+          <span class="chip">No forced refresh</span>
+        </div>
       </div>
-      <div class="screenshot-frame">
-        <img src="assets/images/webui.png" alt="Tater WebUI screenshot">
+      <div class="webui-preview" aria-label="Stylized preview of Tater's current local WebUI">
+        <div class="webui-preview-sidebar">
+          <div class="webui-preview-brand"><span class="webui-preview-mark">+</span><strong>Tater</strong></div>
+          <span class="webui-preview-nav is-active">Dashboard</span>
+          <span class="webui-preview-nav">Chat</span>
+          <span class="webui-preview-nav">Music</span>
+          <span class="webui-preview-nav">Integrations</span>
+          <span class="webui-preview-nav">Voice</span>
+          <span class="webui-preview-version">Installed build</span>
+        </div>
+        <div class="webui-preview-main">
+          <div class="webui-preview-topline"><span>Dashboard</span><span class="webui-preview-status">Systems healthy</span></div>
+          <div class="webui-preview-grid">
+            <div class="webui-preview-card webui-preview-card-wide">
+              <span class="webui-preview-label">Now playing · Family Room</span>
+              <strong>Tater Recommendations</strong>
+              <div class="webui-preview-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="webui-preview-card"><span class="webui-preview-label">Voice</span><strong>8 satellites</strong><small>Office Stereo ready</small></div>
+            <div class="webui-preview-card"><span class="webui-preview-label">System Tasks</span><strong>All caught up</strong><small>Next refresh in 3m</small></div>
+            <div class="webui-preview-card webui-preview-card-wide"><span class="webui-preview-label">Home</span><strong>Devices, people, rooms, and cores</strong><small>Live local state without page reloads</small></div>
+          </div>
+        </div>
       </div>
     </div>
     """
 
+    music_showcase = """
+    <section class="section product-story">
+      <div class="product-story-copy">
+        <span class="eyebrow">Music Core</span>
+        <h2>Your library. The right room. Still playing after Tater speaks.</h2>
+        <p>
+          Ask for an album, artist, genre, song, or recommendation and let room context choose the destination.
+          The same live player stays available for browsing, queue changes, speaker selection, seeking, and volume.
+        </p>
+        <div class="chip-row">
+          <span class="chip">Tater Tube</span>
+          <span class="chip">Plex</span>
+          <span class="chip">Emby</span>
+          <span class="chip">Jellyfin</span>
+          <span class="chip">Navidrome</span>
+          <span class="chip">Sonos + native</span>
+        </div>
+        <div class="action-row">
+          <a class="button" href="cores/music.html">Read Music Core</a>
+          <a class="button button-ghost" href="tater-voice/index.html">Stereo + voice</a>
+        </div>
+      </div>
+      <div class="music-stage" aria-label="Decorative Tater Music player preview">
+        <img class="mascot mascot-music" src="assets/images/tater-mascot-sit.png" alt="" aria-hidden="true">
+        <div class="music-player-demo">
+          <div class="music-now-playing">
+            <span class="music-kicker">Now playing · Family Room</span>
+            <strong>Whole-home, your way</strong>
+            <span>Tater Recommendations</span>
+          </div>
+          <div class="music-progress"><span></span></div>
+          <div class="music-controls" aria-hidden="true">
+            <span>−</span><span>‹</span><span class="music-play">▶</span><span>›</span><span>＋</span>
+          </div>
+          <div class="music-destinations">
+            <span>Office Stereo</span><span>Family Room Sonos</span><span>Kitchen Sat</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    """
+
     body = f"""
     {hero}
+    <section class="section">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">What changed</span>
+        <h2>Tater has grown into a room-aware AI and media platform.</h2>
+        <p>The biggest current capabilities, brought forward so you do not have to discover them one old page at a time.</p>
+      </div>
+      <div class="grid spotlight-grid">
+        {spotlight_html}
+      </div>
+    </section>
+    {music_showcase}
     {macos_release}
     {mascot_intro}
     <section class="section">
@@ -3029,7 +3259,7 @@ def render_home_page(
         <span class="eyebrow">What Tater does</span>
         <h2>Tater plans, acts, and connects across your stack.</h2>
       </div>
-      <div class="grid grid-4">
+      <div class="grid capability-grid">
         {feature_html}
       </div>
     </section>
@@ -3064,7 +3294,7 @@ def render_home_page(
     """
     return page_template(
         title="Tater | Home",
-        description="Overview of Tater Assistant, supported portals, modular integrations, and the current wiki structure.",
+        description="Meet Tater Assistant: private local AI with room-aware voice, Music Core, stereo pairs, multi-room playback, smart-home control, and a modern local WebUI.",
         body=body,
         depth=0,
         nav_key="home",
@@ -4015,9 +4245,9 @@ def render_cores_page(cores: list[dict[str, Any]]) -> str:
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Core reference</span>
-        <h1>Tater cores power built-in runtime services.</h1>
+        <h1>Cores give Tater persistent skills and background work.</h1>
         <p>
-          Cores are always-on internal services like awareness automation, scheduling, memory extraction, personal email intelligence, and feed monitoring.
+          Install only the services you want: automation, awareness, environment, network security, scheduling, memory, music, personal intelligence, feeds, and Tater Tube recommendations.
         </p>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -4308,8 +4538,29 @@ def render_platform_detail(
     if platform["slug"] == "webui":
         webui_showcase = """
         <section class="section">
-          <div class="screenshot-frame">
-            <img src="../assets/images/webui.png" alt="Tater WebUI screenshot">
+          <div class="webui-preview" aria-label="Stylized preview of Tater's current local WebUI">
+            <div class="webui-preview-sidebar">
+              <div class="webui-preview-brand"><span class="webui-preview-mark">+</span><strong>Tater</strong></div>
+              <span class="webui-preview-nav is-active">Dashboard</span>
+              <span class="webui-preview-nav">Chat</span>
+              <span class="webui-preview-nav">Music</span>
+              <span class="webui-preview-nav">Integrations</span>
+              <span class="webui-preview-nav">Voice</span>
+              <span class="webui-preview-version">Installed build</span>
+            </div>
+            <div class="webui-preview-main">
+              <div class="webui-preview-topline"><span>Dashboard</span><span class="webui-preview-status">Systems healthy</span></div>
+              <div class="webui-preview-grid">
+                <div class="webui-preview-card webui-preview-card-wide">
+                  <span class="webui-preview-label">Now playing · Family Room</span>
+                  <strong>Tater Recommendations</strong>
+                  <div class="webui-preview-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <div class="webui-preview-card"><span class="webui-preview-label">Voice</span><strong>8 satellites</strong><small>Office Stereo ready</small></div>
+                <div class="webui-preview-card"><span class="webui-preview-label">System Tasks</span><strong>All caught up</strong><small>Next refresh in 3m</small></div>
+                <div class="webui-preview-card webui-preview-card-wide"><span class="webui-preview-label">Home</span><strong>Devices, people, rooms, and cores</strong><small>Live local state without page reloads</small></div>
+              </div>
+            </div>
           </div>
         </section>
         """

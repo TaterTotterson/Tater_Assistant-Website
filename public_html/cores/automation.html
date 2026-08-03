@@ -3,14 +3,14 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Scheduled and recurring AI jobs with direct notifier delivery, whole-home broadcast destinations, stereo pairs, and optional generated background-audio scenes.">
+          <meta name="description" content="Visual event-to-action automation builder powered by Tater&#x27;s shared rooms, integration devices, notifications, cameras, and voice destinations.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | AI Task Runner">
-          <meta property="og:description" content="Scheduled and recurring AI jobs with direct notifier delivery, whole-home broadcast destinations, stereo pairs, and optional generated background-audio scenes.">
+          <meta property="og:title" content="Tater Assistant | Automation Core">
+          <meta property="og:description" content="Visual event-to-action automation builder powered by Tater&#x27;s shared rooms, integration devices, notifications, cameras, and voice destinations.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | AI Task Runner</title>
+          <title>Tater Assistant | Automation Core</title>
           <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
@@ -45,19 +45,19 @@
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
-        <h1>AI Task Runner</h1>
-        <p>Scheduled and recurring AI jobs with direct notifier delivery, whole-home broadcast destinations, stereo pairs, and optional generated background-audio scenes.</p>
+        <h1>Automation Core</h1>
+        <p>Visual event-to-action automation builder powered by Tater&#x27;s shared rooms, integration devices, notifications, cameras, and voice destinations.</p>
         <div class="chip-row">
-          <span class="chip">Scheduler</span>
-          <span class="chip">v1.2.0</span>
+          <span class="chip">Automation engine</span>
+          <span class="chip">v1.1.0</span>
           <span class="chip">No required fields</span>
-          <span class="chip">Scheduler runtime</span>
+          <span class="chip">Internal runtime</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Configuration category</span>
-        <p>AI Task Scheduler Core Settings</p>
-        <p>Settings extracted from <code>ai_task_core.py</code>.</p>
+        <p>Automation Core Settings</p>
+        <p>Settings extracted from <code>automation_core.py</code>.</p>
       </aside>
     </section>
     <section class="section">
@@ -65,12 +65,12 @@
         <article class="panel">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
-          <p>Scheduler</p>
+          <p>Automation engine</p>
         </article>
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Executes recurring jobs without requiring an external scheduler around Tater.</li><li>Routes the prepared result directly through supported notifier portals without asking a second model to rewrite it.</li><li>Broadcast delivery can target everywhere, one native satellite, or a configured stereo pair.</li><li>Optional generated or uploaded background audio can loop beneath TTS with volume, ducking, attack, release, and finish-fade controls.</li><li>Persistent native audio scenes stop their background when the scheduled speech finishes and fall back clearly on older firmware.</li></ul>
+          <ul class="stack-list"><li>Builds automations from the same integration categories, device actions, rooms, and aliases used throughout Tater.</li><li>Triggers include state changes, on/off and open/close transitions, motion, people, vehicles, animals, packages, faces, license plates, doorbells, text matches, connection changes, and numeric thresholds.</li><li>Actions can control devices or categories, send notifications, speak on satellites or announcement targets, and describe a camera image with Tater&#x27;s vision model.</li><li>Reusable message fields expose event context without requiring users to hand-write integration-specific payloads.</li><li>Cooldowns, enable/disable controls, manual test runs, last-run state, and execution history make each rule observable from the Core UI.</li></ul>
         </article>
       </div>
     </section>
@@ -79,17 +79,44 @@
         <article class="panel">
           <span class="eyebrow">Related Verbas</span>
           <h2>Direct core support</h2>
-          <p>AI Task Runner is a scheduler core. It executes scheduled prompts and routes results through notifier portals rather than acting as a direct Verba target.</p>
+          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
         </article>
         <article class="panel">
           <span class="eyebrow">Settings</span>
           <h2>Configuration schema</h2>
-          <p>The scheduler declares a settings block, but it does not currently require explicit fields. Its behavior is driven by scheduled task data, targets, and notifier routing.</p>
+          <p>This core declares a CORE_SETTINGS schema, but it does not currently require any explicit fields.</p>
         </article>
       </div>
     </section>
 
 
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Automation builder</span>
+        <h2>Build useful home flows without tying them to one provider</h2>
+        <p>Automation Core consumes Tater&#x27;s generic device registry, so the same rule shape can work with Home Assistant, Hue, Shelly, UniFi Protect, and future integrations.</p>
+      </div>
+      <div class="grid grid-2">
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Devices</span><span class="chip">Events</span><span class="chip">Thresholds</span></div>
+          <h3>Choose a trigger</h3>
+          <p>Start with a device event or condition exposed by an enabled integration.</p>
+          <ul class="stack-list"><li>Pick a category and device from the shared catalog instead of entering provider-specific identifiers by hand.</li><li>Use event filters for camera detections or state filters for lights, doors, motion, connectivity, text, and numeric values.</li><li>A cooldown prevents repeated sensor chatter from firing the same actions too frequently.</li></ul>
+
+        </article>
+
+        <article class="tool-card">
+          <div class="chip-row"><span class="chip">Device control</span><span class="chip">TTS</span><span class="chip">Vision</span></div>
+          <h3>Compose actions</h3>
+          <p>One rule can control the home, speak, notify, or ask vision what a camera sees.</p>
+          <ul class="stack-list"><li>Control an individual device or a compatible room/category group using advertised integration actions.</li><li>Send a message through notifier portals or speak it on selected native satellites, stereo pairs, or announcement players.</li><li>Camera actions can capture a current image, generate a short description, then use that result in a notification or spoken announcement.</li></ul>
+
+        </article>
+
+      </div>
+    </section>
 
 
     <section class="section">

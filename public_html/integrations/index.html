@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Reference for optional Tater integrations, device capabilities, and web-search providers.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Integrations">
+          <meta property="og:description" content="Reference for optional Tater integrations, device capabilities, and web-search providers.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Integrations</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -49,7 +56,7 @@
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Current catalog</span>
-        <p>13 integrations are documented from the current manifest, including 4 web-search providers.</p>
+        <p>15 integrations are documented from the current manifest, including 4 web-search providers.</p>
         <div class="chip-row"><span class="chip">Access</span><span class="chip">Audio</span><span class="chip">Climate</span><span class="chip">Lighting</span><span class="chip">Models</span><span class="chip">Network</span><span class="chip">Security</span><span class="chip">Smart home</span><span class="chip">Weather</span><span class="chip">Web search</span></div>
       </aside>
     </section>
@@ -149,13 +156,13 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Smart home</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.3.2</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Home Assistant</h3>
-          <p>Provides a shared Home Assistant endpoint and token for legacy HA-backed devices and notification paths.</p>
+          <p>Imports Home Assistant devices, rooms, actions, media players, cameras, and sensors into Tater&#x27;s shared integration catalog.</p>
           <div class="chip-row platform-row">
-            <span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">sensor</span><span class="chip">thermostat</span><span class="chip">light</span>
+            <span class="chip">light</span><span class="chip">switch</span><span class="chip">plug</span><span class="chip">fan</span><span class="chip">sensor</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="homeassistant.html">Read integration page</a>
@@ -164,14 +171,30 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
+            <span class="chip">Smart home</span>
+            <span class="chip">v1.2.1</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Shelly</h3>
+          <p>Discovers Shelly devices and exposes controls, covers, sensor readings, and power data through Tater&#x27;s shared device catalog.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">light</span><span class="chip">switch</span><span class="chip">plug</span><span class="chip">cover</span><span class="chip">sensor</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="shelly.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
             <span class="chip">Security</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.3.1</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>UniFi Protect</h3>
           <p>Exposes UniFi Protect cameras, sensors, and direct speaker announcement targets.</p>
           <div class="chip-row platform-row">
-            <span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">motion</span><span class="chip">doorbell</span><span class="chip">entry_sensor</span>
+            <span class="chip">camera</span><span class="chip">motion</span><span class="chip">entry_sensor</span><span class="chip">temperature</span><span class="chip">humidity</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="unifi_protect.html">Read integration page</a>
@@ -181,13 +204,13 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Audio</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.3.0</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Sonos</h3>
-          <p>Discovers Sonos speakers and exposes them as announcement and playback targets.</p>
+          <p>Discovers Sonos speakers for announcements, room-aware Music Core playback, synchronized temporary groups, and mixed Sonos/native scenes.</p>
           <div class="chip-row platform-row">
-            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span><span class="chip">play_media</span>
+            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="sonos.html">Read integration page</a>
@@ -196,14 +219,30 @@
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
+            <span class="chip">Audio</span>
+            <span class="chip">v1.2.1</span>
+            <span class="chip">Downloaded when enabled</span>
+          </div>
+          <h3>Roon</h3>
+          <p>Pairs with Roon, exposes zones as standard Tater media players, and supports browse-based playback from room-aware music requests.</p>
+          <div class="chip-row platform-row">
+            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">music</span>
+          </div>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="roon.html">Read integration page</a>
+          </div>
+        </article>
+
+        <article class="platform-card platform-card-detail">
+          <div class="chip-row">
             <span class="chip">Lighting</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.3.3</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Philips Hue</h3>
           <p>Pairs a Philips Hue Bridge and exposes lights, switches, and Hue resources through generic device capabilities.</p>
           <div class="chip-row platform-row">
-            <span class="chip">light</span><span class="chip">switch</span><span class="chip">sensor</span><span class="chip">button</span><span class="chip">motion</span>
+            <span class="chip">light</span><span class="chip">switch</span><span class="chip">sensor</span><span class="chip">entry_sensor</span><span class="chip">motion</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="hue.html">Read integration page</a>
@@ -213,13 +252,13 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Climate</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.2.0</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Ecobee (HomeKit)</h3>
           <p>Pairs Ecobee thermostats through HomeKit and exposes thermostats plus remote sensors.</p>
           <div class="chip-row platform-row">
-            <span class="chip">thermostat</span><span class="chip">climate</span><span class="chip">hvac</span><span class="chip">temperature</span><span class="chip">humidity</span>
+            <span class="chip">climate</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">motion</span><span class="chip">entry_sensor</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="homekit.html">Read integration page</a>
@@ -229,13 +268,13 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Access</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.2.0</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Aladdin Connect</h3>
           <p>Exposes Genie/Aladdin garage doors as generic open/close devices.</p>
           <div class="chip-row platform-row">
-            <span class="chip">garage_door</span><span class="chip">garage</span><span class="chip">entry_sensor</span><span class="chip">open_close</span><span class="chip">door</span>
+            <span class="chip">garage_door</span><span class="chip">cover</span><span class="chip">entry_sensor</span><span class="chip">battery</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="aladdin.html">Read integration page</a>
@@ -245,13 +284,13 @@
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
             <span class="chip">Network</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.2.4</span>
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>UniFi Network</h3>
           <p>Exposes UniFi Network clients and infrastructure devices for inventory and presence-aware flows.</p>
           <div class="chip-row platform-row">
-            <span class="chip">network_device</span><span class="chip">client</span><span class="chip">presence</span><span class="chip">connectivity</span>
+            <span class="chip">network_device</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="unifi_network.html">Read integration page</a>
@@ -296,7 +335,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

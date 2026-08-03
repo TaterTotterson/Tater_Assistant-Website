@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Memory Core">
+          <meta property="og:description" content="Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Memory Core</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -42,8 +49,8 @@
         <p>Background memory extraction layer that scans chat history, stores user and room memory, and feeds Hydra context.</p>
         <div class="chip-row">
           <span class="chip">Background service</span>
-          <span class="chip">v1.0.26</span>
-          <span class="chip">10 settings</span>
+          <span class="chip">v1.0.29</span>
+          <span class="chip">9 settings</span>
           <span class="chip">Memory service</span>
         </div>
       </div>
@@ -63,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Incrementally mines durable facts from prior conversations instead of relying only on the active turn.</li><li>Builds user and room summaries in Redis for later Hydra injection.</li><li>Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and Tater Voice identities.</li><li>Includes confidence thresholds, identity linking options, and context-size limits.</li></ul>
+          <ul class="stack-list"><li>Incrementally mines durable facts from prior conversations instead of relying only on the active turn.</li><li>Builds user and room summaries in Redis for later Hydra injection.</li><li>Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and Tater Voice identities.</li><li>Includes confidence thresholds, identity linking options, and context-size limits.</li><li>Memory scans publish as Core-owned System Tasks with schedule, run state, errors, and a manual Run Now control.</li></ul>
         </article>
       </div>
     </section>
@@ -78,15 +85,6 @@
           <span class="eyebrow">Settings</span>
           <h2>Configuration schema</h2>
           <ul class="argument-list">
-            <li>
-              <strong>Extraction Max Tokens</strong>
-              <span>number</span>
-              <p>Max completion tokens for memory extraction.</p>
-              <small>Key: extraction_max_tokens</small>
-              <small>Default: 2700</small>
-
-            </li>
-
             <li>
               <strong>Hydra Memory Items</strong>
               <span>number</span>
@@ -189,7 +187,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

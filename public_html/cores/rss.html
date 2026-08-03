@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Background feed watcher that summarizes articles and dispatches updates through notifier portals.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | RSS">
+          <meta property="og:description" content="Background feed watcher that summarizes articles and dispatches updates through notifier portals.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | RSS</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -42,7 +49,7 @@
         <p>Background feed watcher that summarizes articles and dispatches updates through notifier portals.</p>
         <div class="chip-row">
           <span class="chip">Background service</span>
-          <span class="chip">v1.0.9</span>
+          <span class="chip">v1.0.12</span>
           <span class="chip">1 settings</span>
           <span class="chip">Feed watcher</span>
         </div>
@@ -63,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Polls feeds, extracts article bodies, and creates digest-style summaries.</li><li>Designed for automated broadcast and notification workflows rather than direct user chat.</li><li>Lets Tater act as a content monitor in addition to an assistant.</li></ul>
+          <ul class="stack-list"><li>Polls feeds, extracts article bodies, and creates digest-style summaries.</li><li>Designed for automated broadcast and notification workflows rather than direct user chat.</li><li>Lets Tater act as a content monitor in addition to an assistant.</li><li>Feed polling publishes its schedule, latest run, next run, errors, and Run Now action through Settings -&gt; System Tasks.</li></ul>
         </article>
       </div>
     </section>
@@ -108,7 +115,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

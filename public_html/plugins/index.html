@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Verbas">
+          <meta property="og:description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Verbas</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -38,7 +45,7 @@
     <section class="hero hero-subpage">
       <div class="hero-copy">
         <span class="eyebrow">Verba reference</span>
-        <h1>Actions speak louder then words. 66 Verbas are documented here.</h1>
+        <h1>Actions speak louder then words. 62 Verbas are documented here.</h1>
         <p>
           This index reflects the current Tater Shop manifest and Verba files. Each entry links to a source-backed detail page with usage, portals, and current behavior.
         </p>
@@ -53,33 +60,12 @@
             <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
             <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
           </div>
-          <p class="results-copy"><span data-results-count>66</span> Verbas shown</p>
+          <p class="results-copy"><span data-results-count>62</span> Verbas shown</p>
         </div>
       </aside>
     </section>
     <section class="section">
       <div class="plugin-grid" data-plugin-grid>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="aladdin connect"
-      data-description="control aladdin connect garage doors."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.5</span>
-          <span class="chip">aladdin_connect</span>
-        </div>
-        <h3>Aladdin Connect</h3>
-        <p>Control Aladdin Connect garage doors.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="aladdin_connect.html">Read Verba</a>
-      </div>
-    </article>
 
     <article
       class="plugin-card"
@@ -105,21 +91,63 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="battery status"
+      data-description="read battery status from hue, ecobee/homekit, aladdin, unifi protect, home assistant, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">battery_status</span>
+        </div>
+        <h3>Battery Status</h3>
+        <p>Read battery status from Hue, Ecobee/HomeKit, Aladdin, UniFi Protect, Home Assistant, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="battery_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="broadcast"
-      data-description="send a one-time spoken announcement to your configured broadcast targets."
+      data-description="send a one-time spoken announcement to all satellites or one specified room."
       data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.1.15</span>
+          <span class="chip">v1.3.0</span>
           <span class="chip">broadcast</span>
         </div>
         <h3>Broadcast</h3>
-        <p>Send a one-time spoken announcement to your configured broadcast targets.</p>
+        <p>Send a one-time spoken announcement to all satellites or one specified room.</p>
       </div>
       <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
         <a class="button button-ghost" href="broadcast.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="camera control"
+      data-description="use for requests about cameras, doorbells, snapshots, camera images, or current visible activity in a named camera-covered area, including questions like &#x27;what&#x27;s happening in the front yard?&#x27;, &#x27;who is at the door?&#x27;, or &#x27;is anyone on the porch?&#x27;"
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.3</span>
+          <span class="chip">camera_control</span>
+        </div>
+        <h3>Camera Control</h3>
+        <p>Use for requests about cameras, doorbells, snapshots, camera images, or current visible activity in a named camera-covered area, including questions like &#x27;what&#x27;s happening in the front yard?&#x27;, &#x27;who is at the door?&#x27;, or &#x27;is anyone on the porch?&#x27;</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="camera_control.html">Read Verba</a>
       </div>
     </article>
 
@@ -132,7 +160,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.5</span>
+          <span class="chip">v1.0.6</span>
           <span class="chip">comfyui_image_video</span>
         </div>
         <h3>ComfyUI Animate Image</h3>
@@ -153,7 +181,7 @@
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.19</span>
+          <span class="chip">v1.0.27</span>
           <span class="chip">comfyui_audio_ace</span>
         </div>
         <h3>ComfyUI Audio Ace</h3>
@@ -183,6 +211,27 @@
       <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
       <div class="plugin-links">
         <a class="button button-ghost" href="comfyui_image_plugin.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="comfyui image edit"
+      data-description="edit or transform the latest/referenced image in chat with comfyui image-to-image."
+      data-platforms="discord webui little_spud macos matrix telegram"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.2</span>
+          <span class="chip">comfyui_image_edit</span>
+        </div>
+        <h3>ComfyUI Image Edit</h3>
+        <p>Edit or transform the latest/referenced image in chat with ComfyUI image-to-image.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="comfyui_image_edit.html">Read Verba</a>
       </div>
     </article>
 
@@ -273,6 +322,27 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="device control"
+      data-description="use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, and scripts. use camera control for cameras and snapshots."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.3</span>
+          <span class="chip">device_control</span>
+        </div>
+        <h3>Device Control</h3>
+        <p>Use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, and scripts. Use Camera Control for cameras and snapshots.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="device_control.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="discord admin response mode"
       data-description="toggle always-respond mode for the current discord channel only."
       data-platforms="discord"
@@ -336,21 +406,42 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="ecobee homekit thermostat"
-      data-description="control ecobee thermostats through homekit pairing."
+      data-name="door &amp; window sensor status"
+      data-description="read entry sensor status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
       data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">ecobee_homekit_thermostat</span>
+          <span class="chip">v1.0.1</span>
+          <span class="chip">entry_sensor_status</span>
         </div>
-        <h3>Ecobee HomeKit Thermostat</h3>
-        <p>Control Ecobee thermostats through HomeKit pairing.</p>
+        <h3>Door &amp; Window Sensor Status</h3>
+        <p>Read entry sensor status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
       </div>
       <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
-        <a class="button button-ghost" href="ecobee_homekit_thermostat.html">Read Verba</a>
+        <a class="button button-ghost" href="entry_sensor_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="energy status"
+      data-description="read energy and power data from shelly, home assistant, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">energy_status</span>
+        </div>
+        <h3>Energy Status</h3>
+        <p>Read energy and power data from Shelly, Home Assistant, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="energy_status.html">Read Verba</a>
       </div>
     </article>
 
@@ -420,252 +511,21 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="home assistant climate"
-      data-description="control home assistant thermostats and hvac entities."
+      data-name="humidity status"
+      data-description="read humidity from ecobee/homekit, home assistant, hue, shelly, unifi protect, and other integrations."
       data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v2.1.5</span>
-          <span class="chip">ha_climate</span>
+          <span class="chip">v1.0.1</span>
+          <span class="chip">humidity_status</span>
         </div>
-        <h3>Home Assistant Climate</h3>
-        <p>Control Home Assistant thermostats and HVAC entities.</p>
+        <h3>Humidity Status</h3>
+        <p>Read humidity from Ecobee/HomeKit, Home Assistant, Hue, Shelly, UniFi Protect, and other integrations.</p>
       </div>
       <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
-        <a class="button button-ghost" href="ha_climate.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant covers"
-      data-description="control home assistant covers and garage doors."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_covers</span>
-        </div>
-        <h3>Home Assistant Covers</h3>
-        <p>Control Home Assistant covers and garage doors.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_covers.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant fans"
-      data-description="control home assistant fans."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_fans</span>
-        </div>
-        <h3>Home Assistant Fans</h3>
-        <p>Control Home Assistant fans.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_fans.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant lights"
-      data-description="control home assistant lights."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.1.9</span>
-          <span class="chip">ha_lights</span>
-        </div>
-        <h3>Home Assistant Lights</h3>
-        <p>Control Home Assistant lights.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_lights.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant locks"
-      data-description="control home assistant lock entities."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_locks</span>
-        </div>
-        <h3>Home Assistant Locks</h3>
-        <p>Control Home Assistant lock entities.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_locks.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant media players"
-      data-description="media-player control for home assistant."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.9</span>
-          <span class="chip">ha_media_players</span>
-        </div>
-        <h3>Home Assistant Media Players</h3>
-        <p>Media-player control for Home Assistant.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_media_players.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant remotes"
-      data-description="control home assistant remote entities."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_remotes</span>
-        </div>
-        <h3>Home Assistant Remotes</h3>
-        <p>Control Home Assistant remote entities.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_remotes.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant scenes"
-      data-description="control home assistant scenes."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_scenes</span>
-        </div>
-        <h3>Home Assistant Scenes</h3>
-        <p>Control Home Assistant scenes.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_scenes.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant scripts"
-      data-description="control home assistant scripts."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_scripts</span>
-        </div>
-        <h3>Home Assistant Scripts</h3>
-        <p>Control Home Assistant scripts.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_scripts.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant sensors"
-      data-description="read home assistant sensor and binary_sensor entities."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_sensors</span>
-        </div>
-        <h3>Home Assistant Sensors</h3>
-        <p>Read Home Assistant sensor and binary_sensor entities.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_sensors.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant switches"
-      data-description="control home assistant switches and plugs."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.6</span>
-          <span class="chip">ha_switches</span>
-        </div>
-        <h3>Home Assistant Switches</h3>
-        <p>Control Home Assistant switches and plugs.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_switches.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant temperature"
-      data-description="read home assistant ambient temperatures."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.5</span>
-          <span class="chip">ha_temperature</span>
-        </div>
-        <h3>Home Assistant Temperature</h3>
-        <p>Read Home Assistant ambient temperatures.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_temperature.html">Read Verba</a>
+        <a class="button button-ghost" href="humidity_status.html">Read Verba</a>
       </div>
     </article>
 
@@ -798,6 +658,48 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="leak sensor status"
+      data-description="read leak sensor status from unifi protect, home assistant, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">leak_status</span>
+        </div>
+        <h3>Leak Sensor Status</h3>
+        <p>Read leak sensor status from UniFi Protect, Home Assistant, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="leak_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="light sensor status"
+      data-description="read lux and light-level sensors from hue, shelly, home assistant, unifi protect, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">illuminance_status</span>
+        </div>
+        <h3>Light Sensor Status</h3>
+        <p>Read lux and light-level sensors from Hue, Shelly, Home Assistant, UniFi Protect, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="illuminance_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="microwakeword"
       data-description="change or suggest the local microwakeword wake word on a tater voice core satellite."
       data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
@@ -882,6 +784,27 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="motion status"
+      data-description="read motion status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">motion_status</span>
+        </div>
+        <h3>Motion Status</h3>
+        <p>Read motion status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="motion_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="music assistant"
       data-description="play music and control playback via music assistant in home assistant."
       data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
@@ -897,6 +820,27 @@
       <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
         <a class="button button-ghost" href="music_assistant.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="network device status"
+      data-description="read network device status from unifi network and any integration that exposes network devices."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">network_device_status</span>
+        </div>
+        <h3>Network Device Status</h3>
+        <p>Read network device status from UniFi Network and any integration that exposes network devices.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="network_device_status.html">Read Verba</a>
       </div>
     </article>
 
@@ -1008,27 +952,6 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="philips hue lights"
-      data-description="control philips hue bridge lights."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.4</span>
-          <span class="chip">hue_lights</span>
-        </div>
-        <h3>Philips Hue Lights</h3>
-        <p>Control Philips Hue Bridge lights.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="hue_lights.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
       data-name="premiumize add transfer"
       data-description="create premiumize transfers from explicit magnet links, remote http(s) .torrent urls, attached .torrent files, or local/downloaded .torrent files."
       data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
@@ -1134,6 +1057,90 @@
     <article
       class="plugin-card"
       data-plugin-card
+      data-name="presence status"
+      data-description="read presence from unifi network clients, ecobee/homekit occupancy sensors, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">presence_status</span>
+        </div>
+        <h3>Presence Status</h3>
+        <p>Read presence from UniFi Network clients, Ecobee/HomeKit occupancy sensors, and other integrations.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="presence_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="reachy vision"
+      data-description="use when someone asks tater to look at them or something in front of reachy, including &#x27;how do i look?&#x27;, &#x27;do you like what i&#x27;m wearing?&#x27;, &#x27;what am i wearing?&#x27;, &#x27;look at this&#x27;, or &#x27;what do you see?&#x27;. do not use for named home-security cameras; use camera control for those."
+      data-platforms="voice_core"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.0</span>
+          <span class="chip">reachy_vision</span>
+        </div>
+        <h3>Reachy Vision</h3>
+        <p>Use when someone asks Tater to look at them or something in front of Reachy, including &#x27;how do I look?&#x27;, &#x27;do you like what I&#x27;m wearing?&#x27;, &#x27;what am I wearing?&#x27;, &#x27;look at this&#x27;, or &#x27;what do you see?&#x27;. Do not use for named home-security cameras; use Camera Control for those.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="reachy_vision.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="roon music"
+      data-description="play existing music through roon in a room or zone: songs, artists, albums, genres, playlists, radio, shuffle/random playback, and playback controls. do not use for generating new songs or audio."
+      data-platforms="voice_core webui little_spud macos homekit xbmc discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">roon_music</span>
+        </div>
+        <h3>Roon Music</h3>
+        <p>Play existing music through Roon in a room or zone: songs, artists, albums, genres, playlists, radio, shuffle/random playback, and playback controls. Do not use for generating new songs or audio.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="roon_music.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
+      data-name="sensor status"
+      data-description="read other sensor status from all enabled integrations through the shared device registry."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+    >
+      <div class="plugin-meta">
+        <div class="chip-row">
+          <span class="chip">v1.0.1</span>
+          <span class="chip">sensor_status</span>
+        </div>
+        <h3>Sensor Status</h3>
+        <p>Read other sensor status from all enabled integrations through the shared device registry.</p>
+      </div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="plugin-links">
+        <a class="button button-ghost" href="sensor_status.html">Read Verba</a>
+      </div>
+    </article>
+
+    <article
+      class="plugin-card"
+      data-plugin-card
       data-name="sftpgo account"
       data-description="create an sftpgo account for the user and return login details."
       data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
@@ -1197,42 +1204,42 @@
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="unifi network clients"
-      data-description="list unifi clients with wired/wireless counts and client details."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+      data-name="temperature status"
+      data-description="read temperature from ecobee/homekit, home assistant, hue, shelly, unifi protect, and other integrations."
+      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_network_clients</span>
+          <span class="chip">v1.0.1</span>
+          <span class="chip">temperature_status</span>
         </div>
-        <h3>UniFi Network Clients</h3>
-        <p>List UniFi clients with wired/wireless counts and client details.</p>
+        <h3>Temperature Status</h3>
+        <p>Read temperature from Ecobee/HomeKit, Home Assistant, Hue, Shelly, UniFi Protect, and other integrations.</p>
       </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_network_clients.html">Read Verba</a>
+        <a class="button button-ghost" href="temperature_status.html">Read Verba</a>
       </div>
     </article>
 
     <article
       class="plugin-card"
       data-plugin-card
-      data-name="unifi network devices"
-      data-description="list unifi devices with online/offline status and core details."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+      data-name="timer"
+      data-description="set, cancel, snooze, silence, or check a timer."
+      data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
     >
       <div class="plugin-meta">
         <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_network_devices</span>
+          <span class="chip">v1.4.0</span>
+          <span class="chip">voicepe_remote_timer</span>
         </div>
-        <h3>UniFi Network Devices</h3>
-        <p>List UniFi devices with online/offline status and core details.</p>
+        <h3>Timer</h3>
+        <p>Set, cancel, snooze, silence, or check a timer.</p>
       </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_network_devices.html">Read Verba</a>
+        <a class="button button-ghost" href="voicepe_remote_timer.html">Read Verba</a>
       </div>
     </article>
 
@@ -1296,90 +1303,6 @@
       <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
       <div class="plugin-links">
         <a class="button button-ghost" href="unifi_protect_area.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi protect camera"
-      data-description="describe a single unifi protect camera snapshot."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_protect_camera</span>
-        </div>
-        <h3>UniFi Protect Camera</h3>
-        <p>Describe a single UniFi Protect camera snapshot.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_protect_camera.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi protect camera info"
-      data-description="list unifi protect cameras."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_protect_camera_info</span>
-        </div>
-        <h3>UniFi Protect Camera Info</h3>
-        <p>List UniFi Protect cameras.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_protect_camera_info.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi protect sensors"
-      data-description="check unifi protect sensor status and single-sensor detail."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_protect_sensors</span>
-        </div>
-        <h3>UniFi Protect Sensors</h3>
-        <p>Check UniFi Protect sensor status and single-sensor detail.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_protect_sensors.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="voice pe remote timer"
-      data-description="start, cancel, or check a voice pe (esphome) timer device."
-      data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.2.4</span>
-          <span class="chip">voicepe_remote_timer</span>
-        </div>
-        <h3>Voice PE Remote Timer</h3>
-        <p>Start, cancel, or check a Voice PE (ESPHome) timer device.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="voicepe_remote_timer.html">Read Verba</a>
       </div>
     </article>
 
@@ -1453,7 +1376,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

@@ -1,0 +1,262 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="Off-grid Meshtastic portal that connects Tater to direct and channel conversations through the local Tater Meshtastic Bridge.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Meshtastic">
+          <meta property="og:description" content="Off-grid Meshtastic portal that connects Tater to direct and channel conversations through the local Tater Meshtastic Bridge.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <title>Tater Assistant | Meshtastic</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
+          <link rel="stylesheet" href="../assets/site.css">
+          <script src="../assets/site.js" defer></script>
+        </head>
+        <body data-page="portals">
+          <div class="page-shell">
+            <header class="site-header">
+              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
+                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
+                <span class="brand-pill">Docs</span>
+              </a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <nav class="site-nav" id="site-nav">
+                <a class="nav-link" href="../index.html">Home</a>
+<a class="nav-link" href="../install/index.html">Install</a>
+<a class="nav-link" href="../cerberus/index.html">Hydra</a>
+<a class="nav-link" href="../spudex/index.html">Spudex</a>
+<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
+<a class="nav-link" href="../llms/index.html">LLMs</a>
+<a class="nav-link" href="../api/index.html">API</a>
+<a class="nav-link is-active" href="../portals/index.html">Portals</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
+<a class="nav-link" href="../cores/index.html">Cores</a>
+<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </nav>
+            </header>
+            <main class="page-main">
+
+    <section class="hero hero-subpage hero-plugin">
+      <div class="hero-copy">
+        <span class="eyebrow">Portal profile</span>
+        <h1>Meshtastic</h1>
+        <p>Off-grid Meshtastic portal that connects Tater to direct and channel conversations through the local Tater Meshtastic Bridge.</p>
+        <div class="chip-row">
+          <span class="chip">Mesh radio endpoint</span>
+          <span class="chip">v0.1.8</span>
+          <span class="chip">16 settings</span>
+          <span class="chip">45 Verbas</span>
+        </div>
+      </div>
+      <aside class="panel hero-panel mascot-panel">
+        <span class="eyebrow">Configuration category</span>
+        <p>Meshtastic Settings</p>
+        <p>Settings extracted from <code>meshtastic_portal.py</code>.</p>
+      </aside>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Portal role</span>
+          <h2>What this portal is for</h2>
+          <p>Mesh radio endpoint</p>
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Highlights</span>
+          <h2>Behavior in the current codebase</h2>
+          <ul class="stack-list"><li>Connects through the local Tater Meshtastic Bridge instead of requiring radio hardware inside the Tater process.</li><li>Supports direct messages, selected mesh channels, mention-only or broader response policies, and per-node conversation sessions.</li><li>Splits longer replies into compact numbered radio messages with configurable length and chunk limits.</li><li>Rejects stale bridge backlog, remembers processed messages, and can resume either from now or from the last stored event.</li><li>Uses the same current-speaker identity boundary and admin gating as Tater&#x27;s other shared chat portals.</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="detail-grid">
+        <article class="panel">
+          <span class="eyebrow">Related Verbas</span>
+          <h2>Direct portal support</h2>
+
+        <p>45 current Verbas advertise direct support for this portal.</p>
+        <div class="chip-row"><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/camera_control.html">Camera Control</a><a class="chip-link" href="../plugins/device_control.html">Device Control</a><a class="chip-link" href="../plugins/entry_sensor_status.html">Door &amp; Window Sensor Status</a><a class="chip-link" href="../plugins/energy_status.html">Energy Status</a></div>
+
+        </article>
+        <article class="panel">
+          <span class="eyebrow">Settings</span>
+          <h2>Configuration schema</h2>
+          <ul class="argument-list">
+            <li>
+              <strong>Allow Broadcast Replies</strong>
+              <span>select</span>
+              <p>If true, channel traffic can receive channel replies.</p>
+              <small>Key: allow_broadcasts</small>
+              <small>Default: true</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>Allow Direct Messages</strong>
+              <span>select</span>
+              <p>If true, direct mesh messages can trigger replies.</p>
+              <small>Key: allow_direct_messages</small>
+              <small>Default: true</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>Allowed Channels</strong>
+              <span>string</span>
+              <p>Choose one or more mesh channels that Tater is allowed to answer on, including channel 0 if you want to allow it.</p>
+              <small>Key: allowed_channels</small>
+
+
+            </li>
+
+            <li>
+              <strong>API Token</strong>
+              <span>password</span>
+              <p>Optional bearer token expected by the bridge.</p>
+              <small>Key: api_token</small>
+
+
+            </li>
+
+            <li>
+              <strong>Bridge URL</strong>
+              <span>string</span>
+              <p>Base URL for the local Tater Meshtastic Bridge service.</p>
+              <small>Key: bridge_url</small>
+              <small>Default: http://127.0.0.1:8433</small>
+
+            </li>
+
+            <li>
+              <strong>Enable Chunking</strong>
+              <span>select</span>
+              <p>Split long replies into numbered multi-part messages.</p>
+              <small>Key: enable_chunking</small>
+              <small>Default: true</small>
+              <small>Options: true, false</small>
+            </li>
+
+            <li>
+              <strong>Max Chunks</strong>
+              <span>number</span>
+              <p>Maximum number of numbered parts to send for one reply.</p>
+              <small>Key: max_chunks</small>
+              <small>Default: 3</small>
+
+            </li>
+
+            <li>
+              <strong>Max Message Age (sec)</strong>
+              <span>number</span>
+              <p>Messages older than this are treated as backlog and will not trigger replies. Set 0 to disable.</p>
+              <small>Key: max_message_age_sec</small>
+              <small>Default: 300</small>
+
+            </li>
+
+            <li>
+              <strong>Max Outbound Length</strong>
+              <span>number</span>
+              <p>Soft character limit for each outbound radio message chunk.</p>
+              <small>Key: max_outbound_length</small>
+              <small>Default: 160</small>
+
+            </li>
+
+            <li>
+              <strong>Poll Interval (sec)</strong>
+              <span>number</span>
+              <p>How often to poll the bridge for new mesh messages.</p>
+              <small>Key: poll_interval_sec</small>
+              <small>Default: 3.0</small>
+
+            </li>
+
+            <li>
+              <strong>HTTP Timeout (sec)</strong>
+              <span>number</span>
+              <p>Timeout for bridge API requests.</p>
+              <small>Key: request_timeout_sec</small>
+              <small>Default: 15.0</small>
+
+            </li>
+
+            <li>
+              <strong>Response Policy</strong>
+              <span>select</span>
+              <p>When the portal should answer channel traffic.</p>
+              <small>Key: response_policy</small>
+              <small>Default: mention_only</small>
+              <small>Options: mention_only, direct_only, all_messages</small>
+            </li>
+
+            <li>
+              <strong>Resume Mode</strong>
+              <span>select</span>
+              <p>Choose whether the portal ignores existing bridge backlog on startup.</p>
+              <small>Key: resume_mode</small>
+              <small>Default: from_now</small>
+              <small>Options: from_now, from_last_seen</small>
+            </li>
+
+            <li>
+              <strong>Session Mode</strong>
+              <span>select</span>
+              <p>Choose whether memory is tracked per node or per node+channel.</p>
+              <small>Key: session_mode</small>
+              <small>Default: node_channel</small>
+              <small>Options: node, node_channel</small>
+            </li>
+
+            <li>
+              <strong>Session TTL (sec)</strong>
+              <span>number</span>
+              <p>How long to keep mesh chat history alive in Redis.</p>
+              <small>Key: session_ttl_seconds</small>
+              <small>Default: 21600</small>
+
+            </li>
+
+            <li>
+              <strong>Trigger Keywords</strong>
+              <span>string</span>
+              <p>Comma-separated names that count as a mention on shared channels.</p>
+              <small>Key: trigger_keywords</small>
+              <small>Default: tater</small>
+
+            </li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+
+
+
+    <section class="section">
+      <div class="action-row">
+        <a class="button button-ghost" href="index.html">Back to portals</a>
+        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
+        <a class="button button-ghost" href="../tater-voice/index.html">Tater Voice</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
+      </div>
+    </section>
+
+            </main>
+            <footer class="page-footer">
+              <div class="footer-row">
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
+                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
+              </div>
+            </footer>
+          </div>
+        </body>
+        </html>

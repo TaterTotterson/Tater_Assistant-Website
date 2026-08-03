@@ -4,7 +4,14 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Guardian Core">
+          <meta property="og:description" content="Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Guardian Core</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -42,7 +49,7 @@
         <p>Network guardian core for inventory, source health, posture scoring, AI review, and guided security confirmations.</p>
         <div class="chip-row">
           <span class="chip">Network security monitor</span>
-          <span class="chip">v1.3.7</span>
+          <span class="chip">v1.3.12</span>
           <span class="chip">13 settings</span>
           <span class="chip">Internal runtime</span>
         </div>
@@ -63,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Builds a network inventory from the selected network integration. UniFi Network is supported now, and the selector is ready for future network providers.</li><li>Can also use local passive ARP cache discovery as an optional source when Tater runs on the same network.</li><li>Tracks online, offline, untrusted, and critical devices, plus source health, scan freshness, and recent Guardian events.</li><li>Records events for newly observed unknown devices and monitored devices going offline.</li><li>Lets operators edit device names, notes, trust state, and critical-device flags from the Guardian WebUI tab.</li><li>Runs optional TCP watch checks for important endpoints such as routers, DNS, servers, WAN dependencies, or local infrastructure.</li><li>Computes a Guardian posture score from stale inventory data, source errors, offline critical devices, untrusted devices, unknown devices, and failed watch checks.</li><li>Uses LLM calls where they improve the feature: posture interpretation, risk level, findings, device suggestions, watch-target suggestions, and follow-up questions.</li><li>Does not use a local deterministic fallback for the AI analysis path; if model processing fails, the old analysis is preserved and the error is shown.</li><li>Adds a guided Confirm tab where the user answers only Guardian&#x27;s active questions with quick choices and optional typed context.</li><li>Processes confirmations through the model, stores the human answers, and folds that context into the next Guardian analysis.</li><li>Injects compact Guardian context into Hydra prompts, including stats, findings, offline/untrusted devices, source health, recent events, and human confirmations.</li><li>Includes dark Tater-themed Guardian UI cards for Network Posture/Security Map, AI Threat Brief, and the Guardian Question Queue.</li><li>Tunnel integrations were intentionally removed; Guardian does not manage Tailscale, WireGuard, or Cloudflare Tunnel.</li></ul>
+          <ul class="stack-list"><li>Builds a network inventory from the selected network integration. UniFi Network is supported now, and the selector is ready for future network providers.</li><li>Can also use local passive ARP cache discovery as an optional source when Tater runs on the same network.</li><li>Tracks online, offline, untrusted, and critical devices, plus source health, scan freshness, and recent Guardian events.</li><li>Records events for newly observed unknown devices and monitored devices going offline.</li><li>Lets operators edit device names, notes, trust state, and critical-device flags from the Guardian WebUI tab.</li><li>Runs optional TCP watch checks for important endpoints such as routers, DNS, servers, WAN dependencies, or local infrastructure.</li><li>Computes a Guardian posture score from stale inventory data, source errors, offline critical devices, untrusted devices, unknown devices, and failed watch checks.</li><li>Uses LLM calls where they improve the feature: posture interpretation, risk level, findings, device suggestions, watch-target suggestions, and follow-up questions.</li><li>Does not use a local deterministic fallback for the AI analysis path; if model processing fails, the old analysis is preserved and the error is shown.</li><li>Adds a guided Confirm tab where the user answers only Guardian&#x27;s active questions with quick choices and optional typed context.</li><li>Processes confirmations through the model, stores the human answers, and folds that context into the next Guardian analysis.</li><li>Injects compact Guardian context into Hydra prompts, including stats, findings, offline/untrusted devices, source health, recent events, and human confirmations.</li><li>Includes dark Tater-themed Guardian UI cards for Network Posture/Security Map, AI Threat Brief, and the Guardian Question Queue.</li><li>Tunnel integrations were intentionally removed; Guardian does not manage Tailscale, WireGuard, or Cloudflare Tunnel.</li><li>Inventory scans and AI security reviews publish through the Core task contract, including their current state, last/next run, errors, and Run Now action in Settings -&gt; System Tasks.</li></ul>
         </article>
       </div>
     </section>
@@ -155,7 +162,7 @@
               <span>number</span>
               <p>Maximum Guardian context characters added to Hydra system prompts.</p>
               <small>Key: prompt_context_max_chars</small>
-              <small>Default: 2400</small>
+              <small>Default: 1200</small>
 
             </li>
 
@@ -259,7 +266,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

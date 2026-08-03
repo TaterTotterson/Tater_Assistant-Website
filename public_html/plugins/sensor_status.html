@@ -3,8 +3,15 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Control Ecobee thermostats through HomeKit pairing.">
-          <title>Tater Assistant | Ecobee HomeKit Thermostat</title>
+          <meta name="description" content="Read other sensor status from all enabled integrations through the shared device registry.">
+          <meta name="theme-color" content="#151515">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Tater Assistant | Sensor Status">
+          <meta property="og:description" content="Read other sensor status from all enabled integrations through the shared device registry.">
+          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+          <meta name="twitter:card" content="summary_large_image">
+          <title>Tater Assistant | Sensor Status</title>
+          <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
@@ -38,11 +45,11 @@
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
         <span class="eyebrow">Verba profile</span>
-        <h1>Ecobee HomeKit Thermostat</h1>
-        <p>Control Ecobee thermostats through HomeKit pairing.</p>
+        <h1>Sensor Status</h1>
+        <p>Read other sensor status from all enabled integrations through the shared device registry.</p>
         <div class="chip-row">
-          <span class="chip">ecobee_homekit_thermostat</span>
-          <span class="chip">Version 1.0.3</span>
+          <span class="chip">sensor_status</span>
+          <span class="chip">Version 1.0.1</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -84,7 +91,7 @@
         <span class="eyebrow">Example call</span>
         <h2>Canonical usage JSON</h2>
         <pre class="code-block"><code>{
-  &quot;function&quot;: &quot;ecobee_homekit_thermostat&quot;,
+  &quot;function&quot;: &quot;sensor_status&quot;,
   &quot;arguments&quot;: {}
 }</code></pre>
       </article>
@@ -102,7 +109,7 @@
             </main>
             <footer class="page-footer">
               <div class="footer-row">
-                <p>Built from the current Tater source snapshot in this repository.</p>
+                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
                 <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
               </div>
             </footer>

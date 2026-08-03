@@ -3,19 +3,19 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Ping or ring your phone through Home Assistant so you can locate it.">
+          <meta name="description" content="Local Shelly device discovery and direct HTTP control for switches, lights, covers, and sensors.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | Find My Phone">
-          <meta property="og:description" content="Ping or ring your phone through Home Assistant so you can locate it.">
+          <meta property="og:title" content="Tater Assistant | Shelly">
+          <meta property="og:description" content="Local Shelly device discovery and direct HTTP control for switches, lights, covers, and sensors.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | Find My Phone</title>
+          <title>Tater Assistant | Shelly</title>
           <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
-        <body data-page="plugins">
+        <body data-page="integrations">
           <div class="page-shell">
             <header class="site-header">
               <a class="brand" href="../index.html" aria-label="Tater Assistant home">
@@ -32,11 +32,11 @@
 <a class="nav-link" href="../llms/index.html">LLMs</a>
 <a class="nav-link" href="../api/index.html">API</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
-<a class="nav-link" href="../integrations/index.html">Integrations</a>
+<a class="nav-link is-active" href="../integrations/index.html">Integrations</a>
 <a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
 <a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
-<a class="nav-link is-active" href="../plugins/index.html">Verbas</a>
+<a class="nav-link" href="../plugins/index.html">Verbas</a>
 <a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
               </nav>
             </header>
@@ -44,65 +44,55 @@
 
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
-        <span class="eyebrow">Verba profile</span>
-        <h1>Find My Phone</h1>
-        <p>Ping or ring your phone through Home Assistant so you can locate it.</p>
+        <span class="eyebrow">Integration profile</span>
+        <h1>Shelly</h1>
+        <p>Discovers Shelly devices and exposes controls, covers, sensor readings, and power data through Tater&#x27;s shared device catalog.</p>
         <div class="chip-row">
-          <span class="chip">find_my_phone</span>
-          <span class="chip">Version 1.0.11</span>
+          <span class="chip">Smart home</span>
+          <span class="chip">v1.2.1</span>
+          <span class="chip">Optional</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
-        <span class="eyebrow">Supported portals</span>
-        <div class="chip-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+        <span class="eyebrow">Source module</span>
+        <p>integrations/shelly.py</p>
       </aside>
     </section>
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">When to use</span>
-          <h2>Best-fit scenarios</h2>
-          <p>No description is present in the current Verba metadata.</p>
+          <span class="eyebrow">Description</span>
+          <h2>What it provides</h2>
+          <p>Local Shelly device discovery and direct HTTP control for switches, lights, covers, and sensors.</p>
+          <div class="chip-row"><span class="chip">light</span><span class="chip">switch</span><span class="chip">plug</span><span class="chip">cover</span><span class="chip">sensor</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">illuminance</span><span class="chip">energy</span></div>
         </article>
         <article class="panel">
-          <span class="eyebrow">How to call it</span>
-          <h2>Execution guidance</h2>
-          <p>Use the example call shape below and provide only the fields the plugin expects.</p>
+          <span class="eyebrow">Behavior</span>
+          <h2>Operational notes</h2>
+          <ul class="stack-list"><li>Shelly devices can be renamed, assigned to rooms, given Tater aliases, and controlled through the same Device Control Verba as other integrations.</li><li>Read-only environment and energy measurements remain available to status Verbas and device-aware cores.</li></ul>
         </article>
       </div>
     </section>
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Arguments</span>
-          <h2>Input shape</h2>
-          <p>This Verba does not require named arguments in its published usage example. Hydra usually triggers it directly from the user&#x27;s request or from recent conversation context.</p>
+          <span class="eyebrow">Settings</span>
+          <h2>Declared fields</h2>
+          <ul class="stack-list"><li>Enable Shelly</li><li>Manual Device Hosts</li><li>Device Names / Aliases</li><li>Device Rooms</li><li>Username</li><li>Password</li><li>Request Timeout Seconds</li><li>Discovery Timeout Seconds</li></ul>
         </article>
         <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Required configuration</h2>
-          <p>This Verba does not declare plugin-specific settings in its metadata. Any dependencies are handled through portal config, environment variables, or the backing service itself.</p>
+          <span class="eyebrow">Actions</span>
+          <h2>Declared setup actions</h2>
+          <ul class="stack-list"><li>Discover Shelly Devices</li><li>Test Shelly</li></ul>
         </article>
       </div>
     </section>
-
-    <section class="section">
-      <article class="panel">
-        <span class="eyebrow">Example call</span>
-        <h2>Canonical usage JSON</h2>
-        <pre class="code-block"><code>{
-  &quot;function&quot;: &quot;find_my_phone&quot;,
-  &quot;arguments&quot;: {}
-}</code></pre>
-      </article>
-    </section>
     <section class="section">
       <div class="action-row">
-        <a class="button button-ghost" href="index.html">Back to Verbas</a>
-        <a class="button button-ghost" href="../portals/index.html">Portals</a>
-        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="index.html">Back to integrations</a>
         <a class="button button-ghost" href="../kernel-tools/index.html">Kernel tools</a>
-        <a class="button button-ghost" href="../cerberus/index.html">Hydra</a>
+        <a class="button button-ghost" href="../cores/index.html">Cores</a>
+        <a class="button button-ghost" href="../index.html">Home</a>
       </div>
     </section>
 

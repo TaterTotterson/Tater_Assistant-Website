@@ -3,14 +3,14 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.">
+          <meta name="description" content="Connects Tater to Tater Tube Server for recent viewing context, AI-selected movie and series recommendations, and spoken Tater&#x27;s Picks.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | Awareness Core">
-          <meta property="og:description" content="Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.">
+          <meta property="og:title" content="Tater Assistant | Tater Tube Core">
+          <meta property="og:description" content="Connects Tater to Tater Tube Server for recent viewing context, AI-selected movie and series recommendations, and spoken Tater&#x27;s Picks.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | Awareness Core</title>
+          <title>Tater Assistant | Tater Tube Core</title>
           <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
@@ -45,19 +45,19 @@
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
-        <h1>Awareness Core</h1>
-        <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.</p>
+        <h1>Tater Tube Core</h1>
+        <p>Connects Tater to Tater Tube Server for recent viewing context, AI-selected movie and series recommendations, and spoken Tater&#x27;s Picks.</p>
         <div class="chip-row">
-          <span class="chip">Home awareness engine</span>
-          <span class="chip">v3.4.12</span>
-          <span class="chip">4 settings</span>
-          <span class="chip">Awareness engine</span>
+          <span class="chip">Media intelligence</span>
+          <span class="chip">v1.2.3</span>
+          <span class="chip">9 settings</span>
+          <span class="chip">Internal runtime</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Configuration category</span>
-        <p>Awareness Core Settings</p>
-        <p>Settings extracted from <code>awareness_core.py</code>.</p>
+        <p>Tater Tube Core Settings</p>
+        <p>Settings extracted from <code>tater_tube_core.py</code>.</p>
       </aside>
     </section>
     <section class="section">
@@ -65,12 +65,12 @@
         <article class="panel">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
-          <p>Home awareness engine</p>
+          <p>Media intelligence</p>
         </article>
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Replaces the old HA automations bridge with an in-core awareness runtime.</li><li>Builds camera, doorbell, motion, and entry-sensor options from enabled integration device capabilities.</li><li>Existing rules that reference unavailable integrations report the missing integration/device until the provider is downloaded and enabled.</li><li>Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.</li><li>Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.</li><li>Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.</li><li>The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.</li><li>Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.</li></ul>
+          <ul class="stack-list"><li>Pairs with Tater Tube Server and reads recent viewing activity without turning the general assistant into a media-server client.</li><li>Can inject a bounded recent-viewing summary so Tater understands what the selected user has been watching.</li><li>Builds AI-selected movie and series recommendations and publishes them as Tater&#x27;s Picks.</li><li>Uses the user&#x27;s configured TTS path when a recommendation should be voiced.</li><li>Recurring sync and recommendation work publishes through the Core task contract so it appears in Settings -&gt; System Tasks.</li></ul>
         </article>
       </div>
     </section>
@@ -86,37 +86,82 @@
           <h2>Configuration schema</h2>
           <ul class="argument-list">
             <li>
-              <strong>Entity Catalog Cache (sec)</strong>
+              <strong>Catalog Candidate Limit</strong>
               <span>number</span>
-              <p>How long to cache provider entity discovery for UI dropdowns.</p>
-              <small>Key: entity_catalog_ttl_sec</small>
-              <small>Default: 30</small>
+              <p>Maximum launchable catalog items sent to the recommendation model.</p>
+              <small>Key: candidate_limit</small>
+              <small>Default: 200</small>
 
             </li>
 
             <li>
-              <strong>Snapshot Max Size (KB)</strong>
+              <strong>Context Sync Interval (sec)</strong>
               <span>number</span>
-              <p>Maximum JPEG size to store per event snapshot.</p>
-              <small>Key: event_snapshot_max_kb</small>
-              <small>Default: 768</small>
+              <p>How often Core refreshes viewing context from Tater Tube Server.</p>
+              <small>Key: poll_interval_seconds</small>
+              <small>Default: 300</small>
 
             </li>
 
             <li>
-              <strong>Events Retention</strong>
-              <span>select</span>
-              <p>How long to retain awareness events written to Redis.</p>
-              <small>Key: events_retention</small>
-              <small>Default: 7d</small>
-              <small>Options: 2d, 7d, 30d, forever</small>
+              <strong>Viewing Profile</strong>
+              <span>text</span>
+              <p>Server profile used for viewing context and recommendations.</p>
+              <small>Key: profile_id</small>
+              <small>Default: household</small>
+
             </li>
 
             <li>
-              <strong>Store Event Snapshots</strong>
+              <strong>Prompt Context Enabled</strong>
               <span>checkbox</span>
-              <p>Store camera/doorbell snapshot images in Redis for future event gallery UI.</p>
-              <small>Key: store_event_snapshots</small>
+              <p>Let Tater use compact recent viewing context when it is relevant.</p>
+              <small>Key: prompt_context_enabled</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
+              <strong>Prompt Context Max Characters</strong>
+              <span>number</span>
+              <p>Maximum viewing-context text added to Hydra prompts.</p>
+              <small>Key: prompt_context_max_chars</small>
+              <small>Default: 2400</small>
+
+            </li>
+
+            <li>
+              <strong>Recommendation Count</strong>
+              <span>number</span>
+              <p>Number of Tater&#x27;s Picks to publish per batch.</p>
+              <small>Key: recommendation_count</small>
+              <small>Default: 8</small>
+
+            </li>
+
+            <li>
+              <strong>Picks Stay Fresh (hours)</strong>
+              <span>number</span>
+              <p>How long a recommendation batch remains visible on players.</p>
+              <small>Key: recommendation_expiry_hours</small>
+              <small>Default: 24</small>
+
+            </li>
+
+            <li>
+              <strong>Recommendation Interval (hours)</strong>
+              <span>number</span>
+              <p>How often Tater prepares a fresh recommendation batch.</p>
+              <small>Key: recommendation_interval_hours</small>
+              <small>Default: 6</small>
+
+            </li>
+
+            <li>
+              <strong>Tater&#x27;s Picks Welcome</strong>
+              <span>checkbox</span>
+              <p>Play one personalized spoken briefing when Tater&#x27;s Picks opens.</p>
+              <small>Key: tts_enabled</small>
               <small>Default: True</small>
 
             </li>
