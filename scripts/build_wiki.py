@@ -1363,18 +1363,18 @@ PLATFORM_DOCS = {
     },
     "music": {
         "label": "Music Core",
-        "description": "Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.",
+        "description": "Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.",
         "role": "Music library + player",
         "source": TATER_SHOP_DIR / "cores" / "music_core.py",
         "plugin_surface": "",
         "highlights": [
-            "Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.",
+            "Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.",
             "Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.",
             "Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.",
             "Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.",
             "An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.",
-            "Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.",
-            "Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.",
+            "Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, Home Assistant, and compatible integration media players.",
+            "Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.",
             "Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.",
             "Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.",
             "Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.",
@@ -1382,16 +1382,16 @@ PLATFORM_DOCS = {
         ],
         "guides_eyebrow": "Whole-home music",
         "guides_title": "Browse once, then play naturally by voice or from the live player",
-        "guides_intro": "Music Core keeps library browsing, room selection, active playback, history, and AI recommendations in one provider-neutral surface.",
+        "guides_intro": "Music Core keeps the Tater Tube library, room selection, active playback, history, and AI recommendations in one local surface.",
         "guides": [
             {
-                "title": "Connect a library",
-                "summary": "Choose the provider you already use and let Music Core build a local browse catalog.",
-                "chips": ["Tater Tube", "Plex", "Jellyfin + more"],
+                "title": "Pair Tater Tube Server",
+                "summary": "Pair once with a Player PIN and let Music Core build its local browse catalog.",
+                "chips": ["Tater Tube Server", "Player PIN", "Background sync"],
                 "details": [
-                    "Connect Tater Tube by pairing PIN, Plex by server and token, Emby or Jellyfin by server/API key, or Navidrome by OpenSubsonic credentials.",
-                    "Catalog sync collects artists, albums, genres, tracks, and provider artwork, then refreshes in the background on the configured interval.",
-                    "Provider setup and the player remain usable from the same Core tab, with the active provider clearly marked.",
+                    "Create a six-digit Player PIN in Tater Tube Server, then enter the server URL and PIN in Music Core.",
+                    "Catalog sync collects artists, albums, genres, tracks, and artwork, then refreshes in the background on the configured interval.",
+                    "Tater Tube setup and the player remain available from the same Core tab, with connection state shown clearly.",
                 ],
             },
             {
@@ -2715,8 +2715,14 @@ def render_macos_release_card() -> str:
             </div>
           </div>
           <div class="little-spud-store-links" aria-label="Download Little Spud">
-            <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">App Store</a>
-            <a class="little-spud-store-button little-spud-store-button-secondary" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">Google Play</a>
+            <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+              <span class="store-badge-platform" aria-hidden="true">iOS</span>
+              <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+              <span class="store-badge-platform" aria-hidden="true">Play</span>
+              <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
+            </a>
           </div>
         </div>
         <small class="release-meta">Pulled from the current Tater release source{escape(f" • SHA {sha_short}" if sha_short else "")}.</small>
@@ -2906,7 +2912,7 @@ def render_home_page(
           and live system work together without turning the WebUI into a collection of separate apps.
         </p>
         <ul class="stack-list">
-          <li>Browse and play your own music through Tater Tube, Plex, Emby, Jellyfin, or Navidrome, then send it to a room, stereo pair, Sonos group, or synchronized set of satellites.</li>
+          <li>Pair Music Core with Tater Tube Server, then browse your library and play it in a room, stereo pair, synchronized satellite group, Sonos zone, AirPlay destination, or compatible media player.</li>
           <li>Use the locally bundled Vue WebUI for the Dashboard, Chat, Music, Integrations, Verbas, Portals, Cores, Spudex, Voice, Settings, and live runtime state.</li>
           <li>Pair Tater Native satellites securely, run microWakeWord on-device, verify wakes with fast STT, and keep 30 days of voice statistics in Redis.</li>
           <li>Let cached System Tasks refresh devices, satellites, models, hardware, Dashboard briefs, recommendations, memory, security, feeds, and other Core work in the background.</li>
@@ -3251,12 +3257,12 @@ def render_home_page(
           The same live player stays available for browsing, queue changes, speaker selection, and synchronized volume.
         </p>
         <div class="chip-row">
-          <span class="chip">Tater Tube</span>
-          <span class="chip">Plex</span>
-          <span class="chip">Emby</span>
-          <span class="chip">Jellyfin</span>
-          <span class="chip">Navidrome</span>
-          <span class="chip">Sonos + native</span>
+          <span class="chip">Tater Tube Server</span>
+          <span class="chip">Tater Native</span>
+          <span class="chip">Stereo pairs</span>
+          <span class="chip">Sonos</span>
+          <span class="chip">AirPlay</span>
+          <span class="chip">Home Assistant</span>
         </div>
         <div class="action-row">
           <a class="button" href="cores/music.html">Read Music Core</a>
@@ -3715,15 +3721,13 @@ def render_spud_hub_page() -> str:
       </div>
       <div class="app-store-actions">
         <div class="store-button-row">
-          <a class="app-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
-            <span>Download on the</span>
-            <strong>App Store</strong>
-            <small>iPhone + iPad</small>
+          <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span class="store-badge-platform" aria-hidden="true">iOS</span>
+            <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
           </a>
-          <a class="app-store-button app-store-button-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
-            <span>Get it on</span>
-            <strong>Google Play</strong>
-            <small>Android phones + tablets</small>
+          <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+            <span class="store-badge-platform" aria-hidden="true">Play</span>
+            <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
           </a>
         </div>
         <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy policy</a>

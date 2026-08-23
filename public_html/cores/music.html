@@ -3,11 +3,11 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.">
+          <meta name="description" content="Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
           <meta property="og:title" content="Tater Assistant | Music Core">
-          <meta property="og:description" content="Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.">
+          <meta property="og:description" content="Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Music Core</title>
@@ -46,7 +46,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
         <h1>Music Core</h1>
-        <p>Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.</p>
+        <p>Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.</p>
         <div class="chip-row">
           <span class="chip">Music library + player</span>
           <span class="chip">v3.4.6</span>
@@ -70,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
+          <ul class="stack-list"><li>Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
         </article>
       </div>
     </section>
@@ -239,15 +239,15 @@
       <div class="section-head">
         <span class="eyebrow">Whole-home music</span>
         <h2>Browse once, then play naturally by voice or from the live player</h2>
-        <p>Music Core keeps library browsing, room selection, active playback, history, and AI recommendations in one provider-neutral surface.</p>
+        <p>Music Core keeps the Tater Tube library, room selection, active playback, history, and AI recommendations in one local surface.</p>
       </div>
       <div class="grid grid-2">
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Tater Tube</span><span class="chip">Plex</span><span class="chip">Jellyfin + more</span></div>
-          <h3>Connect a library</h3>
-          <p>Choose the provider you already use and let Music Core build a local browse catalog.</p>
-          <ul class="stack-list"><li>Connect Tater Tube by pairing PIN, Plex by server and token, Emby or Jellyfin by server/API key, or Navidrome by OpenSubsonic credentials.</li><li>Catalog sync collects artists, albums, genres, tracks, and provider artwork, then refreshes in the background on the configured interval.</li><li>Provider setup and the player remain usable from the same Core tab, with the active provider clearly marked.</li></ul>
+          <div class="chip-row"><span class="chip">Tater Tube Server</span><span class="chip">Player PIN</span><span class="chip">Background sync</span></div>
+          <h3>Pair Tater Tube Server</h3>
+          <p>Pair once with a Player PIN and let Music Core build its local browse catalog.</p>
+          <ul class="stack-list"><li>Create a six-digit Player PIN in Tater Tube Server, then enter the server URL and PIN in Music Core.</li><li>Catalog sync collects artists, albums, genres, tracks, and artwork, then refreshes in the background on the configured interval.</li><li>Tater Tube setup and the player remain available from the same Core tab, with connection state shown clearly.</li></ul>
 
         </article>
 

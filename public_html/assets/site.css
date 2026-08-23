@@ -1471,44 +1471,102 @@ h1 {
   min-width: 0;
 }
 
-.little-spud-store-button {
+.store-badge {
   position: relative;
   z-index: 1;
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  justify-self: stretch;
+  gap: 0.72rem;
   min-width: 0;
-  min-height: 48px;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid rgba(255, 145, 36, 0.45);
-  border-radius: 12px;
-  background: linear-gradient(180deg, #ffb15d, #ff6a00);
-  color: #15120f;
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  overflow-wrap: normal;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-  word-break: normal;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    0 16px 34px rgba(255, 106, 0, 0.2);
-}
-
-.little-spud-store-button-secondary {
-  border-color: rgba(255, 255, 255, 0.2);
+  min-height: 68px;
+  padding: 0.68rem 0.78rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
-    #17191c;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015)),
+    #050608;
   color: #ffffff;
+  text-decoration: none;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 16px 34px rgba(0, 0, 0, 0.2);
+    0 16px 34px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.store-badge::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 106, 0, 0.86), transparent);
+  opacity: 0.7;
+}
+
+.store-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 126, 33, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 20px 40px rgba(0, 0, 0, 0.34),
+    0 0 26px rgba(255, 106, 0, 0.1);
+}
+
+.store-badge-platform {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.store-badge-copy {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.store-badge-copy small {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.store-badge-copy strong {
+  overflow-wrap: normal;
+  font-size: clamp(0.98rem, 1.25vw, 1.2rem);
+  line-height: 1.05;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.store-badge-apple .store-badge-platform {
+  background: #ffffff;
+  color: #08090a;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.store-badge-play {
+  border-color: rgba(76, 175, 80, 0.3);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(66, 133, 244, 0.16), transparent 48%),
+    linear-gradient(180deg, rgba(52, 168, 83, 0.08), rgba(255, 255, 255, 0.012)),
+    #050608;
+}
+
+.store-badge-play .store-badge-platform {
+  background: linear-gradient(135deg, #4285f4 0 34%, #34a853 34% 58%, #fbbc04 58% 78%, #ea4335 78%);
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
 }
 
 .release-visual {
@@ -1571,41 +1629,6 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
-}
-
-.app-store-button {
-  display: grid;
-  gap: 0.08rem;
-  min-width: 0;
-  min-height: 76px;
-  padding: 0.86rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035)),
-    #050608;
-  color: #ffffff;
-  text-decoration: none;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
-}
-
-.app-store-button span,
-.app-store-button small {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.74rem;
-  line-height: 1.25;
-}
-
-.app-store-button strong {
-  font-size: 1.35rem;
-  line-height: 1.1;
-}
-
-.app-store-button-play {
-  border-color: rgba(255, 106, 0, 0.28);
-  background:
-    linear-gradient(180deg, rgba(255, 106, 0, 0.13), rgba(255, 255, 255, 0.03)),
-    #090a0c;
 }
 
 .mascot-band {
