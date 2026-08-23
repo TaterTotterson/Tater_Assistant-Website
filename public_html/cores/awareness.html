@@ -49,8 +49,8 @@
         <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.</p>
         <div class="chip-row">
           <span class="chip">Home awareness engine</span>
-          <span class="chip">v3.4.12</span>
-          <span class="chip">4 settings</span>
+          <span class="chip">v4.11.0</span>
+          <span class="chip">6 settings</span>
           <span class="chip">Awareness engine</span>
         </div>
       </div>
@@ -86,11 +86,20 @@
           <h2>Configuration schema</h2>
           <ul class="argument-list">
             <li>
-              <strong>Entity Catalog Cache (sec)</strong>
+              <strong>Camera Event Clip Length (sec)</strong>
               <span>number</span>
-              <p>How long to cache provider entity discovery for UI dropdowns.</p>
-              <small>Key: entity_catalog_ttl_sec</small>
-              <small>Default: 30</small>
+              <p>Length of short camera clips sent to the configured Video Understanding model.</p>
+              <small>Key: camera_event_clip_seconds</small>
+              <small>Default: 8</small>
+
+            </li>
+
+            <li>
+              <strong>Event Clip Max Size (MB)</strong>
+              <span>number</span>
+              <p>Maximum video size to retain for each Awareness event.</p>
+              <small>Key: event_clip_max_mb</small>
+              <small>Default: 32</small>
 
             </li>
 
@@ -113,9 +122,18 @@
             </li>
 
             <li>
+              <strong>Store Event Clips</strong>
+              <span>checkbox</span>
+              <p>Keep successful camera and sensor-linked clips so they can be played from Event History.</p>
+              <small>Key: store_event_clips</small>
+              <small>Default: True</small>
+
+            </li>
+
+            <li>
               <strong>Store Event Snapshots</strong>
               <span>checkbox</span>
-              <p>Store camera/doorbell snapshot images in Redis for future event gallery UI.</p>
+              <p>Store camera, doorbell, and sensor-linked snapshots for Event History.</p>
               <small>Key: store_event_snapshots</small>
               <small>Default: True</small>
 

@@ -63,8 +63,8 @@
         <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
       </aside>
       <div class="hero-stats" aria-label="Tater documentation counts">
-        <div class="stat-card"><strong>62</strong><span>documented Verbas</span></div>
-        <div class="stat-card"><strong>18</strong><span>kernel tools</span></div>
+        <div class="stat-card"><strong>63</strong><span>documented Verbas</span></div>
+        <div class="stat-card"><strong>20</strong><span>kernel tools</span></div>
         <div class="stat-card"><strong>10</strong><span>portals</span></div>
         <div class="stat-card"><strong>15</strong><span>integrations</span></div>
         <div class="stat-card"><strong>4</strong><span>install paths</span></div>
@@ -73,58 +73,46 @@
 
     <section class="section">
       <div class="section-head section-head-wide">
-        <span class="eyebrow">What changed</span>
-        <h2>Tater has grown into a room-aware AI and media platform.</h2>
-        <p>The biggest current capabilities, brought forward so you do not have to discover them one old page at a time.</p>
+        <span class="eyebrow">Latest in Tater</span>
+        <h2>Local voice, media, models, and multi-room playback keep getting better.</h2>
+        <p>A compact look at the most useful additions from the latest Tater releases.</p>
       </div>
       <div class="grid spotlight-grid">
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">01</span>
-          <h3>Music Core</h3>
-          <p>Browse Search, Genres, Artists, Albums, and Tater Recommendations from a live player that understands rooms, preferred speakers, listening history, and your own media library.</p>
+          <h3>Private local speech</h3>
+          <p>Run experimental Qwen3-ASR locally for speech recognition, then answer with managed Qwen3-TTS, OmniVoice, Pocket TTS, or another configured voice backend.</p>
         </article>
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">02</span>
-          <h3>Stereo pairs</h3>
-          <p>Turn two Tater Native satellites into one calibrated left/right destination with shared starts, channel routing, playhead telemetry, and synchronized TTS ducking.</p>
+          <h3>Audio + video understanding</h3>
+          <p>Give audio files and short video clips to dedicated understanding models while camera events return playable clips with clean snapshot previews.</p>
         </article>
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">03</span>
-          <h3>Multi-room playback</h3>
-          <p>Play across native satellites, Sonos, stereo pairs, integration media players, or mixed groups while temporary voice replies duck the music instead of stopping it.</p>
+          <h3>Face ID + People</h3>
+          <p>Keep face matching private, link recognized identities to Tater People, and use recent camera context in Awareness and Automation flows.</p>
         </article>
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">04</span>
-          <h3>A new local WebUI</h3>
-          <p>Tater&#x27;s main workspaces now share a fast Vue 3 interface with responsive cards, stable live updates, compact controls, smoother dialogs, and the orange-and-gray Tater theme.</p>
+          <h3>A clearer model workspace</h3>
+          <p>Browse Hugging Face models from the Models screen and configure MTP, DFlash, or DSpark speculative decoding with task-aware downloads and runtime status.</p>
         </article>
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">05</span>
-          <h3>Background System Tasks</h3>
-          <p>Slow discovery and recurring Core work run outside page loads, with last run, next run, state, errors, and Run Now gathered under one Settings tab.</p>
+          <h3>Music and voice stay together</h3>
+          <p>Readable speaker cards, persistent volume, synchronized targets, and stereo TTS overlays keep music playing at the intended level before, during, and after replies.</p>
         </article>
 
         <article class="feature-card feature-card-spotlight">
           <span class="card-index">06</span>
-          <h3>People and trusted identity</h3>
-          <p>The newest portal or voice event decides who is speaking. Master People link accounts and voices without letting old shared-channel history inherit another user&#x27;s name or tools.</p>
-        </article>
-
-        <article class="feature-card feature-card-spotlight">
-          <span class="card-index">07</span>
-          <h3>Smarter device control</h3>
-          <p>One Device Control Verba handles lights, switches, plugs, fans, covers, locks, climate, media players, scenes, scripts, and more with AI selection for ambiguous devices.</p>
-        </article>
-
-        <article class="feature-card feature-card-spotlight">
-          <span class="card-index">08</span>
-          <h3>Reachy can look and respond</h3>
-          <p>Reachy Vision captures a fresh authenticated snapshot for questions such as &#x27;what do you see?&#x27; while expressive tracking and motion continue through Tater&#x27;s segmented speech.</p>
+          <h3>Satellites stay in sync</h3>
+          <p>Compact WebUI volume controls and physical satellite buttons share one saved level, while board-aware firmware routing keeps production and Beta.1 hardware on the right update path.</p>
         </article>
 
       </div>
@@ -136,7 +124,7 @@
         <h2>Your library. The right room. Still playing after Tater speaks.</h2>
         <p>
           Ask for an album, artist, genre, song, or recommendation and let room context choose the destination.
-          The same live player stays available for browsing, queue changes, speaker selection, seeking, and volume.
+          The same live player stays available for browsing, queue changes, speaker selection, and synchronized volume.
         </p>
         <div class="chip-row">
           <span class="chip">Tater Tube</span>
@@ -159,7 +147,6 @@
             <strong>Whole-home, your way</strong>
             <span>Tater Recommendations</span>
           </div>
-          <div class="music-progress"><span></span></div>
           <div class="music-controls" aria-hidden="true">
             <span>−</span><span>‹</span><span class="music-play">▶</span><span>›</span><span>＋</span>
           </div>
@@ -176,37 +163,38 @@
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
       <div class="release-copy">
-        <span class="eyebrow">Mac app release</span>
-        <h2>Tater v99.1 is ready for macOS.</h2>
+        <span class="eyebrow">Latest Tater release</span>
+        <h2>Tater v1.1.10 is ready for macOS.</h2>
         <p>
           Download the native Tater server app with the menu bar icon, private runtime,
           first-run setup, and automatic update checks.
         </p>
-        <p>Tater macOS update v99.1.</p>
+        <p>Tater v1.1.10 fixes the complete voice-to-music handoff for stereo satellite pairs, including commands that start new music.</p>
         <div class="chip-row">
-          <span class="chip">Release v99.1</span>
-          <span class="chip">Build 135</span>
-          <span class="chip">38.3 MB</span>
-          <span class="chip">Auto-updates</span>
+          <span class="chip">Release v1.1.10</span><span class="chip">Auto-updates</span>
         </div>
         <div class="action-row release-actions">
-          <a class="button" href="https://raw.githubusercontent.com/TaterTotterson/Tater/main/macos/Tater/releases/Tater-v99.1.dmg" target="_blank" rel="noreferrer">Download macOS app</a>
-          <a class="button button-ghost" href="https://raw.githubusercontent.com/TaterTotterson/Tater/main/macos/Tater/releases/Tater-v99.1.zip" target="_blank" rel="noreferrer">Updater zip</a>
+          <a class="button" href="https://github.com/TaterTotterson/Tater/releases/download/v1.1.10/Tater-v1.1.10.dmg" target="_blank" rel="noreferrer">Download macOS app</a>
+          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater/releases/download/v1.1.10/Tater-v1.1.10.zip" target="_blank" rel="noreferrer">Updater zip</a>
+          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater/releases/tag/v1.1.10" target="_blank" rel="noreferrer">Release notes</a>
         </div>
         <div class="little-spud-attach">
           <div class="little-spud-copy">
             <span class="little-spud-title">Little Spud</span>
-            <span class="little-spud-kicker">iPhone + iPad companion</span>
-            <p>Pair by QR code, chat with your private Tater, use voice and TTS, view media replies, and switch between Home and Away routes.</p>
+            <span class="little-spud-kicker">iPhone + iPad + Android companion</span>
+            <p>Pair by QR code, chat with your private Tater, control your Home and Music Core, use voice and TTS, and open notification snapshots or video clips.</p>
             <div class="chip-row">
-              <span class="chip">QR pairing</span>
-              <span class="chip">Voice + TTS</span>
-              <span class="chip">Home / Away</span>
+              <span class="chip">iOS + Android</span>
+              <span class="chip">Chat + voice</span>
+              <span class="chip">Home + Music</span>
             </div>
           </div>
-          <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">Download Little Spud</a>
+          <div class="little-spud-store-links" aria-label="Download Little Spud">
+            <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">App Store</a>
+            <a class="little-spud-store-button little-spud-store-button-secondary" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">Google Play</a>
+          </div>
         </div>
-        <small class="release-meta">Pulled from the Tater update manifest • SHA 6d383db64622.</small>
+        <small class="release-meta">Pulled from the current Tater release source.</small>
       </div>
     </section>
 
@@ -387,7 +375,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Chat endpoint</span>
-            <span class="chip">v1.0.9</span>
+            <span class="chip">v1.0.11</span>
             <span class="chip">2 settings</span>
           </div>
           <h3>Discord</h3>
@@ -465,8 +453,8 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Voice endpoint</span>
-            <span class="chip">v1.1.4</span>
-            <span class="chip">5 settings</span>
+            <span class="chip">v1.1.5</span>
+            <span class="chip">3 settings</span>
           </div>
           <h3>HomeKit</h3>
           <p>Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.</p>
@@ -491,8 +479,8 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Console endpoint</span>
-            <span class="chip">v1.1.4</span>
-            <span class="chip">4 settings</span>
+            <span class="chip">v1.1.9</span>
+            <span class="chip">3 settings</span>
           </div>
           <h3>XBMC4Xbox</h3>
           <p>Original Xbox integration through the custom Cortana-powered Tater skin and scripts for XBMC4Xbox.</p>
@@ -508,7 +496,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Smart home</span>
-            <span class="chip">v1.3.2</span>
+            <span class="chip">v1.4.0</span>
             <span class="chip">Optional</span>
           </div>
           <h3>Home Assistant</h3>
@@ -534,7 +522,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Security</span>
-            <span class="chip">v1.3.1</span>
+            <span class="chip">v1.5.0</span>
             <span class="chip">Optional</span>
           </div>
           <h3>UniFi Protect</h3>
@@ -547,7 +535,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Audio</span>
-            <span class="chip">v1.3.0</span>
+            <span class="chip">v1.3.1</span>
             <span class="chip">Optional</span>
           </div>
           <h3>Sonos</h3>
@@ -629,7 +617,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Automation engine</span>
-            <span class="chip">v1.1.0</span>
+            <span class="chip">v1.5.0</span>
             <span class="chip">No required fields</span>
           </div>
           <h3>Automation Core</h3>
@@ -642,8 +630,8 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Home awareness engine</span>
-            <span class="chip">v3.4.12</span>
-            <span class="chip">4 settings</span>
+            <span class="chip">v4.11.0</span>
+            <span class="chip">6 settings</span>
           </div>
           <h3>Awareness Core</h3>
           <p>Home awareness automation core for camera, doorbell, entry-sensor, snapshot, notification, and Redis-backed event history workflows across enabled integrations.</p>
@@ -681,7 +669,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Background service</span>
-            <span class="chip">v1.0.29</span>
+            <span class="chip">v1.0.30</span>
             <span class="chip">9 settings</span>
           </div>
           <h3>Memory Core</h3>
@@ -694,8 +682,8 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Music library + player</span>
-            <span class="chip">v2.7.0</span>
-            <span class="chip">13 settings</span>
+            <span class="chip">v3.4.6</span>
+            <span class="chip">16 settings</span>
           </div>
           <h3>Music Core</h3>
           <p>Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.</p>
@@ -733,7 +721,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Media intelligence</span>
-            <span class="chip">v1.2.3</span>
+            <span class="chip">v1.4.0</span>
             <span class="chip">9 settings</span>
           </div>
           <h3>Tater Tube Core</h3>

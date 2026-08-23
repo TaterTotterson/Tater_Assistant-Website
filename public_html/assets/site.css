@@ -1391,7 +1391,7 @@ h1 {
 .little-spud-attach {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 240px);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
   align-items: center;
   gap: 0.9rem;
   min-width: 0;
@@ -1462,6 +1462,15 @@ h1 {
   font-size: 0.6rem;
 }
 
+.little-spud-store-links {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-width: 0;
+}
+
 .little-spud-store-button {
   position: relative;
   z-index: 1;
@@ -1469,7 +1478,7 @@ h1 {
   align-items: center;
   justify-content: center;
   justify-self: stretch;
-  min-width: 220px;
+  min-width: 0;
   min-height: 48px;
   padding: 0.8rem 1.2rem;
   border: 1px solid rgba(255, 145, 36, 0.45);
@@ -1491,6 +1500,17 @@ h1 {
     0 16px 34px rgba(255, 106, 0, 0.2);
 }
 
+.little-spud-store-button-secondary {
+  border-color: rgba(255, 255, 255, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    #17191c;
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 16px 34px rgba(0, 0, 0, 0.2);
+}
+
 .release-visual {
   position: relative;
   z-index: 1;
@@ -1510,7 +1530,7 @@ h1 {
   position: relative;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 560px);
   align-items: center;
   gap: clamp(1rem, 3vw, 2rem);
   padding: clamp(1.25rem, 3vw, 2rem);
@@ -1547,6 +1567,12 @@ h1 {
   justify-items: stretch;
 }
 
+.store-button-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
 .app-store-button {
   display: grid;
   gap: 0.08rem;
@@ -1573,6 +1599,13 @@ h1 {
 .app-store-button strong {
   font-size: 1.35rem;
   line-height: 1.1;
+}
+
+.app-store-button-play {
+  border-color: rgba(255, 106, 0, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 106, 0, 0.13), rgba(255, 255, 255, 0.03)),
+    #090a0c;
 }
 
 .mascot-band {
@@ -1672,8 +1705,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .little-spud-store-button {
-    grid-column: 1 / -1;
+  .app-store-banner {
+    grid-template-columns: 1fr;
   }
 
 }
@@ -1774,10 +1807,6 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .little-spud-store-button {
-    grid-column: 1 / -1;
-  }
-
   .release-visual {
     min-height: 0;
     justify-items: center;
@@ -1801,6 +1830,13 @@ h1 {
     opacity: 0.14;
     right: -3.5rem;
     width: 170px;
+  }
+}
+
+@media (max-width: 560px) {
+  .little-spud-store-links,
+  .store-button-row {
+    grid-template-columns: 1fr;
   }
 }
 

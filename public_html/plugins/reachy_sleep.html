@@ -3,19 +3,19 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Shared Home Assistant endpoint and token for devices, camera snapshots and short camera clips.">
+          <meta name="description" content="Use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. Do not use merely because the user says they are going to sleep, asks a question about sleep, or asks Reachy to be quiet">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | Home Assistant">
-          <meta property="og:description" content="Shared Home Assistant endpoint and token for devices, camera snapshots and short camera clips.">
+          <meta property="og:title" content="Tater Assistant | Reachy Sleep">
+          <meta property="og:description" content="Use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. Do not use merely because the user says they are going to sleep, asks a question about sleep, or asks Reachy to be quiet">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | Home Assistant</title>
+          <title>Tater Assistant | Reachy Sleep</title>
           <link rel="icon" href="../assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="../assets/site.css">
           <script src="../assets/site.js" defer></script>
         </head>
-        <body data-page="integrations">
+        <body data-page="plugins">
           <div class="page-shell">
             <header class="site-header">
               <a class="brand" href="../index.html" aria-label="Tater Assistant home">
@@ -32,11 +32,11 @@
 <a class="nav-link" href="../llms/index.html">LLMs</a>
 <a class="nav-link" href="../api/index.html">API</a>
 <a class="nav-link" href="../portals/index.html">Portals</a>
-<a class="nav-link is-active" href="../integrations/index.html">Integrations</a>
+<a class="nav-link" href="../integrations/index.html">Integrations</a>
 <a class="nav-link" href="../tater-voice/index.html">Tater Voice</a>
 <a class="nav-link" href="../cores/index.html">Cores</a>
 <a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
-<a class="nav-link" href="../plugins/index.html">Verbas</a>
+<a class="nav-link is-active" href="../plugins/index.html">Verbas</a>
 <a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
               </nav>
             </header>
@@ -44,55 +44,65 @@
 
     <section class="hero hero-subpage hero-plugin">
       <div class="hero-copy">
-        <span class="eyebrow">Integration profile</span>
-        <h1>Home Assistant</h1>
-        <p>Imports Home Assistant devices, rooms, actions, media players, cameras, and sensors into Tater&#x27;s shared integration catalog.</p>
+        <span class="eyebrow">Verba profile</span>
+        <h1>Reachy Sleep</h1>
+        <p>Use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. Do not use merely because the user says they are going to sleep, asks a question about sleep, or asks Reachy to be quiet</p>
         <div class="chip-row">
-          <span class="chip">Smart home</span>
-          <span class="chip">v1.4.0</span>
-          <span class="chip">Optional</span>
+          <span class="chip">reachy_sleep</span>
+          <span class="chip">Version 1.0.1</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
-        <span class="eyebrow">Source module</span>
-        <p>integrations/homeassistant.py</p>
+        <span class="eyebrow">Supported portals</span>
+        <div class="chip-row"><span class="chip">Tater Voice</span></div>
       </aside>
     </section>
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Description</span>
-          <h2>What it provides</h2>
-          <p>Shared Home Assistant endpoint and token for devices, camera snapshots and short camera clips.</p>
-          <div class="chip-row"><span class="chip">light</span><span class="chip">switch</span><span class="chip">plug</span><span class="chip">fan</span><span class="chip">sensor</span><span class="chip">garage_door</span><span class="chip">entry_sensor</span><span class="chip">lock</span><span class="chip">motion</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">illuminance</span><span class="chip">energy</span><span class="chip">leak</span><span class="chip">battery</span><span class="chip">camera</span><span class="chip">video_clip</span><span class="chip">cover</span><span class="chip">climate</span><span class="chip">media_player</span><span class="chip">remote</span><span class="chip">scene</span><span class="chip">script</span></div>
+          <span class="eyebrow">When to use</span>
+          <h2>Best-fit scenarios</h2>
+          <p>No description is present in the current Verba metadata.</p>
         </article>
         <article class="panel">
-          <span class="eyebrow">Behavior</span>
-          <h2>Operational notes</h2>
-          <ul class="stack-list"><li>Home Assistant is now optional; Tater can boot and run without this module installed.</li><li>Device Control, the Devices browser, room organization, Automation Core, Music Core, and other consumers use the same normalized metadata instead of Home Assistant-specific tool paths.</li><li>The current integration refreshes category metadata for lights, switches, plugs, fans, locks, covers, climate, cameras, media players, and common sensor types.</li></ul>
+          <span class="eyebrow">How to call it</span>
+          <h2>Execution guidance</h2>
+          <p>Use the example call shape below and provide only the fields the plugin expects.</p>
         </article>
       </div>
     </section>
     <section class="section">
       <div class="detail-grid">
         <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Declared fields</h2>
-          <ul class="stack-list"><li>Base URL</li><li>Long-Lived Access Token</li></ul>
+          <span class="eyebrow">Arguments</span>
+          <h2>Input shape</h2>
+          <p>This Verba does not require named arguments in its published usage example. Hydra usually triggers it directly from the user&#x27;s request or from recent conversation context.</p>
         </article>
         <article class="panel">
-          <span class="eyebrow">Actions</span>
-          <h2>Declared setup actions</h2>
-          <ul class="stack-list"><li>Test Home Assistant</li></ul>
+          <span class="eyebrow">Settings</span>
+          <h2>Required configuration</h2>
+          <p>This Verba does not declare plugin-specific settings in its metadata. Any dependencies are handled through portal config, environment variables, or the backing service itself.</p>
         </article>
       </div>
     </section>
+
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Example call</span>
+        <h2>Canonical usage JSON</h2>
+        <pre class="code-block"><code>{
+  &quot;function&quot;: &quot;reachy_sleep&quot;,
+  &quot;arguments&quot;: {}
+}</code></pre>
+      </article>
+    </section>
     <section class="section">
       <div class="action-row">
-        <a class="button button-ghost" href="index.html">Back to integrations</a>
-        <a class="button button-ghost" href="../kernel-tools/index.html">Kernel tools</a>
+        <a class="button button-ghost" href="index.html">Back to Verbas</a>
+        <a class="button button-ghost" href="../portals/index.html">Portals</a>
         <a class="button button-ghost" href="../cores/index.html">Cores</a>
-        <a class="button button-ghost" href="../index.html">Home</a>
+        <a class="button button-ghost" href="../kernel-tools/index.html">Kernel tools</a>
+        <a class="button button-ghost" href="../cerberus/index.html">Hydra</a>
       </div>
     </section>
 

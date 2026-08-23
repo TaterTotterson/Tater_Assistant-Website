@@ -59,8 +59,8 @@
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">Effective date</span>
-        <h2>June 17, 2026</h2>
-        <p>This policy covers the Little Spud iOS and iPadOS app.</p>
+        <h2>August 23, 2026</h2>
+        <p>This policy covers the Little Spud app for iOS, iPadOS, and Android.</p>
       </aside>
     </section>
 
@@ -80,11 +80,25 @@
           <p>
             Little Spud stores app settings on your device, including preferences
             such as notification and TTS settings. Pairing tokens for your Tater
-            instance are stored in the iOS Keychain. Recent chat messages may be
-            stored locally so the app can show conversation history.
+            instance are stored using secure operating-system storage. Recent chat
+            messages may be stored locally so the app can show conversation history.
           </p>
         </article>
       </div>
+    </section>
+
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Push delivery</span>
+        <h2>Push services deliver a wake-up, not your private alert content.</h2>
+        <p>
+          If you enable push notifications, Apple Push Notification service on
+          iOS and iPadOS or Firebase Cloud Messaging on Android can deliver a
+          wake-up notification. Little Spud then retrieves the alert details from
+          your paired Tater instance. Push registration tokens are used only to
+          route those notifications and are not used for advertising or tracking.
+        </p>
+      </article>
     </section>
 
     <section class="section">
@@ -133,7 +147,7 @@
         </article>
         <article class="feature-card">
           <h3>Controls</h3>
-          <p>You can manage these permissions in iOS Settings.</p>
+          <p>You can manage these permissions in your device's Settings app.</p>
         </article>
       </div>
     </section>

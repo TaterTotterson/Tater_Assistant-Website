@@ -49,8 +49,8 @@
         <p>Provider-neutral music library and live whole-home player for Tater Tube, Plex, Emby, Jellyfin, and Navidrome, with room-aware routing, recommendations, stereo pairs, Sonos, and synchronized native satellites.</p>
         <div class="chip-row">
           <span class="chip">Music library + player</span>
-          <span class="chip">v2.7.0</span>
-          <span class="chip">13 settings</span>
+          <span class="chip">v3.4.6</span>
+          <span class="chip">16 settings</span>
           <span class="chip">Internal runtime</span>
         </div>
       </div>
@@ -70,7 +70,7 @@
         <article class="panel">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, seek, volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
+          <ul class="stack-list"><li>Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected media URLs keep provider sources private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
         </article>
       </div>
     </section>
@@ -85,6 +85,42 @@
           <span class="eyebrow">Settings</span>
           <h2>Configuration schema</h2>
           <ul class="argument-list">
+            <li>
+              <strong>AirPlay Receiver</strong>
+              <span>checkbox</span>
+              <p>Let Apple devices send live audio to selected Tater Native, Sonos, and AirPlay speakers.</p>
+              <small>Key: airplay_receiver_enabled</small>
+              <small>Default: False</small>
+
+            </li>
+
+            <li>
+              <strong>AirPlay Receiver Name</strong>
+              <span>text</span>
+              <p>The name advertised in the AirPlay speaker picker.</p>
+              <small>Key: airplay_receiver_name</small>
+              <small>Default: Tater Music</small>
+
+            </li>
+
+            <li>
+              <strong>AirPlay Pairing PIN</strong>
+              <span>password</span>
+              <p>Optional fixed four-digit PIN used when a device pairs for the first time.</p>
+              <small>Key: airplay_receiver_pin</small>
+
+
+            </li>
+
+            <li>
+              <strong>AirPlay Destinations</strong>
+              <span>text</span>
+              <p>Tater Native satellites, stereo pairs, AirPlay-capable Sonos players, or AirPlay speakers that play incoming audio.</p>
+              <small>Key: airplay_receiver_targets</small>
+
+
+            </li>
+
             <li>
               <strong>Catalog Sync Interval (sec)</strong>
               <span>number</span>
@@ -104,7 +140,7 @@
             </li>
 
             <li>
-              <strong>Default Players</strong>
+              <strong>Default Speakers</strong>
               <span>text</span>
               <p>Fallback playback destinations when a room or speaking satellite is unavailable.</p>
               <small>Key: default_targets</small>
@@ -155,15 +191,6 @@
               <small>Key: prompt_profile_interval_hours</small>
               <small>Default: 12</small>
 
-            </li>
-
-            <li>
-              <strong>Music Provider</strong>
-              <span>select</span>
-              <p>Music source used by Music Core. More providers can be added without changing the player.</p>
-              <small>Key: provider</small>
-              <small>Default: tater_tube</small>
-              <small>Options: Tater Tube Server, Plex, Emby, Jellyfin, Navidrome</small>
             </li>
 
             <li>
@@ -233,7 +260,7 @@
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">No reloads</span><span class="chip">Track list</span><span class="chip">Seek + volume</span></div>
+          <div class="chip-row"><span class="chip">No reloads</span><span class="chip">Track list</span><span class="chip">Synced volume</span></div>
           <h3>Live queue and player</h3>
           <p>The persistent player changes in place and keeps the active album or mix easy to navigate.</p>
           <ul class="stack-list"><li>Playing another album replaces the active track list instead of appending it to the previous one.</li><li>The current song stays highlighted; double-click another row to jump directly to it, or use previous/next without leaving the page.</li><li>Live Core events update only when playback state changes, preserving the selected browse tab, open track list, forms, and scroll position.</li></ul>

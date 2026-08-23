@@ -4,6 +4,7 @@ import ast
 import html
 import json
 import os
+import re
 import textwrap
 from pathlib import Path
 from typing import Any
@@ -1369,7 +1370,7 @@ PLATFORM_DOCS = {
         "highlights": [
             "Connects Tater Tube Server, Plex, Emby, Jellyfin, or Navidrome without changing the player experience.",
             "Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.",
-            "Keeps a persistent player visible with play, stop, previous, next, seek, volume, speaker selection, shuffle, and a collapsible current track list.",
+            "Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.",
             "Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.",
             "An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.",
             "Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, Roon, Home Assistant, and compatible integration media players.",
@@ -1406,7 +1407,7 @@ PLATFORM_DOCS = {
             {
                 "title": "Live queue and player",
                 "summary": "The persistent player changes in place and keeps the active album or mix easy to navigate.",
-                "chips": ["No reloads", "Track list", "Seek + volume"],
+                "chips": ["No reloads", "Track list", "Synced volume"],
                 "details": [
                     "Playing another album replaces the active track list instead of appending it to the previous one.",
                     "The current song stays highlighted; double-click another row to jump directly to it, or use previous/next without leaving the page.",
@@ -2584,24 +2585,63 @@ def format_bytes(value: int) -> str:
     return f"{int(value or 0)} B"
 
 
+def version_key(value: str) -> tuple[int, ...]:
+    parts = [int(part) for part in re.findall(r"\d+", str(value or ""))]
+    return tuple(parts or [0])
+
+
+def load_release_notes_summary() -> dict[str, str]:
+    notes_path = TATER_DIR / "macos" / "Tater" / "RELEASE_NOTES.md"
+    try:
+        notes_text = notes_path.read_text(encoding="utf-8")
+    except Exception:
+        return {}
+
+    match = re.search(r"^#\s+Tater\s+v?([0-9]+(?:\.[0-9]+)*)\s*$", notes_text, flags=re.MULTILINE)
+    if not match:
+        return {}
+
+    summary = ""
+    remainder = notes_text[match.end() :].strip()
+    for paragraph in re.split(r"\n\s*\n", remainder):
+        candidate = " ".join(line.strip() for line in paragraph.splitlines()).strip()
+        if candidate and not candidate.startswith(("#", "-")):
+            summary = candidate
+            break
+
+    return {"version": match.group(1), "summary": summary}
+
+
 def load_macos_release() -> dict[str, str]:
     manifest_path = TATER_DIR / "macos" / "Tater" / "update-manifest.json"
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except Exception:
-        return {}
+        manifest = {}
     if not isinstance(manifest, dict):
-        return {}
+        manifest = {}
 
     version = str(manifest.get("version") or "").strip()
     build = str(manifest.get("build") or "").strip()
     zip_url = str(manifest.get("url") or "").strip()
     sha256 = str(manifest.get("sha256") or "").strip()
     notes = str(manifest.get("notes") or "").strip()
-    if not version or not zip_url:
+    release_notes = load_release_notes_summary()
+    notes_version = release_notes.get("version", "")
+    if notes_version and version_key(notes_version) > version_key(version):
+        version = notes_version
+        build = ""
+        version_tag = f"v{version}"
+        zip_url = f"https://github.com/TaterTotterson/Tater/releases/download/{version_tag}/Tater-{version_tag}.zip"
+        sha256 = ""
+        notes = release_notes.get("summary", "")
+
+    if not version:
         return {}
 
     version_label = version if version.lower().startswith("v") else f"v{version}"
+    if not zip_url:
+        zip_url = f"https://github.com/TaterTotterson/Tater/releases/download/{version_label}/Tater-{version_label}.zip"
     dmg_url = zip_url[:-4] + ".dmg" if zip_url.lower().endswith(".zip") else zip_url
     dmg_path = manifest_path.parent / "releases" / f"Tater-{version_label}.dmg"
     zip_path = manifest_path.parent / "releases" / f"Tater-{version_label}.zip"
@@ -2626,10 +2666,21 @@ def render_macos_release_card() -> str:
     if not release:
         return ""
     version_label = release["version_label"]
-    build = release.get("build") or release["version"]
-    dmg_size = release.get("dmg_size") or "DMG"
+    build = release.get("build") or ""
+    dmg_size = release.get("dmg_size") or ""
     notes = release.get("notes") or f"Tater macOS release {version_label}."
     sha_short = release.get("sha256", "")[:12]
+    release_chips = "".join(
+        chip(item)
+        for item in [
+            f"Release {version_label}",
+            f"Build {build}" if build else "",
+            dmg_size,
+            "Auto-updates",
+        ]
+        if item
+    )
+    release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
 
     return f"""
     <section class="release-card" aria-label="Latest macOS app release">
@@ -2637,7 +2688,7 @@ def render_macos_release_card() -> str:
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
       <div class="release-copy">
-        <span class="eyebrow">Mac app release</span>
+        <span class="eyebrow">Latest Tater release</span>
         <h2>Tater {escape(version_label)} is ready for macOS.</h2>
         <p>
           Download the native Tater server app with the menu bar icon, private runtime,
@@ -2645,29 +2696,30 @@ def render_macos_release_card() -> str:
         </p>
         <p>{escape(notes)}</p>
         <div class="chip-row">
-          {chip(f"Release {version_label}")}
-          {chip(f"Build {build}")}
-          {chip(dmg_size)}
-          {chip("Auto-updates")}
+          {release_chips}
         </div>
         <div class="action-row release-actions">
           <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
           <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
+          <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">Release notes</a>
         </div>
         <div class="little-spud-attach">
           <div class="little-spud-copy">
             <span class="little-spud-title">Little Spud</span>
-            <span class="little-spud-kicker">iPhone + iPad companion</span>
-            <p>Pair by QR code, chat with your private Tater, use voice and TTS, view media replies, and switch between Home and Away routes.</p>
+            <span class="little-spud-kicker">iPhone + iPad + Android companion</span>
+            <p>Pair by QR code, chat with your private Tater, control your Home and Music Core, use voice and TTS, and open notification snapshots or video clips.</p>
             <div class="chip-row">
-              {chip("QR pairing")}
-              {chip("Voice + TTS")}
-              {chip("Home / Away")}
+              {chip("iOS + Android")}
+              {chip("Chat + voice")}
+              {chip("Home + Music")}
             </div>
           </div>
-          <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">Download Little Spud</a>
+          <div class="little-spud-store-links" aria-label="Download Little Spud">
+            <a class="little-spud-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">App Store</a>
+            <a class="little-spud-store-button little-spud-store-button-secondary" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">Google Play</a>
+          </div>
         </div>
-        <small class="release-meta">Pulled from the Tater update manifest{escape(f" • SHA {sha_short}" if sha_short else "")}.</small>
+        <small class="release-meta">Pulled from the current Tater release source{escape(f" • SHA {sha_short}" if sha_short else "")}.</small>
       </div>
     </section>
     """
@@ -2871,36 +2923,28 @@ def render_home_page(
 
     spotlight_cards = [
         (
-            "Music Core",
-            "Browse Search, Genres, Artists, Albums, and Tater Recommendations from a live player that understands rooms, preferred speakers, listening history, and your own media library.",
+            "Private local speech",
+            "Run experimental Qwen3-ASR locally for speech recognition, then answer with managed Qwen3-TTS, OmniVoice, Pocket TTS, or another configured voice backend.",
         ),
         (
-            "Stereo pairs",
-            "Turn two Tater Native satellites into one calibrated left/right destination with shared starts, channel routing, playhead telemetry, and synchronized TTS ducking.",
+            "Audio + video understanding",
+            "Give audio files and short video clips to dedicated understanding models while camera events return playable clips with clean snapshot previews.",
         ),
         (
-            "Multi-room playback",
-            "Play across native satellites, Sonos, stereo pairs, integration media players, or mixed groups while temporary voice replies duck the music instead of stopping it.",
+            "Face ID + People",
+            "Keep face matching private, link recognized identities to Tater People, and use recent camera context in Awareness and Automation flows.",
         ),
         (
-            "A new local WebUI",
-            "Tater's main workspaces now share a fast Vue 3 interface with responsive cards, stable live updates, compact controls, smoother dialogs, and the orange-and-gray Tater theme.",
+            "A clearer model workspace",
+            "Browse Hugging Face models from the Models screen and configure MTP, DFlash, or DSpark speculative decoding with task-aware downloads and runtime status.",
         ),
         (
-            "Background System Tasks",
-            "Slow discovery and recurring Core work run outside page loads, with last run, next run, state, errors, and Run Now gathered under one Settings tab.",
+            "Music and voice stay together",
+            "Readable speaker cards, persistent volume, synchronized targets, and stereo TTS overlays keep music playing at the intended level before, during, and after replies.",
         ),
         (
-            "People and trusted identity",
-            "The newest portal or voice event decides who is speaking. Master People link accounts and voices without letting old shared-channel history inherit another user's name or tools.",
-        ),
-        (
-            "Smarter device control",
-            "One Device Control Verba handles lights, switches, plugs, fans, covers, locks, climate, media players, scenes, scripts, and more with AI selection for ambiguous devices.",
-        ),
-        (
-            "Reachy can look and respond",
-            "Reachy Vision captures a fresh authenticated snapshot for questions such as 'what do you see?' while expressive tracking and motion continue through Tater's segmented speech.",
+            "Satellites stay in sync",
+            "Compact WebUI volume controls and physical satellite buttons share one saved level, while board-aware firmware routing keeps production and Beta.1 hardware on the right update path.",
         ),
     ]
     spotlight_html = "".join(
@@ -3204,7 +3248,7 @@ def render_home_page(
         <h2>Your library. The right room. Still playing after Tater speaks.</h2>
         <p>
           Ask for an album, artist, genre, song, or recommendation and let room context choose the destination.
-          The same live player stays available for browsing, queue changes, speaker selection, seeking, and volume.
+          The same live player stays available for browsing, queue changes, speaker selection, and synchronized volume.
         </p>
         <div class="chip-row">
           <span class="chip">Tater Tube</span>
@@ -3227,7 +3271,6 @@ def render_home_page(
             <strong>Whole-home, your way</strong>
             <span>Tater Recommendations</span>
           </div>
-          <div class="music-progress"><span></span></div>
           <div class="music-controls" aria-hidden="true">
             <span>−</span><span>‹</span><span class="music-play">▶</span><span>›</span><span>＋</span>
           </div>
@@ -3243,9 +3286,9 @@ def render_home_page(
     {hero}
     <section class="section">
       <div class="section-head section-head-wide">
-        <span class="eyebrow">What changed</span>
-        <h2>Tater has grown into a room-aware AI and media platform.</h2>
-        <p>The biggest current capabilities, brought forward so you do not have to discover them one old page at a time.</p>
+        <span class="eyebrow">Latest in Tater</span>
+        <h2>Local voice, media, models, and multi-room playback keep getting better.</h2>
+        <p>A compact look at the most useful additions from the latest Tater releases.</p>
       </div>
       <div class="grid spotlight-grid">
         {spotlight_html}
@@ -3320,8 +3363,8 @@ def render_little_spud_privacy_page() -> str:
       </div>
       <aside class="panel hero-panel">
         <span class="eyebrow">Effective date</span>
-        <h2>June 17, 2026</h2>
-        <p>This policy covers the Little Spud iOS and iPadOS app.</p>
+        <h2>August 23, 2026</h2>
+        <p>This policy covers the Little Spud app for iOS, iPadOS, and Android.</p>
       </aside>
     </section>
 
@@ -3341,11 +3384,25 @@ def render_little_spud_privacy_page() -> str:
           <p>
             Little Spud stores app settings on your device, including preferences
             such as notification and TTS settings. Pairing tokens for your Tater
-            instance are stored in the iOS Keychain. Recent chat messages may be
-            stored locally so the app can show conversation history.
+            instance are stored using secure operating-system storage. Recent chat
+            messages may be stored locally so the app can show conversation history.
           </p>
         </article>
       </div>
+    </section>
+
+    <section class="section">
+      <article class="panel">
+        <span class="eyebrow">Push delivery</span>
+        <h2>Push services deliver a wake-up, not your private alert content.</h2>
+        <p>
+          If you enable push notifications, Apple Push Notification service on
+          iOS and iPadOS or Firebase Cloud Messaging on Android can deliver a
+          wake-up notification. Little Spud then retrieves the alert details from
+          your paired Tater instance. Push registration tokens are used only to
+          route those notifications and are not used for advertising or tracking.
+        </p>
+      </article>
     </section>
 
     <section class="section">
@@ -3394,7 +3451,7 @@ def render_little_spud_privacy_page() -> str:
         </article>
         <article class="feature-card">
           <h3>Controls</h3>
-          <p>You can manage these permissions in iOS Settings.</p>
+          <p>You can manage these permissions in your device's Settings app.</p>
         </article>
       </div>
     </section>
@@ -3642,25 +3699,33 @@ def render_spud_hub_page() -> str:
     <section class="app-store-banner" aria-label="Little Spud app">
       <div class="app-store-copy">
         <span class="eyebrow">Little Spud app</span>
-        <h2>Chat with your Tater from iPhone and iPad.</h2>
+        <h2>Take your Tater with you on iPhone, iPad, and Android.</h2>
         <p>
           Little Spud pairs to Spud Hub with a QR code, keeps home and away Tater URLs,
-          streams tool progress, shows returned images and media, and uses the Hub's
-          voice settings for STT, TTS, notifications, and follow-up mic behavior.
+          streams tool progress, controls Home and Music Core, shows notification
+          snapshots and full-screen video, and uses the Hub's voice settings for STT,
+          TTS, notifications, and follow-up mic behavior.
         </p>
         <div class="chip-row">
-          <span class="chip">iPhone + iPad</span>
+          <span class="chip">iOS + Android</span>
           <span class="chip">QR pairing</span>
-          <span class="chip">Home / away URLs</span>
+          <span class="chip">Home + Music</span>
           <span class="chip">No Little Spud cloud</span>
         </div>
       </div>
       <div class="app-store-actions">
-        <a class="app-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
-          <span>Download on the</span>
-          <strong>App Store</strong>
-          <small>Available now</small>
-        </a>
+        <div class="store-button-row">
+          <a class="app-store-button" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span>Download on the</span>
+            <strong>App Store</strong>
+            <small>iPhone + iPad</small>
+          </a>
+          <a class="app-store-button app-store-button-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+            <span>Get it on</span>
+            <strong>Google Play</strong>
+            <small>Android phones + tablets</small>
+          </a>
+        </div>
         <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy policy</a>
       </div>
     </section>

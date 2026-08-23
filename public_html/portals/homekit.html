@@ -49,8 +49,8 @@
         <p>Siri and Apple Shortcuts portal for a full Siri-to-Tater round-trip, with per-device sessions, Shortcut-friendly JSON, and optional auth protection.</p>
         <div class="chip-row">
           <span class="chip">Voice endpoint</span>
-          <span class="chip">v1.1.4</span>
-          <span class="chip">5 settings</span>
+          <span class="chip">v1.1.5</span>
+          <span class="chip">3 settings</span>
           <span class="chip">33 Verbas</span>
         </div>
       </div>
@@ -107,29 +107,11 @@
             </li>
 
             <li>
-              <strong>Legacy Auth Token (optional)</strong>
-              <span>password</span>
-              <p>Backward-compatible fallback token if API Key is empty.</p>
-              <small>Key: AUTH_TOKEN</small>
-
-
-            </li>
-
-            <li>
               <strong>Session TTL (seconds)</strong>
               <span>number</span>
               <p>How long to keep a Siri session alive.</p>
               <small>Key: SESSION_TTL_SECONDS</small>
               <small>Default: 3600</small>
-
-            </li>
-
-            <li>
-              <strong>Legacy Bind Port</strong>
-              <span>number</span>
-              <p>Deprecated. Siri / Shortcuts now uses Tater&#x27;s main API path: /api/portals/homekit_portal/api/tater-homekit/v1</p>
-              <small>Key: bind_port</small>
-              <small>Default: 8789</small>
 
             </li>
             </ul>
