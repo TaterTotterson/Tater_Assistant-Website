@@ -1513,6 +1513,39 @@ PLATFORM_META["voice_core"] = {
 
 INSTALL_METHODS = [
     {
+        "slug": "macos",
+        "title": "Tater for macOS",
+        "eyebrow": "Native Mac app",
+        "summary": "Install the complete Tater server as a native Apple Silicon Mac app with a private runtime, menu bar controls, and automatic updates.",
+        "best_for": "Apple Silicon Macs running macOS 15 or newer that want the simplest native Tater setup.",
+        "complexity": "Low",
+        "highlights": [
+            "The DMG includes Tater.app and an Applications shortcut for a standard drag-and-drop installation.",
+            "First launch prepares a private managed runtime under ~/.taterassistant without changing a source checkout or system Python.",
+            "Closing the main window keeps Tater running in the menu bar, where it can be opened, restarted, updated, inspected, or quit.",
+            "The native window runs the same TaterOS WebUI and main Tater routes used by the other installation paths.",
+        ],
+        "steps": [
+            "Download the latest Tater DMG for macOS.",
+            "Open the DMG and drag Tater.app into Applications.",
+            "Open Tater from Applications and allow the first launch to prepare its private Python 3.11 runtime and environment.",
+            "Finish Redis, model, voice, integration, and Core setup in the TaterOS WebUI.",
+            "Use the Tater menu bar item to reopen the app, view logs, restart Tater, check for updates, or quit.",
+        ],
+        "notes": [
+            "The native app currently requires an Apple Silicon Mac running macOS 15.0 or newer.",
+            "App data, downloaded models, Cores, Verbas, integrations, settings, logs, and updates stay under ~/.taterassistant.",
+            "Use the DMG for a first installation. Existing supported app versions can install later releases from the built-in updater.",
+        ],
+        "snippets": [],
+        "links": [
+            {
+                "label": "Latest Tater release",
+                "href": "https://github.com/TaterTotterson/Tater/releases/latest",
+            },
+        ],
+    },
+    {
         "slug": "unraid",
         "title": "Unraid Community Apps",
         "eyebrow": "Recommended easy path",
@@ -2683,7 +2716,7 @@ def render_macos_release_card() -> str:
     release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
 
     return f"""
-    <section class="release-card" aria-label="Latest macOS app release">
+    <section class="release-card" aria-label="Latest Tater release and companion apps">
       <aside class="release-visual" aria-hidden="true">
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
@@ -2699,8 +2732,8 @@ def render_macos_release_card() -> str:
           {release_chips}
         </div>
         <div class="action-row release-actions">
-          <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
-          <a class="button button-ghost" href="{escape(release['zip_url'])}" target="_blank" rel="noreferrer">Updater zip</a>
+          <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download for macOS</a>
+          <a class="button button-ghost" href="install/index.html#server-install-paths">Other ways to install</a>
           <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">Release notes</a>
         </div>
         <div class="little-spud-attach">
@@ -3290,6 +3323,7 @@ def render_home_page(
 
     body = f"""
     {hero}
+    {macos_release}
     <section class="section">
       <div class="section-head section-head-wide">
         <span class="eyebrow">Latest in Tater</span>
@@ -3301,7 +3335,6 @@ def render_home_page(
       </div>
     </section>
     {music_showcase}
-    {macos_release}
     {mascot_intro}
     <section class="section">
       <div class="section-head">
@@ -4042,11 +4075,16 @@ def render_openai_api_page() -> str:
 
 def render_install_index() -> str:
     readme_note = extract_install_readme_note()
+    macos_release = load_macos_release()
+    macos_version = macos_release.get("version_label", "")
+    macos_download_url = macos_release.get("dmg_url") or "https://github.com/TaterTotterson/Tater/releases/latest"
+    macos_download_label = f"Download Tater {macos_version}" if macos_version else "Download Tater for macOS"
+    macos_version_chip = chip(f"Current release {macos_version}") if macos_version else chip("Latest release")
     cards = "".join(
         f"""
-        <article class="platform-card platform-card-detail">
+        <article class="platform-card platform-card-detail{' install-card-featured' if method['slug'] == 'macos' else ''}">
           <div class="chip-row">
-            {chip(method['complexity'])}
+            {chip(method['complexity'])}{chip("Apple Silicon") if method['slug'] == 'macos' else ''}
           </div>
           <h3>{escape(method['title'])}</h3>
           <p>{escape(method['summary'])}</p>
@@ -4065,8 +4103,19 @@ def render_install_index() -> str:
         <span class="eyebrow">Install Tater</span>
         <h1>Pick the install path that fits your stack.</h1>
         <p>
-          Tater ships with four main setup paths: Unraid, Home Assistant, local Python, and Docker.
+          Start with the native macOS app, or run Tater through Unraid, Home Assistant,
+          local Python, or Docker. After Tater is running, Little Spud can pair as its
+          iPhone, iPad, or Android companion.
         </p>
+        <div class="chip-row">
+          {macos_version_chip}
+          {chip("5 install paths")}
+          {chip("iOS + Android companion")}
+        </div>
+        <div class="action-row">
+          <a class="button" href="{escape(macos_download_url)}" target="_blank" rel="noreferrer">{escape(macos_download_label)}</a>
+          <a class="button button-ghost" href="#server-install-paths">Compare install paths</a>
+        </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">README note</span>
@@ -4076,15 +4125,54 @@ def render_install_index() -> str:
         </div>
       </aside>
     </section>
-    <section class="section">
+    <section class="section install-section-anchor" id="server-install-paths">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">Ways to run Tater</span>
+        <h2>Choose the host that already fits your home.</h2>
+        <p>The macOS app is the quickest native path. The other options run the same TaterOS experience on a server or container you control.</p>
+      </div>
       <div class="grid grid-2">
         {cards}
+      </div>
+    </section>
+
+    <section class="app-store-banner" aria-label="Little Spud companion apps">
+      <div class="app-store-copy">
+        <span class="eyebrow">Companion apps</span>
+        <h2>Run Tater first, then pair Little Spud.</h2>
+        <p>
+          Little Spud does not replace the Tater server. It pairs to your Tater through
+          Spud Hub and brings chat, voice, Home controls, Music Core, notifications,
+          snapshots, and video clips to your phone or tablet.
+        </p>
+        <div class="chip-row">
+          <span class="chip">iPhone + iPad</span>
+          <span class="chip">Android</span>
+          <span class="chip">QR pairing</span>
+          <span class="chip">Self-hosted Tater</span>
+        </div>
+      </div>
+      <div class="app-store-actions">
+        <div class="store-button-row">
+          <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span class="store-badge-platform" aria-hidden="true">iOS</span>
+            <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+            <span class="store-badge-platform" aria-hidden="true">Play</span>
+            <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+        </div>
+        <div class="action-row">
+          <a class="button button-ghost" href="../spud-hub/index.html">Pairing guide</a>
+          <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy</a>
+        </div>
       </div>
     </section>
     """
     return page_template(
         title="Tater Assistant | Install",
-        description="Installation paths for Tater Assistant from the current README.",
+        description="Install Tater for macOS, Unraid, Home Assistant, local Python, or Docker, then pair Little Spud on iOS or Android.",
         body=body,
         depth=1,
         nav_key="install",
@@ -4158,6 +4246,20 @@ def render_install_detail(method: dict[str, Any]) -> str:
         button(link["label"], link["href"], ghost=True)
         for link in method["links"]
     )
+    detail_chips = chip(method["complexity"])
+
+    primary_action = ""
+    if method["slug"] == "macos":
+        detail_chips += chip("Apple Silicon")
+        macos_release = load_macos_release()
+        macos_version = macos_release.get("version_label", "")
+        macos_download_url = macos_release.get("dmg_url") or "https://github.com/TaterTotterson/Tater/releases/latest"
+        macos_download_label = f"Download Tater {macos_version}" if macos_version else "Download Tater for macOS"
+        primary_action = f"""
+        <div class="action-row">
+          <a class="button" href="{escape(macos_download_url)}" target="_blank" rel="noreferrer">{escape(macos_download_label)}</a>
+        </div>
+        """
 
     links_section = ""
     if links_html:
@@ -4191,8 +4293,8 @@ def render_install_detail(method: dict[str, Any]) -> str:
         <h1>{escape(method['title'])}</h1>
         <p>{escape(method['summary'])}</p>
         <div class="chip-row">
-          {chip(method['complexity'])}
-        </div>
+          {detail_chips}
+        </div>{primary_action}
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">Best for</span>

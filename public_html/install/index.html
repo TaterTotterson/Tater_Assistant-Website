@@ -3,11 +3,11 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Installation paths for Tater Assistant from the current README.">
+          <meta name="description" content="Install Tater for macOS, Unraid, Home Assistant, local Python, or Docker, then pair Little Spud on iOS or Android.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
           <meta property="og:title" content="Tater Assistant | Install">
-          <meta property="og:description" content="Installation paths for Tater Assistant from the current README.">
+          <meta property="og:description" content="Install Tater for macOS, Unraid, Home Assistant, local Python, or Docker, then pair Little Spud on iOS or Android.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Install</title>
@@ -47,8 +47,19 @@
         <span class="eyebrow">Install Tater</span>
         <h1>Pick the install path that fits your stack.</h1>
         <p>
-          Tater ships with four main setup paths: Unraid, Home Assistant, local Python, and Docker.
+          Start with the native macOS app, or run Tater through Unraid, Home Assistant,
+          local Python, or Docker. After Tater is running, Little Spud can pair as its
+          iPhone, iPad, or Android companion.
         </p>
+        <div class="chip-row">
+          <span class="chip">Current release v1.1.10</span>
+          <span class="chip">5 install paths</span>
+          <span class="chip">iOS + Android companion</span>
+        </div>
+        <div class="action-row">
+          <a class="button" href="https://github.com/TaterTotterson/Tater/releases/download/v1.1.10/Tater-v1.1.10.dmg" target="_blank" rel="noreferrer">Download Tater v1.1.10</a>
+          <a class="button button-ghost" href="#server-install-paths">Compare install paths</a>
+        </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
         <span class="eyebrow">README note</span>
@@ -58,8 +69,25 @@
         </div>
       </aside>
     </section>
-    <section class="section">
+    <section class="section install-section-anchor" id="server-install-paths">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">Ways to run Tater</span>
+        <h2>Choose the host that already fits your home.</h2>
+        <p>The macOS app is the quickest native path. The other options run the same TaterOS experience on a server or container you control.</p>
+      </div>
       <div class="grid grid-2">
+
+        <article class="platform-card platform-card-detail install-card-featured">
+          <div class="chip-row">
+            <span class="chip">Low</span><span class="chip">Apple Silicon</span>
+          </div>
+          <h3>Tater for macOS</h3>
+          <p>Install the complete Tater server as a native Apple Silicon Mac app with a private runtime, menu bar controls, and automatic updates.</p>
+          <p><strong>Best for:</strong> Apple Silicon Macs running macOS 15 or newer that want the simplest native Tater setup.</p>
+          <div class="plugin-links">
+            <a class="button button-ghost" href="macos.html">Read install path</a>
+          </div>
+        </article>
 
         <article class="platform-card platform-card-detail">
           <div class="chip-row">
@@ -109,6 +137,40 @@
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <section class="app-store-banner" aria-label="Little Spud companion apps">
+      <div class="app-store-copy">
+        <span class="eyebrow">Companion apps</span>
+        <h2>Run Tater first, then pair Little Spud.</h2>
+        <p>
+          Little Spud does not replace the Tater server. It pairs to your Tater through
+          Spud Hub and brings chat, voice, Home controls, Music Core, notifications,
+          snapshots, and video clips to your phone or tablet.
+        </p>
+        <div class="chip-row">
+          <span class="chip">iPhone + iPad</span>
+          <span class="chip">Android</span>
+          <span class="chip">QR pairing</span>
+          <span class="chip">Self-hosted Tater</span>
+        </div>
+      </div>
+      <div class="app-store-actions">
+        <div class="store-button-row">
+          <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+            <span class="store-badge-platform" aria-hidden="true">iOS</span>
+            <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+            <span class="store-badge-platform" aria-hidden="true">Play</span>
+            <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+        </div>
+        <div class="action-row">
+          <a class="button button-ghost" href="../spud-hub/index.html">Pairing guide</a>
+          <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy</a>
+        </div>
       </div>
     </section>
 

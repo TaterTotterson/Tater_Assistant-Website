@@ -2106,6 +2106,32 @@ body::before {
   gap: 1.1rem;
 }
 
+.install-section-anchor {
+  scroll-margin-top: 7rem;
+}
+
+.install-card-featured {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: rgba(255, 122, 24, 0.4);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 122, 24, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 106, 0, 0.11), rgba(255, 255, 255, 0.018)),
+    rgba(18, 19, 21, 0.98);
+}
+
+.install-card-featured::after {
+  content: "";
+  position: absolute;
+  right: 1.25rem;
+  bottom: 0;
+  left: 1.25rem;
+  z-index: -1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 24, 0.82), transparent);
+}
+
 .spotlight-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
