@@ -24,6 +24,7 @@ This repo is set up for a Linux host with this layout:
     Tater/
     Tater_Shop/
     Tater_Integrations/
+    Tater-Native-Firmware/
 ```
 
 ## What it does
@@ -33,6 +34,8 @@ This repo is set up for a Linux host with this layout:
 - reads Verbas inventory from `Tater_Shop/manifest.json`
 - reads optional integration inventory from `Tater_Integrations/manifest.json`
 - reads plugin detail metadata from the actual plugin files in `Tater_Shop/plugins`
+- builds the Tater-themed HTTPS USB Flasher page with automatic, verified latest firmware plus Factory and OTA Keep Settings modes
+- mirrors the current official firmware release into the website so browsers can download it without leaving the Tater flasher
 - can clone/update all source repos automatically and rebuild the site when they change
 
 ## Main files
@@ -40,11 +43,11 @@ This repo is set up for a Linux host with this layout:
 - `scripts/build_wiki.py`
   Generates the HTML site in `public_html`
 - `scripts/sync_wiki_sources.py`
-  Clones or updates `Tater`, `Tater_Shop`, and `Tater_Integrations`, then runs the wiki build when source heads change
+  Clones or updates `Tater`, `Tater_Shop`, `Tater_Integrations`, and `Tater-Native-Firmware`, then runs the wiki build when source heads change
 - `scripts/.wiki-sync-state.json`
   Stores the last built source heads so unchanged runs can skip the rebuild
 - `public_html/assets/`
-  Shared CSS, JS, and images used by the generated site
+  Shared CSS, JS, images, and the locally bundled USB flashing engine used by the generated site
 
 ## Requirements
 
@@ -72,6 +75,7 @@ What it does:
 - clones `Tater` into `scripts/Tater` if missing
 - clones `Tater_Shop` into `scripts/Tater_Shop` if missing
 - clones `Tater_Integrations` into `scripts/Tater_Integrations` if missing
+- clones `Tater-Native-Firmware` into `scripts/Tater-Native-Firmware` if missing
 - fast-forwards clean repos
 - skips rebuilds when nothing changed
 - blocks rebuilds if a source repo is dirty or diverged

@@ -1,5 +1,10 @@
 Tater
 Tater_Shop
+Tater_Integrations
+Tater-Native-Firmware
+
+# Built on the website host from the latest verified official release.
+/public_html/firmware/latest/
 
 # macOS hidden metadata files
 .DS_Store

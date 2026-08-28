@@ -2628,6 +2628,452 @@ textarea:focus-visible {
   }
 }
 
+.usb-flasher-hero {
+  grid-template-columns: minmax(0, 0.9fr) minmax(480px, 1.1fr);
+}
+
+.usb-flasher-hero-panel {
+  position: relative;
+  isolation: isolate;
+  min-height: 420px;
+  overflow: hidden;
+  padding: 0;
+  border-color: rgba(255, 139, 45, 0.34);
+  background: #050505;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 26px 70px rgba(0, 0, 0, 0.42),
+    0 0 52px rgba(255, 106, 0, 0.08);
+}
+
+.usb-flasher-mascot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.usb-flasher-hero-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3, 3, 4, 0.88) 0%, rgba(3, 3, 4, 0.36) 44%, transparent 70%),
+    linear-gradient(0deg, rgba(3, 3, 4, 0.9), transparent 46%);
+}
+
+.usb-flasher-hero-overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  min-height: 420px;
+  padding: 1.25rem;
+}
+
+.usb-flasher-hero-copy {
+  max-width: min(52%, 330px);
+}
+
+.usb-flasher-hero-copy h2 {
+  max-width: 13ch;
+  margin: 0.3rem 0 0.45rem;
+  font-size: clamp(1.35rem, 2.5vw, 2.1rem);
+}
+
+.usb-flasher-hero-copy p {
+  margin: 0;
+  color: rgba(255, 250, 242, 0.76);
+  font-size: 0.8rem;
+}
+
+.usb-browser-state {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+  max-width: min(56%, 360px);
+  backdrop-filter: blur(12px);
+}
+
+.usb-browser-state[data-tone="ready"] {
+  border-color: rgba(91, 216, 143, 0.34);
+  background: rgba(91, 216, 143, 0.09);
+  color: #b9f3d1;
+}
+
+.usb-browser-state[data-tone="error"] {
+  border-color: rgba(255, 103, 103, 0.34);
+  background: rgba(255, 103, 103, 0.09);
+  color: #ffc4c4;
+}
+
+.usb-flasher-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.72fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.usb-flasher-steps {
+  display: grid;
+  gap: 1rem;
+}
+
+.usb-flasher-step,
+.usb-flasher-console {
+  display: grid;
+  gap: 1rem;
+}
+
+.usb-step-heading,
+.usb-console-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.usb-step-heading h3,
+.usb-console-heading h3 {
+  margin: 0.18rem 0 0;
+}
+
+.usb-step-number {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 139, 45, 0.35);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 139, 45, 0.2), rgba(255, 139, 45, 0.06));
+  color: var(--accent-strong);
+  font-family: var(--font-head);
+  font-size: 1rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.usb-mode-card {
+  font: inherit;
+  cursor: pointer;
+}
+
+.usb-source-panel {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.usb-field {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.usb-field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 2.4rem 0.7rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 14px;
+  color: var(--text);
+  background: rgba(8, 10, 12, 0.72);
+  font: inherit;
+}
+
+.usb-field select:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.usb-field small,
+.usb-inline-note {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.usb-firmware-summary,
+.usb-mode-warning {
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.usb-firmware-summary strong {
+  display: block;
+  color: var(--text);
+}
+
+.usb-firmware-summary span {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.usb-device-field select {
+  min-height: 54px;
+  border-color: rgba(255, 139, 45, 0.28);
+  background:
+    linear-gradient(135deg, rgba(255, 139, 45, 0.08), transparent 44%),
+    rgba(8, 10, 12, 0.82);
+  font-size: 0.88rem;
+}
+
+.usb-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.usb-mode-card {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 0.38rem 0.65rem;
+  min-height: 120px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.025);
+  text-align: left;
+}
+
+.usb-mode-card.is-active {
+  border-color: rgba(255, 139, 45, 0.48);
+  background: linear-gradient(145deg, rgba(255, 139, 45, 0.14), rgba(255, 255, 255, 0.025));
+  box-shadow: inset 0 0 0 1px rgba(255, 139, 45, 0.08);
+}
+
+.usb-mode-card strong,
+.usb-mode-card small {
+  grid-column: 2;
+}
+
+.usb-mode-card small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.usb-mode-mark {
+  grid-row: 1 / span 2;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+}
+
+.usb-mode-card.is-active .usb-mode-mark {
+  border: 6px solid var(--accent);
+  background: #17191c;
+}
+
+.usb-mode-warning {
+  border: 1px solid rgba(255, 139, 45, 0.2);
+  background: rgba(255, 139, 45, 0.07);
+  color: #f4c896;
+}
+
+.usb-mode-warning[data-tone="keep"] {
+  border-color: rgba(91, 216, 143, 0.24);
+  background: rgba(91, 216, 143, 0.07);
+  color: #b9f3d1;
+}
+
+.usb-connect-step {
+  background:
+    radial-gradient(circle at top right, rgba(255, 139, 45, 0.11), transparent 45%),
+    var(--panel);
+}
+
+.usb-ready-summary {
+  min-height: 1.5rem;
+}
+
+.usb-flash-button,
+.usb-clear-log {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.usb-flash-button {
+  width: 100%;
+}
+
+.usb-flash-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+  opacity: 0.5;
+  transform: none;
+}
+
+.usb-flasher-console {
+  position: sticky;
+  top: 7.2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 139, 45, 0.07), transparent 28%),
+    rgba(15, 17, 20, 0.96);
+}
+
+.usb-console-heading {
+  justify-content: space-between;
+}
+
+.usb-status-dot {
+  flex: 0 0 13px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #8b9098;
+  box-shadow: 0 0 0 6px rgba(139, 144, 152, 0.1);
+}
+
+.usb-status-dot[data-tone="busy"] {
+  background: var(--accent);
+  box-shadow: 0 0 0 6px rgba(255, 139, 45, 0.13), 0 0 18px rgba(255, 139, 45, 0.42);
+  animation: usb-status-pulse 1.4s ease-in-out infinite;
+}
+
+.usb-status-dot[data-tone="success"] {
+  background: #5bd88f;
+  box-shadow: 0 0 0 6px rgba(91, 216, 143, 0.12);
+}
+
+.usb-status-dot[data-tone="error"] {
+  background: #ff6767;
+  box-shadow: 0 0 0 6px rgba(255, 103, 103, 0.12);
+}
+
+@keyframes usb-status-pulse {
+  50% { transform: scale(0.82); opacity: 0.72; }
+}
+
+.usb-progress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.usb-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 0 18px rgba(255, 139, 45, 0.38);
+  transition: width 180ms ease;
+}
+
+.usb-progress-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.usb-progress-copy strong {
+  color: var(--text);
+}
+
+.usb-console-log {
+  min-height: 260px;
+  max-height: 42vh;
+  overflow: auto;
+  padding: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  background: #090b0d;
+  color: #d5d9de;
+  font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.usb-log-line + .usb-log-line {
+  margin-top: 0.36rem;
+}
+
+.usb-log-line.tone-warn { color: #ffcf8c; }
+.usb-log-line.tone-error { color: #ff9f9f; }
+.usb-log-line.tone-success { color: #9ff0c2; }
+.usb-log-line.tone-debug { color: #939ba6; }
+
+.usb-clear-log {
+  justify-self: start;
+  min-height: 38px;
+  padding: 0.55rem 0.9rem;
+}
+
+@media (max-width: 980px) {
+  .usb-flasher-hero,
+  .usb-flasher-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .usb-flasher-console {
+    position: static;
+  }
+
+  .usb-flasher-hero-panel,
+  .usb-flasher-hero-overlay {
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 620px) {
+  .usb-mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .usb-step-heading {
+    align-items: flex-start;
+  }
+
+  .usb-flasher-hero-panel,
+  .usb-flasher-hero-overlay {
+    min-height: 500px;
+  }
+
+  .usb-flasher-mascot {
+    object-position: 64% center;
+  }
+
+  .usb-flasher-hero-panel::after {
+    background:
+      linear-gradient(180deg, rgba(3, 3, 4, 0.12) 30%, rgba(3, 3, 4, 0.96) 78%),
+      linear-gradient(90deg, rgba(3, 3, 4, 0.42), transparent 58%);
+  }
+
+  .usb-flasher-hero-overlay {
+    justify-content: flex-end;
+  }
+
+  .usb-flasher-hero-copy,
+  .usb-browser-state {
+    max-width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

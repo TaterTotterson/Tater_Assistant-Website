@@ -23,6 +23,7 @@ SELF_UPDATE_RECOVERABLE_PREFIXES = ("public_html/",)
 DEFAULT_TATER_URL = "https://github.com/TaterTotterson/Tater.git"
 DEFAULT_TATER_SHOP_URL = "https://github.com/TaterTotterson/Tater_Shop.git"
 DEFAULT_TATER_INTEGRATIONS_URL = "https://github.com/TaterTotterson/Tater_Integrations.git"
+DEFAULT_TATER_FIRMWARE_URL = "https://github.com/TaterTotterson/Tater-Native-Firmware.git"
 
 
 def utc_now() -> str:
@@ -317,6 +318,8 @@ def missing_outputs(root: Path) -> bool:
         root / "integrations" / "index.html",
         root / "kernel-tools" / "index.html",
         root / "cerberus" / "index.html",
+        root / "usb-flasher" / "index.html",
+        root / "firmware" / "latest" / "catalog.json",
     ]
     return any(not path.exists() for path in expected)
 
@@ -336,10 +339,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tater-url", default=DEFAULT_TATER_URL, help="Git URL for the core Tater repo.")
     parser.add_argument("--shop-url", default=DEFAULT_TATER_SHOP_URL, help="Git URL for the Tater Shop repo.")
     parser.add_argument("--integrations-url", default=DEFAULT_TATER_INTEGRATIONS_URL, help="Git URL for the Tater Integrations repo.")
+    parser.add_argument("--firmware-url", default=DEFAULT_TATER_FIRMWARE_URL, help="Git URL for the Tater Native Firmware repo.")
     parser.add_argument("--site-dir", default=str(SITE_ROOT), help="Output directory for the generated website.")
     parser.add_argument("--tater-dir", default=str(SCRIPT_DIR / "Tater"), help="Checkout path for the Tater repo.")
     parser.add_argument("--shop-dir", default=str(SCRIPT_DIR / "Tater_Shop"), help="Checkout path for the Tater Shop repo.")
     parser.add_argument("--integrations-dir", default=str(SCRIPT_DIR / "Tater_Integrations"), help="Checkout path for the Tater Integrations repo.")
+    parser.add_argument("--firmware-dir", default=str(SCRIPT_DIR / "Tater-Native-Firmware"), help="Checkout path for the Tater Native Firmware repo.")
     parser.add_argument("--python", default=sys.executable or "python3", help="Python interpreter used to run build_wiki.py.")
     parser.add_argument("--skip-fetch", action="store_true", help="Do not contact remotes; only inspect local checkouts and state.")
     parser.add_argument("--force-build", action="store_true", help="Run build_wiki.py even if the repo heads did not change.")
@@ -368,6 +373,7 @@ def main() -> int:
     tater_dir = Path(args.tater_dir).expanduser().resolve()
     shop_dir = Path(args.shop_dir).expanduser().resolve()
     integrations_dir = Path(args.integrations_dir).expanduser().resolve()
+    firmware_dir = Path(args.firmware_dir).expanduser().resolve()
     state_path = Path(args.state_file).expanduser().resolve()
     site_root = Path(args.site_dir).expanduser().resolve()
     site_updated = os.getenv(SITE_UPDATED_ENV) == "1"
@@ -395,6 +401,7 @@ def main() -> int:
         "tater": sync_repo("Tater", args.tater_url, tater_dir, skip_fetch=args.skip_fetch),
         "shop": sync_repo("Tater_Shop", args.shop_url, shop_dir, skip_fetch=args.skip_fetch),
         "integrations": sync_repo("Tater_Integrations", args.integrations_url, integrations_dir, skip_fetch=args.skip_fetch),
+        "firmware": sync_repo("Tater-Native-Firmware", args.firmware_url, firmware_dir, skip_fetch=args.skip_fetch),
     }
 
     blocked = {name: info for name, info in sources.items() if info["status"] in {"dirty", "diverged"}}

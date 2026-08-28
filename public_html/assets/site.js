@@ -2,6 +2,18 @@
   const navToggle = document.querySelector(".nav-toggle");
   const siteNav = document.querySelector(".site-nav");
 
+  if (siteNav && !siteNav.querySelector('[href*="usb-flasher/"]')) {
+    const homeLink = siteNav.querySelector('a[href$="index.html"]');
+    const githubLink = siteNav.querySelector(".nav-link-github");
+    if (homeLink) {
+      const flasherLink = document.createElement("a");
+      flasherLink.className = `nav-link${document.body.dataset.page === "usb-flasher" ? " is-active" : ""}`;
+      flasherLink.href = new URL("usb-flasher/index.html", homeLink.href).toString();
+      flasherLink.textContent = "USB Flasher";
+      siteNav.insertBefore(flasherLink, githubLink || null);
+    }
+  }
+
   if (navToggle && siteNav) {
     navToggle.addEventListener("click", () => {
       const isOpen = siteNav.classList.toggle("is-open");
