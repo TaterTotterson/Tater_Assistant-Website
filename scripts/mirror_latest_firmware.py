@@ -20,6 +20,8 @@ OFFICIAL_RELEASE_PATH_PREFIX = "/TaterTotterson/Tater-Native-Firmware/releases/d
 MAX_METADATA_BYTES = 1024 * 1024
 MAX_FIRMWARE_BYTES = 64 * 1024 * 1024
 DOWNLOAD_TIMEOUT_SECONDS = 90
+PUBLISHED_DIRECTORY_MODE = 0o755
+PUBLISHED_FILE_MODE = 0o644
 
 
 def _request_bytes(url: str, *, limit: int) -> bytes:
@@ -98,7 +100,9 @@ def _artifact_catalog_entry(artifact: dict[str, Any], *, target_dir: Path) -> di
     if not data or data[0] != 0xE9:
         raise RuntimeError(f"Firmware image check failed for {filename}.")
 
-    (target_dir / filename).write_bytes(data)
+    target_path = target_dir / filename
+    target_path.write_bytes(data)
+    target_path.chmod(PUBLISHED_FILE_MODE)
     return {
         "filename": filename,
         "size_bytes": expected_size,
@@ -128,7 +132,9 @@ def mirror_latest_firmware(site_root: Path, *, latest_url: str | None = None) ->
 
     firmware_root = site_root / "firmware"
     firmware_root.mkdir(parents=True, exist_ok=True)
+    firmware_root.chmod(PUBLISHED_DIRECTORY_MODE)
     staging = Path(tempfile.mkdtemp(prefix=".latest-", dir=firmware_root))
+    staging.chmod(PUBLISHED_DIRECTORY_MODE)
     target = firmware_root / "latest"
     previous = firmware_root / ".latest-previous"
     catalog_devices: list[dict[str, Any]] = []
@@ -182,10 +188,12 @@ def mirror_latest_firmware(site_root: Path, *, latest_url: str | None = None) ->
             "display_version": str(manifest.get("display_version") or latest.get("display_version") or "").strip(),
             "devices": catalog_devices,
         }
-        (staging / "catalog.json").write_text(
+        catalog_path = staging / "catalog.json"
+        catalog_path.write_text(
             json.dumps(catalog, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
+        catalog_path.chmod(PUBLISHED_FILE_MODE)
 
         if previous.exists():
             shutil.rmtree(previous)

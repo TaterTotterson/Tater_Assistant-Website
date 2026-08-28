@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 import hashlib
 import json
+import stat
 import tempfile
 from pathlib import Path
 from unittest import mock
@@ -121,6 +122,17 @@ class UsbFlasherSiteTests(unittest.TestCase):
             self.assertEqual((target / "native-test-satellite1-factory.bin").read_bytes(), factory)
             self.assertEqual((target / "native-test-satellite1-ota.bin").read_bytes(), ota)
             self.assertEqual(json.loads((target / "catalog.json").read_text())["devices"][0]["key"], "satellite1")
+            self.assertEqual(stat.S_IMODE((site_root / "firmware").stat().st_mode), 0o755)
+            self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o755)
+            self.assertEqual(stat.S_IMODE((target / "catalog.json").stat().st_mode), 0o644)
+            self.assertEqual(
+                stat.S_IMODE((target / "native-test-satellite1-factory.bin").stat().st_mode),
+                0o644,
+            )
+            self.assertEqual(
+                stat.S_IMODE((target / "native-test-satellite1-ota.bin").stat().st_mode),
+                0o644,
+            )
 
     def test_bundled_flashing_engine_and_license_are_present(self) -> None:
         self.assertGreater(FLASHER_ENGINE.stat().st_size, 100_000)
