@@ -1616,49 +1616,65 @@ INSTALL_METHODS = [
     },
     {
         "slug": "local",
-        "title": "Local Python Install",
-        "eyebrow": "Advanced local setup",
-        "summary": "Run Tater from source with Python 3.11 and Redis Stack, then configure Redis/Hydra in WebUI.",
+        "title": "Local Source Install",
+        "eyebrow": "Setup script path",
+        "summary": "Clone Tater, run the setup script for the right runtime profile, then start TaterOS with the local launcher.",
         "best_for": "Developers and operators who want direct source control and local customization.",
         "complexity": "Medium",
         "highlights": [
-            "Requires Python 3.11, Redis Stack, and an OpenAI-compatible LLM backend such as Ollama, LocalAI, LM Studio, Lemonade, or OpenAI API.",
-            "The README recommends running inside a virtual environment to keep dependencies isolated.",
-            "Redis is no longer configured in .env; connection setup is handled in-WebUI and saved in .runtime.",
-            "Spudex uses the local Agent Lab workspace for terminal-backed chat, scripts, files, and small hosted tasks.",
+            "The setup script creates .venv, installs Tater's Python dependencies, and writes the selected runtime profile to .runtime/tater_profile.env.",
+            "Profiles cover CPU, edge / remote-only, macOS Apple Silicon, NVIDIA CUDA, AMD ROCm / Strix Halo, Jetson, and Jetson Thor.",
+            "Tater supports Python 3.11 through 3.13. On Linux, setup can install a checksum-verified private Python runtime when the system Python is unsupported.",
+            "Normal local profiles use Tater's embedded Redis runtime. The edge / remote-only profile expects the operating system redis-server package.",
+            "Model choices are finished inside TaterOS under Settings -> Models and Settings -> Voice Pipeline.",
         ],
         "steps": [
             "Clone the repository.",
             "Change into the Tater project directory.",
-            "Create and activate a Python virtual environment.",
-            "Install dependencies from requirements.txt.",
-            "Launch TaterOS and complete Redis setup in the popup (host/port/auth/TLS).",
-            "Configure Hydra LLM base server(s) and optional Beast Mode role routing in Settings.",
+            "Run sh setup_tater.sh and choose the runtime profile for this machine, or pass a profile name for non-interactive setup.",
+            "For edge / remote-only installs, install redis-server first, then run the edge profile.",
+            "Start TaterOS with sh run_ui.sh.",
+            "Open http://127.0.0.1:8501 from the same machine, or use the host's address from another device on your network.",
+            "Finish setup in TaterOS by selecting your LLM, Vision, Spudex, voice, and optional Beast Mode model providers.",
         ],
         "notes": [
-            "Redis connection settings are saved locally in .runtime/redis_connection.json, while downloaded speech models live under agent_lab/models and Spudex work starts under agent_lab/workspace.",
-            "Redis encryption keys and live-encryption state are stored under .runtime when Redis encryption is enabled in Settings.",
-            "This path is the best fit when you want to inspect or modify the source directly.",
+            "The setup profile prepares the runtime only; actual model choices are managed from TaterOS.",
+            "run_ui.sh automatically loads .venv and .runtime/tater_profile.env when they exist, and listens on 0.0.0.0:8501 by default.",
+            "Set HTMLUI_PORT before run_ui.sh if you need a different port.",
+            "Set TATER_SETUP_INSTALL_MANAGED_PYTHON=0 to disable private Python downloads, or TATER_SETUP_INSTALL_SYSTEM_DEPS=0 to disable automatic Linux system-package installation.",
+            "Downloaded models live under agent_lab/models, Spudex work starts under agent_lab/workspace, and runtime state is kept under .runtime.",
         ],
         "snippets": [
             {
-                "label": "Clone and prepare environment",
+                "label": "Clone and run setup",
                 "code": """git clone https://github.com/TaterTotterson/Tater.git
 cd Tater
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt""",
+sh setup_tater.sh""",
             },
             {
-                "label": "Run TaterOS backend + WebUI",
-                "code": "uvicorn tateros_app:app --host 0.0.0.0 --port 8501 --reload --no-access-log",
+                "label": "Non-interactive profiles",
+                "code": """sh setup_tater.sh cpu
+sh setup_tater.sh edge
+sh setup_tater.sh macos
+sh setup_tater.sh nvidia
+sh setup_tater.sh rocm
+sh setup_tater.sh jetson
+sh setup_tater.sh thor""",
             },
             {
-                "label": "Alternative launcher",
-                "code": "sh run_ui.sh",
+                "label": "Start TaterOS",
+                "code": """sh run_ui.sh
+
+# Optional different port:
+HTMLUI_PORT=8601 sh run_ui.sh""",
             },
         ],
-        "links": [],
+        "links": [
+            {
+                "label": "Tater Repository",
+                "href": "https://github.com/TaterTotterson/Tater",
+            },
+        ],
     },
     {
         "slug": "docker",
