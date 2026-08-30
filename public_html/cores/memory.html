@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Background service</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Incrementally mines durable facts from prior conversations instead of relying only on the active turn.</li><li>Builds user and room summaries in Redis for later Hydra injection.</li><li>Can write linked user memory to master People records so the same person keeps one durable memory profile across portals and Tater Voice identities.</li><li>Includes confidence thresholds, identity linking options, and context-size limits.</li><li>Memory scans publish as Core-owned System Tasks with schedule, run state, errors, and a manual Run Now control.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects memory context back into Hydra instead of acting like a direct Verba surface.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>Memory Core is background infrastructure. It scans chat history, extracts durable facts, and injects memory context back into Hydra instead of acting like a direct Verba surface.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Hydra Memory Items</strong>
               <span>number</span>
@@ -187,7 +184,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

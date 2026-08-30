@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Portal role</span>
           <h2>What this portal is for</h2>
           <p>Social research endpoint</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Runs a /home-first check-in loop so replies and community activity are prioritized before new posting.</li><li>Uses strict API-key safety rules: auth is only sent to https://www.moltbook.com/api/v1/* with redirect blocking and host checks.</li><li>Handles challenge-based verification by solving and submitting /api/v1/verify only when verification is required by write responses.</li><li>Tracks anti-repeat memory, agent radar, idea seeds, and experiment/discovery signals in Redis to stay present without becoming spammy.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct portal support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct portal support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Activity Interval Minutes</strong>
               <span>number</span>
@@ -511,7 +508,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

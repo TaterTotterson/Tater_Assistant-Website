@@ -3,11 +3,11 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
+          <meta name="description" content="Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
           <meta property="og:title" content="Tater Assistant | Music Core">
-          <meta property="og:description" content="Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
+          <meta property="og:description" content="Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Music Core</title>
@@ -67,7 +67,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
         <h1>Music Core</h1>
-        <p>Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.</p>
+        <p>Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.</p>
         <div class="chip-row">
           <span class="chip">Music library + player</span>
           <span class="chip">v3.4.6</span>
@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Music library + player</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, Home Assistant, and compatible integration media players.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
+          <ul class="stack-list"><li>Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Tater Tube is the music catalog and playback source; Music Core streams those tracks to native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, and supported media-player destinations.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>AirPlay Receiver</strong>
               <span>checkbox</span>
@@ -250,7 +247,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -276,7 +274,7 @@
           <div class="chip-row"><span class="chip">Room aware</span><span class="chip">Preferred player</span><span class="chip">Sonos first</span></div>
           <h3>Choose where it plays</h3>
           <p>Room context removes the need to ask which speaker when Tater already knows.</p>
-          <ul class="stack-list"><li>If a request names a room, that room wins. Otherwise the speaking satellite&#x27;s room is used when available.</li><li>A preferred player saved for the room is selected before global defaults, and Sonos is preferred when automatic selection finds several compatible players.</li><li>The player-bar speaker button opens every available satellite, stereo pair, Sonos speaker/group, and standard integration media player with readable labels.</li></ul>
+          <ul class="stack-list"><li>If a request names a room, that room wins. Otherwise the speaking satellite&#x27;s room is used when available.</li><li>A preferred player saved for the room is selected before global defaults, and Sonos is preferred when automatic selection finds several compatible players.</li><li>The player-bar speaker button opens Tater Tube stream destinations with readable labels, including native satellites, stereo pairs, Sonos speakers/groups, AirPlay devices, and supported media-player outputs.</li></ul>
 
         </article>
 

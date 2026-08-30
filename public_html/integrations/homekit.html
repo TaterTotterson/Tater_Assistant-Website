@@ -80,32 +80,30 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
           <p>Pair an Ecobee thermostat and environment sensors directly through HomeKit.</p>
-          <div class="chip-row"><span class="chip">climate</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">motion</span><span class="chip">entry_sensor</span><span class="chip">battery</span><span class="chip">sensor</span></div>
+          <div class="chip-row"><span class="chip">thermostat</span><span class="chip">climate</span><span class="chip">hvac</span><span class="chip">temperature</span><span class="chip">humidity</span></div>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
           <ul class="stack-list"><li>The runtime owner maps Ecobee HomeKit devices under the HomeKit integration.</li><li>Environment Core can use the exposed temperature and humidity devices once enabled.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Declared fields</h2>
-          <ul class="stack-list"><li>Pairing Alias</li><li>HomeKit Setup Code</li><li>HomeKit Device ID</li><li>Discovery Timeout Seconds</li></ul>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Actions</span>
-          <h2>Declared setup actions</h2>
-          <ul class="stack-list"><li>Discover HomeKit</li><li>Pair Thermostat</li><li>List Thermostats</li><li>Forget Saved Pairing</li></ul>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Declared fields</h2>
+            <ul class="stack-list"><li>Pairing Alias</li><li>HomeKit Setup Code</li><li>HomeKit Device ID</li><li>Discovery Timeout Seconds</li></ul>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Actions</span>
+            <h2>Declared setup actions</h2>
+            <ul class="stack-list"><li>Discover HomeKit</li><li>Pair Thermostat</li><li>List Thermostats</li><li>Forget Saved Pairing</li></ul>
+          </article>
+        </div>
       </div>
     </section>
     <section class="section">

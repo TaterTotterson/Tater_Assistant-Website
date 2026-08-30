@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Personal intelligence engine</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Scans one or more IMAP inboxes on a configurable interval and stores normalized email history in Redis.</li><li>Extracts structured signals such as spending habits, upcoming events, subscriptions, deliveries, action items, and important notes.</li><li>Publishes personal kernel tools for search, summarization, spending, plans, subscriptions, deliveries, actions, notes, and favorite places.</li><li>Can inject bounded personal context into Hydra prompts per portal, with Discord/IRC/Telegram/Matrix controls.</li><li>Supports notification routing through notifier portals with destination controls and per-cycle limits.</li><li>Includes a dedicated WebUI tab for stats, context previews, manual scans, notification tests, and safe data cleanup actions.</li><li>Mailbox scans and profile refreshes appear as Core-owned System Tasks instead of running as invisible background work.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>Personal Core is background email intelligence. It scans connected inboxes, extracts structured profile signals, and exposes personal kernel tools plus optional prompt-context injection rather than acting like a direct Verba surface.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>Personal Core is background email intelligence. It scans connected inboxes, extracts structured profile signals, and exposes personal kernel tools plus optional prompt-context injection rather than acting like a direct Verba surface.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Scan Interval (sec)</strong>
               <span>select</span>
@@ -115,7 +112,8 @@
               <small>Options: 1 minute, 2 minutes, 5 minutes, 10 minutes, 15 minutes, 30 minutes, 1 hour</small>
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

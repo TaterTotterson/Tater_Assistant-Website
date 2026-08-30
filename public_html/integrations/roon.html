@@ -3,11 +3,11 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Roon Core pairing, zone transport controls, and library browse playback targets.">
+          <meta name="description" content="Roon Core pairing and zone transport control for installs that still need direct Roon access.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
           <meta property="og:title" content="Tater Assistant | Roon">
-          <meta property="og:description" content="Roon Core pairing, zone transport controls, and library browse playback targets.">
+          <meta property="og:description" content="Roon Core pairing and zone transport control for installs that still need direct Roon access.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Roon</title>
@@ -67,7 +67,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Integration profile</span>
         <h1>Roon</h1>
-        <p>Pairs with Roon, exposes zones as standard Tater media players, and supports browse-based playback from room-aware music requests.</p>
+        <p>Pairs with Roon for external zone discovery and control, while Music Core uses Tater Tube as the current music library and playback source.</p>
         <div class="chip-row">
           <span class="chip">Audio</span>
           <span class="chip">v1.2.1</span>
@@ -80,32 +80,30 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
-          <p>Roon Core pairing, zone transport controls, and library browse playback targets.</p>
-          <div class="chip-row"><span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">music</span></div>
+          <p>Roon Core pairing and zone transport control for installs that still need direct Roon access.</p>
+          <div class="chip-row"><span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">roon_zone</span></div>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
-          <ul class="stack-list"><li>Registration can continue after the initial request while the user authorizes Tater in Roon.</li><li>Roon zones participate in the same player chooser and preferred-room routing as other compatible integration media players.</li></ul>
+          <ul class="stack-list"><li>Registration can continue after the initial request while the user authorizes Tater in Roon.</li><li>Roon zones are not used as Music Core stream targets; Tater Tube handles the current music catalog and playback flow.</li><li>Keep Roon configured only when you need direct external zone control outside the Tater Tube Music Core path.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Declared fields</h2>
-          <ul class="stack-list"><li>Enable Roon</li><li>Core Host</li><li>Core API Port</li><li>Zone Names / Aliases</li><li>Request Timeout Seconds</li><li>Discovery Timeout Seconds</li></ul>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Actions</span>
-          <h2>Declared setup actions</h2>
-          <ul class="stack-list"><li>Discover Roon Core</li><li>Pair / Test Roon</li></ul>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Declared fields</h2>
+            <ul class="stack-list"><li>Enable Roon</li><li>Core Host</li><li>Core API Port</li><li>Zone Names / Aliases</li><li>Request Timeout Seconds</li><li>Discovery Timeout Seconds</li></ul>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Actions</span>
+            <h2>Declared setup actions</h2>
+            <ul class="stack-list"><li>Discover Roon Core</li><li>Pair / Test Roon</li></ul>
+          </article>
+        </div>
       </div>
     </section>
     <section class="section">

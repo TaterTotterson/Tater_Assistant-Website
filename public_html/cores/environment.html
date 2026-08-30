@@ -82,31 +82,29 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Environment telemetry</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Combines supported weather stations and enabled sensor integrations into one normalized environment snapshot.</li><li>Supplies current conditions and daily forecast cards to the Dashboard without making the page wait on every source.</li><li>Publishes display-friendly values for temperature, humidity, rain, wind, lightning, and other available readings.</li><li>Supports Ecowitt rain data, Ecobee remote sensors, and consistent Fahrenheit/Celsius conversion.</li><li>Keeps source labels attached so the WebUI and Tater screens can show where each value came from.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <p>This core declares a CORE_SETTINGS schema, but it does not currently require any explicit fields.</p>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <p>This core declares a CORE_SETTINGS schema, but it does not currently require any explicit fields.</p>
+          </article>
+        </div>
       </div>
     </section>
 

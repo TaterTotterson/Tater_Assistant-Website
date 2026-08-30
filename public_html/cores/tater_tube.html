@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Media intelligence</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Pairs with Tater Tube Server and reads recent viewing activity without turning the general assistant into a media-server client.</li><li>Can inject a bounded recent-viewing summary so Tater understands what the selected user has been watching.</li><li>Builds AI-selected movie and series recommendations and publishes them as Tater&#x27;s Picks.</li><li>Uses the user&#x27;s configured TTS path when a recommendation should be voiced.</li><li>Recurring sync and recommendation work publishes through the Core task contract so it appears in Settings -&gt; System Tasks.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Catalog Candidate Limit</strong>
               <span>number</span>
@@ -187,7 +184,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

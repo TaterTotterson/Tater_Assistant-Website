@@ -82,30 +82,27 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Home awareness engine</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Replaces the old HA automations bridge with an in-core awareness runtime.</li><li>Builds camera, doorbell, motion, and entry-sensor options from enabled integration device capabilities.</li><li>Existing rules that reference unavailable integrations report the missing integration/device until the provider is downloaded and enabled.</li><li>Stores newest-first events in Redis with source area context, timestamps, and metadata for later querying.</li><li>Camera and doorbell paths support snapshot + vision summaries, with optional notifications, display cards, and TTS routing.</li><li>Entry sensors log both open and closed events, with open-only notifications and optional open-only TTS.</li><li>The old Home Assistant-oriented brief system has moved out of Awareness Core; the Tater Dashboard now generates cached 12-hour awareness summaries from the Redis event timeline.</li><li>Snapshot notification paths can send recent camera images and descriptions to Tater S3Box displays through the display event API.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Camera Event Clip Length (sec)</strong>
               <span>number</span>
@@ -160,7 +157,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

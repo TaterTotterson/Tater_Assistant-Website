@@ -82,31 +82,29 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Automation engine</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Builds automations from the same integration categories, device actions, rooms, and aliases used throughout Tater.</li><li>Triggers include state changes, on/off and open/close transitions, motion, people, vehicles, animals, packages, faces, license plates, doorbells, text matches, connection changes, and numeric thresholds.</li><li>Actions can control devices or categories, send notifications, speak on satellites or announcement targets, and describe a camera image with Tater&#x27;s vision model.</li><li>Reusable message fields expose event context without requiring users to hand-write integration-specific payloads.</li><li>Cooldowns, enable/disable controls, manual test runs, last-run state, and execution history make each rule observable from the Core UI.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <p>This core declares a CORE_SETTINGS schema, but it does not currently require any explicit fields.</p>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>This runtime component mainly handles orchestration rather than exposing its own direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <p>This core declares a CORE_SETTINGS schema, but it does not currently require any explicit fields.</p>
+          </article>
+        </div>
       </div>
     </section>
 

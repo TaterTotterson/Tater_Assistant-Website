@@ -72,7 +72,7 @@
           <span class="chip">Voice endpoint</span>
           <span class="chip">v1.1.5</span>
           <span class="chip">3 settings</span>
-          <span class="chip">33 Verbas</span>
+          <span class="chip">31 Verbas</span>
         </div>
       </div>
       <aside class="panel hero-panel mascot-panel">
@@ -82,33 +82,30 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Portal role</span>
           <h2>What this portal is for</h2>
           <p>Voice endpoint</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Provides lightweight Siri and Apple Shortcuts routes mounted inside the main Tater app.</li><li>Designed for Shortcut-driven voice loops where Siri captures speech, posts JSON to Tater, then speaks the reply back aloud.</li><li>Maintains per-device conversation sessions instead of treating every request as stateless.</li><li>Supports optional API key protection so Shortcuts must send X-Tater-Token when enabled.</li><li>Uses the default Tater port, so no separate HomeKit service port is needed.</li><li>Good fit for Apple-first households that want voice access without a full chat client.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct portal support</h2>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct portal support</h2>
 
-        <p>33 current Verbas advertise direct support for this portal.</p>
+        <p>31 current Verbas advertise direct support for this portal.</p>
         <div class="chip-row"><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/camera_control.html">Camera Control</a><a class="chip-link" href="../plugins/device_control.html">Device Control</a><a class="chip-link" href="../plugins/entry_sensor_status.html">Door &amp; Window Sensor Status</a><a class="chip-link" href="../plugins/energy_status.html">Energy Status</a></div>
 
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <ul class="argument-list">
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <ul class="argument-list">
             <li>
               <strong>Require API Key</strong>
               <span>select</span>
@@ -136,7 +133,8 @@
 
             </li>
             </ul>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

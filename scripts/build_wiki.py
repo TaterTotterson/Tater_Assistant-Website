@@ -40,6 +40,7 @@ TATER_INTEGRATIONS_DIR = resolve_path(
 TATER_SHOP_MANIFEST = TATER_SHOP_DIR / "manifest.json"
 TATER_INTEGRATIONS_MANIFEST = TATER_INTEGRATIONS_DIR / "manifest.json"
 TATER_README = TATER_DIR / "README.md"
+LEGACY_MUSIC_PROVIDER_PLUGIN_IDS = {"music_assistant", "roon_music"}
 
 DEFAULT_INSTALL_README_NOTE = (
     "Tater currently recommends using gemma-4-26b-a4b (disable thinking), "
@@ -181,7 +182,7 @@ INTEGRATION_DOC_OVERRIDES = {
         "summary": "Imports Home Assistant devices, rooms, actions, media players, cameras, and sensors into Tater's shared integration catalog.",
         "notes": [
             "Home Assistant is now optional; Tater can boot and run without this module installed.",
-            "Device Control, the Devices browser, room organization, Automation Core, Music Core, and other consumers use the same normalized metadata instead of Home Assistant-specific tool paths.",
+            "Device Control, the Devices browser, room organization, Automation Core, Awareness Core, and other consumers use the same normalized metadata instead of Home Assistant-specific tool paths.",
             "The current integration refreshes category metadata for lights, switches, plugs, fans, locks, covers, climate, cameras, media players, and common sensor types.",
         ],
     },
@@ -242,11 +243,13 @@ INTEGRATION_DOC_OVERRIDES = {
     },
     "roon": {
         "category": "Audio",
-        "capabilities": ["speaker", "media_player", "audio_output", "music", "play_media"],
-        "summary": "Pairs with Roon, exposes zones as standard Tater media players, and supports browse-based playback from room-aware music requests.",
+        "capabilities": ["speaker", "media_player", "audio_output", "roon_zone"],
+        "description": "Roon Core pairing and zone transport control for installs that still need direct Roon access.",
+        "summary": "Pairs with Roon for external zone discovery and control, while Music Core uses Tater Tube as the current music library and playback source.",
         "notes": [
             "Registration can continue after the initial request while the user authorizes Tater in Roon.",
-            "Roon zones participate in the same player chooser and preferred-room routing as other compatible integration media players.",
+            "Roon zones are not used as Music Core stream targets; Tater Tube handles the current music catalog and playback flow.",
+            "Keep Roon configured only when you need direct external zone control outside the Tater Tube Music Core path.",
         ],
     },
     "shelly": {
@@ -1104,7 +1107,7 @@ PLATFORM_DOCS = {
                 "chips": ["Stereo", "Multi-room", "Ducking"],
                 "details": [
                     "Create a left/right pair under Voice -> Stereo Pairs. Music uses real channel routing, while speech stays centered across both members.",
-                    "Music Core and audio scenes can target individual satellites, stereo pairs, synchronized native groups, Sonos groups, generic media players, or mixed Sonos/native groups.",
+                    "Music Core streams Tater Tube audio to individual satellites, stereo pairs, synchronized native groups, Sonos groups, AirPlay devices, and supported media-player outputs.",
                     "Active music keeps its persistent session while TTS plays as a temporary overlay, ducks the group together, and restores the previous level afterward.",
                     "Offline members are skipped safely, incomplete stereo pairs do not start, and playhead telemetry keeps synchronized members aligned.",
                 ],
@@ -1365,7 +1368,7 @@ PLATFORM_DOCS = {
     },
     "music": {
         "label": "Music Core",
-        "description": "Tater Tube music library and live whole-home player with room-aware routing, recommendations, stereo pairs, Sonos, AirPlay, and synchronized native satellites.",
+        "description": "Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.",
         "role": "Music library + player",
         "source": TATER_SHOP_DIR / "cores" / "music_core.py",
         "plugin_surface": "",
@@ -1375,7 +1378,7 @@ PLATFORM_DOCS = {
             "Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.",
             "Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.",
             "An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.",
-            "Targets include native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, Home Assistant, and compatible integration media players.",
+            "Tater Tube is the music catalog and playback source; Music Core streams those tracks to native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, and supported media-player destinations.",
             "Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.",
             "Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.",
             "Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.",
@@ -1403,7 +1406,7 @@ PLATFORM_DOCS = {
                 "details": [
                     "If a request names a room, that room wins. Otherwise the speaking satellite's room is used when available.",
                     "A preferred player saved for the room is selected before global defaults, and Sonos is preferred when automatic selection finds several compatible players.",
-                    "The player-bar speaker button opens every available satellite, stereo pair, Sonos speaker/group, and standard integration media player with readable labels.",
+                    "The player-bar speaker button opens Tater Tube stream destinations with readable labels, including native satellites, stereo pairs, Sonos speakers/groups, AirPlay devices, and supported media-player outputs.",
                 ],
             },
             {
@@ -2019,6 +2022,9 @@ def build_plugins() -> list[dict[str, Any]]:
 
     rows: list[dict[str, Any]] = []
     for entry in manifest_entries:
+        plugin_id = str(entry.get("id") or "").strip()
+        if plugin_id in LEGACY_MUSIC_PROVIDER_PLUGIN_IDS:
+            continue
         relative_entry = str(entry.get("entry") or "").strip()
         source_path = (TATER_SHOP_DIR / relative_entry).resolve() if relative_entry else None
         if source_path and source_path.exists():
@@ -2096,12 +2102,12 @@ def build_integrations() -> list[dict[str, Any]]:
         ]
 
         capabilities = (
-            _string_list(entry.get("capabilities"))
+            _string_list(override.get("capabilities"))
+            or _string_list(entry.get("capabilities"))
             or _string_list(meta.get("capabilities"))
-            or _string_list(override.get("capabilities"))
         )
         category = str(override.get("category") or ("Web search" if "web_search" in capabilities else "Device")).strip()
-        description = str(entry.get("description") or meta.get("description") or "").strip()
+        description = str(override.get("description") or entry.get("description") or meta.get("description") or "").strip()
         summary = str(override.get("summary") or description).strip()
         rows.append(
             {
@@ -2996,7 +3002,7 @@ def render_home_page(
           and live system work together without turning the WebUI into a collection of separate apps.
         </p>
         <ul class="stack-list">
-          <li>Pair Music Core with Tater Tube Server, then browse your library and play it in a room, stereo pair, synchronized satellite group, Sonos zone, AirPlay destination, or compatible media player.</li>
+          <li>Pair Music Core with Tater Tube Server, then browse your Tater Tube library and play it in a room, stereo pair, synchronized satellite group, Sonos zone, AirPlay destination, or supported media-player output.</li>
           <li>Use the locally bundled Vue WebUI for the Dashboard, Chat, Music, Integrations, Verbas, Portals, Cores, Spudex, Voice, Settings, and live runtime state.</li>
           <li>Pair Tater Native satellites securely, run microWakeWord on-device, verify wakes with fast STT, and keep 30 days of voice statistics in Redis.</li>
           <li>Let cached System Tasks refresh devices, satellites, models, hardware, Dashboard briefs, recommendations, memory, security, feeds, and other Core work in the background.</li>
@@ -3160,7 +3166,6 @@ def render_home_page(
     featured_integration_slugs = {
         "homeassistant",
         "hue",
-        "roon",
         "shelly",
         "sonos",
         "unifi_network",
@@ -3346,7 +3351,7 @@ def render_home_page(
           <span class="chip">Stereo pairs</span>
           <span class="chip">Sonos</span>
           <span class="chip">AirPlay</span>
-          <span class="chip">Home Assistant</span>
+          <span class="chip">Tater Tube audio</span>
         </div>
         <div class="action-row">
           <a class="button" href="cores/music.html">Read Music Core</a>
@@ -4763,32 +4768,30 @@ def render_integration_detail(integration: dict[str, Any]) -> str:
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
           <p>{escape(integration['description'] or integration['summary'])}</p>
           <div class="chip-row">{capability_html}</div>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
           <ul class="stack-list">{notes_html}</ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Declared fields</h2>
-          <ul class="stack-list">{settings_html}</ul>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Actions</span>
-          <h2>Declared setup actions</h2>
-          <ul class="stack-list">{actions_html}</ul>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Declared fields</h2>
+            <ul class="stack-list">{settings_html}</ul>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Actions</span>
+            <h2>Declared setup actions</h2>
+            <ul class="stack-list">{actions_html}</ul>
+          </article>
+        </div>
       </div>
     </section>
     <section class="section">
@@ -4976,31 +4979,29 @@ def render_platform_detail(
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">{escape(role_eyebrow)}</span>
           <h2>{escape(role_title)}</h2>
           <p>{escape(role_text)}</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">{escape(highlights_eyebrow)}</span>
           <h2>{escape(highlights_title)}</h2>
           <ul class="stack-list">{highlight_html}</ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">{escape(plugin_eyebrow)}</span>
-          <h2>{escape(plugin_title)}</h2>
-          {plugin_block}
-        </article>
-        <article class="panel">
-          <span class="eyebrow">{escape(settings_eyebrow)}</span>
-          <h2>{escape(settings_title)}</h2>
-          {settings_block}
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">{escape(plugin_eyebrow)}</span>
+            <h2>{escape(plugin_title)}</h2>
+            {plugin_block}
+          </article>
+          <article class="panel">
+            <span class="eyebrow">{escape(settings_eyebrow)}</span>
+            <h2>{escape(settings_title)}</h2>
+            {settings_block}
+          </article>
+        </div>
       </div>
     </section>
     {webui_showcase}

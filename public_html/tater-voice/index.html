@@ -82,34 +82,32 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Why it matters</span>
           <h2>Voice that understands where it is</h2>
           <p>Every voice turn carries the speaking satellite, room, resolved Person, and trusted permissions into Tater. That same room context drives device control, music playback, follow-up listening, intercom, and reply routing.</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Current voice stack</span>
           <h2>Local wake detection, room context, and synchronized sound</h2>
           <ul class="stack-list"><li>Tater Voice is built into the main Tater runtime and uses secure Add Satellite pairing for supported Tater Native hardware.</li><li>Voice PE, Satellite1, ReSpeaker XVF3800, S3 Box, and compatible Tater Native devices keep their saved name, room, hardware family, firmware revision, and per-device settings.</li><li>Wake detection runs locally on each satellite with int8 microWakeWord models. Users can choose a built-in model, the shared Tater Wake Word Catalog, or a trainer-published custom JSON package.</li><li>Wake Word Trainer pairing uses a short-lived one-use code and a trainer-scoped credential; publishing a model cannot grant general Tater API access.</li><li>STT Wake Verification can run Disabled, Observe, or Enabled. Results fail open on timeout and now persist in Redis with a visible 30-day period and manual reset controls.</li><li>Room arbitration prevents two satellites in the same room from answering one wake while still allowing independent conversations in different rooms.</li><li>Stereo Pairs have their own Voice tab. Left and right members prebuffer one source, begin from a shared timestamp, preserve calibration, and remain one reusable playback destination.</li><li>Persistent native media sessions support music, synchronized multi-satellite scenes, TTS overlays, ducking, drift correction, and continued playback after a temporary reply.</li><li>Intercom can target a room, satellite, stereo pair, or broad group while using the same session state, playback routing, and TTS choices as normal voice replies.</li><li>The Firmware tab downloads signed prebuilt Tater Native images for OTA or Browser USB flashing; local compiling is no longer required.</li><li>Browser USB recovery can erase stale safe-mode state, flash the factory image, and keep USB logs visible through the restart.</li><li>S3 Box displays can show environment readings, voice and tool states, camera snapshots, doorbell notices, and targeted display cards.</li><li>Speaker ID can resolve an enrolled voice to a Person record, while optional Emotion ID adds bounded tone context without changing the trusted speaker boundary.</li><li>Reply playback can stay on the listening satellite, use a preferred room player, target another announcement device, or remain display-only.</li><li>Satellite inventory is cached and rebuilt on connect, disconnect, or settings changes with a periodic safety refresh, so the Voice UI opens quickly.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Voice-aware Verbas</span>
-          <h2>Actions can use the room and device that heard the request</h2>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Voice-aware Verbas</span>
+            <h2>Actions can use the room and device that heard the request</h2>
 
-        <p>36 current Verbas advertise direct support for this runtime.</p>
+        <p>34 current Verbas advertise direct support for this runtime.</p>
         <div class="chip-row"><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/camera_control.html">Camera Control</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/device_control.html">Device Control</a><a class="chip-link" href="../plugins/entry_sensor_status.html">Door &amp; Window Sensor Status</a></div>
 
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Operator controls</span>
-          <h2>Everything lives under Settings -&gt; Voice</h2>
-          <p>Tater Voice is configured through Settings -&gt; Voice, with separate Satellites, Firmware, Stereo Pairs, Stats, and Settings tabs. Each satellite owns its local microWakeWord profile, room, playback, brightness, and supported live controls, while shared STT/TTS and SpeechBrain choices live in Settings -&gt; Models. Prebuilt OTA and Browser USB firmware, secure trainer pairing, wake verification, intercom, persistent statistics, and live logs are managed from the same local UI.</p>
-        </article>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Operator controls</span>
+            <h2>Everything lives under Settings -&gt; Voice</h2>
+            <p>Tater Voice is configured through Settings -&gt; Voice, with separate Satellites, Firmware, Stereo Pairs, Stats, and Settings tabs. Each satellite owns its local microWakeWord profile, room, playback, brightness, and supported live controls, while shared STT/TTS and SpeechBrain choices live in Settings -&gt; Models. Prebuilt OTA and Browser USB firmware, secure trainer pairing, wake verification, intercom, persistent statistics, and live logs are managed from the same local UI.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -151,7 +149,7 @@
           <div class="chip-row"><span class="chip">Stereo</span><span class="chip">Multi-room</span><span class="chip">Ducking</span></div>
           <h3>Stereo pairs and multi-room playback</h3>
           <p>Two satellites can become one stereo destination, and larger groups can play in sync across rooms.</p>
-          <ul class="stack-list"><li>Create a left/right pair under Voice -&gt; Stereo Pairs. Music uses real channel routing, while speech stays centered across both members.</li><li>Music Core and audio scenes can target individual satellites, stereo pairs, synchronized native groups, Sonos groups, generic media players, or mixed Sonos/native groups.</li><li>Active music keeps its persistent session while TTS plays as a temporary overlay, ducks the group together, and restores the previous level afterward.</li><li>Offline members are skipped safely, incomplete stereo pairs do not start, and playhead telemetry keeps synchronized members aligned.</li></ul>
+          <ul class="stack-list"><li>Create a left/right pair under Voice -&gt; Stereo Pairs. Music uses real channel routing, while speech stays centered across both members.</li><li>Music Core streams Tater Tube audio to individual satellites, stereo pairs, synchronized native groups, Sonos groups, AirPlay devices, and supported media-player outputs.</li><li>Active music keeps its persistent session while TTS plays as a temporary overlay, ducks the group together, and restores the previous level afterward.</li><li>Offline members are skipped safely, incomplete stereo pairs do not start, and playhead telemetry keeps synchronized members aligned.</li></ul>
 
         </article>
 

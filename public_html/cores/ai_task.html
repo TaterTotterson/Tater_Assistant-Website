@@ -82,31 +82,29 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Core role</span>
           <h2>What this core is for</h2>
           <p>Scheduler</p>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
           <ul class="stack-list"><li>Executes recurring jobs without requiring an external scheduler around Tater.</li><li>Routes the prepared result directly through supported notifier portals without asking a second model to rewrite it.</li><li>Broadcast delivery can target everywhere, one native satellite, or a configured stereo pair.</li><li>Optional generated or uploaded background audio can loop beneath TTS with volume, ducking, attack, release, and finish-fade controls.</li><li>Persistent native audio scenes stop their background when the scheduled speech finishes and fall back clearly on older firmware.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Related Verbas</span>
-          <h2>Direct core support</h2>
-          <p>AI Task Runner is a scheduler core. It executes scheduled prompts and routes results through notifier portals rather than acting as a direct Verba target.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Configuration schema</h2>
-          <p>The scheduler declares a settings block, but it does not currently require explicit fields. Its behavior is driven by scheduled task data, targets, and notifier routing.</p>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Related Verbas</span>
+            <h2>Direct core support</h2>
+            <p>AI Task Runner is a scheduler core. It executes scheduled prompts and routes results through notifier portals rather than acting as a direct Verba target.</p>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Configuration schema</h2>
+            <p>The scheduler declares a settings block, but it does not currently require explicit fields. Its behavior is driven by scheduled task data, targets, and notifier routing.</p>
+          </article>
+        </div>
       </div>
     </section>
 

@@ -215,7 +215,7 @@
           <h3>UniFi Protect</h3>
           <p>Exposes UniFi Protect cameras, sensors, and direct speaker announcement targets.</p>
           <div class="chip-row platform-row">
-            <span class="chip">camera</span><span class="chip">video_clip</span><span class="chip">doorbell</span><span class="chip">motion</span><span class="chip">entry_sensor</span>
+            <span class="chip">camera</span><span class="chip">snapshot</span><span class="chip">motion</span><span class="chip">doorbell</span><span class="chip">entry_sensor</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="unifi_protect.html">Read integration page</a>
@@ -231,7 +231,7 @@
           <h3>Sonos</h3>
           <p>Discovers Sonos speakers for announcements, room-aware Music Core playback, synchronized temporary groups, and mixed Sonos/native scenes.</p>
           <div class="chip-row platform-row">
-            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span>
+            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">announcement_target</span><span class="chip">play_media</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="sonos.html">Read integration page</a>
@@ -245,9 +245,9 @@
             <span class="chip">Downloaded when enabled</span>
           </div>
           <h3>Roon</h3>
-          <p>Pairs with Roon, exposes zones as standard Tater media players, and supports browse-based playback from room-aware music requests.</p>
+          <p>Pairs with Roon for external zone discovery and control, while Music Core uses Tater Tube as the current music library and playback source.</p>
           <div class="chip-row platform-row">
-            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">music</span>
+            <span class="chip">speaker</span><span class="chip">media_player</span><span class="chip">audio_output</span><span class="chip">roon_zone</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="roon.html">Read integration page</a>
@@ -263,7 +263,7 @@
           <h3>Philips Hue</h3>
           <p>Pairs a Philips Hue Bridge and exposes lights, switches, and Hue resources through generic device capabilities.</p>
           <div class="chip-row platform-row">
-            <span class="chip">light</span><span class="chip">switch</span><span class="chip">sensor</span><span class="chip">entry_sensor</span><span class="chip">motion</span>
+            <span class="chip">light</span><span class="chip">switch</span><span class="chip">sensor</span><span class="chip">button</span><span class="chip">motion</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="hue.html">Read integration page</a>
@@ -279,7 +279,7 @@
           <h3>Ecobee (HomeKit)</h3>
           <p>Pairs Ecobee thermostats through HomeKit and exposes thermostats plus remote sensors.</p>
           <div class="chip-row platform-row">
-            <span class="chip">climate</span><span class="chip">temperature</span><span class="chip">humidity</span><span class="chip">motion</span><span class="chip">entry_sensor</span>
+            <span class="chip">thermostat</span><span class="chip">climate</span><span class="chip">hvac</span><span class="chip">temperature</span><span class="chip">humidity</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="homekit.html">Read integration page</a>
@@ -295,7 +295,7 @@
           <h3>Aladdin Connect</h3>
           <p>Exposes Genie/Aladdin garage doors as generic open/close devices.</p>
           <div class="chip-row platform-row">
-            <span class="chip">garage_door</span><span class="chip">cover</span><span class="chip">entry_sensor</span><span class="chip">battery</span>
+            <span class="chip">garage_door</span><span class="chip">garage</span><span class="chip">entry_sensor</span><span class="chip">open_close</span><span class="chip">door</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="aladdin.html">Read integration page</a>
@@ -311,7 +311,7 @@
           <h3>UniFi Network</h3>
           <p>Exposes UniFi Network clients and infrastructure devices for inventory and presence-aware flows.</p>
           <div class="chip-row platform-row">
-            <span class="chip">network_device</span>
+            <span class="chip">network_device</span><span class="chip">client</span><span class="chip">presence</span><span class="chip">connectivity</span>
           </div>
           <div class="plugin-links">
             <a class="button button-ghost" href="unifi_network.html">Read integration page</a>

@@ -80,32 +80,30 @@
       </aside>
     </section>
     <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
+      <div class="platform-detail-stack">
+        <article class="panel platform-detail-lead">
           <span class="eyebrow">Description</span>
           <h2>What it provides</h2>
           <p>UniFi Network API key for client and device inventory actions.</p>
-          <div class="chip-row"><span class="chip">network_device</span></div>
+          <div class="chip-row"><span class="chip">network_device</span><span class="chip">client</span><span class="chip">presence</span><span class="chip">connectivity</span></div>
         </article>
-        <article class="panel">
+        <article class="panel platform-detail-main">
           <span class="eyebrow">Behavior</span>
           <h2>Operational notes</h2>
           <ul class="stack-list"><li>Device and client inventory becomes available through generic integration device catalogs.</li><li>Presence-style workflows no longer need UniFi-specific code in every consumer.</li></ul>
         </article>
-      </div>
-    </section>
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Settings</span>
-          <h2>Declared fields</h2>
-          <ul class="stack-list"><li>Console Base URL</li><li>API Key</li></ul>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">Actions</span>
-          <h2>Declared setup actions</h2>
-          <ul class="stack-list"><li>Test UniFi Network</li></ul>
-        </article>
+        <div class="detail-grid platform-detail-support">
+          <article class="panel">
+            <span class="eyebrow">Settings</span>
+            <h2>Declared fields</h2>
+            <ul class="stack-list"><li>Console Base URL</li><li>API Key</li></ul>
+          </article>
+          <article class="panel">
+            <span class="eyebrow">Actions</span>
+            <h2>Declared setup actions</h2>
+            <ul class="stack-list"><li>Test UniFi Network</li></ul>
+          </article>
+        </div>
       </div>
     </section>
     <section class="section">
