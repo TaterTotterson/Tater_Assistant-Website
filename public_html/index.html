@@ -24,20 +24,41 @@
               </a>
               <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
               <nav class="site-nav" id="site-nav">
+
+                <div class="nav-primary">
+                  <a class="nav-link nav-link-primary" href="install/index.html">Install Tater</a>
+<a class="nav-link nav-link-primary" href="tater-voice/index.html">Tater Voice</a>
+<a class="nav-link nav-link-primary" href="usb-flasher/index.html">USB Flasher</a>
+                </div>
+                <div class="nav-groups">
+                              <section class="nav-group" aria-label="Start">
+              <span class="nav-group-label">Start</span>
+              <div class="nav-group-links">
                 <a class="nav-link is-active" href="index.html">Home</a>
-<a class="nav-link" href="install/index.html">Install</a>
-<a class="nav-link" href="cerberus/index.html">Hydra</a>
-<a class="nav-link" href="spudex/index.html">Spudex</a>
 <a class="nav-link" href="spud-hub/index.html">Spud Hub</a>
+<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </section>
+            <section class="nav-group" aria-label="Build">
+              <span class="nav-group-label">Build</span>
+              <div class="nav-group-links">
+                <a class="nav-link" href="cerberus/index.html">Hydra</a>
+<a class="nav-link" href="spudex/index.html">Spudex</a>
 <a class="nav-link" href="llms/index.html">LLMs</a>
 <a class="nav-link" href="api/index.html">API</a>
-<a class="nav-link" href="portals/index.html">Portals</a>
+              </div>
+            </section>
+            <section class="nav-group" aria-label="Connect">
+              <span class="nav-group-label">Connect</span>
+              <div class="nav-group-links">
+                <a class="nav-link" href="portals/index.html">Portals</a>
 <a class="nav-link" href="integrations/index.html">Integrations</a>
-<a class="nav-link" href="tater-voice/index.html">Tater Voice</a>
 <a class="nav-link" href="cores/index.html">Cores</a>
 <a class="nav-link" href="kernel-tools/index.html">Kernel Tools</a>
 <a class="nav-link" href="plugins/index.html">Verbas</a>
-<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </section>
+                </div>
               </nav>
             </header>
             <main class="page-main">
@@ -72,25 +93,30 @@
     </section>
 
 
-    <section class="release-card" aria-label="Latest Tater release and companion apps">
+    <section class="release-card" aria-label="Current Tater release, install paths, and companion apps">
       <aside class="release-visual" aria-hidden="true">
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
       <div class="release-copy">
-        <span class="eyebrow">Latest Tater release</span>
-        <h2>Tater v1.1.10 is ready for macOS.</h2>
+        <span class="eyebrow">Current Tater release</span>
+        <h2>Install Tater v1.1.14 your way.</h2>
         <p>
-          Download the native Tater server app with the menu bar icon, private runtime,
-          first-run setup, and automatic update checks.
+          Tater runs as the same assistant stack whether you use the native macOS app,
+          install from source, run Docker, or set it up through Home Assistant or Unraid.
         </p>
-        <p>Tater v1.1.10 fixes the complete voice-to-music handoff for stereo satellite pairs, including commands that start new music.</p>
+        <p>
+          The macOS download is the quick desktop route with a menu bar app,
+          private runtime, first-run setup, and automatic update checks. The install
+          guide covers every supported server path.
+        </p>
+        <p><strong>macOS package note:</strong> Tater macOS update v1.1.14.</p>
         <div class="chip-row">
-          <span class="chip">Release v1.1.10</span><span class="chip">Auto-updates</span>
+          <span class="chip">Release v1.1.14</span><span class="chip">Build 167</span><span class="chip">5 install paths</span>
         </div>
         <div class="action-row release-actions">
-          <a class="button" href="https://github.com/TaterTotterson/Tater/releases/download/v1.1.10/Tater-v1.1.10.dmg" target="_blank" rel="noreferrer">Download for macOS</a>
-          <a class="button button-ghost" href="install/index.html#server-install-paths">Other ways to install</a>
-          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater/releases/tag/v1.1.10" target="_blank" rel="noreferrer">Release notes</a>
+          <a class="button" href="https://github.com/TaterTotterson/Tater/releases/download/v1.1.14/Tater-v1.1.14.dmg" target="_blank" rel="noreferrer">Download macOS app</a>
+          <a class="button button-ghost" href="install/index.html#server-install-paths">Compare install paths</a>
+          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater/releases/tag/v1.1.14" target="_blank" rel="noreferrer">Release notes</a>
         </div>
         <div class="little-spud-attach">
           <div class="little-spud-copy">
@@ -114,7 +140,7 @@
             </a>
           </div>
         </div>
-        <small class="release-meta">Pulled from the current Tater release source.</small>
+        <small class="release-meta">Pulled from the current Tater release source • SHA 52ec9ec15f90.</small>
       </div>
     </section>
 
@@ -567,7 +593,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Lighting</span>
-            <span class="chip">v1.3.3</span>
+            <span class="chip">v1.3.4</span>
             <span class="chip">Optional</span>
           </div>
           <h3>Philips Hue</h3>
@@ -623,7 +649,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Automation engine</span>
-            <span class="chip">v1.5.0</span>
+            <span class="chip">v1.6.1</span>
             <span class="chip">No required fields</span>
           </div>
           <h3>Automation Core</h3>
@@ -636,7 +662,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Home awareness engine</span>
-            <span class="chip">v4.11.0</span>
+            <span class="chip">v4.12.1</span>
             <span class="chip">6 settings</span>
           </div>
           <h3>Awareness Core</h3>
@@ -649,7 +675,7 @@
         <article class="platform-card">
           <div class="chip-row">
             <span class="chip">Environment telemetry</span>
-            <span class="chip">v1.4.19</span>
+            <span class="chip">v1.4.20</span>
             <span class="chip">No required fields</span>
           </div>
           <h3>Environment Core</h3>

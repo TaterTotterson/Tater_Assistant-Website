@@ -128,6 +128,7 @@ code:not(pre code) {
 .brand-copy strong,
 .brand-copy small,
 .nav-link,
+.nav-group-label,
 .eyebrow,
 .button,
 .filter-chip,
@@ -150,20 +151,21 @@ code:not(pre code) {
 .site-nav {
   position: absolute;
   top: calc(100% + 0.45rem);
-  left: clamp(0.85rem, 2vw, 1.35rem);
   right: clamp(0.85rem, 2vw, 1.35rem);
+  left: auto;
   z-index: 6;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-  gap: 0.5rem;
+  width: min(760px, calc(100vw - 2rem));
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
   max-height: calc(100vh - 7.5rem);
   overflow-y: auto;
-  padding: 0.72rem;
+  padding: 0.78rem;
   border: 1px solid rgba(255, 106, 0, 0.24);
-  border-radius: 20px;
+  border-radius: 18px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
-    rgba(9, 10, 12, 0.82);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(9, 10, 12, 0.88);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
     0 22px 54px rgba(0, 0, 0, 0.36);
@@ -190,32 +192,88 @@ code:not(pre code) {
     visibility 0s;
 }
 
+.nav-primary,
+.nav-groups,
+.nav-group,
+.nav-group-links {
+  display: grid;
+  min-width: 0;
+}
+
+.nav-primary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255, 106, 0, 0.16);
+}
+
+.nav-groups {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.nav-group {
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.nav-group-label {
+  padding: 0 0.15rem;
+  color: rgba(255, 151, 66, 0.88);
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.nav-group-links {
+  gap: 0.36rem;
+}
+
 .nav-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
   max-width: 100%;
-  min-height: 42px;
-  padding: 0.72rem 1rem;
-  border-radius: 999px;
+  min-height: 36px;
+  padding: 0.56rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.028);
   color: var(--muted);
-  font-size: 0.78rem;
-  text-align: center;
+  font-size: 0.72rem;
+  text-align: left;
+  font-weight: 780;
   overflow-wrap: anywhere;
   word-break: break-word;
-  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .nav-link:hover,
 .nav-link.is-active {
+  border-color: rgba(255, 139, 45, 0.2);
   color: var(--text);
   background: rgba(255, 139, 45, 0.12);
   box-shadow: inset 0 0 0 1px rgba(255, 139, 45, 0.15);
 }
 
+.nav-link-primary {
+  justify-content: center;
+  min-height: 42px;
+  color: #fff7ee;
+  background:
+    linear-gradient(180deg, rgba(255, 151, 66, 0.18), rgba(255, 106, 0, 0.1)),
+    rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 139, 45, 0.26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.nav-link-primary:hover,
+.nav-link-primary.is-active {
+  color: #ffffff;
+  background: linear-gradient(180deg, rgba(255, 151, 66, 0.28), rgba(255, 106, 0, 0.16));
+}
+
 .nav-link-github {
-  margin-left: 0.2rem;
   color: #f7f9fb;
   background: linear-gradient(180deg, rgba(44, 49, 56, 0.96), rgba(27, 31, 35, 0.96));
   box-shadow:
@@ -1037,15 +1095,18 @@ body.modal-open {
     top: calc(100% + 0.35rem);
     left: 0.7rem;
     right: 0.7rem;
+    width: auto;
     padding: 0.62rem;
   }
 
-  .site-nav.is-open {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .nav-primary,
+  .nav-groups {
+    grid-template-columns: 1fr;
   }
 
   .site-nav .nav-link {
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
   }
 
   .hero-stats,
@@ -1972,19 +2033,18 @@ body::before {
 }
 
 .site-nav {
-  gap: 0.56rem;
+  gap: 0.7rem;
   padding: 0.8rem;
   border-color: rgba(255, 122, 24, 0.26);
   border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
-    rgba(11, 12, 14, 0.96);
+    rgba(11, 12, 14, 0.9);
 }
 
 .nav-link {
-  min-height: 44px;
-  border: 1px solid transparent;
-  border-radius: 12px;
+  min-height: 36px;
+  border-radius: 11px;
   font-weight: 780;
 }
 

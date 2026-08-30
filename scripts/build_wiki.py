@@ -2532,27 +2532,69 @@ def escape(text: Any) -> str:
 
 def page_template(*, title: str, description: str, body: str, depth: int, nav_key: str) -> str:
     base = prefix(depth)
-    nav_items = [
-        ("home", "Home", f"{base}index.html"),
-        ("install", "Install", f"{base}install/index.html"),
-        ("usb-flasher", "USB Flasher", f"{base}usb-flasher/index.html"),
-        ("cerberus", "Hydra", f"{base}cerberus/index.html"),
-        ("spudex", "Spudex", f"{base}spudex/index.html"),
-        ("spud-hub", "Spud Hub", f"{base}spud-hub/index.html"),
-        ("llms", "LLMs", f"{base}llms/index.html"),
-        ("api", "API", f"{base}api/index.html"),
-        ("portals", "Portals", f"{base}portals/index.html"),
-        ("integrations", "Integrations", f"{base}integrations/index.html"),
+
+    def nav_link(key: str, label: str, href: str, class_name: str = "nav-link", external: bool = False) -> str:
+        active_class = " is-active" if key == nav_key else ""
+        external_attrs = ' target="_blank" rel="noreferrer"' if external else ""
+        return f'<a class="{escape(class_name)}{active_class}" href="{escape(href)}"{external_attrs}>{escape(label)}</a>'
+
+    primary_nav = [
+        ("install", "Install Tater", f"{base}install/index.html"),
         ("esphome", "Tater Voice", f"{base}tater-voice/index.html"),
-        ("cores", "Cores", f"{base}cores/index.html"),
-        ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
-        ("plugins", "Verbas", f"{base}plugins/index.html"),
+        ("usb-flasher", "USB Flasher", f"{base}usb-flasher/index.html"),
     ]
-    nav_html = "\n".join(
-        f'<a class="nav-link{" is-active" if key == nav_key else ""}" href="{href}">{label}</a>'
-        for key, label, href in nav_items
+    nav_groups = [
+        (
+            "Start",
+            [
+                ("home", "Home", f"{base}index.html"),
+                ("spud-hub", "Spud Hub", f"{base}spud-hub/index.html"),
+                ("github", "GitHub", "https://github.com/TaterTotterson/Tater"),
+            ],
+        ),
+        (
+            "Build",
+            [
+                ("cerberus", "Hydra", f"{base}cerberus/index.html"),
+                ("spudex", "Spudex", f"{base}spudex/index.html"),
+                ("llms", "LLMs", f"{base}llms/index.html"),
+                ("api", "API", f"{base}api/index.html"),
+            ],
+        ),
+        (
+            "Connect",
+            [
+                ("portals", "Portals", f"{base}portals/index.html"),
+                ("integrations", "Integrations", f"{base}integrations/index.html"),
+                ("cores", "Cores", f"{base}cores/index.html"),
+                ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
+                ("plugins", "Verbas", f"{base}plugins/index.html"),
+            ],
+        ),
+    ]
+    primary_html = "\n".join(
+        nav_link(key, label, href, "nav-link nav-link-primary")
+        for key, label, href in primary_nav
     )
-    nav_html += "\n" + '<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>'
+    group_html = "\n".join(
+        textwrap.dedent(
+            f"""\
+            <section class="nav-group" aria-label="{escape(group_label)}">
+              <span class="nav-group-label">{escape(group_label)}</span>
+              <div class="nav-group-links">
+                {chr(10).join(nav_link(key, label, href, "nav-link nav-link-github" if key == "github" else "nav-link", key == "github") for key, label, href in links)}
+              </div>
+            </section>"""
+        )
+        for group_label, links in nav_groups
+    )
+    nav_html = f"""
+                <div class="nav-primary">
+                  {primary_html}
+                </div>
+                <div class="nav-groups">
+                  {group_html}
+                </div>"""
     return textwrap.dedent(
         f"""\
         <!DOCTYPE html>
@@ -2705,6 +2747,7 @@ def render_macos_release_card() -> str:
     build = release.get("build") or ""
     dmg_size = release.get("dmg_size") or ""
     notes = release.get("notes") or f"Tater macOS release {version_label}."
+    note_label = "macOS package note" if "macos" in notes.lower() else "Release note"
     sha_short = release.get("sha256", "")[:12]
     release_chips = "".join(
         chip(item)
@@ -2712,31 +2755,36 @@ def render_macos_release_card() -> str:
             f"Release {version_label}",
             f"Build {build}" if build else "",
             dmg_size,
-            "Auto-updates",
+            "5 install paths",
         ]
         if item
     )
     release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
 
     return f"""
-    <section class="release-card" aria-label="Latest Tater release and companion apps">
+    <section class="release-card" aria-label="Current Tater release, install paths, and companion apps">
       <aside class="release-visual" aria-hidden="true">
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
       <div class="release-copy">
-        <span class="eyebrow">Latest Tater release</span>
-        <h2>Tater {escape(version_label)} is ready for macOS.</h2>
+        <span class="eyebrow">Current Tater release</span>
+        <h2>Install Tater {escape(version_label)} your way.</h2>
         <p>
-          Download the native Tater server app with the menu bar icon, private runtime,
-          first-run setup, and automatic update checks.
+          Tater runs as the same assistant stack whether you use the native macOS app,
+          install from source, run Docker, or set it up through Home Assistant or Unraid.
         </p>
-        <p>{escape(notes)}</p>
+        <p>
+          The macOS download is the quick desktop route with a menu bar app,
+          private runtime, first-run setup, and automatic update checks. The install
+          guide covers every supported server path.
+        </p>
+        <p><strong>{escape(note_label)}:</strong> {escape(notes)}</p>
         <div class="chip-row">
           {release_chips}
         </div>
         <div class="action-row release-actions">
-          <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download for macOS</a>
-          <a class="button button-ghost" href="install/index.html#server-install-paths">Other ways to install</a>
+          <a class="button" href="{escape(release['dmg_url'])}" target="_blank" rel="noreferrer">Download macOS app</a>
+          <a class="button button-ghost" href="install/index.html#server-install-paths">Compare install paths</a>
           <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">Release notes</a>
         </div>
         <div class="little-spud-attach">
