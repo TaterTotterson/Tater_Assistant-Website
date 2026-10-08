@@ -2644,7 +2644,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
           <title>{escape(title)}</title>
           <link rel="icon" href="{base}assets/images/tater-logo-primary.png">
           <link rel="stylesheet" href="{base}assets/site.css">
-          <script src="{base}assets/site.js" defer></script>
+          <script src="{base}assets/site.js?v=20261008" defer></script>
         </head>
         <body data-page="{escape(nav_key)}">
           <div class="page-shell">
@@ -2653,7 +2653,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
                 <img class="brand-wordmark" src="{base}assets/images/tater-logo-primary.png" alt="Tater Assistant">
                 <span class="brand-pill">Docs</span>
               </a>
-              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Explore</span><i aria-hidden="true"></i></button>
               <nav class="site-nav" id="site-nav">
                 {nav_html}
               </nav>
