@@ -2781,44 +2781,62 @@ def render_macos_release_card() -> str:
     if not release:
         return ""
     version_label = release["version_label"]
+    dmg_url = release["dmg_url"]
     release_chips = "".join(
         chip(item)
-        for item in ["Sendspin v1", "Native + Echo", "Stereo + multi-room"]
+        for item in [
+            f"Tater {version_label}",
+            f"Echo {CURRENT_ECHO_RELEASE}",
+            f"Native {CURRENT_NATIVE_RELEASE}",
+            f"{len(INSTALL_METHODS)} install paths",
+        ]
     )
     release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
 
     return f"""
-    <section class="release-card" aria-label="Whole-home audio with current Tater software">
+    <section class="release-card" id="current-release" aria-label="Current Tater release and Little Spud companion apps">
       <aside class="release-visual" aria-hidden="true">
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
       <div class="release-copy">
-        <span class="eyebrow">Whole-home sound</span>
-        <h2>Music moves through the house. Tater knows when to speak.</h2>
+        <span class="eyebrow">Current Tater release</span>
+        <h2>Tater {escape(version_label)} is ready for your home.</h2>
         <p>
-          Choose one speaker, a stereo pair, or the whole house. Sendspin keeps supported native and
-          Echo satellites together while Tater handles voice replies, announcements, and timers without
-          losing the music or its place.
+          Run Tater as a native Apple Silicon app, with Docker, through Home Assistant or Unraid,
+          or directly from source. Every path gives you the same private assistant runtime and WebUI.
         </p>
-        <p class="release-summary">Capable Echo screens and LEDs can follow the same track with artwork, progress, color, and motion.</p>
+        <p class="release-summary">This release brings Sendspin v1 playback, richer Echo now-playing presentation, and native satellite output calibration alongside room-aware voice, devices, memory, and automations.</p>
         <div class="chip-row">
           {release_chips}
         </div>
-        <div class="release-version-strip" aria-label="Current software versions">
-          <a href="{escape(release_url)}" target="_blank" rel="noreferrer"><small>Tater</small><strong>{escape(version_label)}</strong></a>
-          <a href="https://github.com/TaterTotterson/Tater-Echo-Firmware/releases/tag/{CURRENT_ECHO_RELEASE}" target="_blank" rel="noreferrer"><small>Echo firmware</small><strong>{CURRENT_ECHO_RELEASE}</strong></a>
-          <a href="https://github.com/TaterTotterson/Tater-Native-Firmware/releases/tag/native-{CURRENT_NATIVE_RELEASE}" target="_blank" rel="noreferrer"><small>Native firmware</small><strong>{CURRENT_NATIVE_RELEASE}</strong></a>
-        </div>
         <div class="action-row release-actions">
-          <a class="button" href="cores/music.html">Explore Music Core</a>
-          <a class="button button-ghost" href="tater-voice/index.html">Meet Tater Voice</a>
-          <a class="button button-ghost" href="install/index.html">Install Tater</a>
+          <a class="button" href="{escape(dmg_url)}" target="_blank" rel="noreferrer">Download Tater {escape(version_label)}</a>
+          <a class="button button-ghost" href="install/index.html#server-install-paths">Compare install paths</a>
+          <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">View release</a>
         </div>
-        <p class="companion-note"><strong>Little Spud</strong> keeps Tater in your pocket on
-          <a href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer">iPhone and iPad</a>
-          or <a href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer">Android</a>.
-        </p>
-        <small class="release-meta">Current software is shown above for operators who want the details.</small>
+        <div class="little-spud-attach">
+          <div class="little-spud-copy">
+            <span class="little-spud-title">Little Spud</span>
+            <span class="little-spud-kicker">iPhone + iPad + Android companion</span>
+            <p>Pair by QR code, chat with your private Tater, control Home and Music Core, use voice and TTS, and open notification snapshots or video clips.</p>
+            <div class="chip-row">
+              {chip("iOS + Android")}
+              {chip("Chat + voice")}
+              {chip("Home + Music")}
+            </div>
+          </div>
+          <div class="little-spud-store-links" aria-label="Download Little Spud">
+            <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
+              <span class="store-badge-platform" aria-hidden="true">iOS</span>
+              <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
+              <span class="store-badge-platform" aria-hidden="true">Play</span>
+              <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
+            </a>
+          </div>
+        </div>
+        <small class="release-meta">Downloads are published directly through the official Tater GitHub release.</small>
       </div>
     </section>
     """
