@@ -3,11 +3,11 @@
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
+          <meta name="description" content="Tater Tube music library and live whole-home player with room-aware Sendspin playback across native and Echo satellites, stereo pairs, Sonos, and AirPlay.">
           <meta name="theme-color" content="#151515">
           <meta property="og:type" content="website">
           <meta property="og:title" content="Tater Assistant | Music Core">
-          <meta property="og:description" content="Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.">
+          <meta property="og:description" content="Tater Tube music library and live whole-home player with room-aware Sendspin playback across native and Echo satellites, stereo pairs, Sonos, and AirPlay.">
           <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
           <meta name="twitter:card" content="summary_large_image">
           <title>Tater Assistant | Music Core</title>
@@ -67,7 +67,7 @@
       <div class="hero-copy">
         <span class="eyebrow">Core profile</span>
         <h1>Music Core</h1>
-        <p>Tater Tube music library and live whole-home player with room-aware routing to stereo pairs, Sonos, AirPlay, and synchronized native satellites.</p>
+        <p>Tater Tube music library and live whole-home player with room-aware Sendspin playback across native and Echo satellites, stereo pairs, Sonos, and AirPlay.</p>
         <div class="chip-row">
           <span class="chip">Music library + player</span>
           <span class="chip">v3.4.6</span>
@@ -91,7 +91,7 @@
         <article class="panel platform-detail-main">
           <span class="eyebrow">Highlights</span>
           <h2>Behavior in the current codebase</h2>
-          <ul class="stack-list"><li>Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Tater Tube is the music catalog and playback source; Music Core streams those tracks to native satellites, stereo pairs, synchronized multi-satellite scenes, Sonos, AirPlay, and supported media-player destinations.</li><li>Mixed Sonos/native groups use shared start timing plus an adjustable offset, while protected Tater Tube streams stay private and reachable on the LAN.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker; no selection means no prompt injection.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li><li>Catalog sync, recommendations, prompt-profile generation, and continuous-radio refill appear in Settings -&gt; System Tasks with next-run state and Run Now controls.</li></ul>
+          <ul class="stack-list"><li>Pairs securely with Tater Tube Server using a Player PIN, then keeps its artists, albums, genres, tracks, and artwork available in Tater.</li><li>Browses Search, Genres, Artists, Albums, and AI-named Tater Recommendations in a responsive local Vue interface with provider artwork.</li><li>Keeps a persistent player visible with play, stop, previous, next, synchronized volume, speaker selection, shuffle, and a collapsible current track list.</li><li>Playback changes update live without loading screens, page refresh flicker, lost scroll position, or discarded in-progress settings.</li><li>An explicitly named room overrides the speaking satellite; otherwise Music Core can use the voice room, saved preferred room player, defaults, and Sonos-first automatic selection.</li><li>Tater Tube is the catalog and source; Music Core sends tracks through Sendspin v1 to supported native and Echo satellites, stereo pairs, and synchronized multi-room groups.</li><li>Grouped Music Core playback and AirPlay input share one Sendspin timeline with clean replacement, buffering, resampling, cancellation, completion, and restart behavior.</li><li>Capable Echo satellites receive track details, artwork, colors, progress, loudness, peaks, beat events, and spectrum data for now-playing screens and music-reactive LEDs.</li><li>Mixed Echo/native groups keep measured hardware compensation plus persistent per-satellite delay calibration, while protected Tater Tube streams stay private on the LAN.</li><li>Sonos and supported external media-player destinations remain available alongside the Sendspin satellite path.</li><li>Listening history feeds AI-named recommendation playlists and a compact selected-Person profile with favorite genres, artists, and recent tracks.</li><li>Music context is injected only when a Person is selected and that Person is the current trusted speaker.</li><li>Continuous radio can extend a queue near its final tracks so a broad voice request keeps playing without stacking unrelated manual album queues.</li></ul>
         </article>
         <div class="detail-grid platform-detail-support">
           <article class="panel">
@@ -287,10 +287,10 @@
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Stereo pair</span><span class="chip">Native sync</span><span class="chip">Mixed groups</span></div>
+          <div class="chip-row"><span class="chip">Sendspin v1</span><span class="chip">Stereo pair</span><span class="chip">Mixed groups</span></div>
           <h3>Stereo and multi-room scenes</h3>
-          <p>One request can play through a calibrated stereo pair or a larger synchronized group.</p>
-          <ul class="stack-list"><li>Native members prebuffer the same media and start from a shared clock; stereo pairs retain left/right routing, level, and delay calibration.</li><li>Sonos groups can be formed temporarily, then restored without permanently disturbing the listener&#x27;s queue or prior grouping.</li><li>Music remains a persistent session while voice replies play as ducked overlays and restore the original music level afterward.</li></ul>
+          <p>One Sendspin timeline can play through a calibrated stereo pair or a mixed native-and-Echo group.</p>
+          <ul class="stack-list"><li>Native and Echo members follow the same synchronized media timeline; stereo pairs retain left/right routing, level, and delay calibration.</li><li>Persistent per-satellite output delay tightens alignment in mixed groups without discarding each board&#x27;s measured hardware compensation.</li><li>Sonos groups can be formed temporarily, then restored without permanently disturbing the listener&#x27;s queue or prior grouping.</li><li>Voice replies, announcements, timers, and TTS take priority locally, then release the player cleanly back to Sendspin at the intended music level.</li></ul>
 
         </article>
 
