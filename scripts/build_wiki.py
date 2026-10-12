@@ -2572,6 +2572,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
 
     primary_nav = [
         ("install", "Install Tater", f"{base}install/index.html"),
+        ("satellites", "Satellites", f"{base}satellites/index.html"),
         ("esphome", "Tater Voice", f"{base}tater-voice/index.html"),
         ("usb-flasher", "USB Flasher", f"{base}usb-flasher/index.html"),
     ]
@@ -2643,7 +2644,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
           <meta name="twitter:card" content="summary_large_image">
           <title>{escape(title)}</title>
           <link rel="icon" href="{base}assets/images/tater-logo-primary.png">
-          <link rel="stylesheet" href="{base}assets/site.css">
+          <link rel="stylesheet" href="{base}assets/site.css?v=20261012">
           <script src="{base}assets/site.js?v=20261008" defer></script>
         </head>
         <body data-page="{escape(nav_key)}">
@@ -2794,7 +2795,7 @@ def render_macos_release_card() -> str:
     release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
 
     return f"""
-    <section class="release-card" id="current-release" aria-label="Current Tater release and Little Spud companion apps">
+    <section class="release-card" id="current-release" aria-label="Current Tater release, supported satellites, and Little Spud companion apps">
       <aside class="release-visual" aria-hidden="true">
         <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
       </aside>
@@ -2813,6 +2814,26 @@ def render_macos_release_card() -> str:
           <a class="button" href="{escape(dmg_url)}" target="_blank" rel="noreferrer">Download Tater {escape(version_label)}</a>
           <a class="button button-ghost" href="install/index.html#server-install-paths">Compare install paths</a>
           <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">View release</a>
+        </div>
+        <div class="satellite-release-attach">
+          <div class="satellite-release-copy">
+            <span class="little-spud-title">Tater Satellites</span>
+            <span class="little-spud-kicker">Nine supported devices · three firmware families</span>
+            <p>Bring room-aware voice, local wake words, timers, synchronized Sendspin playback, and over-the-air updates to native ESP32-S3 hardware, exact unlocked Echo generations, or the ThirdReality S420.</p>
+            <div class="chip-row">
+              {chip("4 native boards")}
+              {chip("4 Echo models")}
+              {chip("ThirdReality S420")}
+            </div>
+          </div>
+          <div class="satellite-release-action">
+            <div class="satellite-release-thumbs" aria-hidden="true">
+              <img src="assets/images/satellites/voice-pe.webp" alt="">
+              <img src="assets/images/satellites/tater-echo-firmware.webp" alt="">
+              <img src="assets/images/satellites/thirdreality-s420.webp" alt="">
+            </div>
+            <a class="button" href="satellites/index.html">See supported satellites</a>
+          </div>
         </div>
         <div class="little-spud-attach">
           <div class="little-spud-copy">
@@ -3116,7 +3137,7 @@ def render_home_page(
       <article class="directory-lane">
         <span class="directory-number">02</span>
         <div><h3>Voice and music</h3><p>Pair satellites, update firmware, build stereo groups, and route Music Core around the house.</p></div>
-        <div class="directory-actions">{button("Tater Voice", "tater-voice/index.html", ghost=True)}{button("Music Core", "cores/music.html", ghost=True)}</div>
+        <div class="directory-actions">{button("Satellites", "satellites/index.html", ghost=True)}{button("Tater Voice", "tater-voice/index.html", ghost=True)}{button("Music Core", "cores/music.html", ghost=True)}</div>
       </article>
       <article class="directory-lane">
         <span class="directory-number">03</span>
@@ -3275,6 +3296,226 @@ def render_home_page(
         body=body,
         depth=0,
         nav_key="home",
+    )
+
+
+def render_satellites_page() -> str:
+    native_devices = [
+        {
+            "name": "Home Assistant Voice Preview Edition",
+            "target": "voicepe",
+            "image": "voice-pe.webp",
+            "alt": "Top view of the Home Assistant Voice Preview Edition",
+            "summary": "Compact voice hardware with an XMOS audio front end, dual microphones, an LED ring, a volume dial, and a physical microphone-mute switch.",
+            "chips": ["16 MB", "Hardware AEC", "3.5 mm output"],
+        },
+        {
+            "name": "Satellite1 / Sat1",
+            "target": "satellite1",
+            "image": "satellite1.webp",
+            "alt": "Satellite1 voice assistant with its illuminated top ring",
+            "summary": "Supported from Public Batch #1 Beta.1/rev4.1 onward, with a four-microphone XMOS front end, 24-pixel ring, volume controls, and internal or AUX output.",
+            "chips": ["16 MB", "4 microphones", "AUX + internal"],
+        },
+        {
+            "name": "ReSpeaker XVF3800",
+            "target": "respeaker_xvf3800",
+            "image": "respeaker-xvf3800.webp",
+            "alt": "Seeed Studio ReSpeaker XVF3800 circular microphone board",
+            "summary": "A four-microphone XMOS platform with direction-of-arrival telemetry, hardware mute, a 12-pixel ring, and a dedicated 8 MB Tater firmware layout.",
+            "chips": ["8 MB", "4 microphones", "XMOS DoA"],
+        },
+        {
+            "name": "ESP32-S3-BOX-3 Display",
+            "target": "s3_box",
+            "image": "esp32-s3-box-3.webp",
+            "alt": "ESP32-S3-BOX-3 mounted in its blue desktop dock",
+            "summary": "A 320 × 240 display satellite for voice, clock and status cards, timers, volume and mute state, OTA progress, and Tater-provided display feeds.",
+            "chips": ["16 MB", "320 × 240 display", "Dual microphones"],
+        },
+    ]
+    native_html = "".join(
+        f"""
+        <article class="satellite-device-card">
+          <div class="satellite-device-media">
+            <img src="../assets/images/satellites/{escape(device['image'])}" alt="{escape(device['alt'])}" loading="lazy" decoding="async">
+          </div>
+          <div class="satellite-device-copy">
+            <span class="satellite-target">{escape(device['target'])}</span>
+            <h3>{escape(device['name'])}</h3>
+            <p>{escape(device['summary'])}</p>
+            <div class="chip-row">{"".join(chip(item) for item in device["chips"])}</div>
+          </div>
+        </article>
+        """
+        for device in native_devices
+    )
+
+    echo_devices = [
+        ("Echo Dot 2nd Generation (2016)", "biscuit", "Tater emOS"),
+        ("Echo 2nd Generation (2017)", "radar", "Tater emOS"),
+        ("Echo Show 5 1st Generation (2019)", "checkers", "Tater Linux"),
+        ("Echo Spot 1st Generation (2017)", "rook", "Tater Linux"),
+    ]
+    echo_html = "".join(
+        f"""
+        <article class="satellite-compat-row">
+          <div>
+            <span class="satellite-target">{escape(target)}</span>
+            <h3>{escape(name)}</h3>
+          </div>
+          <div class="satellite-compat-meta">
+            <span>{escape(system)}</span>
+            <span>Factory + OTA</span>
+          </div>
+        </article>
+        """
+        for name, target, system in echo_devices
+    )
+
+    body = f"""
+    <section class="hero hero-subpage satellite-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Tater Satellites</span>
+        <h1>Give every room ears, a voice, and a beat.</h1>
+        <p>
+          Tater turns supported voice hardware into room-aware satellites for natural conversation,
+          local wake detection, timers, announcements, and synchronized whole-home music.
+        </p>
+        <div class="action-row">
+          <a class="button" href="#supported-hardware">See supported hardware</a>
+          <a class="button button-ghost" href="../usb-flasher/index.html">Flash native hardware</a>
+          <a class="button button-ghost" href="../tater-voice/index.html">Open Tater Voice docs</a>
+        </div>
+      </div>
+      <aside class="satellite-hero-art" aria-label="Examples of supported Tater satellite hardware">
+        <figure class="satellite-hero-tile satellite-hero-tile-native">
+          <img src="../assets/images/satellites/voice-pe.webp" alt="Home Assistant Voice Preview Edition">
+          <figcaption>Native ESP32-S3</figcaption>
+        </figure>
+        <figure class="satellite-hero-tile satellite-hero-tile-echo">
+          <img src="../assets/images/satellites/tater-echo-firmware.webp" alt="Tater Echo firmware artwork featuring an Echo Dot 2">
+          <figcaption>Unlocked Echo</figcaption>
+        </figure>
+        <figure class="satellite-hero-tile satellite-hero-tile-s420">
+          <img src="../assets/images/satellites/thirdreality-s420.webp" alt="ThirdReality Voice and Music Assistant S420">
+          <figcaption>ThirdReality S420</figcaption>
+        </figure>
+      </aside>
+      <div class="hero-stats satellite-stats" aria-label="Satellite support summary">
+        <div class="stat-card"><strong>9</strong><span>supported devices</span></div>
+        <div class="stat-card"><strong>3</strong><span>firmware families</span></div>
+        <div class="stat-card"><strong>Local</strong><span>wake detection</span></div>
+        <div class="stat-card"><strong>Sendspin</strong><span>multi-room audio</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="supported-hardware">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">Supported hardware</span>
+        <h2>Pick the shape that fits the room.</h2>
+        <p>Support is tied to the exact boards and generations below. Similar-looking hardware may use different chips, flash layouts, or recovery paths.</p>
+      </div>
+
+      <article class="satellite-family satellite-family-native">
+        <div class="satellite-family-head">
+          <div>
+            <span class="eyebrow">Family 01 · Tater Native</span>
+            <h2>Purpose-built ESP32-S3 satellites.</h2>
+            <p>Official native firmware connects directly to Tater—no YAML and no per-device firmware editing. Tater owns pairing, settings, wake words, diagnostics, and OTA updates.</p>
+          </div>
+          <img class="satellite-family-logo" src="../assets/images/satellites/tater-native-firmware.webp" alt="Tater Native Firmware">
+        </div>
+        <div class="satellite-device-grid">
+          {native_html}
+        </div>
+        <div class="action-row satellite-family-actions">
+          <a class="button" href="../usb-flasher/index.html">Open browser USB flasher</a>
+          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater-Native-Firmware" target="_blank" rel="noreferrer">Native firmware repo</a>
+        </div>
+      </article>
+
+      <article class="satellite-family satellite-family-echo">
+        <div class="satellite-family-head satellite-family-head-echo">
+          <div>
+            <span class="eyebrow">Family 02 · Tater Echo</span>
+            <h2>Give exact unlocked Echo models a private second life.</h2>
+            <p>Tater replaces the voice application on supported hardware with native wake detection, audio processing, displays or LEDs, controls, Bluetooth features, Sendspin, and verified OTA updates.</p>
+            <div class="compat-warning"><strong>Exact models only.</strong> Each device must complete the documented amonet unlock for its codename before installing Tater firmware.</div>
+          </div>
+          <img class="satellite-family-logo satellite-family-logo-echo" src="../assets/images/satellites/tater-echo-firmware.webp" alt="Tater robot presenting an Echo Dot 2 for Tater Echo Firmware">
+        </div>
+        <div class="satellite-compat-list">
+          {echo_html}
+        </div>
+        <div class="action-row satellite-family-actions">
+          <a class="button" href="https://github.com/TaterTotterson/Tater-Echo-Firmware#supported-devices" target="_blank" rel="noreferrer">Check unlock + install guides</a>
+          <a class="button button-ghost" href="https://github.com/TaterTotterson/Tater-Echo-Firmware" target="_blank" rel="noreferrer">Echo firmware repo</a>
+        </div>
+      </article>
+
+      <article class="satellite-family satellite-family-s420">
+        <div class="satellite-s420-media">
+          <img src="../assets/images/satellites/thirdreality-s420.webp" alt="ThirdReality Voice and Music Assistant S420" loading="lazy" decoding="async">
+        </div>
+        <div class="satellite-s420-copy">
+          <span class="eyebrow">Family 03 · ThirdReality</span>
+          <span class="satellite-target">s420</span>
+          <h2>ThirdReality Voice &amp; Music Assistant.</h2>
+          <p>The Amlogic A113X/S420 model runs Tater Linux Voice with local wake detection, playback-reference AEC, room pairing, hardware controls, passive BLE presence, Sendspin, audio scenes, and signed OTA.</p>
+          <div class="chip-row">
+            {chip("Amlogic S420")}
+            {chip("256 MB RAM")}
+            {chip("512 MB NAND")}
+            {chip("Sendspin")}
+          </div>
+          <p class="satellite-install-note"><strong>First install:</strong> the ThirdReality debug board is required for factory flashing or recovery. Routine updates preserve pairing and settings over OTA; browser USB flashing is not supported for this model.</p>
+          <div class="action-row">
+            <a class="button" href="https://github.com/TaterTotterson/Tater-ThirdReality-Voice-Firmware" target="_blank" rel="noreferrer">ThirdReality firmware repo</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">One Tater experience</span>
+        <h2>Different hardware. The same room-aware layer.</h2>
+        <p>Capabilities vary by board, but every supported family is designed around the same native Tater pairing, voice, playback, and update flow.</p>
+      </div>
+      <div class="grid capability-grid satellite-capability-grid">
+        <article class="feature-card"><span class="card-index">01</span><h3>Local wake words</h3><p>Wake detection stays on the satellite, with built-in and custom models managed centrally from Tater.</p></article>
+        <article class="feature-card"><span class="card-index">02</span><h3>Room context</h3><p>The device supplies its room and identity so lights, cameras, speakers, and follow-up listening land in the right place.</p></article>
+        <article class="feature-card"><span class="card-index">03</span><h3>Sendspin playback</h3><p>Build synchronized multi-room groups and stereo pairs, then let Tater speech step in and return the speaker cleanly.</p></article>
+        <article class="feature-card"><span class="card-index">04</span><h3>Timers + intercom</h3><p>Run local timers, announcements, push-to-talk or intercom hooks, and continued conversations from room hardware.</p></article>
+        <article class="feature-card"><span class="card-index">05</span><h3>Managed updates</h3><p>Install official builds, inspect firmware state, and deliver routine OTA updates from Tater after the first setup.</p></article>
+        <article class="feature-card"><span class="card-index">06</span><h3>Presence signals</h3><p>Supported radios can observe nearby BLE advertisements for room-level presence, sensors, and automations.</p></article>
+      </div>
+    </section>
+
+    <section class="section satellite-setup">
+      <div class="section-head section-head-wide">
+        <span class="eyebrow">From hardware to room</span>
+        <h2>Flash once. Pair from the setup network. Manage it in Tater.</h2>
+      </div>
+      <div class="satellite-setup-steps">
+        <article><span>01</span><h3>Install the exact build</h3><p>Use Tater's browser flasher for supported ESP32-S3 boards, or follow the device-specific factory guide for Echo and ThirdReality hardware.</p></article>
+        <article><span>02</span><h3>Join Tater Setup</h3><p>On first boot, connect to <code>Tater-Setup-XXXX</code> and enter Wi-Fi, your Tater URL, device name, room, and pairing code.</p></article>
+        <article><span>03</span><h3>Tune it centrally</h3><p>Use Tater Voice to manage wake words, sensitivity, volume, LEDs or displays, stereo pairs, diagnostics, and future OTA updates.</p></article>
+      </div>
+      <div class="action-row satellite-setup-actions">
+        <a class="button" href="../usb-flasher/index.html">Flash an ESP32-S3 satellite</a>
+        <a class="button button-ghost" href="../tater-voice/index.html">Read Tater Voice setup</a>
+      </div>
+      <p class="satellite-image-credit">Hardware names and product imagery belong to their respective owners and are shown only to identify compatibility. Sources: <a href="https://www.home-assistant.io/voice-pe/" target="_blank" rel="noreferrer">Home Assistant</a>, <a href="https://futureproofhomes.net/products/satellite1-pcb-dev-kit" target="_blank" rel="noreferrer">FutureProofHomes</a>, <a href="https://www.seeedstudio.com/ReSpeaker-XVF3800-4-Mic-Array-With-XIAO-ESP32S3-p-6489.html" target="_blank" rel="noreferrer">Seeed Studio</a>, <a href="https://docs.espressif.com/projects/esp-board-manager/en/latest/references/boards/esp32_s3_box_3.html" target="_blank" rel="noreferrer">Espressif</a>, and the official Tater firmware repositories.</p>
+    </section>
+    """
+    return page_template(
+        title="Tater | Satellites",
+        description="Supported Tater voice satellites: native ESP32-S3 devices, exact unlocked Amazon Echo generations, and the ThirdReality S420.",
+        body=body,
+        depth=1,
+        nav_key="satellites",
     )
 
 
@@ -5537,6 +5778,7 @@ def build() -> None:
 
     write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores, integrations))
     write_page(SITE_ROOT / "install" / "index.html", render_install_index())
+    write_page(SITE_ROOT / "satellites" / "index.html", render_satellites_page())
     write_page(SITE_ROOT / "usb-flasher" / "index.html", render_usb_flasher_page())
     write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))
     write_page(SITE_ROOT / "integrations" / "index.html", render_integrations_page(integrations))
@@ -5576,6 +5818,7 @@ def build() -> None:
     write_page(SITE_ROOT / "plugins" / "index.html", render_plugins_page(plugins))
 
     cleanup_section_pages(SITE_ROOT / "install", [method["slug"] for method in INSTALL_METHODS])
+    cleanup_section_pages(SITE_ROOT / "satellites", [])
     cleanup_section_pages(SITE_ROOT / "usb-flasher", [])
     cleanup_section_pages(SITE_ROOT / "portals", [platform["slug"] for platform in portals])
     cleanup_section_pages(SITE_ROOT / "integrations", [integration["slug"] for integration in integrations])

@@ -318,6 +318,7 @@ def missing_outputs(root: Path) -> bool:
         root / "integrations" / "index.html",
         root / "kernel-tools" / "index.html",
         root / "cerberus" / "index.html",
+        root / "satellites" / "index.html",
         root / "usb-flasher" / "index.html",
         root / "firmware" / "latest" / "catalog.json",
     ]

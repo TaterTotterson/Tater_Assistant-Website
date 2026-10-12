@@ -33,6 +33,16 @@ class UsbFlasherSiteTests(unittest.TestCase):
         self.assertNotIn("data-usb-flash-size", source)
         self.assertIn('src="../assets/usb-flasher.js"', source)
 
+    def test_generator_builds_satellite_compatibility_page(self) -> None:
+        source = GENERATOR.read_text(encoding="utf-8")
+
+        self.assertIn('("satellites", "Satellites"', source)
+        self.assertIn("def render_satellites_page()", source)
+        self.assertIn('SITE_ROOT / "satellites" / "index.html"', source)
+        self.assertIn("Home Assistant Voice Preview Edition", source)
+        self.assertIn("Echo Dot 2nd Generation (2016)", source)
+        self.assertIn("ThirdReality Voice &amp; Music Assistant", source)
+
     def test_browser_flasher_loads_verified_latest_firmware_and_uses_safe_offsets(self) -> None:
         source = FLASHER.read_text(encoding="utf-8")
 
