@@ -136,3 +136,9 @@ For the Linux-specific sync notes, see `docs/auto-sync-linux.md`.
 - Keep `public_html/assets` in place. The generator writes HTML pages, but the site assets live there.
 - Generated HTML should be treated as build output.
 - The source of truth for plugin inventory is `Tater_Shop`.
+
+## License and trademarks
+
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE).
+
+The Tater name and logo are governed by the [Tater Trademark Policy](TRADEMARKS.md).\n
