@@ -94,6 +94,8 @@ body[data-page="home"] .page-main { display: block; }
 .values-strip { position: relative; display: flex; align-items: center; justify-content: space-evenly; gap: 2rem; padding: 1.1rem 0; margin: 0 calc((1160px - 100vw) / 2); background: var(--accent); color: #332315; transform: rotate(-1.7deg); }
 .values-strip p { color: inherit; font-size: 1.05rem; font-weight: 1000; white-space: nowrap; }
 .values-strip span { font-size: 1.8rem; line-height: 1; }
+.values-strip > span { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.values-strip > span .ui-icon { width: 28px; height: 28px; stroke-width: 1.9; }
 .meet-section { display: grid; grid-template-columns: .95fr 1.05fr; gap: 4rem; align-items: center; padding: 122px 0 64px; }
 .meet-section h2 { font-size: clamp(2.2rem, 3.8vw, 3.5rem); }
 .tater-demo { min-width: 0; border: 1px solid #45413d; background: #242527; border-radius: 24px; box-shadow: 8px 8px 0 #0f101144; transform: rotate(1deg); overflow: hidden; }
@@ -312,6 +314,7 @@ body[data-page="install"] .setup-picker { margin-top: 0; }
   .values-strip p { font-size: .875rem; }
   .values-strip p:nth-of-type(3), .values-strip span:last-child { display: none; }
   .values-strip span { font-size: 1.5rem; }
+  .values-strip > span .ui-icon { width: 22px; height: 22px; }
   .meet-section { grid-template-columns: 1fr; padding-top: 82px; gap: 2rem; }
   .meet-section h2 { font-size: 2.6rem; }
   .tater-demo { transform: none; }

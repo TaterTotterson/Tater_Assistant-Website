@@ -58,7 +58,7 @@ def render_home_body(release: dict[str, str]) -> str:
         <div class="hello-sticker">Oh, hey there!<span>Your new favorite spud.</span></div>
       </div>
     </section>
-    <div class="values-strip"><p>A little more local.</p><span aria-hidden="true">✳</span><p>A lot more personal.</p><span aria-hidden="true">✳</span><p>Entirely your Tater.</p><span aria-hidden="true">✳</span></div>
+    <div class="values-strip"><p>A little more local.</p><span aria-hidden="true">{icon('chat')}</span><p>A lot more personal.</p><span aria-hidden="true">{icon('chat')}</span><p>Entirely your Tater.</p><span aria-hidden="true">{icon('chat')}</span></div>
     <section class="meet-section" id="meet-tater" aria-labelledby="meet-title">
       <div class="section-intro"><span class="eyebrow">Less tapping. More asking.</span><h2 id="meet-title">Life's better with<br>a helpful little spud.</h2><p>One assistant for the everyday things.<br>Make it as simple or as clever as you like.</p></div>
       <div class="tater-demo" data-tabs>
