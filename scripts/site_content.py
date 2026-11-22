@@ -85,7 +85,7 @@ def render_home_body(release: dict[str, str]) -> str:
       <details><summary>Does it work with my smart home?</summary><p>Tater supports optional integrations including Home Assistant, Philips Hue, and other services. Check the <a href="integrations/index.html">integration directory</a> for your devices.</p></details>
       <details><summary>Where are the technical docs?</summary><p>Right here. The <a href="docs/index.html">Tater docs</a> cover setup, voice, integrations, skills, and the pieces under the hood.</p></details>
     </div></section>
-    <section class="community-band"><span class="community-flower" aria-hidden="true">✳</span><div><span class="eyebrow">Good things grow together</span><h2>Help this little spud grow.</h2><p>Have an idea, found a bug, or built something fun? Come say hello.</p></div><a class="button button-outline" href="https://github.com/TaterTotterson/Tater">{icon('github')}Find Tater on GitHub</a></section>
+    <section class="community-band"><span class="community-icon" aria-hidden="true">{icon('chat')}</span><div><span class="eyebrow">Good things grow together</span><h2>Help this little spud grow.</h2><p>Have an idea, found a bug, or built something fun? Come say hello.</p></div><a class="button button-outline" href="https://github.com/TaterTotterson/Tater">{icon('github')}Find Tater on GitHub</a></section>
     '''
 
 

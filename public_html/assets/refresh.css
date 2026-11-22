@@ -168,7 +168,8 @@ body[data-page="home"] .page-main { display: block; }
 .faq-list details > p { padding: 0 1.5rem 1.4rem 0; }
 .faq-list a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .community-band { display: flex; align-items: center; gap: 2rem; padding: 2rem 0 4rem; }
-.community-flower { font-size: 6rem; color: var(--accent); line-height: 1; }
+.community-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 80px; width: 80px; height: 80px; color: var(--accent); }
+.community-icon .ui-icon { width: 100%; height: 100%; stroke-width: 1.4; }
 .community-band h2 { font-size: 2rem; margin: .5rem 0; }
 .community-band .button { flex: 0 0 auto; margin-left: auto; }
 
@@ -284,7 +285,7 @@ body[data-page="install"] .setup-picker { margin-top: 0; }
   .satellite-display { width: 280px; }
   .faq-section { gap: 2rem; }
   .community-band { flex-wrap: wrap; }
-  .community-band .button { margin-left: 8rem; }
+  .community-band .button { margin-left: 7rem; }
   .guide-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 760px) {
@@ -343,7 +344,7 @@ body[data-page="install"] .setup-picker { margin-top: 0; }
   .faq-section { grid-template-columns: 1fr; padding-top: 72px; gap: 2rem; }
   .faq-section img { display: none; }
   .community-band { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 0 0 1rem; }
-  .community-flower { font-size: 4rem; }
+  .community-icon { flex-basis: 64px; width: 64px; height: 64px; }
   .community-band h2 { font-size: 1.8rem; }
   .community-band .button { margin: 0; justify-self: start; }
   .page-footer { margin-top: 3rem; padding-top: 2.5rem; }
