@@ -1,194 +1,115 @@
 (() => {
-  const navToggle = document.querySelector(".nav-toggle");
-  const siteNav = document.querySelector(".site-nav");
+  const navToggle = document.querySelector('.nav-toggle');
+  const siteNav = document.querySelector('.site-nav');
+  const closeNav = (restoreFocus = false) => {
+    siteNav?.classList.remove('is-open');
+    navToggle?.setAttribute('aria-expanded', 'false');
+    if (restoreFocus) navToggle?.focus();
+  };
+  navToggle?.addEventListener('click', () => {
+    const open = siteNav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  siteNav?.addEventListener('click', (event) => {
+    if (event.target.closest('a')) closeNav();
+  });
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.site-header')) closeNav();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && siteNav?.classList.contains('is-open')) closeNav(true);
+  });
+  window.matchMedia('(min-width: 761px)').addEventListener('change', () => closeNav());
 
-  if (navToggle && siteNav) {
-    const closeNav = ({ restoreFocus = false } = {}) => {
-      siteNav.classList.remove("is-open");
-      navToggle.setAttribute("aria-expanded", "false");
-      if (restoreFocus) {
-        navToggle.focus();
+  // Panels stay readable without JavaScript. Enhance each independent tab group.
+  document.querySelectorAll('[data-tabs]').forEach((group) => {
+    const tabs = Array.from(group.querySelectorAll('[role="tab"]'));
+    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
+    const select = (index, focus = false) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+        panels[i].hidden = i !== index;
+      });
+      if (focus) {
+        tabs[index].focus();
+        tabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
     };
-
-    navToggle.addEventListener("click", () => {
-      const isOpen = siteNav.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", String(isOpen));
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        select(index);
+      });
+      tab.addEventListener('keydown', (event) => {
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else if (event.key === ' ' || event.key === 'Enter') next = index;
+        else return;
+        event.preventDefault();
+        select(next, true);
+      });
     });
-
-    siteNav.addEventListener("click", (event) => {
-      if (event.target.closest("a")) {
-        closeNav();
-      }
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!siteNav.classList.contains("is-open") || event.target.closest(".site-header")) {
-        return;
-      }
-      closeNav();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && siteNav.classList.contains("is-open")) {
-        closeNav({ restoreFocus: true });
-      }
-    });
-  }
-
-  const contactEmail = "tater@tatertottersonai.com";
-  const contactOpenButtons = Array.from(document.querySelectorAll("[data-contact-open]"));
-  let contactModal = null;
-  let contactForm = null;
-
-  if (contactOpenButtons.length) {
-    contactModal = document.createElement("div");
-    contactModal.className = "contact-modal";
-    contactModal.hidden = true;
-    contactModal.setAttribute("data-contact-modal", "");
-    contactModal.setAttribute("role", "dialog");
-    contactModal.setAttribute("aria-modal", "true");
-    contactModal.setAttribute("aria-labelledby", "contact-title");
-    contactModal.innerHTML = `
-      <button class="contact-backdrop" type="button" data-contact-close aria-label="Close contact form"></button>
-      <section class="contact-dialog" role="document">
-        <div class="contact-dialog-header">
-          <span class="eyebrow">Contact Tater</span>
-          <button class="contact-close" type="button" data-contact-close aria-label="Close contact form">Close</button>
-        </div>
-        <h2 id="contact-title">Tell us what you are building.</h2>
-        <p>Questions, install notes, app feedback, integration ideas, and weird edge cases can all go to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>
-        <form class="contact-form" data-contact-form>
-          <label>
-            <span>Name</span>
-            <input name="name" autocomplete="name">
-          </label>
-          <label>
-            <span>Email</span>
-            <input name="email" type="email" autocomplete="email">
-          </label>
-          <label>
-            <span>Subject</span>
-            <input name="subject" autocomplete="off">
-          </label>
-          <label>
-            <span>Message</span>
-            <textarea name="message" rows="5" required></textarea>
-          </label>
-          <div class="action-row">
-            <button class="button" type="submit">Open email</button>
-            <a class="button button-ghost" href="mailto:${contactEmail}">Email directly</a>
-          </div>
-        </form>
-      </section>
-    `;
-    document.body.appendChild(contactModal);
-    contactForm = contactModal.querySelector("[data-contact-form]");
-  }
-
-  const contactCloseButtons = Array.from(contactModal?.querySelectorAll("[data-contact-close]") || []);
-
-  const closeContact = () => {
-    if (!contactModal) {
-      return;
-    }
-    contactModal.hidden = true;
-    document.body.classList.remove("modal-open");
-  };
-
-  const openContact = (event) => {
-    if (!contactModal) {
-      return;
-    }
-    event?.preventDefault();
-    contactModal.removeAttribute("hidden");
-    document.body.classList.add("modal-open");
-    const firstField = contactModal.querySelector(".contact-form input, .contact-form textarea, .contact-close");
-    firstField?.focus();
-  };
-
-  contactOpenButtons.forEach((button) => {
-    button.addEventListener("click", openContact);
+    const selectedFromHash = panels.findIndex((panel) => `#${panel.id}` === window.location.hash);
+    select(selectedFromHash >= 0 ? selectedFromHash : 0);
+    group.classList.add('tabs-ready');
   });
 
-  contactCloseButtons.forEach((button) => {
-    button.addEventListener("click", closeContact);
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && contactModal && !contactModal.hidden) {
-      closeContact();
-    }
-  });
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const formData = new FormData(contactForm);
-      const name = String(formData.get("name") || "").trim();
-      const email = String(formData.get("email") || "").trim();
-      const subject = String(formData.get("subject") || "Tater Assistant contact").trim();
-      const message = String(formData.get("message") || "").trim();
-      const body = [
-        name ? `Name: ${name}` : "",
-        email ? `Email: ${email}` : "",
-        "",
-        message,
-      ].filter((line, index) => line || index === 2).join("\n");
-
-      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const guideSearch = document.querySelector('[data-guide-search]');
+  const guideGroups = Array.from(document.querySelectorAll('[data-guide-group]'));
+  const guideCount = document.querySelector('[data-guide-count]');
+  const guideEmpty = document.querySelector('[data-guide-empty]');
+  guideSearch?.addEventListener('input', () => {
+    const words = guideSearch.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let total = 0;
+    guideGroups.forEach((group) => {
+      let visible = 0;
+      group.querySelectorAll('[data-guide]').forEach((guide) => {
+        const text = `${guide.textContent} ${guide.dataset.guideKeywords || ''}`.toLowerCase();
+        guide.hidden = !words.every((word) => text.includes(word));
+        if (!guide.hidden) visible++;
+      });
+      group.hidden = visible === 0;
+      total += visible;
     });
-  }
+    guideCount.textContent = `${total} ${total === 1 ? 'guide' : 'guides'}${words.length ? ' found.' : ' to help you get growing.'}`;
+    guideEmpty.hidden = total !== 0;
+  });
 
-  const searchInput = document.querySelector("[data-plugin-search]");
-  const filterButtons = Array.from(document.querySelectorAll("[data-platform-filter]"));
-  const pluginCards = Array.from(document.querySelectorAll("[data-plugin-card]"));
-  const emptyState = document.querySelector("[data-plugin-empty]");
-  const resultsCount = document.querySelector("[data-results-count]");
-
-  if (!pluginCards.length) {
-    return;
-  }
-
-  let activePlatform = "all";
-
+  // Preserve the technical directories' search and platform filters.
+  const searchInput = document.querySelector('[data-plugin-search]');
+  const filterButtons = Array.from(document.querySelectorAll('[data-platform-filter]'));
+  const cards = Array.from(document.querySelectorAll('[data-plugin-card]'));
+  const emptyState = document.querySelector('[data-plugin-empty]');
+  const resultsCount = document.querySelector('[data-results-count]');
+  let activePlatform = 'all';
   const applyFilters = () => {
-    const query = String(searchInput?.value || "").trim().toLowerCase();
+    const query = String(searchInput?.value || '').trim().toLowerCase();
     let visibleCount = 0;
-
-    pluginCards.forEach((card) => {
-      const name = card.getAttribute("data-name") || "";
-      const description = card.getAttribute("data-description") || "";
-      const platforms = (card.getAttribute("data-platforms") || "").split(/\s+/).filter(Boolean);
-      const matchesQuery = !query || name.includes(query) || description.includes(query);
-      const matchesPlatform = activePlatform === "all" || platforms.includes(activePlatform);
-      const visible = matchesQuery && matchesPlatform;
-
+    cards.forEach((card) => {
+      const text = `${card.dataset.name || ''} ${card.dataset.description || ''}`.toLowerCase();
+      const platforms = (card.dataset.platforms || '').split(/\s+/);
+      const visible = (!query || text.includes(query)) && (activePlatform === 'all' || platforms.includes(activePlatform));
       card.hidden = !visible;
-      if (visible) {
-        visibleCount += 1;
-      }
+      if (visible) visibleCount++;
     });
-
-    if (resultsCount) {
-      resultsCount.textContent = String(visibleCount);
-    }
-    if (emptyState) {
-      emptyState.hidden = visibleCount !== 0;
-    }
+    if (resultsCount) resultsCount.textContent = String(visibleCount);
+    if (emptyState) emptyState.hidden = visibleCount !== 0;
   };
-
   filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      activePlatform = button.getAttribute("data-platform-filter") || "all";
-      filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+    button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
+    button.addEventListener('click', () => {
+      activePlatform = button.dataset.platformFilter || 'all';
+      filterButtons.forEach((item) => {
+        item.classList.toggle('is-active', item === button);
+        item.setAttribute('aria-pressed', String(item === button));
+      });
       applyFilters();
     });
   });
-
-  if (searchInput) {
-    searchInput.addEventListener("input", applyFilters);
-  }
-
-  applyFilters();
+  searchInput?.addEventListener('input', applyFilters);
+  if (cards.length) applyFilters();
 })();

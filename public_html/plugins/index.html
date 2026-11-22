@@ -1,1386 +1,1513 @@
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
-          <meta name="theme-color" content="#151515">
-          <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | Verbas">
-          <meta property="og:description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
-          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
-          <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | Verbas</title>
-          <link rel="icon" href="../assets/images/tater-logo-primary.png">
-          <link rel="stylesheet" href="../assets/site.css?v=20261012">
-          <script src="../assets/site.js?v=20261008" defer></script>
-        </head>
-        <body data-page="plugins">
-          <div class="page-shell">
-            <header class="site-header">
-              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
-                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
-                <span class="brand-pill">Docs</span>
-              </a>
-              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Explore</span><i aria-hidden="true"></i></button>
-              <nav class="site-nav" id="site-nav">
-
-                <div class="nav-primary">
-                  <a class="nav-link nav-link-primary" href="../install/index.html">Install Tater</a>
-<a class="nav-link nav-link-primary" href="../satellites/index.html">Satellites</a>
-<a class="nav-link nav-link-primary" href="../tater-voice/index.html">Tater Voice</a>
-<a class="nav-link nav-link-primary" href="../usb-flasher/index.html">USB Flasher</a>
-                </div>
-                <div class="nav-groups">
-                              <section class="nav-group" aria-label="Start">
-              <span class="nav-group-label">Start</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../index.html">Home</a>
-<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
-<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Build">
-              <span class="nav-group-label">Build</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../cerberus/index.html">Hydra</a>
-<a class="nav-link" href="../spudex/index.html">Spudex</a>
-<a class="nav-link" href="../llms/index.html">LLMs</a>
-<a class="nav-link" href="../api/index.html">API</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Connect">
-              <span class="nav-group-label">Connect</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../portals/index.html">Portals</a>
-<a class="nav-link" href="../integrations/index.html">Integrations</a>
-<a class="nav-link" href="../cores/index.html">Cores</a>
-<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
-<a class="nav-link is-active" href="../plugins/index.html">Verbas</a>
-              </div>
-            </section>
-                </div>
-              </nav>
-            </header>
-            <main class="page-main">
-
-    <section class="hero hero-subpage">
-      <div class="hero-copy">
-        <span class="eyebrow">Verba reference</span>
-        <h1>Actions speak louder then words. 61 Verbas are documented here.</h1>
-        <p>
-          This index reflects the current Tater Shop manifest and Verba files. Each entry links to a source-backed detail page with usage, portals, and current behavior.
-        </p>
-      </div>
-      <aside class="panel hero-panel mascot-panel">
-        <span class="eyebrow">Filter the list</span>
-        <div class="plugins-toolbar">
-          <input class="search-input" type="search" placeholder="Search Verbas" data-plugin-search>
-          <div class="chip-row filter-row">
-            <button class="filter-chip is-active" type="button" data-platform-filter="all">All</button>
-            <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
-            <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
-            <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
-          </div>
-          <p class="results-copy"><span data-results-count>61</span> Verbas shown</p>
-        </div>
-      </aside>
-    </section>
-    <section class="section">
-      <div class="plugin-grid" data-plugin-grid>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="automatic1111 image"
-      data-description="create one image from a natural-language image request."
-      data-platforms="discord webui little_spud macos telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.2.2</span>
-          <span class="chip">automatic_plugin</span>
-        </div>
-        <h3>Automatic1111 Image</h3>
-        <p>Create one image from a natural-language image request.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="automatic_plugin.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="battery status"
-      data-description="read battery status from hue, ecobee/homekit, aladdin, unifi protect, home assistant, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">battery_status</span>
-        </div>
-        <h3>Battery Status</h3>
-        <p>Read battery status from Hue, Ecobee/HomeKit, Aladdin, UniFi Protect, Home Assistant, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="battery_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="broadcast"
-      data-description="send a one-time spoken announcement to all satellites or one specified room."
-      data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.3.0</span>
-          <span class="chip">broadcast</span>
-        </div>
-        <h3>Broadcast</h3>
-        <p>Send a one-time spoken announcement to all satellites or one specified room.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="broadcast.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="camera control"
-      data-description="use for requests about cameras, doorbells, snapshots, camera images, or current visible activity in a named camera-covered area, including questions like &#x27;what&#x27;s happening in the front yard?&#x27;, &#x27;who is at the door?&#x27;, or &#x27;is anyone on the porch?&#x27;"
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">camera_control</span>
-        </div>
-        <h3>Camera Control</h3>
-        <p>Use for requests about cameras, doorbells, snapshots, camera images, or current visible activity in a named camera-covered area, including questions like &#x27;what&#x27;s happening in the front yard?&#x27;, &#x27;who is at the door?&#x27;, or &#x27;is anyone on the porch?&#x27;</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="camera_control.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui animate image"
-      data-description="animate the most recent image in chat into a looping webp or mp4 via comfyui."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">comfyui_image_video</span>
-        </div>
-        <h3>ComfyUI Animate Image</h3>
-        <p>Animate the most recent image in chat into a looping WebP or MP4 via ComfyUI.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_image_video.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui audio ace"
-      data-description="compose a music track from a prompt with comfyui audio ace."
-      data-platforms="discord webui little_spud macos voice_core matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.27</span>
-          <span class="chip">comfyui_audio_ace</span>
-        </div>
-        <h3>ComfyUI Audio Ace</h3>
-        <p>Compose a music track from a prompt with ComfyUI Audio Ace.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_audio_ace.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui image"
-      data-description="generate a still image from a text prompt using your comfyui workflow."
-      data-platforms="discord webui little_spud macos matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.7</span>
-          <span class="chip">comfyui_image_plugin</span>
-        </div>
-        <h3>ComfyUI Image</h3>
-        <p>Generate a still image from a text prompt using your ComfyUI workflow.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_image_plugin.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui image edit"
-      data-description="edit or transform the latest/referenced image in chat with comfyui image-to-image."
-      data-platforms="discord webui little_spud macos matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.2</span>
-          <span class="chip">comfyui_image_edit</span>
-        </div>
-        <h3>ComfyUI Image Edit</h3>
-        <p>Edit or transform the latest/referenced image in chat with ComfyUI image-to-image.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_image_edit.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui lofi video"
-      data-description="create a cozy comfyui lofi video by generating music and looping a matching animation."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.7</span>
-          <span class="chip">lowfi_video</span>
-        </div>
-        <h3>ComfyUI Lofi Video</h3>
-        <p>Create a cozy ComfyUI lofi video by generating music and looping a matching animation.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="lowfi_video.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui music video"
-      data-description="build a full ai music video—lyrics, music, and animated visuals—using comfyui."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.7</span>
-          <span class="chip">comfyui_music_video</span>
-        </div>
-        <h3>ComfyUI Music Video</h3>
-        <p>Build a full AI music video—lyrics, music, and animated visuals—using ComfyUI.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_music_video.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="comfyui video"
-      data-description="create a short video from a text prompt by stitching comfyui-generated clips."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">comfyui_video_plugin</span>
-        </div>
-        <h3>ComfyUI Video</h3>
-        <p>Create a short video from a text prompt by stitching ComfyUI-generated clips.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="comfyui_video_plugin.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="device compare"
-      data-description="natural-language device comparison with spec tables and optional per-game fps benchmarks."
-      data-platforms="discord webui little_spud macos matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.4</span>
-          <span class="chip">device_compare</span>
-        </div>
-        <h3>Device Compare</h3>
-        <p>Natural-language device comparison with spec tables and optional per-game FPS benchmarks.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="device_compare.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="device control"
-      data-description="use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, and scripts. use camera control for cameras and snapshots."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.4</span>
-          <span class="chip">device_control</span>
-        </div>
-        <h3>Device Control</h3>
-        <p>Use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, and scripts. Use Camera Control for cameras and snapshots.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="device_control.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="discord admin response mode"
-      data-description="toggle always-respond mode for the current discord channel only."
-      data-platforms="discord"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.1</span>
-          <span class="chip">discord_admin_response_mode</span>
-        </div>
-        <h3>Discord Admin Response Mode</h3>
-        <p>Toggle always-respond mode for the current Discord channel only.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="discord_admin_response_mode.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="discord admin roles"
-      data-description="discord role listing and role assignment commands."
-      data-platforms="discord"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">discord_admin_roles</span>
-        </div>
-        <h3>Discord Admin Roles</h3>
-        <p>Discord role listing and role assignment commands.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="discord_admin_roles.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="discord admin setup"
-      data-description="discord server setup and structural admin changes."
-      data-platforms="discord"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">discord_admin_setup</span>
-        </div>
-        <h3>Discord Admin Setup</h3>
-        <p>Discord server setup and structural admin changes.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="discord_admin_setup.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="door &amp; window sensor status"
-      data-description="read entry sensor status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">entry_sensor_status</span>
-        </div>
-        <h3>Door &amp; Window Sensor Status</h3>
-        <p>Read entry sensor status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="entry_sensor_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="energy status"
-      data-description="read energy and power data from shelly, home assistant, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">energy_status</span>
-        </div>
-        <h3>Energy Status</h3>
-        <p>Read energy and power data from Shelly, Home Assistant, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="energy_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="find my phone"
-      data-description="ping or ring your phone through home assistant so you can locate it."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.11</span>
-          <span class="chip">find_my_phone</span>
-        </div>
-        <h3>Find My Phone</h3>
-        <p>Ping or ring your phone through Home Assistant so you can locate it.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="find_my_phone.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="ftp browser"
-      data-description="browse and download files from the configured ftp server."
-      data-platforms="discord"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.1</span>
-          <span class="chip">ftp_browser</span>
-        </div>
-        <h3>FTP Browser</h3>
-        <p>Browse and download files from the configured FTP server.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ftp_browser.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="home assistant camera area"
-      data-description="find cameras in a home assistant area and describe what they see."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.8</span>
-          <span class="chip">ha_camera_area</span>
-        </div>
-        <h3>Home Assistant Camera Area</h3>
-        <p>Find cameras in a Home Assistant area and describe what they see.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="ha_camera_area.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="humidity status"
-      data-description="read humidity from ecobee/homekit, home assistant, hue, shelly, unifi protect, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">humidity_status</span>
-        </div>
-        <h3>Humidity Status</h3>
-        <p>Read humidity from Ecobee/HomeKit, Home Assistant, Hue, Shelly, UniFi Protect, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="humidity_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="irc admin op"
-      data-description="gives the user op or voice in the current irc channel."
-      data-platforms="irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.3.2</span>
-          <span class="chip">irc_admin_op</span>
-        </div>
-        <h3>IRC Admin OP</h3>
-        <p>Gives the user op or voice in the current IRC channel.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="irc_admin_op.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="irc admin slap"
-      data-description="slaps the requested user in the current irc channel."
-      data-platforms="irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.2</span>
-          <span class="chip">irc_admin_slap</span>
-        </div>
-        <h3>IRC Admin Slap</h3>
-        <p>Slaps the requested user in the current IRC channel.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="irc_admin_slap.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="irc admin topic"
-      data-description="sets the current irc channel topic to the requested text."
-      data-platforms="irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.2</span>
-          <span class="chip">irc_admin_topic</span>
-        </div>
-        <h3>IRC Admin Topic</h3>
-        <p>Sets the current IRC channel topic to the requested text.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="irc_admin_topic.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="jackett recent uploads"
-      data-description="list and rank recent jackett uploads across selected indexers."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core homekit matrix telegram xbmc"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.5</span>
-          <span class="chip">jackett_recent_uploads</span>
-        </div>
-        <h3>Jackett Recent Uploads</h3>
-        <p>List and rank recent Jackett uploads across selected indexers.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Matrix</span><span class="chip">Telegram</span><span class="chip">XBMC4Xbox</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="jackett_recent_uploads.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="jackett search torrents"
-      data-description="run jackett torrent searches with filters and ranked results."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core homekit matrix telegram xbmc"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">jackett_search_torrents</span>
-        </div>
-        <h3>Jackett Search Torrents</h3>
-        <p>Run Jackett torrent searches with filters and ranked results.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Matrix</span><span class="chip">Telegram</span><span class="chip">XBMC4Xbox</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="jackett_search_torrents.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="joke api"
-      data-description="fetch one joke from jokeapi."
-      data-platforms="webui little_spud macos voice_core homekit discord telegram matrix irc meshtastic xbmc"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.4</span>
-          <span class="chip">joke_api</span>
-        </div>
-        <h3>Joke API</h3>
-        <p>Fetch one joke from JokeAPI.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">XBMC4Xbox</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="joke_api.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="leak sensor status"
-      data-description="read leak sensor status from unifi protect, home assistant, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">leak_status</span>
-        </div>
-        <h3>Leak Sensor Status</h3>
-        <p>Read leak sensor status from UniFi Protect, Home Assistant, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="leak_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="light sensor status"
-      data-description="read lux and light-level sensors from hue, shelly, home assistant, unifi protect, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">illuminance_status</span>
-        </div>
-        <h3>Light Sensor Status</h3>
-        <p>Read lux and light-level sensors from Hue, Shelly, Home Assistant, UniFi Protect, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="illuminance_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="microwakeword"
-      data-description="change or suggest the local microwakeword wake word on a tater voice core satellite."
-      data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.5</span>
-          <span class="chip">microwakeword</span>
-        </div>
-        <h3>microWakeWord</h3>
-        <p>Change or suggest the local microWakeWord wake word on a Tater Voice Core satellite.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="microwakeword.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="mister remote"
-      data-description="control your mister fpga setup—launch games, check status, or take screenshots."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.10</span>
-          <span class="chip">mister_remote</span>
-        </div>
-        <h3>MiSTer Remote</h3>
-        <p>Control your MiSTer FPGA setup—launch games, check status, or take screenshots.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="mister_remote.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook account summary"
-      data-description="moltbook account/profile summary, profile url, following/fellow agents, and target agent profiles."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.5</span>
-          <span class="chip">moltbook_account_summary</span>
-        </div>
-        <h3>Moltbook Account Summary</h3>
-        <p>Moltbook account/profile summary, profile URL, following/fellow agents, and target agent profiles.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_account_summary.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="moltbook home overview"
-      data-description="moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.5</span>
-          <span class="chip">moltbook_home_overview</span>
-        </div>
-        <h3>Moltbook Home Overview</h3>
-        <p>Moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="moltbook_home_overview.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="motion status"
-      data-description="read motion status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">motion_status</span>
-        </div>
-        <h3>Motion Status</h3>
-        <p>Read motion status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="motion_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="network device status"
-      data-description="read network device status from unifi network and any integration that exposes network devices."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">network_device_status</span>
-        </div>
-        <h3>Network Device Status</h3>
-        <p>Read network device status from UniFi Network and any integration that exposes network devices.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="network_device_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="obsidian note"
-      data-description="save markdown content to obsidian with predictable note naming, append/overwrite controls, and tags."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v3.0.3</span>
-          <span class="chip">obsidian_note</span>
-        </div>
-        <h3>Obsidian Note</h3>
-        <p>Save markdown content to Obsidian with predictable note naming, append/overwrite controls, and tags.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="obsidian_note.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="obsidian search"
-      data-description="search your obsidian vault quickly and return relevant snippets with optional ai synthesis."
-      data-platforms="webui little_spud macos"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v2.0.3</span>
-          <span class="chip">obsidian_search</span>
-        </div>
-        <h3>Obsidian Search</h3>
-        <p>Search your Obsidian vault quickly and return relevant snippets with optional AI synthesis.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="obsidian_search.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="overseerr details"
-      data-description="fetch details for a specific movie or tv show from overseerr."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.2.4</span>
-          <span class="chip">overseerr_details</span>
-        </div>
-        <h3>Overseerr Details</h3>
-        <p>Fetch details for a specific movie or TV show from Overseerr.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="overseerr_details.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="overseerr request"
-      data-description="request a movie or tv show in overseerr by title."
-      data-platforms="webui little_spud macos voice_core homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.4</span>
-          <span class="chip">overseerr_request</span>
-        </div>
-        <h3>Overseerr Request</h3>
-        <p>Request a movie or TV show in Overseerr by title.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="overseerr_request.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="overseerr trending"
-      data-description="list trending or upcoming movies/tv from overseerr."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.2.4</span>
-          <span class="chip">overseerr_trending</span>
-        </div>
-        <h3>Overseerr Trending</h3>
-        <p>List trending or upcoming movies/TV from Overseerr.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="overseerr_trending.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="premiumize add transfer"
-      data-description="create premiumize transfers from explicit magnet links, remote http(s) .torrent urls, attached .torrent files, or local/downloaded .torrent files."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.4</span>
-          <span class="chip">premiumize_add_transfer</span>
-        </div>
-        <h3>Premiumize Add Transfer</h3>
-        <p>Create Premiumize transfers from explicit magnet links, remote HTTP(S) .torrent URLs, attached .torrent files, or local/downloaded .torrent files.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="premiumize_add_transfer.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="premiumize check transfer"
-      data-description="inspect a premiumize transfer and report status, progress, and related files."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.9</span>
-          <span class="chip">premiumize_check_transfer</span>
-        </div>
-        <h3>Premiumize Check Transfer</h3>
-        <p>Inspect a Premiumize transfer and report status, progress, and related files.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="premiumize_check_transfer.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="premiumize get links"
-      data-description="get premiumize stream/download links by magnet links, remote http(s) .torrent urls, attached .torrent files, or local/downloaded .torrent files."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.4</span>
-          <span class="chip">premiumize_get_links</span>
-        </div>
-        <h3>Premiumize Get Links</h3>
-        <p>Get Premiumize stream/download links by magnet links, remote HTTP(S) .torrent URLs, attached .torrent files, or local/downloaded .torrent files.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="premiumize_get_links.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="premiumize list files"
-      data-description="list premiumize cloud folder contents with file/folder counts."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.9</span>
-          <span class="chip">premiumize_list_files</span>
-        </div>
-        <h3>Premiumize List Files</h3>
-        <p>List Premiumize cloud folder contents with file/folder counts.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="premiumize_list_files.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="premiumize list transfers"
-      data-description="show premiumize transfer queue/status with active, finished, and failed counts."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.9</span>
-          <span class="chip">premiumize_list_transfers</span>
-        </div>
-        <h3>Premiumize List Transfers</h3>
-        <p>Show Premiumize transfer queue/status with active, finished, and failed counts.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="premiumize_list_transfers.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="presence status"
-      data-description="read presence from unifi network clients, ecobee/homekit occupancy sensors, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">presence_status</span>
-        </div>
-        <h3>Presence Status</h3>
-        <p>Read presence from UniFi Network clients, Ecobee/HomeKit occupancy sensors, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="presence_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="reachy sleep"
-      data-description="use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. do not use merely because the user says they are going to sleep, asks a question about sleep, or asks reachy to be quiet"
-      data-platforms="voice_core"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">reachy_sleep</span>
-        </div>
-        <h3>Reachy Sleep</h3>
-        <p>Use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. Do not use merely because the user says they are going to sleep, asks a question about sleep, or asks Reachy to be quiet</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="reachy_sleep.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="reachy vision"
-      data-description="use when someone asks tater to look at them or something in front of reachy, including &#x27;how do i look?&#x27;, &#x27;do you like what i&#x27;m wearing?&#x27;, &#x27;what am i wearing?&#x27;, &#x27;look at this&#x27;, or &#x27;what do you see?&#x27;. do not use for named home-security cameras; use camera control for those."
-      data-platforms="voice_core"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.0</span>
-          <span class="chip">reachy_vision</span>
-        </div>
-        <h3>Reachy Vision</h3>
-        <p>Use when someone asks Tater to look at them or something in front of Reachy, including &#x27;how do I look?&#x27;, &#x27;do you like what I&#x27;m wearing?&#x27;, &#x27;what am I wearing?&#x27;, &#x27;look at this&#x27;, or &#x27;what do you see?&#x27;. Do not use for named home-security cameras; use Camera Control for those.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="reachy_vision.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="sensor status"
-      data-description="read other sensor status from all enabled integrations through the shared device registry."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">sensor_status</span>
-        </div>
-        <h3>Sensor Status</h3>
-        <p>Read other sensor status from all enabled integrations through the shared device registry.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="sensor_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="sftpgo account"
-      data-description="create an sftpgo account for the user and return login details."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">sftpgo_account</span>
-        </div>
-        <h3>SFTPGo Account</h3>
-        <p>Create an SFTPGo account for the user and return login details.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="sftpgo_account.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="sftpgo activity"
-      data-description="show current connection activity on the sftpgo server."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">sftpgo_activity</span>
-        </div>
-        <h3>SFTPGo Activity</h3>
-        <p>Show current connection activity on the SFTPGo server.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="sftpgo_activity.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="tater gits add feed"
-      data-description="add a github releases feed to the tater-gits watcher with smart naming."
-      data-platforms="webui little_spud macos discord irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">tater_gits_add_feed</span>
-        </div>
-        <h3>Tater Gits Add Feed</h3>
-        <p>Add a GitHub releases feed to the tater-gits watcher with smart naming.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="tater_gits_add_feed.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="temperature status"
-      data-description="read temperature from ecobee/homekit, home assistant, hue, shelly, unifi protect, and other integrations."
-      data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">temperature_status</span>
-        </div>
-        <h3>Temperature Status</h3>
-        <p>Read temperature from Ecobee/HomeKit, Home Assistant, Hue, Shelly, UniFi Protect, and other integrations.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="temperature_status.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="timer"
-      data-description="set, cancel, snooze, silence, or check a timer."
-      data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.4.0</span>
-          <span class="chip">voicepe_remote_timer</span>
-        </div>
-        <h3>Timer</h3>
-        <p>Set, cancel, snooze, silence, or check a timer.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="voicepe_remote_timer.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi network health"
-      data-description="get unifi network health summary including client/device totals and offline device signals."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_network_health</span>
-        </div>
-        <h3>UniFi Network Health</h3>
-        <p>Get UniFi network health summary including client/device totals and offline device signals.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_network_health.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi network lookup"
-      data-description="look up a unifi client/device and return matching identity and network details."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.6</span>
-          <span class="chip">unifi_network_lookup</span>
-        </div>
-        <h3>UniFi Network Lookup</h3>
-        <p>Look up a UniFi client/device and return matching identity and network details.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_network_lookup.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="unifi protect area"
-      data-description="describe activity across multiple cameras in a named area."
-      data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.7</span>
-          <span class="chip">unifi_protect_area</span>
-        </div>
-        <h3>UniFi Protect Area</h3>
-        <p>Describe activity across multiple cameras in a named area.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="unifi_protect_area.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="weather forecast"
-      data-description="fetch weatherapi.com weather through tater integrations and answer only what the user asked (llm-guided)."
-      data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit xbmc telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.1.12</span>
-          <span class="chip">weather_forecast</span>
-        </div>
-        <h3>Weather Forecast</h3>
-        <p>Fetch WeatherAPI.com weather through Tater integrations and answer only what the user asked (LLM-guided).</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="weather_forecast.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="webdav browser"
-      data-description="browse and download files from the configured webdav server."
-      data-platforms="discord"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.1</span>
-          <span class="chip">webdav_browser</span>
-        </div>
-        <h3>WebDAV Browser</h3>
-        <p>Browse and download files from the configured WebDAV server.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="webdav_browser.html">Read Verba</a>
-      </div>
-    </article>
-
-    <article
-      class="plugin-card"
-      data-plugin-card
-      data-name="youtube summary"
-      data-description="summarize a youtube video using its transcript."
-      data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
-    >
-      <div class="plugin-meta">
-        <div class="chip-row">
-          <span class="chip">v1.0.3</span>
-          <span class="chip">youtube_summary</span>
-        </div>
-        <h3>YouTube Summary</h3>
-        <p>Summarize a YouTube video using its transcript.</p>
-      </div>
-      <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
-      <div class="plugin-links">
-        <a class="button button-ghost" href="youtube_summary.html">Read Verba</a>
-      </div>
-    </article>
-
-      </div>
-      <p class="empty-state" data-plugin-empty hidden>No Verbas match the current search and portal filter.</p>
-    </section>
-
-            </main>
-            <footer class="page-footer">
-              <div class="footer-row">
-                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
-                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
+      <meta name="theme-color" content="#17191b">
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="Tater Assistant | Verbas">
+      <meta property="og:description" content="Index of Tater Assistant Verbas documented from the current repository snapshot.">
+      <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+      <meta name="twitter:card" content="summary_large_image">
+      <title>Tater Assistant | Verbas</title>
+      <link rel="icon" href="../assets/images/tater-logo-primary.png">
+      <link rel="preload" href="../assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="stylesheet" href="../assets/site.css?v=20261122">
+      <link rel="stylesheet" href="../assets/refresh.css?v=20261122">
+      <script src="../assets/site.js?v=20261122" defer></script>
+    </head>
+    <body data-page="plugins">
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      <div class="page-shell">
+        <header class="site-header">
+          <a class="brand" href="../index.html" aria-label="Tater Assistant home"><img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater" width="1536" height="1024"></a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Menu</span><i aria-hidden="true"></i></button>
+          <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a class="nav-link" href="../install/index.html">Get Tater</a><a class="nav-link" href="../satellites/index.html">Satellites</a><a class="nav-link" href="../docs/index.html">Docs</a><a class="nav-link nav-github" href="https://github.com/TaterTotterson/Tater"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 2-5-3-7-3m14 6v-4a4 4 0 0 0-1-3c4-.5 6-2 6-6a5 5 0 0 0-1-3 5 5 0 0 0 0-4s-2-.5-4 1a14 14 0 0 0-8 0C6 1.5 4 2 4 2a5 5 0 0 0 0 4 5 5 0 0 0-1 3c0 4 2 5.5 6 6a4 4 0 0 0-1 3v4"/></svg>GitHub</a></nav>
+        </header>
+        <main class="page-main" id="main-content" tabindex="-1"><div class="docs-breadcrumb"><a href="../docs/index.html">Tater docs</a><span aria-hidden="true">/</span><span>Verbas</span></div>
+<section class="hero hero-subpage">
+  <div class="hero-copy">
+    <span class="eyebrow">Verba reference</span>
+    <h1>Actions speak louder then words. 69 Verbas are documented here.</h1>
+    <p>
+      This index reflects the current Tater Shop manifest and Verba files. Each entry links to a source-backed detail page with usage, portals, and current behavior.
+    </p>
+  </div>
+  <aside class="panel hero-panel mascot-panel">
+    <span class="eyebrow">Filter the list</span>
+    <div class="plugins-toolbar">
+      <input class="search-input" type="search" placeholder="Search Verbas" data-plugin-search>
+      <div class="chip-row filter-row">
+        <button class="filter-chip is-active" type="button" data-platform-filter="all">All</button>
+        <button class="filter-chip" type="button" data-platform-filter="webui">WebUI</button>
+        <button class="filter-chip" type="button" data-platform-filter="discord">Discord</button>
+        <button class="filter-chip" type="button" data-platform-filter="telegram">Telegram</button>
+      </div>
+      <p class="results-copy"><span data-results-count>69</span> Verbas shown</p>
+    </div>
+  </aside>
+</section>
+<section class="section">
+  <div class="plugin-grid" data-plugin-grid>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="automatic1111 image"
+  data-description="create one image from a natural-language image request."
+  data-platforms="discord webui little_spud macos telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.2.2</span>
+      <span class="chip">automatic_plugin</span>
+    </div>
+    <h3>Automatic1111 Image</h3>
+    <p>Create one image from a natural-language image request.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="automatic_plugin.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="battery status"
+  data-description="read battery status from hue, ecobee/homekit, aladdin, unifi protect, home assistant, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">battery_status</span>
+    </div>
+    <h3>Battery Status</h3>
+    <p>Read battery status from Hue, Ecobee/HomeKit, Aladdin, UniFi Protect, Home Assistant, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="battery_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="broadcast"
+  data-description="send a one-time spoken announcement to all satellites or one specified room."
+  data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.3.1</span>
+      <span class="chip">broadcast</span>
+    </div>
+    <h3>Broadcast</h3>
+    <p>Send a one-time spoken announcement to all satellites or one specified room.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="broadcast.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="cast media"
+  data-description="play audio and video media files on a named tv or google cast device."
+  data-platforms="voice_core webui tater_open_webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">cast_media</span>
+    </div>
+    <h3>Cast Media</h3>
+    <p>Play audio and video media files on a named TV or Google Cast device.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="cast_media.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui animate image"
+  data-description="animate the most recent image in chat into a looping webp or mp4 via comfyui."
+  data-platforms="discord webui tater_open_webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.8</span>
+      <span class="chip">comfyui_image_video</span>
+    </div>
+    <h3>ComfyUI Animate Image</h3>
+    <p>Animate the most recent image in chat into a looping WebP or MP4 via ComfyUI.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_image_video.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui audio ace"
+  data-description="compose a music track with comfyui audio ace and play it through sendspin with automatic presentation colors and optional generated album art."
+  data-platforms="discord webui tater_open_webui little_spud macos voice_core matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.30</span>
+      <span class="chip">comfyui_audio_ace</span>
+    </div>
+    <h3>ComfyUI Audio Ace</h3>
+    <p>Compose a music track with ComfyUI Audio Ace and play it through SendSpin with automatic presentation colors and optional generated album art.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_audio_ace.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui image"
+  data-description="generate a still image from a text prompt and show it on supported screen satellites."
+  data-platforms="discord webui tater_open_webui little_spud macos voice_core matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.0</span>
+      <span class="chip">comfyui_image_plugin</span>
+    </div>
+    <h3>ComfyUI Image</h3>
+    <p>Generate a still image from a text prompt and show it on supported screen satellites.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_image_plugin.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui image edit"
+  data-description="edit or transform the latest/referenced image in chat with comfyui image-to-image."
+  data-platforms="discord webui tater_open_webui little_spud macos matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">comfyui_image_edit</span>
+    </div>
+    <h3>ComfyUI Image Edit</h3>
+    <p>Edit or transform the latest/referenced image in chat with ComfyUI image-to-image.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_image_edit.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui lofi video"
+  data-description="create a cozy comfyui lofi video by generating music and looping a matching animation."
+  data-platforms="webui tater_open_webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.8</span>
+      <span class="chip">lowfi_video</span>
+    </div>
+    <h3>ComfyUI Lofi Video</h3>
+    <p>Create a cozy ComfyUI lofi video by generating music and looping a matching animation.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="lowfi_video.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui music video"
+  data-description="build a full ai music video—lyrics, music, and animated visuals—using comfyui."
+  data-platforms="webui tater_open_webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.9</span>
+      <span class="chip">comfyui_music_video</span>
+    </div>
+    <h3>ComfyUI Music Video</h3>
+    <p>Build a full AI music video—lyrics, music, and animated visuals—using ComfyUI.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_music_video.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="comfyui video"
+  data-description="create a short video from a text prompt by stitching comfyui-generated clips."
+  data-platforms="webui tater_open_webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">comfyui_video_plugin</span>
+    </div>
+    <h3>ComfyUI Video</h3>
+    <p>Create a short video from a text prompt by stitching ComfyUI-generated clips.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Tater Open Webui</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="comfyui_video_plugin.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="device compare"
+  data-description="natural-language device comparison with spec tables and optional per-game fps benchmarks."
+  data-platforms="discord webui little_spud macos matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.5</span>
+      <span class="chip">device_compare</span>
+    </div>
+    <h3>Device Compare</h3>
+    <p>Natural-language device comparison with spec tables and optional per-game FPS benchmarks.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="device_compare.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="device control"
+  data-description="use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, scripts, and appliance readings such as washer, dryer, or dishwasher status and remaining time. use tater vision for visual camera questions."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.9</span>
+      <span class="chip">device_control</span>
+    </div>
+    <h3>Device Control</h3>
+    <p>Use for any request to control or check smart-home devices across integrations, including lights, switches, plugs, fans, covers, garage doors, locks, thermostats, media players, remotes, scenes, scripts, and appliance readings such as washer, dryer, or dishwasher status and remaining time. Use Tater Vision for visual camera questions.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="device_control.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="discord admin response mode"
+  data-description="toggle always-respond mode for the current discord channel only."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.3</span>
+      <span class="chip">discord_admin_response_mode</span>
+    </div>
+    <h3>Discord Admin Response Mode</h3>
+    <p>Toggle always-respond mode for the current Discord channel only.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="discord_admin_response_mode.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="discord admin roles"
+  data-description="discord role listing and role assignment commands."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">discord_admin_roles</span>
+    </div>
+    <h3>Discord Admin Roles</h3>
+    <p>Discord role listing and role assignment commands.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="discord_admin_roles.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="discord admin setup"
+  data-description="discord server setup and structural admin changes."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">discord_admin_setup</span>
+    </div>
+    <h3>Discord Admin Setup</h3>
+    <p>Discord server setup and structural admin changes.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="discord_admin_setup.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="discord chat summary"
+  data-description="use when a discord user asks for a detailed summary of the current channel over a time frame, optionally limited to one or more mentioned or replied-to people."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.0</span>
+      <span class="chip">discord_chat_summary</span>
+    </div>
+    <h3>Discord Chat Summary</h3>
+    <p>Use when a Discord user asks for a detailed summary of the current channel over a time frame, optionally limited to one or more mentioned or replied-to people.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="discord_chat_summary.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="discord user profile"
+  data-description="use when a discord user asks for a brief, evidence-based behavioral profile of one member from that member&#x27;s messages in the current channel."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">discord_user_profile</span>
+    </div>
+    <h3>Discord User Profile</h3>
+    <p>Use when a Discord user asks for a brief, evidence-based behavioral profile of one member from that member&#x27;s messages in the current channel.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="discord_user_profile.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="do not disturb"
+  data-description="control per-satellite do not disturb."
+  data-platforms="voice_core webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.0</span>
+      <span class="chip">do_not_disturb</span>
+    </div>
+    <h3>Do Not Disturb</h3>
+    <p>Control per-satellite Do Not Disturb.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="do_not_disturb.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="door &amp; window sensor status"
+  data-description="read entry sensor status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">entry_sensor_status</span>
+    </div>
+    <h3>Door &amp; Window Sensor Status</h3>
+    <p>Read entry sensor status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="entry_sensor_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="energy status"
+  data-description="read energy and power data from shelly, home assistant, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">energy_status</span>
+    </div>
+    <h3>Energy Status</h3>
+    <p>Read energy and power data from Shelly, Home Assistant, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="energy_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="enroll my device"
+  data-description="enroll a phone or watch for private room-presence tracking."
+  data-platforms="voice_core webui macos little_spud"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.0</span>
+      <span class="chip">ble_device_enrollment</span>
+    </div>
+    <h3>Enroll My Device</h3>
+    <p>Enroll a phone or watch for private room-presence tracking.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">macOS</span><span class="chip">Little Spud</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="ble_device_enrollment.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="find my phone"
+  data-description="ping or ring your phone through home assistant so you can locate it."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.11</span>
+      <span class="chip">find_my_phone</span>
+    </div>
+    <h3>Find My Phone</h3>
+    <p>Ping or ring your phone through Home Assistant so you can locate it.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="find_my_phone.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="ftp browser"
+  data-description="browse and download files from the configured ftp server."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.1</span>
+      <span class="chip">ftp_browser</span>
+    </div>
+    <h3>FTP Browser</h3>
+    <p>Browse and download files from the configured FTP server.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="ftp_browser.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="home assistant camera area"
+  data-description="find cameras in a home assistant area and describe what they see."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.10</span>
+      <span class="chip">ha_camera_area</span>
+    </div>
+    <h3>Home Assistant Camera Area</h3>
+    <p>Find cameras in a Home Assistant area and describe what they see.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="ha_camera_area.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="humidity status"
+  data-description="read humidity from ecobee/homekit, home assistant, hue, shelly, unifi protect, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">humidity_status</span>
+    </div>
+    <h3>Humidity Status</h3>
+    <p>Read humidity from Ecobee/HomeKit, Home Assistant, Hue, Shelly, UniFi Protect, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="humidity_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="irc admin op"
+  data-description="gives the user op or voice in the current irc channel."
+  data-platforms="irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.3.4</span>
+      <span class="chip">irc_admin_op</span>
+    </div>
+    <h3>IRC Admin OP</h3>
+    <p>Gives the user op or voice in the current IRC channel.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="irc_admin_op.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="irc admin slap"
+  data-description="slaps the requested user in the current irc channel."
+  data-platforms="irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.2</span>
+      <span class="chip">irc_admin_slap</span>
+    </div>
+    <h3>IRC Admin Slap</h3>
+    <p>Slaps the requested user in the current IRC channel.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="irc_admin_slap.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="irc admin topic"
+  data-description="sets the current irc channel topic to the requested text."
+  data-platforms="irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">irc_admin_topic</span>
+    </div>
+    <h3>IRC Admin Topic</h3>
+    <p>Sets the current IRC channel topic to the requested text.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="irc_admin_topic.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="jackett recent uploads"
+  data-description="list and rank recent jackett uploads across selected indexers."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core homekit matrix telegram xbmc"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.6</span>
+      <span class="chip">jackett_recent_uploads</span>
+    </div>
+    <h3>Jackett Recent Uploads</h3>
+    <p>List and rank recent Jackett uploads across selected indexers.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Matrix</span><span class="chip">Telegram</span><span class="chip">XBMC4Xbox</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="jackett_recent_uploads.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="jackett search torrents"
+  data-description="run jackett torrent searches with filters and ranked results."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core homekit matrix telegram xbmc"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">jackett_search_torrents</span>
+    </div>
+    <h3>Jackett Search Torrents</h3>
+    <p>Run Jackett torrent searches with filters and ranked results.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Matrix</span><span class="chip">Telegram</span><span class="chip">XBMC4Xbox</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="jackett_search_torrents.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="joke api"
+  data-description="fetch one joke from jokeapi."
+  data-platforms="webui little_spud macos voice_core homekit discord telegram matrix irc meshtastic xbmc"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.4</span>
+      <span class="chip">joke_api</span>
+    </div>
+    <h3>Joke API</h3>
+    <p>Fetch one joke from JokeAPI.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">XBMC4Xbox</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="joke_api.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="leak sensor status"
+  data-description="read leak sensor status from unifi protect, home assistant, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">leak_status</span>
+    </div>
+    <h3>Leak Sensor Status</h3>
+    <p>Read leak sensor status from UniFi Protect, Home Assistant, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="leak_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="light sensor status"
+  data-description="read lux and light-level sensors from hue, shelly, home assistant, unifi protect, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">illuminance_status</span>
+    </div>
+    <h3>Light Sensor Status</h3>
+    <p>Read lux and light-level sensors from Hue, Shelly, Home Assistant, UniFi Protect, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="illuminance_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="microwakeword"
+  data-description="change or suggest the local microwakeword wake word on a tater voice core satellite."
+  data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">microwakeword</span>
+    </div>
+    <h3>microWakeWord</h3>
+    <p>Change or suggest the local microWakeWord wake word on a Tater Voice Core satellite.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="microwakeword.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="mister remote"
+  data-description="control your mister fpga setup—launch games, check status, or take screenshots."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.11</span>
+      <span class="chip">mister_remote</span>
+    </div>
+    <h3>MiSTer Remote</h3>
+    <p>Control your MiSTer FPGA setup—launch games, check status, or take screenshots.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="mister_remote.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="moltbook account summary"
+  data-description="moltbook account/profile summary, profile url, following/fellow agents, and target agent profiles."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">moltbook_account_summary</span>
+    </div>
+    <h3>Moltbook Account Summary</h3>
+    <p>Moltbook account/profile summary, profile URL, following/fellow agents, and target agent profiles.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="moltbook_account_summary.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="moltbook home overview"
+  data-description="moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.7</span>
+      <span class="chip">moltbook_home_overview</span>
+    </div>
+    <h3>Moltbook Home Overview</h3>
+    <p>Moltbook dashboard overview plus latest posts, announcements, post activity, subscriptions, and monitored submolts.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="moltbook_home_overview.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="motion status"
+  data-description="read motion status from home assistant, hue, unifi protect, ecobee/homekit, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">motion_status</span>
+    </div>
+    <h3>Motion Status</h3>
+    <p>Read motion status from Home Assistant, Hue, UniFi Protect, Ecobee/HomeKit, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="motion_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="network device status"
+  data-description="read network device status from unifi network and any integration that exposes network devices."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">network_device_status</span>
+    </div>
+    <h3>Network Device Status</h3>
+    <p>Read network device status from UniFi Network and any integration that exposes network devices.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="network_device_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="obsidian note"
+  data-description="save markdown content to obsidian with predictable note naming, append/overwrite controls, and tags."
+  data-platforms="webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v3.0.3</span>
+      <span class="chip">obsidian_note</span>
+    </div>
+    <h3>Obsidian Note</h3>
+    <p>Save markdown content to Obsidian with predictable note naming, append/overwrite controls, and tags.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="obsidian_note.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="obsidian search"
+  data-description="search your obsidian vault quickly and return relevant snippets with optional ai synthesis."
+  data-platforms="webui little_spud macos"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v2.0.3</span>
+      <span class="chip">obsidian_search</span>
+    </div>
+    <h3>Obsidian Search</h3>
+    <p>Search your Obsidian vault quickly and return relevant snippets with optional AI synthesis.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="obsidian_search.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="overseerr details"
+  data-description="fetch details for a specific movie or tv show from overseerr."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.2.6</span>
+      <span class="chip">overseerr_details</span>
+    </div>
+    <h3>Overseerr Details</h3>
+    <p>Fetch details for a specific movie or TV show from Overseerr.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="overseerr_details.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="overseerr request"
+  data-description="request a movie or tv show in overseerr by title."
+  data-platforms="webui little_spud macos voice_core homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.6</span>
+      <span class="chip">overseerr_request</span>
+    </div>
+    <h3>Overseerr Request</h3>
+    <p>Request a movie or TV show in Overseerr by title.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="overseerr_request.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="overseerr trending"
+  data-description="list trending or upcoming movies/tv from overseerr."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.2.5</span>
+      <span class="chip">overseerr_trending</span>
+    </div>
+    <h3>Overseerr Trending</h3>
+    <p>List trending or upcoming movies/TV from Overseerr.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="overseerr_trending.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="premiumize add transfer"
+  data-description="create premiumize transfers from explicit magnet links, remote http(s) .torrent urls, attached .torrent files, or local/downloaded .torrent files."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.5</span>
+      <span class="chip">premiumize_add_transfer</span>
+    </div>
+    <h3>Premiumize Add Transfer</h3>
+    <p>Create Premiumize transfers from explicit magnet links, remote HTTP(S) .torrent URLs, attached .torrent files, or local/downloaded .torrent files.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="premiumize_add_transfer.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="premiumize check transfer"
+  data-description="inspect a premiumize transfer and report status, progress, and related files."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.10</span>
+      <span class="chip">premiumize_check_transfer</span>
+    </div>
+    <h3>Premiumize Check Transfer</h3>
+    <p>Inspect a Premiumize transfer and report status, progress, and related files.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="premiumize_check_transfer.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="premiumize get links"
+  data-description="get premiumize stream/download links by magnet links, remote http(s) .torrent urls, attached .torrent files, or local/downloaded .torrent files."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.5</span>
+      <span class="chip">premiumize_get_links</span>
+    </div>
+    <h3>Premiumize Get Links</h3>
+    <p>Get Premiumize stream/download links by magnet links, remote HTTP(S) .torrent URLs, attached .torrent files, or local/downloaded .torrent files.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="premiumize_get_links.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="premiumize list files"
+  data-description="list premiumize cloud folder contents with file/folder counts."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.10</span>
+      <span class="chip">premiumize_list_files</span>
+    </div>
+    <h3>Premiumize List Files</h3>
+    <p>List Premiumize cloud folder contents with file/folder counts.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="premiumize_list_files.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="premiumize list transfers"
+  data-description="show premiumize transfer queue/status with active, finished, and failed counts."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.10</span>
+      <span class="chip">premiumize_list_transfers</span>
+    </div>
+    <h3>Premiumize List Transfers</h3>
+    <p>Show Premiumize transfer queue/status with active, finished, and failed counts.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="premiumize_list_transfers.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="presence status"
+  data-description="read presence from unifi network clients, ecobee/homekit occupancy sensors, and other integrations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">presence_status</span>
+    </div>
+    <h3>Presence Status</h3>
+    <p>Read presence from UniFi Network clients, Ecobee/HomeKit occupancy sensors, and other integrations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="presence_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="reachy sleep"
+  data-description="use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. do not use merely because the user says they are going to sleep, asks a question about sleep, or asks reachy to be quiet"
+  data-platforms="voice_core"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">reachy_sleep</span>
+    </div>
+    <h3>Reachy Sleep</h3>
+    <p>Use only when someone explicitly tells you to go to sleep, go to bed, or take a nap. Do not use merely because the user says they are going to sleep, asks a question about sleep, or asks Reachy to be quiet</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="reachy_sleep.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="reachy vision"
+  data-description="use only when the request originates from a reachy satellite or explicitly asks reachy to look at the user or something in front of it, including &#x27;reachy, how do i look?&#x27; or &#x27;what does reachy see?&#x27;. for visual questions about an echo show, another room satellite, or a named home-security camera area, use tater vision instead."
+  data-platforms="voice_core"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">reachy_vision</span>
+    </div>
+    <h3>Reachy Vision</h3>
+    <p>Use only when the request originates from a Reachy satellite or explicitly asks Reachy to look at the user or something in front of it, including &#x27;Reachy, how do I look?&#x27; or &#x27;what does Reachy see?&#x27;. For visual questions about an Echo Show, another room satellite, or a named home-security camera area, use Tater Vision instead.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="reachy_vision.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="sensor status"
+  data-description="read other sensor status from all enabled integrations through the shared device registry."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">sensor_status</span>
+    </div>
+    <h3>Sensor Status</h3>
+    <p>Read other sensor status from all enabled integrations through the shared device registry.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="sensor_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="sftpgo account"
+  data-description="create an sftpgo account for the user and return login details."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.5</span>
+      <span class="chip">sftpgo_account</span>
+    </div>
+    <h3>SFTPGo Account</h3>
+    <p>Create an SFTPGo account for the user and return login details.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="sftpgo_account.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="sftpgo activity"
+  data-description="show current connection activity on the sftpgo server."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">sftpgo_activity</span>
+    </div>
+    <h3>SFTPGo Activity</h3>
+    <p>Show current connection activity on the SFTPGo server.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="sftpgo_activity.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="tater assistant support"
+  data-description="use when a discord user asks how to install, configure, troubleshoot, use, or develop tater assistant, tater shop packages, or tater integrations, including questions that require checking their readme files or source code."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">tater_assistant_support</span>
+    </div>
+    <h3>Tater Assistant Support</h3>
+    <p>Use when a Discord user asks how to install, configure, troubleshoot, use, or develop Tater Assistant, Tater Shop packages, or Tater Integrations, including questions that require checking their README files or source code.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="tater_assistant_support.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="tater gits add feed"
+  data-description="add a github releases feed to the tater-gits watcher with smart naming."
+  data-platforms="webui little_spud macos discord irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.4</span>
+      <span class="chip">tater_gits_add_feed</span>
+    </div>
+    <h3>Tater Gits Add Feed</h3>
+    <p>Add a GitHub releases feed to the tater-gits watcher with smart naming.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="tater_gits_add_feed.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="tater tube support"
+  data-description="use when a discord user asks how to install, configure, pair, troubleshoot, use, or develop tater tube for raspberry pi, tater tube for steam or steam deck, or tater tube server, including questions that require checking their readme files or source code."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">tater_tube_support</span>
+    </div>
+    <h3>Tater Tube Support</h3>
+    <p>Use when a Discord user asks how to install, configure, pair, troubleshoot, use, or develop Tater Tube for Raspberry Pi, Tater Tube for Steam or Steam Deck, or Tater Tube Server, including questions that require checking their README files or source code.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="tater_tube_support.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="tater vision"
+  data-description="give tater eyes in camera-equipped rooms and areas. ask what you&#x27;re holding, how an outfit looks, whether a pet is nearby, or what&#x27;s happening around your home. tater automatically chooses a camera from the location you name or, on a room-aware device, the room where you ask."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.1.4</span>
+      <span class="chip">tater_vision</span>
+    </div>
+    <h3>Tater Vision</h3>
+    <p>Give Tater eyes in camera-equipped rooms and areas. Ask what you&#x27;re holding, how an outfit looks, whether a pet is nearby, or what&#x27;s happening around your home. Tater automatically chooses a camera from the location you name or, on a room-aware device, the room where you ask.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="tater_vision.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="temperature status"
+  data-description="read a specifically named local room, thermostat, device, or temperature sensor; never handle general weather or geographic locations."
+  data-platforms="voice_core webui little_spud macos xbmc homekit discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.6</span>
+      <span class="chip">temperature_status</span>
+    </div>
+    <h3>Temperature Status</h3>
+    <p>Read a specifically named local room, thermostat, device, or temperature sensor; never handle general weather or geographic locations.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">XBMC4Xbox</span><span class="chip">HomeKit</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="temperature_status.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="timer"
+  data-description="set, cancel, snooze, silence, or check a timer."
+  data-platforms="voice_core homekit xbmc webui little_spud macos discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.4.1</span>
+      <span class="chip">voicepe_remote_timer</span>
+    </div>
+    <h3>Timer</h3>
+    <p>Set, cancel, snooze, silence, or check a timer.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="voicepe_remote_timer.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="unifi network health"
+  data-description="get unifi network health summary including client/device totals and offline device signals."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.8</span>
+      <span class="chip">unifi_network_health</span>
+    </div>
+    <h3>UniFi Network Health</h3>
+    <p>Get UniFi network health summary including client/device totals and offline device signals.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="unifi_network_health.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="unifi network lookup"
+  data-description="look up a unifi client/device and return matching identity and network details."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.8</span>
+      <span class="chip">unifi_network_lookup</span>
+    </div>
+    <h3>UniFi Network Lookup</h3>
+    <p>Look up a UniFi client/device and return matching identity and network details.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="unifi_network_lookup.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="unifi protect area"
+  data-description="describe activity across multiple cameras in a named area."
+  data-platforms="webui little_spud macos voice_core homekit xbmc discord telegram matrix irc meshtastic"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.9</span>
+      <span class="chip">unifi_protect_area</span>
+    </div>
+    <h3>UniFi Protect Area</h3>
+    <p>Describe activity across multiple cameras in a named area.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">Tater Voice</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Discord</span><span class="chip">Telegram</span><span class="chip">Matrix</span><span class="chip">IRC</span><span class="chip">Meshtastic</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="unifi_protect_area.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="wake word trainer support"
+  data-description="use when a discord user asks how to choose, install, configure, train with, troubleshoot, or understand code in the apple silicon or nvidia microwakeword trainers. do not use for openwakeword or nanowakeword."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">wake_word_trainer_support</span>
+    </div>
+    <h3>Wake Word Trainer Support</h3>
+    <p>Use when a Discord user asks how to choose, install, configure, train with, troubleshoot, or understand code in the Apple Silicon or NVIDIA microWakeWord trainers. Do not use for openWakeWord or NanoWakeWord.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="wake_word_trainer_support.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="weather forecast"
+  data-description="get weatherapi.com conditions and forecasts for the configured home location or any named geographic place."
+  data-platforms="discord webui little_spud macos irc meshtastic voice_core matrix homekit xbmc telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.2.3</span>
+      <span class="chip">weather_forecast</span>
+    </div>
+    <h3>Weather Forecast</h3>
+    <p>Get WeatherAPI.com conditions and forecasts for the configured home location or any named geographic place.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Tater Voice</span><span class="chip">Matrix</span><span class="chip">HomeKit</span><span class="chip">XBMC4Xbox</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="weather_forecast.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="webdav browser"
+  data-description="browse and download files from the configured webdav server."
+  data-platforms="discord"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.1</span>
+      <span class="chip">webdav_browser</span>
+    </div>
+    <h3>WebDAV Browser</h3>
+    <p>Browse and download files from the configured WebDAV server.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="webdav_browser.html">Read Verba</a>
+  </div>
+</article>
+
+<article
+  class="plugin-card"
+  data-plugin-card
+  data-name="youtube summary"
+  data-description="summarize a youtube video using its transcript."
+  data-platforms="discord webui little_spud macos irc meshtastic matrix telegram"
+>
+  <div class="plugin-meta">
+    <div class="chip-row">
+      <span class="chip">v1.0.3</span>
+      <span class="chip">youtube_summary</span>
+    </div>
+    <h3>YouTube Summary</h3>
+    <p>Summarize a YouTube video using its transcript.</p>
+  </div>
+  <div class="chip-row platform-row"><span class="chip">Discord</span><span class="chip">WebUI</span><span class="chip">Little Spud</span><span class="chip">macOS</span><span class="chip">IRC</span><span class="chip">Meshtastic</span><span class="chip">Matrix</span><span class="chip">Telegram</span></div>
+  <div class="plugin-links">
+    <a class="button button-ghost" href="youtube_summary.html">Read Verba</a>
+  </div>
+</article>
+
+  </div>
+  <p class="empty-state" data-plugin-empty hidden>No Verbas match the current search and portal filter.</p>
+</section>
+</main>
+        <footer class="page-footer">
+          <div class="footer-main"><div class="footer-brand"><a class="footer-logo" href="../index.html" aria-label="Tater Assistant home"><img src="../assets/images/tater-logo-primary.png" alt="Tater" width="1535" height="1024" loading="lazy"></a><p>Homegrown AI.<br>Extra personality.</p></div><div class="footer-column"><h2>Get growing</h2><a href="../install/index.html">Get Tater</a><a href="../satellites/index.html">Voice satellites</a><a href="../little-spud/index.html">Little Spud</a></div><div class="footer-column"><h2>A little guidance</h2><a href="../docs/index.html">All guides</a><a href="../usb-flasher/index.html">USB Flasher</a><a href="../integrations/index.html">Integrations</a><a href="../plugins/index.html">Extra skills</a></div><div class="footer-column"><h2>Say hello</h2><a href="https://github.com/TaterTotterson/Tater">GitHub</a><a href="https://github.com/TaterTotterson/Tater/issues">Ideas &amp; issues</a><a href="mailto:tater@tatertottersonai.com">Contact us</a></div></div>
+          <div class="footer-bottom"><p>A little spud. A world of possibilities.</p><a href="../privacy/little-spud/index.html">Little Spud privacy</a><a href="#">Back to top</a></div>
+        </footer>
+      </div>
+    </body>
+    </html>

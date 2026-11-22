@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from mirror_latest_firmware import mirror_latest_firmware
+from site_content import icon, render_docs_body, render_home_body, render_install_body, render_little_spud_body
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -57,7 +58,11 @@ CERBERUS_SOURCE = resolve_path(
     TATER_DIR / "hydra" / "__init__.py",
     TATER_DIR / "cerberus" / "__init__.py",
 )
-TOOL_RUNTIME_SOURCE = TATER_DIR / "tool_runtime.py"
+TOOL_RUNTIME_SOURCE = resolve_path(
+    "TATER_WIKI_TOOL_RUNTIME_SOURCE",
+    TATER_DIR / "tater" / "extensions" / "runtime.py",
+    TATER_DIR / "tool_runtime.py",
+)
 SPUDEX_TOOLS_SOURCE = TATER_DIR / "spudex" / "hydra_tools.py"
 SPUDEX_SETTINGS_SOURCE = TATER_DIR / "spudex" / "settings.py"
 PLUGIN_DIR = resolve_path("TATER_WIKI_VERBA_DIR", TATER_DIR / "verba")
@@ -2564,70 +2569,25 @@ def escape(text: Any) -> str:
 
 def page_template(*, title: str, description: str, body: str, depth: int, nav_key: str) -> str:
     base = prefix(depth)
-
-    def nav_link(key: str, label: str, href: str, class_name: str = "nav-link", external: bool = False) -> str:
-        active_class = " is-active" if key == nav_key else ""
-        external_attrs = ' target="_blank" rel="noreferrer"' if external else ""
-        return f'<a class="{escape(class_name)}{active_class}" href="{escape(href)}"{external_attrs}>{escape(label)}</a>'
-
-    primary_nav = [
-        ("install", "Install Tater", f"{base}install/index.html"),
+    links = [
+        ("install", "Get Tater", f"{base}install/index.html"),
         ("satellites", "Satellites", f"{base}satellites/index.html"),
-        ("esphome", "Tater Voice", f"{base}tater-voice/index.html"),
+        ("docs", "Docs", f"{base}docs/index.html"),
+    ]
+    nav = "".join(
+        f'<a class="nav-link{" is-active" if key == nav_key else ""}" href="{href}"'
+        f'{" aria-current=page" if key == nav_key else ""}>{label}</a>'
+        for key, label, href in links
+    )
+    # Technical destinations belong in the field guide and footer, not the main navigation.
+    footer_links = [
+        ("docs", "All guides", f"{base}docs/index.html"),
         ("usb-flasher", "USB Flasher", f"{base}usb-flasher/index.html"),
+        ("integrations", "Integrations", f"{base}integrations/index.html"),
+        ("plugins", "Extra skills", f"{base}plugins/index.html"),
     ]
-    nav_groups = [
-        (
-            "Start",
-            [
-                ("home", "Home", f"{base}index.html"),
-                ("spud-hub", "Spud Hub", f"{base}spud-hub/index.html"),
-                ("github", "GitHub", "https://github.com/TaterTotterson/Tater"),
-            ],
-        ),
-        (
-            "Build",
-            [
-                ("cerberus", "Hydra", f"{base}cerberus/index.html"),
-                ("spudex", "Spudex", f"{base}spudex/index.html"),
-                ("llms", "LLMs", f"{base}llms/index.html"),
-                ("api", "API", f"{base}api/index.html"),
-            ],
-        ),
-        (
-            "Connect",
-            [
-                ("portals", "Portals", f"{base}portals/index.html"),
-                ("integrations", "Integrations", f"{base}integrations/index.html"),
-                ("cores", "Cores", f"{base}cores/index.html"),
-                ("kernel", "Kernel Tools", f"{base}kernel-tools/index.html"),
-                ("plugins", "Verbas", f"{base}plugins/index.html"),
-            ],
-        ),
-    ]
-    primary_html = "\n".join(
-        nav_link(key, label, href, "nav-link nav-link-primary")
-        for key, label, href in primary_nav
-    )
-    group_html = "\n".join(
-        textwrap.dedent(
-            f"""\
-            <section class="nav-group" aria-label="{escape(group_label)}">
-              <span class="nav-group-label">{escape(group_label)}</span>
-              <div class="nav-group-links">
-                {chr(10).join(nav_link(key, label, href, "nav-link nav-link-github" if key == "github" else "nav-link", key == "github") for key, label, href in links)}
-              </div>
-            </section>"""
-        )
-        for group_label, links in nav_groups
-    )
-    nav_html = f"""
-                <div class="nav-primary">
-                  {primary_html}
-                </div>
-                <div class="nav-groups">
-                  {group_html}
-                </div>"""
+    guides = "".join(f'<a href="{href}">{label}</a>' for _, label, href in footer_links)
+    breadcrumb = "" if nav_key in {"home", "install", "docs"} else f'<div class="docs-breadcrumb"><a href="{base}docs/index.html">Tater docs</a><span aria-hidden="true">/</span><span>{escape(title.split("|")[-1].strip())}</span></div>'
     return textwrap.dedent(
         f"""\
         <!DOCTYPE html>
@@ -2636,7 +2596,7 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="{escape(description)}">
-          <meta name="theme-color" content="#151515">
+          <meta name="theme-color" content="#17191b">
           <meta property="og:type" content="website">
           <meta property="og:title" content="{escape(title)}">
           <meta property="og:description" content="{escape(description)}">
@@ -2644,29 +2604,23 @@ def page_template(*, title: str, description: str, body: str, depth: int, nav_ke
           <meta name="twitter:card" content="summary_large_image">
           <title>{escape(title)}</title>
           <link rel="icon" href="{base}assets/images/tater-logo-primary.png">
-          <link rel="stylesheet" href="{base}assets/site.css?v=20261012">
-          <script src="{base}assets/site.js?v=20261008" defer></script>
+          <link rel="preload" href="{base}assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+          <link rel="stylesheet" href="{base}assets/site.css?v=20261122">
+          <link rel="stylesheet" href="{base}assets/refresh.css?v=20261122">
+          <script src="{base}assets/site.js?v=20261122" defer></script>
         </head>
         <body data-page="{escape(nav_key)}">
+          <a class="skip-link" href="#main-content">Skip to content</a>
           <div class="page-shell">
             <header class="site-header">
-              <a class="brand" href="{base}index.html" aria-label="Tater Assistant home">
-                <img class="brand-wordmark" src="{base}assets/images/tater-logo-primary.png" alt="Tater Assistant">
-                <span class="brand-pill">Docs</span>
-              </a>
-              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Explore</span><i aria-hidden="true"></i></button>
-              <nav class="site-nav" id="site-nav">
-                {nav_html}
-              </nav>
+              <a class="brand" href="{base}index.html" aria-label="Tater Assistant home"><img class="brand-wordmark" src="{base}assets/images/tater-logo-primary.png" alt="Tater" width="1536" height="1024"></a>
+              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Menu</span><i aria-hidden="true"></i></button>
+              <nav class="site-nav" id="site-nav" aria-label="Main navigation">{nav}<a class="nav-link nav-github" href="https://github.com/TaterTotterson/Tater">{icon('github')}GitHub</a></nav>
             </header>
-            <main class="page-main">
-              {body}
-            </main>
+            <main class="page-main" id="main-content" tabindex="-1">{breadcrumb}{body}</main>
             <footer class="page-footer">
-              <div class="footer-row">
-                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
-                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
-              </div>
+              <div class="footer-main"><div class="footer-brand"><a class="footer-logo" href="{base}index.html" aria-label="Tater Assistant home"><img src="{base}assets/images/tater-logo-primary.png" alt="Tater" width="1535" height="1024" loading="lazy"></a><p>Homegrown AI.<br>Extra personality.</p></div><div class="footer-column"><h2>Get growing</h2><a href="{base}install/index.html">Get Tater</a><a href="{base}satellites/index.html">Voice satellites</a><a href="{base}little-spud/index.html">Little Spud</a></div><div class="footer-column"><h2>A little guidance</h2>{guides}</div><div class="footer-column"><h2>Say hello</h2><a href="https://github.com/TaterTotterson/Tater">GitHub</a><a href="https://github.com/TaterTotterson/Tater/issues">Ideas &amp; issues</a><a href="mailto:tater@tatertottersonai.com">Contact us</a></div></div>
+              <div class="footer-bottom"><p>A little spud. A world of possibilities.</p><a href="{base}privacy/little-spud/index.html">Little Spud privacy</a><a href="#">Back to top</a></div>
             </footer>
           </div>
         </body>
@@ -2775,92 +2729,6 @@ def load_macos_release() -> dict[str, str]:
         "dmg_size": dmg_size,
         "zip_size": zip_size,
     }
-
-
-def render_macos_release_card() -> str:
-    release = load_macos_release()
-    if not release:
-        return ""
-    version_label = release["version_label"]
-    dmg_url = release["dmg_url"]
-    release_chips = "".join(
-        chip(item)
-        for item in [
-            f"Tater {version_label}",
-            f"Echo {CURRENT_ECHO_RELEASE}",
-            f"Native {CURRENT_NATIVE_RELEASE}",
-            f"{len(INSTALL_METHODS)} install paths",
-        ]
-    )
-    release_url = f"https://github.com/TaterTotterson/Tater/releases/tag/{version_label}"
-
-    return f"""
-    <section class="release-card" id="current-release" aria-label="Current Tater release, supported satellites, and Little Spud companion apps">
-      <aside class="release-visual" aria-hidden="true">
-        <img class="release-mascot" src="assets/images/tater-mascot-excited-pointer.png" alt="">
-      </aside>
-      <div class="release-copy">
-        <span class="eyebrow">Current Tater release</span>
-        <h2>Tater {escape(version_label)} is ready for your home.</h2>
-        <p>
-          Run Tater as a native Apple Silicon app, with Docker, through Home Assistant or Unraid,
-          or directly from source. Every path gives you the same private assistant runtime and WebUI.
-        </p>
-        <p class="release-summary">This release brings Sendspin v1 playback, richer Echo now-playing presentation, and native satellite output calibration alongside room-aware voice, devices, memory, and automations.</p>
-        <div class="chip-row">
-          {release_chips}
-        </div>
-        <div class="action-row release-actions">
-          <a class="button" href="{escape(dmg_url)}" target="_blank" rel="noreferrer">Download Tater {escape(version_label)}</a>
-          <a class="button button-ghost" href="install/index.html#server-install-paths">Compare install paths</a>
-          <a class="button button-ghost" href="{escape(release_url)}" target="_blank" rel="noreferrer">View release</a>
-        </div>
-        <div class="satellite-release-attach">
-          <div class="satellite-release-copy">
-            <span class="little-spud-title">Tater Satellites</span>
-            <span class="little-spud-kicker">Nine supported devices · three firmware families</span>
-            <p>Bring room-aware voice, local wake words, timers, synchronized Sendspin playback, and over-the-air updates to native ESP32-S3 hardware, exact unlocked Echo generations, or the ThirdReality S420.</p>
-            <div class="chip-row">
-              {chip("4 native boards")}
-              {chip("4 Echo models")}
-              {chip("ThirdReality S420")}
-            </div>
-          </div>
-          <div class="satellite-release-action">
-            <div class="satellite-release-thumbs" aria-hidden="true">
-              <img src="assets/images/satellites/voice-pe.webp" alt="">
-              <img src="assets/images/satellites/tater-echo-firmware.webp" alt="">
-              <img src="assets/images/satellites/thirdreality-s420.webp" alt="">
-            </div>
-            <a class="button" href="satellites/index.html">See supported satellites</a>
-          </div>
-        </div>
-        <div class="little-spud-attach">
-          <div class="little-spud-copy">
-            <span class="little-spud-title">Little Spud</span>
-            <span class="little-spud-kicker">iPhone + iPad + Android companion</span>
-            <p>Pair by QR code, chat with your private Tater, control Home and Music Core, use voice and TTS, and open notification snapshots or video clips.</p>
-            <div class="chip-row">
-              {chip("iOS + Android")}
-              {chip("Chat + voice")}
-              {chip("Home + Music")}
-            </div>
-          </div>
-          <div class="little-spud-store-links" aria-label="Download Little Spud">
-            <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
-              <span class="store-badge-platform" aria-hidden="true">iOS</span>
-              <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
-            </a>
-            <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
-              <span class="store-badge-platform" aria-hidden="true">Play</span>
-              <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
-            </a>
-          </div>
-        </div>
-        <small class="release-meta">Downloads are published directly through the official Tater GitHub release.</small>
-      </div>
-    </section>
-    """
 
 
 def render_platform_badges(platforms: list[str]) -> str:
@@ -2996,306 +2864,32 @@ def render_home_page(
     cores: list[dict[str, Any]],
     integrations: list[dict[str, Any]],
 ) -> str:
-    plugin_count = len(plugins)
-    kernel_count = len(kernel_tools)
-    portal_count = len(portals)
-    integration_count = len(integrations)
-    install_count = len(INSTALL_METHODS)
-
-    hero = f"""
-    <section class="hero hero-home">
-      <div class="hero-copy">
-        <span class="eyebrow">Private AI that lives with you</span>
-        <h1>One private assistant for every room.</h1>
-        <p>
-          Ask naturally from any room. Tater knows who is speaking, where they are,
-          what they can control, and where the answer should play.
-        </p>
-        <div class="action-row">
-          {button("Install Tater", "install/index.html")}
-          {button("See what it can do", "#around-the-house")}
-          {button("Browse the docs", "cores/index.html", ghost=True)}
-        </div>
-      </div>
-      <aside class="hero-art mascot-stage">
-        <img class="hero-wordmark" src="assets/images/tater-logo-primary.png" alt="Tater Assistant">
-        <img class="mascot mascot-wave" src="assets/images/tater-mascot-wave.png" alt="" aria-hidden="true">
-      </aside>
-      <div class="hero-stats" aria-label="Tater experience highlights">
-        <div class="stat-card"><strong>Private</strong><span>runs where you live</span></div>
-        <div class="stat-card"><strong>Aware</strong><span>knows the room</span></div>
-        <div class="stat-card"><strong>In sync</strong><span>sound everywhere</span></div>
-        <div class="stat-card"><strong>Modular</strong><span>add only what you use</span></div>
-        <div class="stat-card"><strong>Yours</strong><span>one local control center</span></div>
-      </div>
-    </section>
-    """
-
-    macos_release = render_macos_release_card()
-
-    mascot_intro = """
-    <section class="section lifestyle-story">
-      <div class="lifestyle-media">
-        <img src="assets/images/tater-at-home-wide.webp" alt="Tater standing in a warm open-plan home at dusk, surrounded by a kitchen, living room, and home office" loading="lazy" decoding="async">
-      </div>
-      <div class="lifestyle-copy">
-        <span class="eyebrow">A day with Tater</span>
-        <h2>Less app switching. More just asking.</h2>
-        <p>
-          Tater keeps the machinery in the background and the useful part close at hand.
-        </p>
-        <ul class="stack-list">
-          <li><strong>Morning:</strong> hear the weather, calendar, and the rooms that need attention while coffee starts.</li>
-          <li><strong>Heading out:</strong> ask one question about doors, lights, cameras, and who is home.</li>
-          <li><strong>Evening:</strong> start music in the kitchen, carry it into the living room, and let Tater answer without stopping the song.</li>
-          <li><strong>Any time:</strong> use the WebUI, a satellite, Little Spud, or a chat portal and keep the same assistant context.</li>
-        </ul>
-        <div class="action-row">
-          <a class="button" href="tater-voice/index.html">Explore Tater Voice</a>
-          <a class="button button-ghost" href="cores/automation.html">See automations</a>
-        </div>
-      </div>
-    </section>
-    """
-
-    spotlight_cards = [
-        (
-            "ROOM",
-            "Say it naturally",
-            "Ask to turn on the lights, play something, or make an announcement. The satellite that heard you supplies the room, so Tater does not need you to repeat it.",
-        ),
-        (
-            "SOUND",
-            "Hear one room—or all of them",
-            "Choose a speaker, stereo pair, or mixed group. Music stays aligned while replies, timers, and announcements step in and hand the room back cleanly.",
-        ),
-        (
-            "DISPLAY",
-            "Let the room show you more",
-            "Capable screens can surface artwork, progress, weather, cameras, doorbells, and useful status while music-reactive LEDs make audio feel present.",
-        ),
-        (
-            "VOICE",
-            "Wake it your way",
-            "Use a built-in wake word, train your own, or let two local detectors agree before the microphone opens. Each room keeps the settings that fit it.",
-        ),
-    ]
-    spotlight_html = "".join(
-        f"""
-        <article class="feature-card feature-card-spotlight">
-          <span class="card-index">{escape(label)}</span>
-          <h3>{escape(title)}</h3>
-          <p>{escape(text)}</p>
-        </article>
-        """
-        for label, title, text in spotlight_cards
-    )
-
-    feature_cards = [
-        (
-            "Stays at home",
-            "Your assistant runtime, speech models, memory, device state, and control center can all stay on hardware you manage.",
-        ),
-        (
-            "Knows who asked",
-            "People can carry their identity, permissions, preferences, and memory between voice, the WebUI, and connected portals.",
-        ),
-        (
-            "Understands the room",
-            "Room context helps Tater choose the right lights, camera, display, speaker, and follow-up microphone without a longer command.",
-        ),
-        (
-            "Turns words into work",
-            "Hydra plans multi-step requests while Verbas handle concrete actions across devices, media, cameras, notes, downloads, and admin tools.",
-        ),
-        (
-            "Grows when you need it",
-            "Add Portals, Integrations, and Cores only when they are useful. The base assistant does not have to carry every service.",
-        ),
-        (
-            "One place to tune it",
-            "Chat, Music, Voice, devices, models, automations, system tasks, and live health share one responsive local WebUI.",
-        ),
-    ]
-    feature_html = "".join(
-        f"""
-        <article class="feature-card">
-          <h3>{escape(title)}</h3>
-          <p>{escape(text)}</p>
-        </article>
-        """
-        for title, text in feature_cards
-    )
-
-    page_links = f"""
-    <div class="docs-directory">
-      <article class="directory-lane">
-        <span class="directory-number">01</span>
-        <div><h3>Start and install</h3><p>Choose macOS, Docker, Home Assistant, Unraid, or a local Python install.</p></div>
-        {button("Install guide", "install/index.html", ghost=True)}
-      </article>
-      <article class="directory-lane">
-        <span class="directory-number">02</span>
-        <div><h3>Voice and music</h3><p>Pair satellites, update firmware, build stereo groups, and route Music Core around the house.</p></div>
-        <div class="directory-actions">{button("Satellites", "satellites/index.html", ghost=True)}{button("Tater Voice", "tater-voice/index.html", ghost=True)}{button("Music Core", "cores/music.html", ghost=True)}</div>
-      </article>
-      <article class="directory-lane">
-        <span class="directory-number">03</span>
-        <div><h3>Extend Tater</h3><p>Connect portals and integrations, add Cores, or browse the Verbas Tater can run.</p></div>
-        <div class="directory-actions">{button("Integrations", "integrations/index.html", ghost=True)}{button("Cores", "cores/index.html", ghost=True)}{button("Verbas", "plugins/index.html", ghost=True)}</div>
-      </article>
-      <article class="directory-lane">
-        <span class="directory-number">04</span>
-        <div><h3>Build with it</h3><p>Explore Hydra, local models, Terminal tools, and the OpenAI-compatible API.</p></div>
-        <div class="directory-actions">{button("Hydra", "cerberus/index.html", ghost=True)}{button("LLMs", "llms/index.html", ghost=True)}{button("API", "api/index.html", ghost=True)}</div>
-      </article>
-    </div>
-    """
-
-    screenshot = """
-    <div class="showcase-grid">
-      <div class="panel panel-tight">
-        <span class="eyebrow">The local control center</span>
-        <h2>One UI for the whole assistant.</h2>
-        <p>
-          Dashboard, Chat, Music, Integrations, Verbas, Portals, Cores, Spudex,
-          Voice, Settings, System Tasks, and runtime telemetry now share one
-          responsive orange-and-gray interface bundled with Tater itself.
-        </p>
-        <div class="chip-row">
-          <span class="chip">Vue 3 + TypeScript</span>
-          <span class="chip">Local assets</span>
-          <span class="chip">Live updates</span>
-          <span class="chip">No forced refresh</span>
-        </div>
-      </div>
-      <div class="webui-preview" aria-label="Stylized preview of Tater's current local WebUI">
-        <div class="webui-preview-sidebar">
-          <div class="webui-preview-brand"><span class="webui-preview-mark">+</span><strong>Tater</strong></div>
-          <span class="webui-preview-nav is-active">Dashboard</span>
-          <span class="webui-preview-nav">Chat</span>
-          <span class="webui-preview-nav">Music</span>
-          <span class="webui-preview-nav">Integrations</span>
-          <span class="webui-preview-nav">Voice</span>
-          <span class="webui-preview-version">Installed build</span>
-        </div>
-        <div class="webui-preview-main">
-          <div class="webui-preview-topline"><span>Dashboard</span><span class="webui-preview-status">Systems healthy</span></div>
-          <div class="webui-preview-grid">
-            <div class="webui-preview-card webui-preview-card-wide">
-              <span class="webui-preview-label">Now playing · Family Room</span>
-              <strong>Tater Recommendations</strong>
-              <div class="webui-preview-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="webui-preview-card"><span class="webui-preview-label">Voice</span><strong>8 satellites</strong><small>Office Stereo ready</small></div>
-            <div class="webui-preview-card"><span class="webui-preview-label">System Tasks</span><strong>All caught up</strong><small>Next refresh in 3m</small></div>
-            <div class="webui-preview-card webui-preview-card-wide"><span class="webui-preview-label">Home</span><strong>Devices, people, rooms, and cores</strong><small>Live local state without page reloads</small></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    """
-
-    music_showcase = """
-    <section class="section product-story">
-      <div class="product-story-copy">
-        <span class="eyebrow">Music Core + Sendspin</span>
-        <h2>One song. Every room lands on the same beat.</h2>
-        <p>
-          Ask for an album, artist, genre, song, or recommendation and let room context choose the destination.
-          Sendspin keeps supported native and Echo satellites together, then hands the speaker back cleanly after Tater talks.
-        </p>
-        <div class="chip-row">
-          <span class="chip">Tater Tube Server</span>
-          <span class="chip">Tater Native</span>
-          <span class="chip">Echo satellites</span>
-          <span class="chip">Sendspin v1</span>
-          <span class="chip">Stereo pairs</span>
-          <span class="chip">Sonos</span>
-          <span class="chip">AirPlay</span>
-        </div>
-        <div class="action-row">
-          <a class="button" href="cores/music.html">Read Music Core</a>
-          <a class="button button-ghost" href="tater-voice/index.html">Stereo + voice</a>
-        </div>
-      </div>
-      <div class="music-stage" aria-label="Decorative Tater Music player preview">
-        <img class="mascot mascot-music" src="assets/images/tater-mascot-sit.png" alt="" aria-hidden="true">
-        <div class="music-player-demo">
-          <div class="music-now-playing">
-            <span class="music-kicker">Sendspin · 4 players synchronized</span>
-            <strong>Whole-home, one timeline</strong>
-            <span>Office Left + Office Right + Kitchen + Rook</span>
-          </div>
-          <div class="music-progress" aria-hidden="true"><span></span></div>
-          <div class="music-controls" aria-hidden="true">
-            <span>−</span><span>‹</span><span class="music-play">▶</span><span>›</span><span>＋</span>
-          </div>
-          <div class="music-destinations">
-            <span>Office Stereo</span><span>Kitchen Voice PE</span><span>Bedroom Rook</span>
-          </div>
-        </div>
-      </div>
-    </section>
-    """
-
-    body = f"""
-    {hero}
-    {macos_release}
-    <section class="section experience-section" id="around-the-house">
-      <span class="experience-word" aria-hidden="true">TATER</span>
-      <div class="experience-lead">
-        <div class="section-head section-head-wide">
-          <span class="eyebrow">Made for real rooms</span>
-          <h2>The house feels smarter when the handoffs disappear.</h2>
-          <p>Tater carries the room, speaker, identity, and intent between the pieces so ordinary requests can stay ordinary.</p>
-        </div>
-        <img class="mascot experience-mascot" src="assets/images/tater-mascot-present.png" alt="" aria-hidden="true">
-      </div>
-      <div class="grid spotlight-grid">
-        {spotlight_html}
-      </div>
-    </section>
-    {music_showcase}
-    {mascot_intro}
-    <section class="section">
-      <div class="section-head">
-        <span class="eyebrow">Designed around you</span>
-        <h2>Powerful underneath. Personal on the surface.</h2>
-      </div>
-      <div class="grid capability-grid">
-        {feature_html}
-      </div>
-    </section>
-    <section class="section catalog-summary">
-      <div class="section-head">
-        <span class="eyebrow">Go deeper</span>
-        <h2>Everything is there when you are ready to explore.</h2>
-        <p>Jump into the focused directories when you want a specific connection or capability.</p>
-      </div>
-      <div class="catalog-lanes">
-        <a class="catalog-lane" href="portals/index.html"><span>Talk to Tater</span><strong>{portal_count} portals</strong><small>WebUI, mobile, chat, voice, and more</small></a>
-        <a class="catalog-lane" href="integrations/index.html"><span>Connect services</span><strong>{integration_count} integrations</strong><small>Devices, search, media, weather, and models</small></a>
-        <a class="catalog-lane" href="cores/index.html"><span>Add capabilities</span><strong>{len(cores)} cores</strong><small>Music, memory, automation, awareness, and more</small></a>
-      </div>
-    </section>
-    <section class="section">
-      <div class="section-head">
-        <span class="eyebrow">Documentation map</span>
-        <h2>Find the next useful step.</h2>
-      </div>
-      {page_links}
-    </section>
-    <section class="section">
-      {screenshot}
-    </section>
-    """
     return page_template(
-        title="Tater | Home",
-        description="Meet Tater Assistant: private local AI with room-aware voice, Sendspin whole-home playback, smart-home control, and a modern local WebUI.",
-        body=body,
+        title="Tater Assistant | Small spud. Big possibilities.",
+        description="Meet Tater, your self-hosted AI assistant for chat, music, and a smarter home. Open source, full of personality, and made to be yours.",
+        body=render_home_body(load_macos_release()),
         depth=0,
         nav_key="home",
+    )
+
+
+def render_docs_page() -> str:
+    return page_template(
+        title="Tater Assistant | Docs",
+        description="Find your way around Tater: installation, AI models, voice satellites, smart-home integrations, extra skills, and technical guides.",
+        body=render_docs_body(),
+        depth=1,
+        nav_key="docs",
+    )
+
+
+def render_little_spud_page() -> str:
+    return page_template(
+        title="Tater Assistant | Little Spud",
+        description="Meet Little Spud, the iPhone, iPad, and Android companion for your own Tater assistant. Chat, voice, music, and home controls, close by.",
+        body=render_little_spud_body(),
+        depth=1,
+        nav_key="little-spud",
     )
 
 
@@ -3377,15 +2971,14 @@ def render_satellites_page() -> str:
     <section class="hero hero-subpage satellite-hero">
       <div class="hero-copy">
         <span class="eyebrow">Tater Satellites</span>
-        <h1>Give every room ears, a voice, and a beat.</h1>
+        <h1>A little voice.<br>In every room.</h1>
         <p>
-          Tater turns supported voice hardware into room-aware satellites for natural conversation,
-          local wake detection, timers, announcements, and synchronized whole-home music.
+          Talk to Tater, set a timer, or play your favorite music.
+          Add a supported voice satellite and give your assistant a place in the room.
         </p>
         <div class="action-row">
           <a class="button" href="#supported-hardware">See supported hardware</a>
-          <a class="button button-ghost" href="../usb-flasher/index.html">Flash native hardware</a>
-          <a class="button button-ghost" href="../tater-voice/index.html">Open Tater Voice docs</a>
+          <a class="button button-ghost" href="../tater-voice/index.html">Voice setup guide</a>
         </div>
       </div>
       <aside class="satellite-hero-art" aria-label="Examples of supported Tater satellite hardware">
@@ -3402,12 +2995,6 @@ def render_satellites_page() -> str:
           <figcaption>ThirdReality S420</figcaption>
         </figure>
       </aside>
-      <div class="hero-stats satellite-stats" aria-label="Satellite support summary">
-        <div class="stat-card"><strong>9</strong><span>supported devices</span></div>
-        <div class="stat-card"><strong>3</strong><span>firmware families</span></div>
-        <div class="stat-card"><strong>Local</strong><span>wake detection</span></div>
-        <div class="stat-card"><strong>Sendspin</strong><span>multi-room audio</span></div>
-      </div>
     </section>
 
     <section class="section" id="supported-hardware">
@@ -3420,9 +3007,9 @@ def render_satellites_page() -> str:
       <article class="satellite-family satellite-family-native">
         <div class="satellite-family-head">
           <div>
-            <span class="eyebrow">Family 01 · Tater Native</span>
-            <h2>Purpose-built ESP32-S3 satellites.</h2>
-            <p>Official native firmware connects directly to Tater—no YAML and no per-device firmware editing. Tater owns pairing, settings, wake words, diagnostics, and OTA updates.</p>
+            <span class="eyebrow">Tater Native</span>
+            <h2>Small devices. Right at home.</h2>
+            <p>Install Tater's firmware on one of these supported boards, then manage its voice, room, and updates from Tater.</p>
           </div>
           <img class="satellite-family-logo" src="../assets/images/satellites/tater-native-firmware.webp" alt="Tater Native Firmware">
         </div>
@@ -3438,9 +3025,9 @@ def render_satellites_page() -> str:
       <article class="satellite-family satellite-family-echo">
         <div class="satellite-family-head satellite-family-head-echo">
           <div>
-            <span class="eyebrow">Family 02 · Tater Echo</span>
-            <h2>Give exact unlocked Echo models a private second life.</h2>
-            <p>Tater replaces the voice application on supported hardware with native wake detection, audio processing, displays or LEDs, controls, Bluetooth features, Sendspin, and verified OTA updates.</p>
+            <span class="eyebrow">Tater Echo</span>
+            <h2>A second life for an old friend.</h2>
+            <p>These specific Echo models can run Tater firmware after unlocking. Check your exact model before getting started.</p>
             <div class="compat-warning"><strong>Exact models only.</strong> Each device must complete the documented amonet unlock for its codename before installing Tater firmware.</div>
           </div>
           <img class="satellite-family-logo satellite-family-logo-echo" src="../assets/images/satellites/tater-echo-firmware.webp" alt="Tater robot presenting an Echo Dot 2 for Tater Echo Firmware">
@@ -3459,38 +3046,16 @@ def render_satellites_page() -> str:
           <img src="../assets/images/satellites/thirdreality-s420.webp" alt="ThirdReality Voice and Music Assistant S420" loading="lazy" decoding="async">
         </div>
         <div class="satellite-s420-copy">
-          <span class="eyebrow">Family 03 · ThirdReality</span>
+          <span class="eyebrow">ThirdReality</span>
           <span class="satellite-target">s420</span>
           <h2>ThirdReality Voice &amp; Music Assistant.</h2>
-          <p>The Amlogic A113X/S420 model runs Tater Linux Voice with local wake detection, playback-reference AEC, room pairing, hardware controls, passive BLE presence, Sendspin, audio scenes, and signed OTA.</p>
-          <div class="chip-row">
-            {chip("Amlogic S420")}
-            {chip("256 MB RAM")}
-            {chip("512 MB NAND")}
-            {chip("Sendspin")}
-          </div>
+          <p>The A113X/S420 model brings Tater voice and music to another familiar form. Pair it with a room and manage it from Tater.</p>
           <p class="satellite-install-note"><strong>First install:</strong> the ThirdReality debug board is required for factory flashing or recovery. Routine updates preserve pairing and settings over OTA; browser USB flashing is not supported for this model.</p>
           <div class="action-row">
             <a class="button" href="https://github.com/TaterTotterson/Tater-ThirdReality-Voice-Firmware" target="_blank" rel="noreferrer">ThirdReality firmware repo</a>
           </div>
         </div>
       </article>
-    </section>
-
-    <section class="section">
-      <div class="section-head section-head-wide">
-        <span class="eyebrow">One Tater experience</span>
-        <h2>Different hardware. The same room-aware layer.</h2>
-        <p>Capabilities vary by board, but every supported family is designed around the same native Tater pairing, voice, playback, and update flow.</p>
-      </div>
-      <div class="grid capability-grid satellite-capability-grid">
-        <article class="feature-card"><span class="card-index">01</span><h3>Local wake words</h3><p>Wake detection stays on the satellite, with built-in and custom models managed centrally from Tater.</p></article>
-        <article class="feature-card"><span class="card-index">02</span><h3>Room context</h3><p>The device supplies its room and identity so lights, cameras, speakers, and follow-up listening land in the right place.</p></article>
-        <article class="feature-card"><span class="card-index">03</span><h3>Sendspin playback</h3><p>Build synchronized multi-room groups and stereo pairs, then let Tater speech step in and return the speaker cleanly.</p></article>
-        <article class="feature-card"><span class="card-index">04</span><h3>Timers + intercom</h3><p>Run local timers, announcements, push-to-talk or intercom hooks, and continued conversations from room hardware.</p></article>
-        <article class="feature-card"><span class="card-index">05</span><h3>Managed updates</h3><p>Install official builds, inspect firmware state, and deliver routine OTA updates from Tater after the first setup.</p></article>
-        <article class="feature-card"><span class="card-index">06</span><h3>Presence signals</h3><p>Supported radios can observe nearby BLE advertisements for room-level presence, sensors, and automations.</p></article>
-      </div>
     </section>
 
     <section class="section satellite-setup">
@@ -4366,106 +3931,10 @@ def render_openai_api_page() -> str:
 
 
 def render_install_index() -> str:
-    readme_note = extract_install_readme_note()
-    macos_release = load_macos_release()
-    macos_version = macos_release.get("version_label", "")
-    macos_download_url = macos_release.get("dmg_url") or "https://github.com/TaterTotterson/Tater/releases/latest"
-    macos_download_label = f"Download Tater {macos_version}" if macos_version else "Download Tater for macOS"
-    macos_version_chip = chip(f"Current release {macos_version}") if macos_version else chip("Latest release")
-    cards = "".join(
-        f"""
-        <article class="platform-card platform-card-detail{' install-card-featured' if method['slug'] == 'macos' else ''}">
-          <div class="chip-row">
-            {chip(method['complexity'])}{chip("Apple Silicon") if method['slug'] == 'macos' else ''}
-          </div>
-          <h3>{escape(method['title'])}</h3>
-          <p>{escape(method['summary'])}</p>
-          <p><strong>Best for:</strong> {escape(method['best_for'])}</p>
-          <div class="plugin-links">
-            {button("Read install path", f"{method['slug']}.html", ghost=True)}
-          </div>
-        </article>
-        """
-        for method in INSTALL_METHODS
-    )
-
-    body = f"""
-    <section class="hero hero-subpage">
-      <div class="hero-copy">
-        <span class="eyebrow">Install Tater</span>
-        <h1>Pick the install path that fits your stack.</h1>
-        <p>
-          Start with the native macOS app, or run Tater through Unraid, Home Assistant,
-          local Python, or Docker. After Tater is running, Little Spud can pair as its
-          iPhone, iPad, or Android companion.
-        </p>
-        <div class="chip-row">
-          {macos_version_chip}
-          {chip("5 install paths")}
-          {chip("iOS + Android companion")}
-        </div>
-        <div class="action-row">
-          <a class="button" href="{escape(macos_download_url)}" target="_blank" rel="noreferrer">{escape(macos_download_label)}</a>
-          <a class="button button-ghost" href="#server-install-paths">Compare install paths</a>
-        </div>
-      </div>
-      <aside class="panel hero-panel mascot-panel">
-        <span class="eyebrow">README note</span>
-        <p>{escape(readme_note)}</p>
-        <div class="action-row">
-          {button("Tater Voice", "../tater-voice/index.html", ghost=True)}
-        </div>
-      </aside>
-    </section>
-    <section class="section install-section-anchor" id="server-install-paths">
-      <div class="section-head section-head-wide">
-        <span class="eyebrow">Ways to run Tater</span>
-        <h2>Choose the host that already fits your home.</h2>
-        <p>The macOS app is the quickest native path. The other options run the same TaterOS experience on a server or container you control.</p>
-      </div>
-      <div class="grid grid-2">
-        {cards}
-      </div>
-    </section>
-
-    <section class="app-store-banner" aria-label="Little Spud companion apps">
-      <div class="app-store-copy">
-        <span class="eyebrow">Companion apps</span>
-        <h2>Run Tater first, then pair Little Spud.</h2>
-        <p>
-          Little Spud does not replace the Tater server. It pairs to your Tater through
-          Spud Hub and brings chat, voice, Home controls, Music Core, notifications,
-          snapshots, and video clips to your phone or tablet.
-        </p>
-        <div class="chip-row">
-          <span class="chip">iPhone + iPad</span>
-          <span class="chip">Android</span>
-          <span class="chip">QR pairing</span>
-          <span class="chip">Self-hosted Tater</span>
-        </div>
-      </div>
-      <div class="app-store-actions">
-        <div class="store-button-row">
-          <a class="store-badge store-badge-apple" href="https://apps.apple.com/app/little-spud/id6781400718" target="_blank" rel="noreferrer" aria-label="Download Little Spud on the App Store">
-            <span class="store-badge-platform" aria-hidden="true">iOS</span>
-            <span class="store-badge-copy"><small>Download on the</small><strong>App Store</strong></span>
-          </a>
-          <a class="store-badge store-badge-play" href="https://play.google.com/store/apps/details?id=com.tatertotterson.littlespud.android" target="_blank" rel="noreferrer" aria-label="Get Little Spud on Google Play">
-            <span class="store-badge-platform" aria-hidden="true">Play</span>
-            <span class="store-badge-copy"><small>Get it on</small><strong>Google Play</strong></span>
-          </a>
-        </div>
-        <div class="action-row">
-          <a class="button button-ghost" href="../spud-hub/index.html">Pairing guide</a>
-          <a class="button button-ghost" href="../privacy/little-spud/index.html">Privacy</a>
-        </div>
-      </div>
-    </section>
-    """
     return page_template(
-        title="Tater Assistant | Install",
-        description="Install Tater for macOS, Unraid, Home Assistant, local Python, or Docker, then pair Little Spud on iOS or Android.",
-        body=body,
+        title="Tater Assistant | Get Tater",
+        description="Get Tater for macOS, Docker, Home Assistant, Unraid, or install from source. Choose a setup and grow your own AI assistant.",
+        body=render_install_body(load_macos_release()),
         depth=1,
         nav_key="install",
     )
@@ -5778,6 +5247,8 @@ def build() -> None:
 
     write_page(SITE_ROOT / "index.html", render_home_page(plugins, kernel_tools, portals, cores, integrations))
     write_page(SITE_ROOT / "install" / "index.html", render_install_index())
+    write_page(SITE_ROOT / "docs" / "index.html", render_docs_page())
+    write_page(SITE_ROOT / "little-spud" / "index.html", render_little_spud_page())
     write_page(SITE_ROOT / "satellites" / "index.html", render_satellites_page())
     write_page(SITE_ROOT / "usb-flasher" / "index.html", render_usb_flasher_page())
     write_page(SITE_ROOT / "portals" / "index.html", render_platforms_page(portals))

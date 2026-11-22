@@ -7,9 +7,9 @@
   <a href="https://taterassistant.com">taterassistant.com</a>
 </h3>
 
-# Tater Assistant Wiki
+# Tater Assistant Website
 
-Static wiki generator for the Tater Assistant docs site.
+Static website with a visitor-friendly homepage, installation picker, and searchable documentation. The Python generator keeps the detailed reference in sync with the Tater projects.
 
 This repo is set up for a Linux host with this layout:
 
@@ -40,14 +40,38 @@ This repo is set up for a Linux host with this layout:
 
 ## Main files
 
+- `scripts/site_content.py`
+  Homepage, installation picker, and Docs directory copy and markup. Edit these pages here so automatic rebuilds preserve changes.
 - `scripts/build_wiki.py`
-  Generates the HTML site in `public_html`
+  Generates the HTML site in `public_html`, including the shared navigation and footer
 - `scripts/sync_wiki_sources.py`
   Clones or updates `Tater`, `Tater_Shop`, `Tater_Integrations`, and `Tater-Native-Firmware`, then runs the wiki build when source heads change
 - `scripts/.wiki-sync-state.json`
   Stores the last built source heads so unchanged runs can skip the rebuild
 - `public_html/assets/`
   Shared CSS, JS, images, and the locally bundled USB flashing engine used by the generated site
+- `public_html/assets/refresh.css`
+  Shared visual system and responsive marketing layouts; technical component layouts remain in `site.css`
+- `public_html/assets/site.js`
+  Mobile navigation, accessible example/install tabs, Docs search, and technical directory filters
+
+## Local preview
+
+After generating the site, serve it from this checkout:
+
+```bash
+python3 -m http.server 8765 --bind 127.0.0.1 --directory public_html
+```
+
+Open `http://127.0.0.1:8765`. No Node build or frontend dependency install is required. The Nunito font is self-hosted under `public_html/assets/fonts` with its OFL license.
+
+For source repos that live beside this checkout rather than inside `scripts/`, use:
+
+```bash
+TATER_WIKI_TATER_DIR=../Tater TATER_WIKI_TATER_SHOP_DIR=../Tater_Shop python3 scripts/build_wiki.py
+```
+
+The existing sync/rebuild command and `public_html` deployment layout still work. The homepage's macOS download and version come from Tater's release metadata.
 
 ## Requirements
 

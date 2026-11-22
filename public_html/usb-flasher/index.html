@@ -1,221 +1,180 @@
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Automatically install the latest official Tater satellite firmware over USB with Factory and OTA Keep Settings modes.">
-          <meta name="theme-color" content="#151515">
-          <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | USB Flasher">
-          <meta property="og:description" content="Automatically install the latest official Tater satellite firmware over USB with Factory and OTA Keep Settings modes.">
-          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
-          <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | USB Flasher</title>
-          <link rel="icon" href="../assets/images/tater-logo-primary.png">
-          <link rel="stylesheet" href="../assets/site.css?v=20261012">
-          <script src="../assets/site.js?v=20261008" defer></script>
-        </head>
-        <body data-page="usb-flasher">
-          <div class="page-shell">
-            <header class="site-header">
-              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
-                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
-                <span class="brand-pill">Docs</span>
-              </a>
-              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Explore</span><i aria-hidden="true"></i></button>
-              <nav class="site-nav" id="site-nav">
-
-                <div class="nav-primary">
-                  <a class="nav-link nav-link-primary" href="../install/index.html">Install Tater</a>
-<a class="nav-link nav-link-primary" href="../satellites/index.html">Satellites</a>
-<a class="nav-link nav-link-primary" href="../tater-voice/index.html">Tater Voice</a>
-<a class="nav-link nav-link-primary is-active" href="../usb-flasher/index.html">USB Flasher</a>
-                </div>
-                <div class="nav-groups">
-                              <section class="nav-group" aria-label="Start">
-              <span class="nav-group-label">Start</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../index.html">Home</a>
-<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
-<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Build">
-              <span class="nav-group-label">Build</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../cerberus/index.html">Hydra</a>
-<a class="nav-link" href="../spudex/index.html">Spudex</a>
-<a class="nav-link" href="../llms/index.html">LLMs</a>
-<a class="nav-link" href="../api/index.html">API</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Connect">
-              <span class="nav-group-label">Connect</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../portals/index.html">Portals</a>
-<a class="nav-link" href="../integrations/index.html">Integrations</a>
-<a class="nav-link" href="../cores/index.html">Cores</a>
-<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
-<a class="nav-link" href="../plugins/index.html">Verbas</a>
-              </div>
-            </section>
-                </div>
-              </nav>
-            </header>
-            <main class="page-main">
-
-    <section class="hero hero-subpage usb-flasher-hero">
-      <div class="hero-copy">
-        <span class="eyebrow">Tater Browser USB</span>
-        <h1>Flash a Tater satellite from this browser.</h1>
-        <p>
-          Select your satellite, connect it over USB, and install the latest official firmware
-          directly from this secure Tater page. No firmware files to find or upload.
-        </p>
-        <div class="chip-row">
-          <span class="chip">Chrome or Edge</span>
-          <span class="chip">ESP32-S3 satellites</span>
-          <span class="chip">Factory + keep settings</span>
-        </div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Automatically install the latest official Tater satellite firmware over USB with Factory and OTA Keep Settings modes.">
+      <meta name="theme-color" content="#17191b">
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="Tater Assistant | USB Flasher">
+      <meta property="og:description" content="Automatically install the latest official Tater satellite firmware over USB with Factory and OTA Keep Settings modes.">
+      <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+      <meta name="twitter:card" content="summary_large_image">
+      <title>Tater Assistant | USB Flasher</title>
+      <link rel="icon" href="../assets/images/tater-logo-primary.png">
+      <link rel="preload" href="../assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="stylesheet" href="../assets/site.css?v=20261122">
+      <link rel="stylesheet" href="../assets/refresh.css?v=20261122">
+      <script src="../assets/site.js?v=20261122" defer></script>
+    </head>
+    <body data-page="usb-flasher">
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      <div class="page-shell">
+        <header class="site-header">
+          <a class="brand" href="../index.html" aria-label="Tater Assistant home"><img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater" width="1536" height="1024"></a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Menu</span><i aria-hidden="true"></i></button>
+          <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a class="nav-link" href="../install/index.html">Get Tater</a><a class="nav-link" href="../satellites/index.html">Satellites</a><a class="nav-link" href="../docs/index.html">Docs</a><a class="nav-link nav-github" href="https://github.com/TaterTotterson/Tater"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 2-5-3-7-3m14 6v-4a4 4 0 0 0-1-3c4-.5 6-2 6-6a5 5 0 0 0-1-3 5 5 0 0 0 0-4s-2-.5-4 1a14 14 0 0 0-8 0C6 1.5 4 2 4 2a5 5 0 0 0 0 4 5 5 0 0 0-1 3c0 4 2 5.5 6 6a4 4 0 0 0-1 3v4"/></svg>GitHub</a></nav>
+        </header>
+        <main class="page-main" id="main-content" tabindex="-1"><div class="docs-breadcrumb"><a href="../docs/index.html">Tater docs</a><span aria-hidden="true">/</span><span>USB Flasher</span></div>
+<section class="hero hero-subpage usb-flasher-hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Tater Browser USB</span>
+    <h1>Flash a Tater satellite from this browser.</h1>
+    <p>
+      Select your satellite, connect it over USB, and install the latest official firmware
+      directly from this secure Tater page. No firmware files to find or upload.
+    </p>
+    <div class="chip-row">
+      <span class="chip">Chrome or Edge</span>
+      <span class="chip">ESP32-S3 satellites</span>
+      <span class="chip">Factory + keep settings</span>
+    </div>
+  </div>
+  <aside class="panel hero-panel usb-flasher-hero-panel">
+    <img
+      class="usb-flasher-mascot"
+      src="../assets/images/tater-mascot-firmware-flasher.png"
+      alt="Tater holding a USB cable and presenting a glowing firmware chip"
+      width="1536"
+      height="1024"
+    >
+    <div class="usb-flasher-hero-overlay">
+      <div class="usb-flasher-hero-copy">
+        <span class="eyebrow">Firmware, the Tater way</span>
+        <h2>Plug in. Pick your sat. Flash.</h2>
+        <p>Use a data-capable USB cable and connect one satellite at a time.</p>
       </div>
-      <aside class="panel hero-panel usb-flasher-hero-panel">
-        <img
-          class="usb-flasher-mascot"
-          src="../assets/images/tater-mascot-firmware-flasher.png"
-          alt="Tater holding a USB cable and presenting a glowing firmware chip"
-          width="1536"
-          height="1024"
-        >
-        <div class="usb-flasher-hero-overlay">
-          <div class="usb-flasher-hero-copy">
-            <span class="eyebrow">Firmware, the Tater way</span>
-            <h2>Plug in. Pick your sat. Flash.</h2>
-            <p>Use a data-capable USB cable and connect one satellite at a time.</p>
-          </div>
-          <div class="usb-browser-state" data-usb-browser-state data-tone="checking">
-            Checking browser USB support…
+      <div class="usb-browser-state" data-usb-browser-state data-tone="checking">
+        Checking browser USB support…
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="section" data-usb-flasher>
+  <div class="section-head section-head-wide">
+    <div>
+      <span class="eyebrow">Tater USB Flasher</span>
+      <h2>Select the satellite, choose how to install it, then connect.</h2>
+    </div>
+    <p>Tater automatically loads and verifies the correct latest firmware before anything is written.</p>
+  </div>
+
+  <div class="usb-flasher-layout">
+    <div class="usb-flasher-steps">
+      <article class="panel usb-flasher-step">
+        <div class="usb-step-heading">
+          <span class="usb-step-number">1</span>
+          <div>
+            <span class="eyebrow">Satellite model</span>
+            <h3>Which Tater satellite is connected?</h3>
           </div>
         </div>
-      </aside>
-    </section>
+        <div class="usb-source-panel">
+          <label class="usb-field usb-device-field">
+            <span>Satellite</span>
+            <select data-usb-device disabled>
+              <option value="">Loading latest firmware…</option>
+            </select>
+          </label>
+          <div class="usb-firmware-summary" data-usb-firmware-summary>
+            <strong>Loading latest firmware…</strong>
+            <span>Checking the official Tater release.</span>
+          </div>
+          <p class="usb-inline-note">The exact firmware version and flash size are chosen automatically for this satellite.</p>
+        </div>
+      </article>
 
-    <section class="section" data-usb-flasher>
-      <div class="section-head section-head-wide">
+      <article class="panel usb-flasher-step">
+        <div class="usb-step-heading">
+          <span class="usb-step-number">2</span>
+          <div>
+            <span class="eyebrow">Install type</span>
+            <h3>Factory install or keep settings.</h3>
+          </div>
+        </div>
+        <div class="usb-mode-grid" role="radiogroup" aria-label="USB install type">
+          <button class="usb-mode-card is-active" type="button" role="radio" aria-checked="true" data-usb-mode="factory">
+            <span class="usb-mode-mark" aria-hidden="true"></span>
+            <strong>Factory Install</strong>
+            <small>Erases the device and installs a clean Tater image.</small>
+          </button>
+          <button class="usb-mode-card" type="button" role="radio" aria-checked="false" data-usb-mode="ota">
+            <span class="usb-mode-mark" aria-hidden="true"></span>
+            <strong>OTA · Keep Settings</strong>
+            <small>Updates the app while preserving Wi-Fi, pairing, and saved settings.</small>
+          </button>
+        </div>
+        <div class="usb-mode-warning" data-usb-mode-warning>
+          Factory Install removes Wi-Fi, pairing, and saved settings. The device will need setup again afterward.
+        </div>
+      </article>
+
+      <article class="panel usb-flasher-step usb-connect-step">
+        <div class="usb-step-heading">
+          <span class="usb-step-number">3</span>
+          <div>
+            <span class="eyebrow">Connect and flash</span>
+            <h3>Choose the satellite’s USB port.</h3>
+          </div>
+        </div>
+        <p class="usb-ready-summary" data-usb-ready-summary>Loading the latest official Tater firmware…</p>
+        <button class="button usb-flash-button" type="button" data-usb-flash disabled>Connect &amp; Flash Latest</button>
+        <p class="usb-inline-note">Chrome will show its own USB device picker. Tater cannot access any device you do not select.</p>
+      </article>
+    </div>
+
+    <aside class="panel usb-flasher-console" aria-live="polite">
+      <div class="usb-console-heading">
         <div>
-          <span class="eyebrow">Tater USB Flasher</span>
-          <h2>Select the satellite, choose how to install it, then connect.</h2>
+          <span class="eyebrow">Flash status</span>
+          <h3 data-usb-status-title>Ready when you are.</h3>
         </div>
-        <p>Tater automatically loads and verifies the correct latest firmware before anything is written.</p>
+        <span class="usb-status-dot" data-usb-status-dot data-tone="idle" aria-hidden="true"></span>
       </div>
-
-      <div class="usb-flasher-layout">
-        <div class="usb-flasher-steps">
-          <article class="panel usb-flasher-step">
-            <div class="usb-step-heading">
-              <span class="usb-step-number">1</span>
-              <div>
-                <span class="eyebrow">Satellite model</span>
-                <h3>Which Tater satellite is connected?</h3>
-              </div>
-            </div>
-            <div class="usb-source-panel">
-              <label class="usb-field usb-device-field">
-                <span>Satellite</span>
-                <select data-usb-device disabled>
-                  <option value="">Loading latest firmware…</option>
-                </select>
-              </label>
-              <div class="usb-firmware-summary" data-usb-firmware-summary>
-                <strong>Loading latest firmware…</strong>
-                <span>Checking the official Tater release.</span>
-              </div>
-              <p class="usb-inline-note">The exact firmware version and flash size are chosen automatically for this satellite.</p>
-            </div>
-          </article>
-
-          <article class="panel usb-flasher-step">
-            <div class="usb-step-heading">
-              <span class="usb-step-number">2</span>
-              <div>
-                <span class="eyebrow">Install type</span>
-                <h3>Factory install or keep settings.</h3>
-              </div>
-            </div>
-            <div class="usb-mode-grid" role="radiogroup" aria-label="USB install type">
-              <button class="usb-mode-card is-active" type="button" role="radio" aria-checked="true" data-usb-mode="factory">
-                <span class="usb-mode-mark" aria-hidden="true"></span>
-                <strong>Factory Install</strong>
-                <small>Erases the device and installs a clean Tater image.</small>
-              </button>
-              <button class="usb-mode-card" type="button" role="radio" aria-checked="false" data-usb-mode="ota">
-                <span class="usb-mode-mark" aria-hidden="true"></span>
-                <strong>OTA · Keep Settings</strong>
-                <small>Updates the app while preserving Wi-Fi, pairing, and saved settings.</small>
-              </button>
-            </div>
-            <div class="usb-mode-warning" data-usb-mode-warning>
-              Factory Install removes Wi-Fi, pairing, and saved settings. The device will need setup again afterward.
-            </div>
-          </article>
-
-          <article class="panel usb-flasher-step usb-connect-step">
-            <div class="usb-step-heading">
-              <span class="usb-step-number">3</span>
-              <div>
-                <span class="eyebrow">Connect and flash</span>
-                <h3>Choose the satellite’s USB port.</h3>
-              </div>
-            </div>
-            <p class="usb-ready-summary" data-usb-ready-summary>Loading the latest official Tater firmware…</p>
-            <button class="button usb-flash-button" type="button" data-usb-flash disabled>Connect &amp; Flash Latest</button>
-            <p class="usb-inline-note">Chrome will show its own USB device picker. Tater cannot access any device you do not select.</p>
-          </article>
-        </div>
-
-        <aside class="panel usb-flasher-console" aria-live="polite">
-          <div class="usb-console-heading">
-            <div>
-              <span class="eyebrow">Flash status</span>
-              <h3 data-usb-status-title>Ready when you are.</h3>
-            </div>
-            <span class="usb-status-dot" data-usb-status-dot data-tone="idle" aria-hidden="true"></span>
-          </div>
-          <p data-usb-status-detail>Loading the latest official Tater firmware.</p>
-          <div class="usb-progress" role="progressbar" aria-label="Firmware flash progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-usb-progress>
-            <span data-usb-progress-bar></span>
-          </div>
-          <div class="usb-progress-copy"><span data-usb-progress-label>Waiting</span><strong data-usb-progress-value>0%</strong></div>
-          <div class="usb-console-log" data-usb-log tabindex="0">
-            <div class="usb-log-line tone-info">Loading the latest Tater firmware catalog.</div>
-          </div>
-          <button class="button button-ghost usb-clear-log" type="button" data-usb-clear-log>Clear log</button>
-        </aside>
+      <p data-usb-status-detail>Loading the latest official Tater firmware.</p>
+      <div class="usb-progress" role="progressbar" aria-label="Firmware flash progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-usb-progress>
+        <span data-usb-progress-bar></span>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="detail-grid">
-        <article class="panel">
-          <span class="eyebrow">Factory Install</span>
-          <h2>Use it for recovery or a clean setup.</h2>
-          <p>The complete factory image is written from address zero after the device is erased. Existing setup data will be removed.</p>
-        </article>
-        <article class="panel">
-          <span class="eyebrow">OTA · Keep Settings</span>
-          <h2>Use it for a wired update.</h2>
-          <p>The application image is written to Tater’s app slots without erasing setup storage. This requires a matching Tater OTA image.</p>
-        </article>
+      <div class="usb-progress-copy"><span data-usb-progress-label>Waiting</span><strong data-usb-progress-value>0%</strong></div>
+      <div class="usb-console-log" data-usb-log tabindex="0">
+        <div class="usb-log-line tone-info">Loading the latest Tater firmware catalog.</div>
       </div>
-    </section>
-    <script type="module" src="../assets/usb-flasher.js"></script>
+      <button class="button button-ghost usb-clear-log" type="button" data-usb-clear-log>Clear log</button>
+    </aside>
+  </div>
+</section>
 
-            </main>
-            <footer class="page-footer">
-              <div class="footer-row">
-                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
-                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
+<section class="section">
+  <div class="detail-grid">
+    <article class="panel">
+      <span class="eyebrow">Factory Install</span>
+      <h2>Use it for recovery or a clean setup.</h2>
+      <p>The complete factory image is written from address zero after the device is erased. Existing setup data will be removed.</p>
+    </article>
+    <article class="panel">
+      <span class="eyebrow">OTA · Keep Settings</span>
+      <h2>Use it for a wired update.</h2>
+      <p>The application image is written to Tater’s app slots without erasing setup storage. This requires a matching Tater OTA image.</p>
+    </article>
+  </div>
+</section>
+<script type="module" src="../assets/usb-flasher.js"></script>
+</main>
+        <footer class="page-footer">
+          <div class="footer-main"><div class="footer-brand"><a class="footer-logo" href="../index.html" aria-label="Tater Assistant home"><img src="../assets/images/tater-logo-primary.png" alt="Tater" width="1535" height="1024" loading="lazy"></a><p>Homegrown AI.<br>Extra personality.</p></div><div class="footer-column"><h2>Get growing</h2><a href="../install/index.html">Get Tater</a><a href="../satellites/index.html">Voice satellites</a><a href="../little-spud/index.html">Little Spud</a></div><div class="footer-column"><h2>A little guidance</h2><a href="../docs/index.html">All guides</a><a href="../usb-flasher/index.html">USB Flasher</a><a href="../integrations/index.html">Integrations</a><a href="../plugins/index.html">Extra skills</a></div><div class="footer-column"><h2>Say hello</h2><a href="https://github.com/TaterTotterson/Tater">GitHub</a><a href="https://github.com/TaterTotterson/Tater/issues">Ideas &amp; issues</a><a href="mailto:tater@tatertottersonai.com">Contact us</a></div></div>
+          <div class="footer-bottom"><p>A little spud. A world of possibilities.</p><a href="../privacy/little-spud/index.html">Little Spud privacy</a><a href="#">Back to top</a></div>
+        </footer>
+      </div>
+    </body>
+    </html>

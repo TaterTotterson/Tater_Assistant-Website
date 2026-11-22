@@ -1,279 +1,238 @@
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <meta name="description" content="Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.">
-          <meta name="theme-color" content="#151515">
-          <meta property="og:type" content="website">
-          <meta property="og:title" content="Tater Assistant | Tater Voice">
-          <meta property="og:description" content="Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.">
-          <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
-          <meta name="twitter:card" content="summary_large_image">
-          <title>Tater Assistant | Tater Voice</title>
-          <link rel="icon" href="../assets/images/tater-logo-primary.png">
-          <link rel="stylesheet" href="../assets/site.css?v=20261012">
-          <script src="../assets/site.js?v=20261008" defer></script>
-        </head>
-        <body data-page="esphome">
-          <div class="page-shell">
-            <header class="site-header">
-              <a class="brand" href="../index.html" aria-label="Tater Assistant home">
-                <img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater Assistant">
-                <span class="brand-pill">Docs</span>
-              </a>
-              <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Explore</span><i aria-hidden="true"></i></button>
-              <nav class="site-nav" id="site-nav">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.">
+      <meta name="theme-color" content="#17191b">
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="Tater Assistant | Tater Voice">
+      <meta property="og:description" content="Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.">
+      <meta property="og:image" content="https://taterassistant.com/assets/images/tater-logo-primary.png">
+      <meta name="twitter:card" content="summary_large_image">
+      <title>Tater Assistant | Tater Voice</title>
+      <link rel="icon" href="../assets/images/tater-logo-primary.png">
+      <link rel="preload" href="../assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="stylesheet" href="../assets/site.css?v=20261122">
+      <link rel="stylesheet" href="../assets/refresh.css?v=20261122">
+      <script src="../assets/site.js?v=20261122" defer></script>
+    </head>
+    <body data-page="esphome">
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      <div class="page-shell">
+        <header class="site-header">
+          <a class="brand" href="../index.html" aria-label="Tater Assistant home"><img class="brand-wordmark" src="../assets/images/tater-logo-primary.png" alt="Tater" width="1536" height="1024"></a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span>Menu</span><i aria-hidden="true"></i></button>
+          <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a class="nav-link" href="../install/index.html">Get Tater</a><a class="nav-link" href="../satellites/index.html">Satellites</a><a class="nav-link" href="../docs/index.html">Docs</a><a class="nav-link nav-github" href="https://github.com/TaterTotterson/Tater"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 2-5-3-7-3m14 6v-4a4 4 0 0 0-1-3c4-.5 6-2 6-6a5 5 0 0 0-1-3 5 5 0 0 0 0-4s-2-.5-4 1a14 14 0 0 0-8 0C6 1.5 4 2 4 2a5 5 0 0 0 0 4 5 5 0 0 0-1 3c0 4 2 5.5 6 6a4 4 0 0 0-1 3v4"/></svg>GitHub</a></nav>
+        </header>
+        <main class="page-main" id="main-content" tabindex="-1"><div class="docs-breadcrumb"><a href="../docs/index.html">Tater docs</a><span aria-hidden="true">/</span><span>Tater Voice</span></div>
+<section class="hero hero-subpage hero-plugin">
+  <div class="hero-copy">
+    <span class="eyebrow">Tater Voice</span>
+    <h1>Tater Voice</h1>
+    <p>Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.</p>
+    <div class="chip-row">
+      <span class="chip">Native device runtime</span>
+      <span class="chip">Bundled</span>
+      <span class="chip">Settings -&gt; Voice</span>
+      <span class="chip">Voice device runtime</span>
+    </div>
+  </div>
+  <aside class="panel hero-panel mascot-panel">
+    <span class="eyebrow">One local voice platform</span>
+    <p>Pair a satellite, assign its room, choose a local microWakeWord model, and manage voice, firmware, stereo, playback, intercom, and diagnostics from Tater&#x27;s own UI.</p>
 
-                <div class="nav-primary">
-                  <a class="nav-link nav-link-primary" href="../install/index.html">Install Tater</a>
-<a class="nav-link nav-link-primary" href="../satellites/index.html">Satellites</a>
-<a class="nav-link nav-link-primary is-active" href="../tater-voice/index.html">Tater Voice</a>
-<a class="nav-link nav-link-primary" href="../usb-flasher/index.html">USB Flasher</a>
-                </div>
-                <div class="nav-groups">
-                              <section class="nav-group" aria-label="Start">
-              <span class="nav-group-label">Start</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../index.html">Home</a>
-<a class="nav-link" href="../spud-hub/index.html">Spud Hub</a>
-<a class="nav-link nav-link-github" href="https://github.com/TaterTotterson/Tater" target="_blank" rel="noreferrer">GitHub</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Build">
-              <span class="nav-group-label">Build</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../cerberus/index.html">Hydra</a>
-<a class="nav-link" href="../spudex/index.html">Spudex</a>
-<a class="nav-link" href="../llms/index.html">LLMs</a>
-<a class="nav-link" href="../api/index.html">API</a>
-              </div>
-            </section>
-            <section class="nav-group" aria-label="Connect">
-              <span class="nav-group-label">Connect</span>
-              <div class="nav-group-links">
-                <a class="nav-link" href="../portals/index.html">Portals</a>
-<a class="nav-link" href="../integrations/index.html">Integrations</a>
-<a class="nav-link" href="../cores/index.html">Cores</a>
-<a class="nav-link" href="../kernel-tools/index.html">Kernel Tools</a>
-<a class="nav-link" href="../plugins/index.html">Verbas</a>
-              </div>
-            </section>
-                </div>
-              </nav>
-            </header>
-            <main class="page-main">
+  </aside>
+</section>
+<section class="section">
+  <div class="platform-detail-stack">
+    <article class="panel platform-detail-lead">
+      <span class="eyebrow">Why it matters</span>
+      <h2>Voice that understands where it is</h2>
+      <p>Every voice turn carries the speaking satellite, room, resolved Person, and trusted permissions into Tater. That same room context drives device control, music playback, follow-up listening, intercom, and reply routing.</p>
+    </article>
+    <article class="panel platform-detail-main">
+      <span class="eyebrow">Current voice stack</span>
+      <h2>Local wake detection, room context, and synchronized sound</h2>
+      <ul class="stack-list"><li>Tater Voice is built into the main runtime and securely pairs supported Tater Native hardware plus Echo Biscuit, Checkers, and Rook satellites.</li><li>Voice PE, Satellite1, ReSpeaker XVF3800, S3 Box, and supported Echo devices keep their saved name, room, hardware family, firmware revision, and per-device settings.</li><li>Wake detection runs locally on each satellite with int8 microWakeWord models. Users can choose a built-in model, the shared Tater Wake Word Catalog, or a trainer-published custom JSON package.</li><li>Wake Word Trainer pairing uses a short-lived one-use code and a trainer-scoped credential; publishing a model cannot grant general Tater API access.</li><li>STT Wake Verification can run Disabled, Observe, or Enabled. Results fail open on timeout and now persist in Redis with a visible 30-day period and manual reset controls.</li><li>Room arbitration prevents two satellites in the same room from answering one wake while still allowing independent conversations in different rooms.</li><li>Sendspin v1 gives native and Echo satellites one synchronized 48 kHz PCM/FLAC playback path while preserving each speaker&#x27;s volume, delay, and stereo assignment.</li><li>Stereo Pairs have their own Voice tab. Left and right members keep their channel assignment and per-satellite delay calibration, and remain one reusable playback destination.</li><li>Music, AirPlay input, replies, announcements, and TTS overlays share clean handoff and recovery behavior; local voice audio takes priority and returns the speaker to Sendspin afterward.</li><li>Capable Echo screens and LEDs receive track details, artwork, colors, progress, loudness, beat, and spectrum presentation from the same Music Core timeline.</li><li>Intercom can target a room, satellite, stereo pair, or broad group while using the same session state, playback routing, and TTS choices as normal voice replies.</li><li>The Firmware tab downloads signed prebuilt Tater Native images for OTA or Browser USB flashing; local compiling is no longer required.</li><li>Browser USB recovery can erase stale safe-mode state, flash the factory image, and keep USB logs visible through the restart.</li><li>S3 Box displays can show environment readings, voice and tool states, camera snapshots, doorbell notices, and targeted display cards.</li><li>Speaker ID can resolve an enrolled voice to a Person record, while optional Emotion ID adds bounded tone context without changing the trusted speaker boundary.</li><li>Reply playback can stay on the listening satellite, use a preferred room player, target another announcement device, or remain display-only.</li><li>Satellite inventory is cached and rebuilt on connect, disconnect, or settings changes with a periodic safety refresh, so the Voice UI opens quickly.</li></ul>
+    </article>
+    <div class="detail-grid platform-detail-support">
+      <article class="panel">
+        <span class="eyebrow">Voice-aware Verbas</span>
+        <h2>Actions can use the room and device that heard the request</h2>
 
-    <section class="hero hero-subpage hero-plugin">
-      <div class="hero-copy">
-        <span class="eyebrow">Tater Voice</span>
-        <h1>Tater Voice</h1>
-        <p>Room-aware voice and Sendspin playback for Tater Native and supported Echo satellites, with local wake detection, stereo pairs, intercom, firmware updates, and persistent voice statistics.</p>
-        <div class="chip-row">
-          <span class="chip">Native device runtime</span>
-          <span class="chip">Bundled</span>
-          <span class="chip">Settings -&gt; Voice</span>
-          <span class="chip">Voice device runtime</span>
-        </div>
-      </div>
-      <aside class="panel hero-panel mascot-panel">
-        <span class="eyebrow">One local voice platform</span>
-        <p>Pair a satellite, assign its room, choose a local microWakeWord model, and manage voice, firmware, stereo, playback, intercom, and diagnostics from Tater&#x27;s own UI.</p>
+    <p>38 current Verbas advertise direct support for this runtime.</p>
+    <div class="chip-row"><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/cast_media.html">Cast Media</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/comfyui_image_plugin.html">ComfyUI Image</a><a class="chip-link" href="../plugins/device_control.html">Device Control</a></div>
 
-      </aside>
-    </section>
-    <section class="section">
-      <div class="platform-detail-stack">
-        <article class="panel platform-detail-lead">
-          <span class="eyebrow">Why it matters</span>
-          <h2>Voice that understands where it is</h2>
-          <p>Every voice turn carries the speaking satellite, room, resolved Person, and trusted permissions into Tater. That same room context drives device control, music playback, follow-up listening, intercom, and reply routing.</p>
-        </article>
-        <article class="panel platform-detail-main">
-          <span class="eyebrow">Current voice stack</span>
-          <h2>Local wake detection, room context, and synchronized sound</h2>
-          <ul class="stack-list"><li>Tater Voice securely pairs supported Tater Native hardware plus Echo Biscuit, Checkers, and Rook satellites.</li><li>Voice PE, Satellite1, ReSpeaker XVF3800, S3 Box, and supported Echo devices keep their saved name, room, hardware family, firmware revision, and per-device settings.</li><li>Wake detection stays local. Native satellites run microWakeWord; Echo firmware can use microWakeWord, openWakeWord, or both together on the same beamformed audio.</li><li>Wake Word Trainer pairing uses a short-lived one-use code and a trainer-scoped credential; publishing a model cannot grant general Tater API access.</li><li>STT Wake Verification can run Disabled, Observe, or Enabled, fails open on timeout, and keeps a visible 30-day history in Redis.</li><li>Room arbitration prevents two satellites in the same room from answering one wake while still allowing independent conversations in different rooms.</li><li>Sendspin v1 gives native and Echo satellites one synchronized 48 kHz PCM/FLAC playback path while preserving volume, delay, and stereo assignment.</li><li>Music, AirPlay input, replies, announcements, and TTS use clean handoff and recovery; local voice audio takes priority and returns the speaker to Sendspin afterward.</li><li>Capable Echo screens and LEDs receive track details, artwork, colors, progress, loudness, beat, and spectrum presentation from the same Music Core timeline.</li><li>Intercom can target a room, satellite, stereo pair, or broad group while using the same routing and TTS choices as normal replies.</li><li>The Firmware tab downloads signed prebuilt images for OTA or Browser USB flashing; local compiling is no longer required.</li><li>Speaker ID can resolve an enrolled voice to a Person record, while optional Emotion ID adds bounded tone context without changing the trusted speaker boundary.</li><li>Reply playback can stay on the listening satellite, use a preferred room player, target another announcement device, or remain display-only.</li></ul>
-        </article>
-        <div class="detail-grid platform-detail-support">
-          <article class="panel">
-            <span class="eyebrow">Voice-aware Verbas</span>
-            <h2>Actions can use the room and device that heard the request</h2>
+      </article>
+      <article class="panel">
+        <span class="eyebrow">Operator controls</span>
+        <h2>Everything lives under Settings -&gt; Voice</h2>
+        <p>Tater Voice is configured through Settings -&gt; Voice, with separate Satellites, Firmware, Stereo Pairs, Stats, and Settings tabs. Each satellite owns its local microWakeWord profile, room, playback, brightness, and supported live controls, while shared STT/TTS and SpeechBrain choices live in Settings -&gt; Models. Prebuilt OTA and Browser USB firmware, secure trainer pairing, wake verification, intercom, persistent statistics, and live logs are managed from the same local UI.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        <p>34 current Verbas advertise direct support for this runtime.</p>
-        <div class="chip-row"><a class="chip-link" href="../plugins/battery_status.html">Battery Status</a><a class="chip-link" href="../plugins/broadcast.html">Broadcast</a><a class="chip-link" href="../plugins/camera_control.html">Camera Control</a><a class="chip-link" href="../plugins/comfyui_audio_ace.html">ComfyUI Audio Ace</a><a class="chip-link" href="../plugins/device_control.html">Device Control</a><a class="chip-link" href="../plugins/entry_sensor_status.html">Door &amp; Window Sensor Status</a></div>
 
-          </article>
-          <article class="panel">
-            <span class="eyebrow">Operator controls</span>
-            <h2>Everything lives under Settings -&gt; Voice</h2>
-            <p>Tater Voice is configured through Settings -&gt; Voice, with separate Satellites, Firmware, Stereo Pairs, Stats, and Settings tabs. Each satellite owns its local microWakeWord profile, room, playback, brightness, and supported live controls, while shared STT/TTS and SpeechBrain choices live in Settings -&gt; Models. Prebuilt OTA and Browser USB firmware, secure trainer pairing, wake verification, intercom, persistent statistics, and live logs are managed from the same local UI.</p>
-          </article>
-        </div>
-      </div>
-    </section>
 
+<section class="section">
+  <div class="section-head">
+    <span class="eyebrow">Voice experience</span>
+    <h2>How current Tater Voice works from wake to playback</h2>
+    <p>The current stack centers on paired Tater Native hardware, on-device microWakeWord, trusted room and Person context, prebuilt firmware, and synchronized audio.</p>
+  </div>
+  <div class="grid grid-2">
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">Add Satellite</span><span class="chip">Rooms</span><span class="chip">Secure pairing</span></div>
+      <h3>Pair and organize satellites</h3>
+      <p>Add Satellite creates a short-lived pairing code, then Tater remembers the device and its room.</p>
+      <ul class="stack-list"><li>Flash a supported Tater Native image, connect to its setup network, and enter the pairing code shown in Settings -&gt; Voice -&gt; Satellites.</li><li>After pairing, give the device a useful name and room. Room assignment becomes part of every trusted voice turn and can select devices or a preferred music player automatically.</li><li>Saved device identity and pairing credentials persist across Tater restarts and Docker image updates when the documented runtime volume is mounted.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">microWakeWord</span><span class="chip">Wake catalog</span><span class="chip">Trainer link</span></div>
+      <h3>Local microWakeWord and trainers</h3>
+      <p>Wake detection stays on the satellite and custom words publish through a scoped trainer link.</p>
+      <ul class="stack-list"><li>Choose the active wake word from each satellite&#x27;s settings popup: a built-in profile, a model from Tater-Wake-Words, or a custom trainer/GitHub JSON URL.</li><li>The Apple Silicon and NVIDIA trainers link with a short-lived code from Tater, then publish only their own trained package and active-word selection.</li><li>Sensitivity and room environment controls adjust acceptance around the model&#x27;s JSON threshold, sliding window, and close-miss tuning.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">Observe</span><span class="chip">Enabled</span><span class="chip">30-day stats</span></div>
+      <h3>Wake verification and persistent stats</h3>
+      <p>A fast STT check can observe or reject wake-word mismatches without becoming a new point of failure.</p>
+      <ul class="stack-list"><li>Observe records the transcript, match score, result, and latency while allowing the turn. Enabled rejects clear mismatches but fails open if verification errors or misses its deadline.</li><li>Per-satellite checks, rejections, fail-opens, latest results, and the broader voice summary are stored in Redis and remain visible while a device is offline.</li><li>Statistics automatically begin a new 30-day collection period and can be reset either for Wake Verification alone or for all voice statistics.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">Sendspin v1</span><span class="chip">Stereo</span><span class="chip">Multi-room</span></div>
+      <h3>Stereo pairs and multi-room playback</h3>
+      <p>Sendspin keeps native and Echo satellites on one playback timeline across rooms.</p>
+      <ul class="stack-list"><li>Create a left/right pair under Voice -&gt; Stereo Pairs. Sendspin preserves stereo, left, right, and mono assignments across reconnects and reboots.</li><li>Music Core and AirPlay input use one synchronized timeline for supported native and Echo satellites, including mixed groups with per-satellite output-delay calibration.</li><li>Active music keeps its place while TTS, replies, announcements, wake cues, and timers take local priority; playback resumes cleanly afterward.</li><li>Capable Echo displays and Biscuit LEDs can follow now-playing metadata and live music presentation without adding that overhead to older audio-only devices.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">Prebuilt images</span><span class="chip">OTA</span><span class="chip">Browser USB</span></div>
+      <h3>Prebuilt firmware and recovery</h3>
+      <p>Update by OTA or recover over Browser USB without compiling firmware locally.</p>
+      <ul class="stack-list"><li>Tater matches the selected satellite to the correct firmware family and board revision, then compares its installed version with the signed native release manifest.</li><li>OTA updates run one device at a time with progress and live logs. Browser USB downloads the factory image, optionally erases flash, writes it directly, and follows the device through restart.</li><li>Tater Native Firmware 0.5.0 covers Voice PE, Satellite1, ReSpeaker XVF3800, and S3 Box. Echo Firmware v2.2.0 covers Biscuit, Checkers, and Rook through its target-aware factory and OTA paths.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">People</span><span class="chip">Room aware</span><span class="chip">Preferred player</span></div>
+      <h3>Identity, rooms, and reply routing</h3>
+      <p>The latest voice event decides who spoke, where they spoke, and what access applies to that turn.</p>
+      <ul class="stack-list"><li>Speaker ID aliases can link to a master Person alongside that person&#x27;s WebUI and portal identities; older history cannot replace the current speaker or inherit their admin access.</li><li>Device Control can use the speaking room when a request says only &#x27;turn on the lights,&#x27; while an explicitly named room overrides the satellite room.</li><li>Music Core follows the same rule and can honor the room&#x27;s preferred player, preferring Sonos when several compatible automatic choices are available.</li><li>Replies can play locally, on a preferred external device, or silently on display-only hardware while follow-up listening remains attached to the original satellite.</li></ul>
+
+    </article>
+
+    <article class="tool-card">
+      <div class="chip-row"><span class="chip">Intercom</span><span class="chip">Displays</span><span class="chip">Live logs</span></div>
+      <h3>Intercom, displays, and observability</h3>
+      <p>Tater Voice also carries targeted announcements, visual events, firmware status, and live diagnostics.</p>
+      <ul class="stack-list"><li>Intercom resolves device and room names before starting a targeted announcement and can preserve the normal follow-up flow afterward.</li><li>Display APIs publish compact environment values and transient camera, doorbell, image, voice, tool-progress, status, or alert cards to selected Tater screens.</li><li>Voice tabs separate Satellites, Firmware, Stereo Pairs, Stats, and Settings, with live logs and direct entity controls where supported.</li><li>Satellite inventory and hardware state refresh through background System Tasks so opening the page does not perform a slow full-device scan.</li></ul>
+
+    </article>
+
+  </div>
+</section>
 
 
     <section class="section">
       <div class="section-head">
-        <span class="eyebrow">Voice experience</span>
-        <h2>How current Tater Voice works from wake to playback</h2>
-        <p>The current stack brings native and Echo hardware together with local wake detection, trusted room and Person context, prebuilt firmware, and synchronized Sendspin audio.</p>
+        <span class="eyebrow">Built-in APIs</span>
+        <h2>HTTP endpoints exposed by this runtime.</h2>
       </div>
+
       <div class="grid grid-2">
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Add Satellite</span><span class="chip">Rooms</span><span class="chip">Secure pairing</span></div>
-          <h3>Pair and organize satellites</h3>
-          <p>Add Satellite creates a short-lived pairing code, then Tater remembers the device and its room.</p>
-          <ul class="stack-list"><li>Flash a supported Tater Native image, connect to its setup network, and enter the pairing code shown in Settings -&gt; Voice -&gt; Satellites.</li><li>After pairing, give the device a useful name and room. Room assignment becomes part of every trusted voice turn and can select devices or a preferred music player automatically.</li><li>Saved device identity and pairing credentials persist across Tater restarts and Docker image updates when the documented runtime volume is mounted.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET</span>
+            <span class="chip">/api/settings/voice/runtime</span>
+          </div>
+          <h3>Load the complete Voice settings workspace.</h3>
+          <p>Returns cached satellite inventory, firmware state, stereo pairs, settings, logs, and persistent voice-stat sections for the local WebUI.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">microWakeWord</span><span class="chip">Wake catalog</span><span class="chip">Trainer link</span></div>
-          <h3>Local microWakeWord and trainers</h3>
-          <p>Wake detection stays on the satellite and custom words publish through a scoped trainer link.</p>
-          <ul class="stack-list"><li>Choose the active wake word from each satellite&#x27;s settings popup: a built-in profile, a model from Tater-Wake-Words, or a custom trainer/GitHub JSON URL.</li><li>The Apple Silicon and NVIDIA trainers link with a short-lived code from Tater, then publish only their own trained package and active-word selection.</li><li>Sensitivity and room environment controls adjust acceptance around the model&#x27;s JSON threshold, sliding window, and close-miss tuning.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">POST</span>
+            <span class="chip">/api/settings/voice/runtime/action</span>
+          </div>
+          <h3>Run a Voice UI action.</h3>
+          <p>Handles pairing, room and device settings, stereo-pair changes, firmware actions, intercom controls, live logs, direct entity actions, and voice-stat resets.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Observe</span><span class="chip">Enabled</span><span class="chip">30-day stats</span></div>
-          <h3>Wake verification and persistent stats</h3>
-          <p>A fast STT check can observe or reject wake-word mismatches without becoming a new point of failure.</p>
-          <ul class="stack-list"><li>Observe records the transcript, match score, result, and latency while allowing the turn. Enabled rejects clear mismatches but fails open if verification errors or misses its deadline.</li><li>Per-satellite checks, rejections, fail-opens, latest results, and the broader voice summary are stored in Redis and remain visible while a device is offline.</li><li>Statistics automatically begin a new 30-day collection period and can be reset either for Wake Verification alone or for all voice statistics.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET</span>
+            <span class="chip">/tater-ha/v1/voice/native/status</span>
+          </div>
+          <h3>Inspect current voice-pipeline and speech-backend state.</h3>
+          <p>Reports the effective speech backends, local model roots, runtime availability, and current native voice state.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Sendspin v1</span><span class="chip">Stereo</span><span class="chip">Multi-room</span></div>
-          <h3>Stereo pairs and multi-room playback</h3>
-          <p>Sendspin keeps native and Echo satellites on one playback timeline across rooms.</p>
-          <ul class="stack-list"><li>Create a left/right pair under Voice -&gt; Stereo Pairs. Sendspin preserves stereo, left, right, and mono assignments across reconnects and reboots.</li><li>Music Core and AirPlay input use one synchronized timeline for supported native and Echo satellites, including mixed groups with per-satellite output-delay calibration.</li><li>Active music keeps its place while TTS, replies, announcements, wake cues, and timers take local priority; playback resumes cleanly afterward.</li><li>Capable Echo displays and Biscuit LEDs follow now-playing metadata and live music presentation without adding that overhead to older audio-only devices.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET</span>
+            <span class="chip">/tater-ha/v1/voice/satellites</span>
+          </div>
+          <h3>List satellite playback and voice targets.</h3>
+          <p>Returns connected and saved native satellites for room-aware routing and compatible companion clients.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Prebuilt images</span><span class="chip">OTA</span><span class="chip">Browser USB</span></div>
-          <h3>Prebuilt firmware and recovery</h3>
-          <p>Update by OTA or recover over Browser USB without compiling firmware locally.</p>
-          <ul class="stack-list"><li>Tater matches the selected satellite to the correct firmware family and board revision, then compares its installed version with the signed release manifest.</li><li>OTA updates run one device at a time with progress and live logs. Browser USB downloads the factory image, optionally erases flash, writes it directly, and follows the device through restart.</li><li>Tater Native Firmware 0.5.0 covers Voice PE, Satellite1, ReSpeaker XVF3800, and S3 Box. Echo Firmware v2.2.0 covers Biscuit, Checkers, and Rook through target-aware factory and OTA paths.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET/POST</span>
+            <span class="chip">/tater-ha/v1/voice/intercom/*</span>
+          </div>
+          <h3>Discover targets and control an intercom session.</h3>
+          <p>Lists available destinations, reports current state, starts a targeted spoken intercom message, or cancels an active session.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">People</span><span class="chip">Room aware</span><span class="chip">Preferred player</span></div>
-          <h3>Identity, rooms, and reply routing</h3>
-          <p>The latest voice event decides who spoke, where they spoke, and what access applies to that turn.</p>
-          <ul class="stack-list"><li>Speaker ID aliases can link to a master Person alongside that person&#x27;s WebUI and portal identities; older history cannot replace the current speaker or inherit their admin access.</li><li>Device Control can use the speaking room when a request says only &#x27;turn on the lights,&#x27; while an explicitly named room overrides the satellite room.</li><li>Music Core follows the same rule and can honor the room&#x27;s preferred player, preferring Sonos when several compatible automatic choices are available.</li><li>Replies can play locally, on a preferred external device, or silently on display-only hardware while follow-up listening remains attached to the original satellite.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET/POST</span>
+            <span class="chip">/tater-ha/v1/display/feed</span>
+          </div>
+          <h3>Serve compact environment and status data to Tater displays.</h3>
+          <p>Returns display-ready readings, labels, online state, and clock data sourced from Tater and enabled cores.</p>
         </article>
 
         <article class="tool-card">
-          <div class="chip-row"><span class="chip">Intercom</span><span class="chip">Displays</span><span class="chip">Live logs</span></div>
-          <h3>Intercom, displays, and observability</h3>
-          <p>Tater Voice also carries targeted announcements, visual events, firmware status, and live diagnostics.</p>
-          <ul class="stack-list"><li>Intercom resolves device and room names before starting a targeted announcement and can preserve the normal follow-up flow afterward.</li><li>Display APIs publish compact environment values and transient camera, doorbell, image, voice, tool-progress, status, or alert cards to selected Tater screens.</li><li>Voice tabs separate Satellites, Firmware, Stereo Pairs, Stats, and Settings, with live logs and direct entity controls where supported.</li><li>Satellite inventory and hardware state refresh through background System Tasks so opening the page does not perform a slow full-device scan.</li></ul>
-
+          <div class="chip-row">
+            <span class="chip">GET/POST</span>
+            <span class="chip">/tater-ha/v1/display/events</span>
+          </div>
+          <h3>Poll or publish targeted display cards.</h3>
+          <p>Carries transient text, images, snapshot references, tool progress, voice states, and alert metadata to selected displays.</p>
         </article>
 
       </div>
     </section>
 
-
-        <section class="section">
-          <div class="section-head">
-            <span class="eyebrow">Built-in APIs</span>
-            <h2>HTTP endpoints exposed by this runtime.</h2>
-          </div>
-
-          <div class="grid grid-2">
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET</span>
-                <span class="chip">/api/settings/voice/runtime</span>
-              </div>
-              <h3>Load the complete Voice settings workspace.</h3>
-              <p>Returns cached satellite inventory, firmware state, stereo pairs, settings, logs, and persistent voice-stat sections for the local WebUI.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">POST</span>
-                <span class="chip">/api/settings/voice/runtime/action</span>
-              </div>
-              <h3>Run a Voice UI action.</h3>
-              <p>Handles pairing, room and device settings, stereo-pair changes, firmware actions, intercom controls, live logs, direct entity actions, and voice-stat resets.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET</span>
-                <span class="chip">/tater-ha/v1/voice/native/status</span>
-              </div>
-              <h3>Inspect current voice-pipeline and speech-backend state.</h3>
-              <p>Reports the effective speech backends, local model roots, runtime availability, and current native voice state.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET</span>
-                <span class="chip">/tater-ha/v1/voice/satellites</span>
-              </div>
-              <h3>List satellite playback and voice targets.</h3>
-              <p>Returns connected and saved native satellites for room-aware routing and compatible companion clients.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET/POST</span>
-                <span class="chip">/tater-ha/v1/voice/intercom/*</span>
-              </div>
-              <h3>Discover targets and control an intercom session.</h3>
-              <p>Lists available destinations, reports current state, starts a targeted spoken intercom message, or cancels an active session.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET/POST</span>
-                <span class="chip">/tater-ha/v1/display/feed</span>
-              </div>
-              <h3>Serve compact environment and status data to Tater displays.</h3>
-              <p>Returns display-ready readings, labels, online state, and clock data sourced from Tater and enabled cores.</p>
-            </article>
-
-            <article class="tool-card">
-              <div class="chip-row">
-                <span class="chip">GET/POST</span>
-                <span class="chip">/tater-ha/v1/display/events</span>
-              </div>
-              <h3>Poll or publish targeted display cards.</h3>
-              <p>Carries transient text, images, snapshot references, tool progress, voice states, and alert metadata to selected displays.</p>
-            </article>
-
-          </div>
-        </section>
-
-    <section class="section">
-      <div class="action-row">
-        <a class="button button-ghost" href="../portals/index.html">Back to portals</a>
-        <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
-        <a class="button button-ghost" href="../portals/index.html">Portals</a>
-        <a class="button button-ghost" href="../tater-voice/index.html">Tater Voice</a>
-        <a class="button button-ghost" href="../cores/index.html">Cores</a>
-        <a class="button button-ghost" href="../index.html">Home</a>
+<section class="section">
+  <div class="action-row">
+    <a class="button button-ghost" href="../portals/index.html">Back to portals</a>
+    <a class="button button-ghost" href="../plugins/index.html">Verbas</a>
+    <a class="button button-ghost" href="../portals/index.html">Portals</a>
+    <a class="button button-ghost" href="../tater-voice/index.html">Tater Voice</a>
+    <a class="button button-ghost" href="../cores/index.html">Cores</a>
+    <a class="button button-ghost" href="../index.html">Home</a>
+  </div>
+</section>
+</main>
+        <footer class="page-footer">
+          <div class="footer-main"><div class="footer-brand"><a class="footer-logo" href="../index.html" aria-label="Tater Assistant home"><img src="../assets/images/tater-logo-primary.png" alt="Tater" width="1535" height="1024" loading="lazy"></a><p>Homegrown AI.<br>Extra personality.</p></div><div class="footer-column"><h2>Get growing</h2><a href="../install/index.html">Get Tater</a><a href="../satellites/index.html">Voice satellites</a><a href="../little-spud/index.html">Little Spud</a></div><div class="footer-column"><h2>A little guidance</h2><a href="../docs/index.html">All guides</a><a href="../usb-flasher/index.html">USB Flasher</a><a href="../integrations/index.html">Integrations</a><a href="../plugins/index.html">Extra skills</a></div><div class="footer-column"><h2>Say hello</h2><a href="https://github.com/TaterTotterson/Tater">GitHub</a><a href="https://github.com/TaterTotterson/Tater/issues">Ideas &amp; issues</a><a href="mailto:tater@tatertottersonai.com">Contact us</a></div></div>
+          <div class="footer-bottom"><p>A little spud. A world of possibilities.</p><a href="../privacy/little-spud/index.html">Little Spud privacy</a><a href="#">Back to top</a></div>
+        </footer>
       </div>
-    </section>
-
-            </main>
-            <footer class="page-footer">
-              <div class="footer-row">
-                <p>Generated from current Tater, Tater Shop, and Tater Integrations source.</p>
-                <a class="footer-contact" href="mailto:tater@tatertottersonai.com?subject=Tater%20Assistant%20contact" data-contact-open>Contact us</a>
-              </div>
-            </footer>
-          </div>
-        </body>
-        </html>
+    </body>
+    </html>
